@@ -1,8 +1,8 @@
 /* eslint dot-notation: 0 */
 /* eslint global-require: 0 */
+
 global.shellStartTime = Date.now();
 const util = require('util');
-
 // TODO: Remove when upgrading to Electron 4
 const fs = require('fs');
 fs.statSyncNoException = function(...args) {
