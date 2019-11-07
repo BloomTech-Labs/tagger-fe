@@ -1,49 +1,149 @@
-# 💌 Mailspring
+🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline, feel free to add your own flare to it.
 
-[![Travis Status](https://travis-ci.org/Foundry376/Mailspring.svg?branch=master)](https://travis-ci.org/Foundry376/Mailspring)
-[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/iuuuy6d65u3x6bj6?svg=true)](https://ci.appveyor.com/project/Foundry376/Mailspring)
-[![Mailspring Slack](https://join-mailspring-slack.herokuapp.com/badge.svg)](https://join-mailspring-slack.herokuapp.com/)
+🚫 The numbers 1️⃣ through 5️⃣ next to each item represent the week that part of the docs needs to be comepleted by. Make sure to delete the numbers by the end of Labs.
 
-**Mailspring is a new version of Nylas Mail maintained by one of the original authors. It's faster, leaner, and shipping today!** It replaces the JavaScript sync code in Nylas Mail with a new C++ sync engine based on [Mailcore2](https://github.com/MailCore/mailcore2). It uses roughly half the RAM and CPU of Nylas Mail and idles with almost zero "CPU Wakes", which translates to great battery life. It also has an entirely revamped composer and other great new features.
+🚫 Each student has a required minimum number of meaningful PRs each week per the rubric. Contributing to docs does NOT count as a PR to meet your weekly requirements.
 
-Mailspring's UI is open source (GPLv3) and written in TypeScript with [Electron](https://github.com/atom/electron) and [React](https://facebook.github.io/react/) - it's built on a plugin architecture and was designed to be easy to extend. Check out [CONTRIBUTING.md](https://github.com/Foundry376/Mailspring/blob/master/CONTRIBUTING.md) to get started!
+1️⃣ Title of project goes here
+1️⃣ You can find the deployed project at [🚫URL NAME GOES HERE](🚫copy and paste URL here).
 
-Mailspring's sync engine is spawned by the Electron application and runs locally on your computer. It will be open-sourced in the future but is [currently closed source.](https://github.com/Foundry376/Mailspring/blob/master/ROADMAP.md#why-is-mailsync-closed-source) When you set up your development environment, Mailspring uses the latest version of the sync process we've shipped for your platform so you don't need to pull sources or install its compile-time dependencies.
+4️⃣ Contributors
+🚫Add contributor info below, make sure add images and edit the social links for each member. Add to or delete these place-holders as needed
 
-![Mailspring Screenshot](https://github.com/Foundry376/Mailspring/raw/master/screenshots/hero_graphic_mac%402x.png)
+Student 1 Student 2 Student 3 Student 4 Student 5
 
-## Features
+🚫 4️⃣ Optional examples of using images with links for your tech stack, make sure to change these to fit your project
 
-Mailspring comes packed with powerful features like Unified Inbox, Snooze, Send Later, Mail Rules, Templates and more. Mailspring Pro, which you can unlock with a monthly subscription, adds even more features for people who send a ton of email: link tracking, read receipts, mailbox analytics, contact and company profiles. **All of these features run in the client - Mailspring does not send your email credentials to the cloud.** For a full list of features, check out [getmailspring.com](https://getmailspring.com/).
+MIT React Typescript [Netlify Status](netlify link goes in these parenthesis) code style: prettier
 
-## Download Mailspring
+🚫 more info on using badges here
 
-You can download compiled versions of Mailspring for Windows, Mac OS X, and Linux (deb, rpm and snap) from [https://getmailspring.com/download](https://getmailspring.com/download).
+Project Overview
+1️⃣ [Trello Board](🚫add link to trello board here)
 
-## Contributing
+1️⃣ [Product Canvas](🚫add link to product canvas here)
 
-Mailspring's UI is entirely open-source and pull requests and contributions are welcome! There are three ways to contribute: building a plugin, building a theme, and submitting pull requests to the project itself. When you're getting started, you may want to join our [public slack](https://join-mailspring-slack.herokuapp.com/) so you can ask questions and learn from other people doing development.
+1️⃣ [UX Design files](🚫add link to design files here) - 🚫 delete if not applicable
 
-### Building A Plugin
+🚫 Replace lorem ipsum with a description of your project
 
-Plugins lie at the heart of Mailspring and give it its powerful features. Building your own plugins allows you to integrate the app with other tools, experiment with new workflows, and more. Follow the [Getting Started guide](https://Foundry376.github.io/Mailspring/) to write your first plugin in five minutes.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-- To create your own theme, check out the [Mailspring-Theme-Starter](https://github.com/Foundry376/Mailspring-Theme-Starter).
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-- To create your own plugin, check out the [Mailspring-Plugin-Starter](https://github.com/Foundry376/Mailspring-Plugin-Starter).
+4️⃣ Key Features
+feature one
+feature two
+feature three
+feature four
+feature five
+1️⃣ Tech Stack
+Front end built using:
+Front end framework goes here
+🚫 Why did you choose this framework?
 
-A plugin "store" like the Chrome Web Store is coming soon, and will make it easy for other users to discover plugins you create. (Right now, users need to "sideload" the plugins into the app by downloading them and copying them into place.)
+point one
+point two
+point three
+point four
+🚫List the rest of the front end features and libraries in the same format as the framework above.
 
-### Building a Theme
+Front end deployed to 🚫insert service here
+[Back end](🚫link to back end repo here) built using:
+🚫 back end framework goes here
+point one
+point two
+point three
+🚫 List the rest of the back end end features and libraries in the same format as the framework above
 
-The Mailspring user interface is styled using CSS, which means it's easy to modify and extend. Mailspring comes stock with a few beautiful themes, and there are many more which have been built by community developers. To start creating a theme, [clone the theme starter](https://github.com/Foundry376/Mailspring-Theme-Starter)!
+APIs
+2️⃣ Authentication API here
+🚫Replace text below with a description of the API
 
-If you are updating an existing Nylas theme for Mailspring here is a [step by step tutorial](https://foundry376.zendesk.com/hc/en-us/articles/115001918391-How-do-I-update-an-N1-Nylas-Mail-theme-for-Mailspring-). Notice: as part of the update process you will probably need to [import mailspring base variables](https://github.com/Foundry376/Mailspring/issues/326#issuecomment-343757775).
+Water's like me. It's laaazy ... Boy, it always looks for the easiest way to do things A little happy sunlight shining through there. Let all these little things happen. Don't fight them. Learn to use them. Even the worst thing we can do here is good.
 
-### Localizing / Translating
+2️⃣ Payment API here
+🚫Replace text below with a description of the API
 
-Mailspring 1.5.0 and above support localization. If you're a fluent speaker of another language, we'd love your help improving translations. Check out the [LOCALIZATION](https://github.com/Foundry376/Mailspring/blob/master/LOCALIZATION.md) guide for more information.
+This is the way you take out your flustrations. Get away from those little Christmas tree things we used to make in school. Isn't it fantastic that you can change your mind and create all these happy things? Everything's not great in life, but we can still find beauty in it.
 
-### Contributing to Mailspring Core
+3️⃣ Misc API here
+🚫Replace text below with a description of the API
 
-Pull requests are always welcome - check out [CONTRIBUTING](https://github.com/Foundry376/Mailspring/blob/master/CONTRIBUTING.md) for more information about setting up the development environment, running tests locally, and submitting pull requests.
+You can do anything your heart can imagine. In life you need colors. This is where you take out all your hostilities and frustrations. It's better than kicking the puppy dog around and all that so. I'm sort of a softy, I couldn't shoot Bambi except with a camera. Trees get lonely too, so we'll give him a little friend. We'll lay all these little funky little things in there.
+
+3️⃣ Misc API here
+🚫Replace text below with a description of the API
+
+When you do it your way you can go anywhere you choose. Let your heart take you to wherever you want to be. If I paint something, I don't want to have to explain what it is. A tree needs to be your friend if you're going to paint him. That's a son of a gun of a cloud. Even the worst thing we can do here is good.
+
+3️⃣ Misc API here
+🚫Replace text below with a description of the API
+
+Volunteering your time; it pays you and your whole community fantastic dividends. Maybe there's a happy little waterfall happening over here. You can spend all day playing with mountains. We don't have to be committed. We are just playing here. You have freedom here. The only guide is your heart. It's cold, but it's beautiful.
+
+3️⃣ Environment Variables
+In order for the app to function correctly, the user must set up their own environment variables. There should be a .env file containing the following:
+
+🚫These are just examples, replace them with the specifics for your app
+
+- REACT_APP_apiKey - this is your Google API key, which can be generated in the Google Cloud Console
+- REACT_APP_authDomain - when you set up your Firebase project, this information will be in the dashboard
+- REACT_APP_databaseURL - in the Firebase dashboard
+- REACT_APP_projectID - in the Firebase dashboard
+- REACT_APP_storageBucket - in the Firebase dashboard
+- REACT_APP_messagingSenderId - in the Firebase dashboard
+- REACT_APP_stripe_API - this is your public Stripe API key, generated in the Stripe dashboard
+- REACT_APP_backendURL - optional for your local development server
+- REACT_APP_clientid - this is the Stripe_connect clientID, generated in Stripe_connect settings
+- REACT_APP_stripe_plan - this is the ID for a second Stripe subscription plan, generated under Stripe products
+  5️⃣ Content Licenses
+  🚫For all content - images, icons, etc, use this table to document permission of use. Remove the two placeholders and add you content to this table
+
+Image Filename Source / Creator License
+doodles.png Nicole Bennett Creative Commons
+rings.svg Sam Herbert MIT
+4️⃣ Testing
+🚫Document what you used for testing and why
+
+4️⃣ Installation Instructions
+🚫explain how to install the required dependencies to get this project up and running with yarn and NPM
+
+Other Scripts
+🚫replace these examples with your own
+
+- typecheck - runs the TypeScript compiler
+- build - creates a build of the application
+- start - starts the production server after a build is created
+- test - runs tests in **tests** directory \* eject - copy the configuration files and dependencies into the project so you have full control over them
+  Contributing
+  When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
+
+Please note we have a code of conduct. Please follow it in all your interactions with the project.
+
+Issue/Bug Request
+If you are having an issue with the existing project code, please submit a bug report under the following guidelines:
+
+Check first to see if your issue has already been reported.
+Check to see if the issue has recently been fixed by attempting to reproduce the issue using the latest master branch in the repository.
+Create a live example of the problem.
+Submit a detailed bug report including your environment & browser, steps to reproduce the issue, actual and expected outcomes, where you believe the issue is originating from, and any potential solutions you have considered.
+Feature Requests
+We would love to hear from you about new features which would improve this app and further the aims of our project. Please provide as much detail and information as possible to show us why you think your new feature should be implemented.
+
+Pull Requests
+If you have developed a patch, bug fix, or new feature that would improve this app, please submit a pull request. It is best to communicate your ideas with the developers first before investing a great deal of time into a pull request to ensure that it will mesh smoothly with the project.
+
+Remember that this project is licensed under the MIT license, and by submitting a pull request, you agree that your work will be, too.
+
+Pull Request Guidelines
+Ensure any install or build dependencies are removed before the end of the layer when doing a build.
+Update the README.md with details of changes to the interface, including new plist variables, exposed ports, useful file locations and container parameters.
+Ensure that your code conforms to our existing code conventions and test coverage.
+Include the relevant issue number, if applicable.
+You may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you.
+Attribution
+These contribution guidelines have been adapted from this good-Contributing.md-template.
+
+Documentation
+See [Backend Documentation](🚫*link to your backend readme here*) for details on the backend of our project.
