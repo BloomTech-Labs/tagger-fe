@@ -1,74 +1,23 @@
-##### Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-##### Arcanist / Phab
-**/.arcconfig
-**/.arclint
-**/arclib
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
 
-##### Client Private Plugins (symlinked)
-**/internal_packages/composer-mail-merge
-**/internal_packages/composer-scheduler
+# testing
+/coverage
 
-##### Node modules
-node_modules
-!app/spec/fixtures/packages/package-with-incompatible-native-module/node_modules
-**/npm-debug.log*
-**/lerna-debug.log*
+# production
+/build
 
-##### Certs for building
-certs
-**/*.p12
-**/*.cer
-**/build/resources/certs
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-##### Misc swap files
-**/*.swp
-**/*.swo
-**/*~
-**/*#
-**/.DS_Store
-**/Thumbs.db
-**/#emacs
-
-# Built cloud files
-n1_cloud_dist
-
-# Built client
-app/dist
-
-# Tests
-spec-saved-state.json
-
-# Symlinked Jasmine config files
-**/jasmine/config.json
-
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
-
-# Sqlite amalgamation for scripts
-scripts/sqlite
-
-# Scripts for calculating statistics
-scripts/toolbox
-scripts/venv
-
-# Python
-*.pyc
-
-# OAuth client secret for talking to Google Sheets
-client_secret.json
-/app/mailsync
-/logfile.txt
-/app/dist-docs
-/app/mailsync.dSYM.zip
-/snap/snapcraft.yml
-
-**.so*
-**.bin
-**.tar.gz
-/app/mailsync.dSYM
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
