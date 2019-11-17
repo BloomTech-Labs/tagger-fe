@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect, withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
@@ -10,51 +10,43 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import MessageToolbar from "../message-toolbar/MessageToolbar";
 
 import "./messageContent.scss";
 
-export class MessageContent extends Component {
-  constructor(props) {
-    super(props);
+const MessageContent = (props) => {
+  const [errorMessage, setErrorMessage] = useState(undefined);
+  const [modal, setModal] = useState();
+  
+  const iframeRef = React.createRef();
 
-    this.state = {
-      errorMessage: undefined
-    };
+  useEffect(() => {
+    const messageId = props.match.params.id;
+    props.getEmailMessage(messageId);
+  }, []);
 
-    this.iframeRef = React.createRef();
-    this.modifyMessage = this.modifyMessage.bind(this);
-  }
-
-  componentDidMount(prevProps) {
-    const messageId = this.props.match.params.id;
-    this.props.getEmailMessage(messageId);
-  }
-
-  componentDidUpdate(prevProps) {
-    const { emailMessageResult } = this.props;
+  // Wasn't sure how to split componentDidMount and componentDidUpdate within a single useEffect call and get it to work so here it is split into two useEffect calls.
+  useEffect(() => {
+    const { emailMessageResult } = props;
     if (!emailMessageResult.loading) {
       if (!emailMessageResult.failed) {
-        if (this.iframeRef.current) {
-          const { body } = this.iframeRef.current.contentWindow.document;
+        if (iframeRef.current) {
+          const { body } = iframeRef.current.contentWindow.document;
           body.style.margin = "0px";
           body.style.fontFamily = "Arial, Helvetica, sans-serif";
           body.style.fontSize = "13px";
-          body.innerHTML = this.props.emailMessageResult.body;
+          body.innerHTML = props.emailMessageResult.body;
         }
       } else {
-        if (!this.state.errorMessage) {
-          this.setState({
-            errorMessage: emailMessageResult.error.result.error.message,
-            modal: true
-          });
+        if (!errorMessage) {
+          setErrorMessage(emailMessageResult.error.result.error.message);
+          setModal(true);
         }
       }
     }
-  }
+  }, [props.emailMessageResult])
 
-  renderSpinner() {
+  const renderSpinner = () => {
     return (
       <div className="d-flex h-100 justify-content-center align-items-center  ">
         <FontAwesomeIcon icon={faSpinner} spin size="5x" />
@@ -62,51 +54,49 @@ export class MessageContent extends Component {
     );
   }
 
-  renderErrorModal() {
+  const renderErrorModal = () => {
     return <Redirect to="/notfound" />;
   }
 
-  modifyMessage(addLabelIds, removeLabelIds) {
-    const id = this.props.emailMessageResult.result.id;
+  const modifyMessage = (addLabelIds, removeLabelIds) => {
+    const id = props.emailMessageResult.result.id;
     const actionParams = {
       ...(addLabelIds && { addLabelIds }),
       ...(removeLabelIds && { removeLabelIds })
     };
-    this.props.modifyMessages({ ids: [id], ...actionParams });
-    this.props.history.goBack();
+    props.modifyMessages({ ids: [id], ...actionParams });
+    props.history.goBack();
   }
 
-  render() {
-    if (this.props.emailMessageResult.loading) {
-      return this.renderSpinner();
-    }
-
-    return (
-      <React.Fragment>
-        <MessageToolbar 
-          onClick={this.modifyMessage} 
-          messageResult={this.props.emailMessageResult}
-        />
-        <div className="d-flex justify-content-center align-items-center message-content">
-          {this.props.emailMessageResult.loading ? this.renderSpinner() : null}
-          {this.state.errorMessage ? (
-            this.renderErrorModal()
-          ) : (
-            <iframe
-              ref={this.iframeRef}
-              title="Message contents"
-              id="message-iframe"
-              style={{
-                display: this.props.emailMessageResult.loading
-                  ? "none"
-                  : "block"
-              }}
-            />
-          )}
-        </div>
-      </React.Fragment>
-    );
+  if (props.emailMessageResult.loading) {
+    return renderSpinner();
   }
+
+  return (
+    <React.Fragment>
+      <MessageToolbar 
+        onClick={modifyMessage} 
+        messageResult={props.emailMessageResult}
+      />
+      <div className="d-flex justify-content-center align-items-center message-content">
+        {props.emailMessageResult.loading ? renderSpinner() : null}
+        {errorMessage ? (
+          renderErrorModal()
+        ) : (
+          <iframe
+            ref={iframeRef}
+            title="Message contents"
+            id="message-iframe"
+            style={{
+              display: props.emailMessageResult.loading
+                ? "none"
+                : "block"
+            }}
+          />
+        )}
+      </div>
+    </React.Fragment>
+  );
 }
 
 const mapStateToProps = state => ({
