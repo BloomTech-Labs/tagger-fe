@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators, compose } from "redux";
 import Header from "../header/Header";
@@ -22,124 +22,109 @@ import {
   setSearchQuery
 } from "../content/message-list/actions/message-list.actions";
 
-import {selectLabel} from '../sidebar/sidebar.actions';
-import {signOut} from '../../api/authentication';
+import { selectLabel } from '../sidebar/sidebar.actions';
+import { signOut } from '../../api/authentication';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 
-export class Main extends Component {
-  constructor(props) {
-    super(props);
+const Main = (props) => {
+  const [signedInUser, setSignedInUser] = useState();
 
-    this.getLabelList = this.getLabelList.bind(this);
-    this.getLabelMessages = this.getLabelMessages.bind(this);
-    this.renderLabelRoutes = this.renderLabelRoutes.bind(this);
-    this.loadLabelMessages = this.loadLabelMessages.bind(this);
-    this.navigateToNextPage = this.navigateToNextPage.bind(this);
-    this.navigateToPrevPage = this.navigateToPrevPage.bind(this);
-    this.addInitialPageToken = this.addInitialPageToken.bind(this);
-    this.onSignout = this.onSignout.bind(this);
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     /* Label list is fetched from here 
     so that we can declare Routes by labelId 
     before rendering anything else */
-    this.getLabelList();
-  }
+    getLabelList();
+  }, []);
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.signedInUser !== this.props.signedInUser) {
-      this.setState({
-        signedInUser: this.props.signedInUser
-      });
-    }
+  useEffect(() => {
+    setSignedInUser(props.signedInUser);
 
-    const {labels} = this.props.labelsResult;
-    const {pathname} = this.props.location;
+    const { labels } = props.labelsResult;
+    const { pathname } = props.location;
     const selectedLabel = labels.find(el => el.selected);
     const labelPathMatch = labels.find(el => el.id.toLowerCase() === pathname.slice(1));
     if (!selectedLabel) {
-      if (labelPathMatch && this.props.searchQuery === "") {
-        this.props.selectLabel(labelPathMatch.id);
+      if (labelPathMatch && props.searchQuery === "") {
+        props.selectLabel(labelPathMatch.id);
       }      
     }
     else {
       if (labelPathMatch && selectedLabel.id !== labelPathMatch.id) {
-        this.props.selectLabel(labelPathMatch.id);
+        props.selectLabel(labelPathMatch.id);
       } 
     }
-  }
+  }, [props.signedInUser]);
 
-  navigateToNextPage(token) {
-    const searchParam = this.props.location.search;
+  const navigateToNextPage = (token) => {
+    const searchParam = props.location.search;
     const currentToken = searchParam.indexOf("?") === 0 ? searchParam.slice(1) : "";
-    this.props.setPageTokens({
+    props.setPageTokens({
       prevPageToken: currentToken
     });
-    this.props.history.push(token);
+    props.history.push(token);
   }
 
-  navigateToPrevPage(token) {
-    this.props.history.push(token);
+  const navigateToPrevPage = (token) => {
+    props.history.push(token);
   }
 
-  loadLabelMessages(label) {
-    const currentSearchQuery = this.props.searchQuery;
-    this.props.clearPageTokens();
-    this.props.selectLabel(label.id);    
+  const loadLabelMessages = (label) => {
+    const currentSearchQuery = props.searchQuery;
+    props.clearPageTokens();
+    props.selectLabel(label.id);    
 
     const newPathToPush = `/${label.id.toLowerCase()}`;
 
     if (currentSearchQuery && currentSearchQuery !== "") {
-      this.props.setSearchQuery("");
-      const {pathname} = this.props.location;
+      props.setSearchQuery("");
+      const {pathname} = props.location;
       if (newPathToPush === pathname) {
-        this.getLabelMessages({labelIds: [label.id] });
+        getLabelMessages({labelIds: [label.id] });
         return;
       }
     }
 
-    this.props.history.push(`/${label.id.toLowerCase()}`);
+    props.history.push(`/${label.id.toLowerCase()}`);
   }
   
 
-  getLabelList() {
-    this.props.getLabels();
+  const getLabelList = () => {
+    props.getLabels();
   }
 
-  getLabelMessages({labelIds, q, pageToken}) {
-    this.props.emptyLabelMessages();    
-    this.props.getLabelMessages({labelIds, q, pageToken});
+  const getLabelMessages = ({ labelIds, q, pageToken }) => {
+    props.emptyLabelMessages();    
+    props.getLabelMessages({labelIds, q, pageToken});
   }
 
 
-  addInitialPageToken(token) {
-    this.props.addInitialPageToken(token);
+  const addInitialPageToken = (token) => {
+    props.addInitialPageToken(token);
   }
 
-  renderLabelRoutes() {
-    return this.props.labelsResult.labels.map(el => (
+  const renderLabelRoutes = (props) => {
+    const { labelsResult } = props;
+    return labelsResult.labels.map(el => (
       <Route
         key={el.id + '_route'}
         exact
         path={"/" + el.id}
-        render={props => {          
-          const that = this;
+        render={routeProps => {
           return (
             <MessageList
-              {...props}
-              getLabelMessages={this.getLabelMessages}
-              messagesResult={this.props.messagesResult}
-              toggleSelected={this.props.toggleSelected}
-              navigateToNextPage={this.navigateToNextPage}
-              navigateToPrevPage={this.navigateToPrevPage}
-              pageTokens={this.props.pageTokens}
-              addInitialPageToken={this.addInitialPageToken}
-              parentLabel={that.props.labelsResult.labels.find(el => el.id === props.match.path.slice(1) )}
-              searchQuery={this.props.searchQuery}
+              {...routeProps}
+              getLabelMessages={getLabelMessages}
+              messagesResult={props.messagesResult}
+              toggleSelected={props.toggleSelected}
+              navigateToNextPage={navigateToNextPage}
+              navigateToPrevPage={navigateToPrevPage}
+              pageTokens={props.pageTokens}
+              addInitialPageToken={addInitialPageToken}
+              parentLabel={labelsResult.labels.find(el => el.id === routeProps.match.path.slice(1))}
+              searchQuery={props.searchQuery}
             />
           )
         }}
@@ -147,7 +132,7 @@ export class Main extends Component {
     ));    
   }
 
-  renderSpinner() {
+  const renderSpinner = () => {
     return (
       <div className="d-flex h-100 align-items-center justify-content-center">
         <FontAwesomeIcon icon={faSpinner} spin size="5x" />
@@ -155,38 +140,37 @@ export class Main extends Component {
     )
   }
 
-  onSignout() {
-    const that = this;
+  const onSignout = () => {
     signOut().then(_ => {
-      that.props.history.replace('inbox');
+      props.history.replace('inbox');
       window.location.reload(true);
     })
   }
 
-  renderInboxViewport() {
+  const renderInboxViewport = () => {
 
-    if (this.props.labelsResult.labels.length < 1) {
-      return this.renderSpinner();
+    if (props.labelsResult.labels.length < 1) {
+      return renderSpinner();
     }
 
     return (
       <Fragment>
-        <Header googleUser={this.props.googleUser} 
-          onSignout={this.onSignout} 
-          setSearchQuery={this.props.setSearchQuery}
-          getLabelMessages={this.getLabelMessages} 
-          searchQuery={this.props.searchQuery}
+        <Header googleUser={props.googleUser} 
+          onSignout={onSignout} 
+          setSearchQuery={props.setSearchQuery}
+          getLabelMessages={getLabelMessages} 
+          searchQuery={props.searchQuery}
         />
         <section className="main hbox space-between">
           <Sidebar
-            getLabelList={this.getLabelList}
-            pathname={this.props.location.pathname}
-            labelsResult={this.props.labelsResult}
-            onLabelClick={this.loadLabelMessages}
+            getLabelList={getLabelList}
+            pathname={props.location.pathname}
+            labelsResult={props.labelsResult}
+            onLabelClick={loadLabelMessages}
           />
           <article className="d-flex flex-column position-relative">
             <Switch>
-              {this.renderLabelRoutes()}
+              {renderLabelRoutes(props)}
               <Route
                 exact
                 path="/notfound"
@@ -204,9 +188,7 @@ export class Main extends Component {
     );
   }
 
-  render() {
-    return this.renderInboxViewport();
-  }
+  return renderInboxViewport();
 }
 
 const mapStateToProps = state => ({

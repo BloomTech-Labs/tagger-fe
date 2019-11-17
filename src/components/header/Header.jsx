@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import "./header.scss";
 import Signout from "../signout/Signout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,77 +6,69 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import debounce from "lodash/debounce";
 
-export class Header extends PureComponent {
-  constructor(props) {
-    super(props);
+const Header = (props) => {
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSearchClick = this.handleSearchClick.bind(this);
-    this.performSearch = debounce(this.performSearch.bind(this), 1000);
-  }
-
-  handleSearchClick(evt) {
-    if (this.props.searhQuery !== "") {
-      this.performSearch();
+  const handleSearchClick = (evt) => {
+    if (props.searhQuery !== "") {
+      performSearch();
     }    
   }
 
-  handleInputChange(evt) {
-    this.props.setSearchQuery(evt.target.value);  
-    this.performSearch();
+  const handleInputChange = (evt) => {
+    props.setSearchQuery(evt.target.value);  
+    performSearch();
   }
 
-  performSearch() {
+  const performSearch = debounce(() => {
     const searchParams = {}
-    if (!this.props.searchQuery || this.props.searchQuery === "") {
+    if (!props.searchQuery || props.searchQuery === "") {
       searchParams.labelIds = ["INBOX"];
     }
-    this.props.getLabelMessages({...searchParams})
-  }
+    props.getLabelMessages({...searchParams})
+  }, 1000);
 
-  render() {
-    const userInfo = this.props.googleUser.w3;
-    const email = userInfo.U3;
-    const fullName = userInfo.ig;
-    const picUrl = userInfo.Paa;
+  const userInfo = props.googleUser.w3;
+  const email = userInfo.U3;
+  const fullName = userInfo.ig;
+  const picUrl = userInfo.Paa;
 
-    return (
-      <header className="d-flex p-3 align-content-center align-items-center header">
-        <div className="header-logo justify-content-center">
-          <Link to="/inbox">REACT GMAIL CLIENT</Link>
-        </div>
+  return (
+    <header className="d-flex p-3 align-content-center align-items-center header">
+      <div className="header-logo justify-content-center">
+        <Link to="/inbox">REACT GMAIL CLIENT</Link>
+      </div>
 
-        <div className="header-search">
-          <div className="input-group w-75 ml-1 mr-auto">
-            <input
-              type="search"
-              className="form-control border-light"
-              placeholder="Search mail"
-              value={this.props.searchQuery}
-              onChange={this.handleInputChange}
-            />
-            <div className="input-group-append" onClick={this.handleSearchClick}>
-              <button
-                className="btn btn-light btn-outline-light bg-white text-dark"
-                type="button"
-              >
-                <FontAwesomeIcon icon={faSearch} />
-              </button>
-            </div>
-          </div>
-          <div>
-            <span className="user-name" title={email}>
-              {fullName}
-            </span>
-
-            <img className="mx-2 profile-pic" src={picUrl} alt="" />
+      <div className="header-search">
+        <div className="input-group w-75 ml-1 mr-auto">
+          <input
+            type="search"
+            className="form-control border-light"
+            placeholder="Search mail"
+            value={props.searchQuery}
+            onChange={handleInputChange}
+          />
+          <div className="input-group-append" onClick={handleSearchClick}>
+            <button
+              className="btn btn-light btn-outline-light bg-white text-dark"
+              type="button"
+            >
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
           </div>
         </div>
+        <div>
+          <span className="user-name" title={email}>
+            {fullName}
+          </span>
 
-        <Signout onSignout={this.props.onSignout} />
-      </header>
-    );
-  }
+          <img className="mx-2 profile-pic" src={picUrl} alt="" />
+        </div>
+      </div>
+
+      <Signout onSignout={props.onSignout} />
+    </header>
+  );
 }
 
 export default Header;
+

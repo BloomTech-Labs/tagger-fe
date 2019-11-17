@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 import MesssageCheckbox from "./MessageCheckbox";
@@ -7,28 +7,22 @@ import NameSubjectFields from "./NameSubjectFields";
 import AttachmentDateFields from "./AttachmentDateFields";
 import {getNameEmail} from '../../../../utils';
 
-export class MessageItem extends PureComponent {
-  constructor(props) {
-    super(props);
+const MessageItem = (props) => {
 
-    this.onSelectionChange = this.onSelectionChange.bind(this);
-    this.getMessage = this.getMessage.bind(this);
+  const onSelectionChange = (evt) => {
+    props.onSelectionChange(evt.target.checked, props.data.id);
   }
 
-  onSelectionChange(evt) {
-    this.props.onSelectionChange(evt.target.checked, this.props.data.id);
+  const getMessage = (evt) => {
+    props.history.push(`/${props.data.id}`);
   }
 
-  getMessage(evt) {
-    this.props.history.push(`/${this.props.data.id}`);
-  }
-
-  getFromName(from) {
+  const getFromName = (from) => {
     const nameEmail = getNameEmail(from);
     return nameEmail.name;
   }
 
-  getFormattedDate(date, fallbackDateObj) {
+  const getFormattedDate = (date, fallbackDateObj) => {
     let messageDate = moment(date);
     if (!messageDate.isValid()) {
       messageDate = moment(fallbackDateObj.parserFn(fallbackDateObj.date));
@@ -50,38 +44,36 @@ export class MessageItem extends PureComponent {
     return formattedDate;
   }
 
-  render() {
-    const receivedHeader = this.props.data.payload.headers.find(el => el.name.toUpperCase() === "X-RECEIVED");
-    const date = receivedHeader ? receivedHeader.value.split(";")[1].trim() : "";
-    let formattedDate = this.getFormattedDate(date, {date: this.props.data.internalDate, parserFn: parseInt});
-    const unread = this.props.data.labelIds.indexOf("UNREAD") > -1 ? " font-weight-bold" : "";
-    const selected = this.props.data.selected ? " selected" : "";
-    const subjectHeader = this.props.data.payload.headers.find(el => el.name.toUpperCase() === "SUBJECT");
-    const subject = subjectHeader ? subjectHeader.value : "";
-    const fromHeader = this.props.data.payload.headers.find(el => el.name.toUpperCase() === "FROM");
-    let fromName = fromHeader ? this.getFromName(fromHeader.value) : "undefined";
+  const receivedHeader = props.data.payload.headers.find(el => el.name.toUpperCase() === "X-RECEIVED");
+  const date = receivedHeader ? receivedHeader.value.split(";")[1].trim() : "";
+  let formattedDate = getFormattedDate(date, {date: props.data.internalDate, parserFn: parseInt});
+  const unread = props.data.labelIds.indexOf("UNREAD") > -1 ? " font-weight-bold" : "";
+  const selected = props.data.selected ? " selected" : "";
+  const subjectHeader = props.data.payload.headers.find(el => el.name.toUpperCase() === "SUBJECT");
+  const subject = subjectHeader ? subjectHeader.value : "";
+  const fromHeader = props.data.payload.headers.find(el => el.name.toUpperCase() === "FROM");
+  let fromName = fromHeader ? getFromName(fromHeader.value) : "undefined";
 
-    return (
-      <div className={`d-flex table-row-wrapper${selected}`}>
-        <MesssageCheckbox
-          selected={this.props.data.selected}
-          onChange={this.onSelectionChange}
+  return (
+    <div className={`d-flex table-row-wrapper${selected}`}>
+      <MesssageCheckbox
+        selected={props.data.selected}
+        onChange={onSelectionChange}
+      />
+      <div
+        onClick={getMessage}
+        className={`table-row px-2 py-3${unread}`}
+      >
+        <NameSubjectFields fromName={fromName} subject={subject} />
+        <AttachmentDateFields
+          formattedDate={formattedDate}
+          hasAttachment={
+            props.data.payload.mimeType === "multipart/mixed"
+          }
         />
-        <div
-          onClick={this.getMessage}
-          className={`table-row px-2 py-3${unread}`}
-        >
-          <NameSubjectFields fromName={fromName} subject={subject} />
-          <AttachmentDateFields
-            formattedDate={formattedDate}
-            hasAttachment={
-              this.props.data.payload.mimeType === "multipart/mixed"
-            }
-          />
-        </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default withRouter(MessageItem);

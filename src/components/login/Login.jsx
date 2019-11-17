@@ -1,19 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import GoogleButton from "react-google-button";
 
-export class Login extends Component {
+const Login = (props) => {
 
-  render() {
-    return (
-      <div className="d-flex align-content-center align-items-center w-100 h-100 text-center">
-        <div className="mx-auto">
-          <GoogleButton
-            onClick={this.props.onSignIn}
-          />
-        </div>
+  return (
+    <div className="d-flex align-content-center align-items-center w-100 h-100 text-center">
+      <div className="mx-auto">
+        <GoogleButton
+          onClick={props.onSignIn}
+        />
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Login;

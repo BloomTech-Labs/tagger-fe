@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { useState, useEffect } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import MessageRow from "./message-row/MessageRow";
 
@@ -16,58 +16,45 @@ const ViewMode = {
   EDIT: 3
 };
 
-export class MessageList extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      viewMode: ViewMode.LIST,
-      contentMessageId: undefined,
-      currentLabel: ""
-    };
-
-    this.onSelectionChange = this.onSelectionChange.bind(this);
-    this.renderView = this.renderView.bind(this);
-    this.renderMessages = this.renderMessages.bind(this);
-  }
-
-  componentDidMount() {
-    const searchParam = this.props.location.search;
+const MessageList = (props) => {
+  const [viewMode, setViewMode] = useState(ViewMode.LIST);
+  const [contentMessageId, setContentMessageId] = useState(undefined);
+  const [currentLabel, setCurrentLabel] = useState("");
+  
+  useEffect(() => {
+    const searchParam = props.location.search;
     const token = searchParam.indexOf("?") === 0 ? searchParam.slice(1) : null;
 
-    if (token && this.props.messagesResult.pageTokens.length === 0) {
-      this.props.addInitialPageToken(token);
+    if (token && props.messagesResult.pageTokens.length === 0) {
+      props.addInitialPageToken(token);
     }
 
-    const labelIds = this.props.searchQuery === "" ? [this.props.parentLabel.id] : undefined;
+    const labelIds = props.searchQuery === "" ? [props.parentLabel.id] : undefined;
 
-    this.props.getLabelMessages({
+    props.getLabelMessages({
       ...labelIds && {labelIds},
       pageToken: token
     });
-  }
+  }, [])
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.location.search !== this.props.location.search) {
-      const searchParam = this.props.location.search;
-      const token = searchParam.indexOf("?") === 0 ? searchParam.slice(1) : null;
+  useEffect(() => {
+    const searchParam = props.location.search;
+    const token = searchParam.indexOf("?") === 0 ? searchParam.slice(1) : null;
 
-      const labelIds = this.props.searchQuery === "" ? [this.props.parentLabel.id] : undefined;
+    const labelIds = props.searchQuery === "" ? [props.parentLabel.id] : undefined;
 
-      this.props.getLabelMessages({
-        ...labelIds && {labelIds},
-        pageToken: token
-      });
-    }
-  }
+    props.getLabelMessages({
+      ...labelIds && {labelIds},
+      pageToken: token
+    });
+  }, [props.location.search])
 
 
-  onSelectionChange(selected, msgId) {
-    this.props.toggleSelected([msgId], selected);
+  const onSelectionChange = (selected, msgId) => {
+    props.toggleSelected([msgId], selected);
   }
   
-
-  renderSpinner() {
+  const renderSpinner = () => {
     return (
       <div className="d-flex h-100 justify-content-center align-items-center  ">
         <FontAwesomeIcon icon={faSpinner} spin size="5x" />
@@ -75,10 +62,10 @@ export class MessageList extends PureComponent {
     );
   }
 
-  renderMessages() {
-    if (this.props.messagesResult.loading) {
-      return this.renderSpinner();
-    } else if (this.props.messagesResult.messages.length === 0) {
+  const renderMessages = () => {
+    if (props.messagesResult.loading) {
+      return renderSpinner();
+    } else if (props.messagesResult.messages.length === 0) {
       return (
         <div className="p-4 text-center">
           There are no messages with this label.
@@ -86,37 +73,35 @@ export class MessageList extends PureComponent {
       );
     }
 
-    return this.props.messagesResult.messages.map(el => {
+    return props.messagesResult.messages.map(el => {
       return (
         <MessageRow
           data={el}
           key={el.id}
-          onSelectionChange={this.onSelectionChange}
-          onClick={this.getMessage}
+          onSelectionChange={onSelectionChange}
+          onClick={props.getMessage}
         />
       );
     });
   }
 
 
-  renderView() {
-    const { viewMode } = this.state;
-
+  const renderView = () => {
     switch (viewMode) {
 
       case ViewMode.EDIT:
-        return this.renderEditView();
+        return props.renderEditView();
 
       default:
-        return this.renderMessages();
+        return renderMessages();
     }
   }
 
-  getPageTokens() {
-    if (this.props.messagesResult.loading) {
+  const getPageTokens = () => {
+    if (props.messagesResult.loading) {
       return { nextToken: null, prevToken: null }
     }
-    const { messagesResult, location } = this.props;
+    const { messagesResult, location } = props;
     const pathname = location.pathname;
     let prevToken;
     let nextToken = messagesResult.nextPageToken;
@@ -141,25 +126,24 @@ export class MessageList extends PureComponent {
     return { nextToken, prevToken };
   }
 
-  render() {
-    const { messagesResult } = this.props;
-    const messagesTotal = messagesResult.label ? messagesResult.label.result.messagesTotal : 0;
-    const { nextToken, prevToken } = this.getPageTokens();    
-    return (
-      <React.Fragment>
-        <ListToolbar
-          nextToken={nextToken}
-          prevToken={prevToken}
-          navigateToNextPage={this.props.navigateToNextPage}
-          navigateToPrevPage={this.props.navigateToPrevPage}
-        />
-        <PerfectScrollbar className="container-fluid no-gutters px-0 message-list-container">
-          {this.renderView()}
-        </PerfectScrollbar>
-        <ListFooter messagesTotal={messagesTotal} />
-      </React.Fragment>
-    );
-  }  
+  const { messagesResult } = props;
+  const messagesTotal = messagesResult.label ? messagesResult.label.result.messagesTotal : 0;
+  const { nextToken, prevToken } = getPageTokens();
+
+  return (
+    <React.Fragment>
+      <ListToolbar
+        nextToken={nextToken}
+        prevToken={prevToken}
+        navigateToNextPage={props.navigateToNextPage}
+        navigateToPrevPage={props.navigateToPrevPage}
+      />
+      <PerfectScrollbar className="container-fluid no-gutters px-0 message-list-container">
+        {renderView()}
+      </PerfectScrollbar>
+      <ListFooter messagesTotal={messagesTotal} />
+    </React.Fragment>
+  );
 }
 
 export default MessageList;
