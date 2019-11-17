@@ -10,6 +10,7 @@
     "moment": "^2.24.0",
     "node-sass": "^4.9.4",
     "react": "^16.10.2",
+    "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.10.2",
     "react-google-button": "^0.5.3",
     "react-perfect-scrollbar": "^1.5.3",
