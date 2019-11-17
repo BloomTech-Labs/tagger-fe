@@ -1,20 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 import GoogleButton from "react-google-button";
 
-export class Authenticating extends Component {
+const Authenticating = () => {
 
-  render() {
-    return (
-      <div className="d-flex align-content-center align-items-center w-100 h-100 text-center">
-        <div className="mx-auto">
-          <GoogleButton
-            label='Signing in...'
-            disabled
-          />
-        </div>
+  return (
+    <div className="d-flex align-content-center align-items-center w-100 h-100 text-center">
+      <div className="mx-auto">
+        <GoogleButton
+          label='Signing in...'
+          disabled
+        />
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Authenticating;

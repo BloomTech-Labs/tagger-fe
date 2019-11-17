@@ -1,5 +1,3 @@
-
-
 export const getBody = (message, mimeType) => {
   let encodedBody = "";
   if (typeof message.parts === "undefined") {

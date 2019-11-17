@@ -8,8 +8,8 @@
 
 .compose-dialog {
   height: 100%;
-  > .modal-content {
-    height: 80%;
+    .modal-content {
+    height: 80vh;
     .editor-wrapper {
       position: absolute;
       left: 0;
@@ -44,7 +44,7 @@
         }
         &:placeholder-shown {
           font-style: italic;
-          font-size: 11px;
+          font-size: 12px;
         }
         &:focus {
           outline: none;

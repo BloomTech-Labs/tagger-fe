@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { useState } from "react";
 import Checkbox from "../../../common/Checkbox";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -9,90 +9,74 @@ import {
 import Pager from "../pager-buttons/PagerButtons";
 import ListActionButtons from "./ListActionButtons";
 
-export class MessageToolbar extends PureComponent {
-  constructor(props) {
-    super(props);
+const MessageToolbar = (props) => {
+  const [selectedMessageIds, setSelectedMessageIds] = useState([]);
 
-    this.onSelectionChange = this.onSelectionChange.bind(this);
-    this.navigateToNextPage = this.navigateToNextPage.bind(this);
-    this.navigateToPrevPage = this.navigateToPrevPage.bind(this);
-    this.modifyMessages = this.modifyMessages.bind(this);
-
-    this.state = {
-      selectedMessageIds: []
-    };
-  }
-
-  onSelectionChange(evt) {
+  const onSelectionChange = (evt) => {
     const checked = evt.target.checked;
 
-    const messageIds = this.props.messagesResult.messages.reduce((acc, el) => {
+    const messageIds = props.messagesResult.messages.reduce((acc, el) => {
       acc.push(el.id);
       return acc;
     }, []);
 
-    this.setState({
-      selectedMessageIds: messageIds
-    });
+    setSelectedMessageIds(messageIds);
 
-    this.props.toggleSelected(messageIds, checked);
+    props.toggleSelected(messageIds, checked);
   }
 
-  navigateToNextPage() {
-    this.props.navigateToNextPage(this.props.nextToken);
+  const navigateToNextPage = () => {
+    props.navigateToNextPage(props.nextToken);
   }
 
-  navigateToPrevPage() {
-    this.props.navigateToPrevPage(this.props.prevToken);
+  const navigateToPrevPage = () => {
+    props.navigateToPrevPage(props.prevToken);
   }
 
-  modifyMessages(addLabelIds, removeLabelIds) {
-    const ids = this.props.messagesResult.messages.filter(el => el.selected).map(el => el.id);
+  const modifyMessages = (addLabelIds, removeLabelIds) => {
+    const ids = props.messagesResult.messages.filter(el => el.selected).map(el => el.id);
     const actionParams = {
       ...addLabelIds && {addLabelIds},
       ...removeLabelIds && {removeLabelIds}
     };
-    this.props.modifyMessages({ ids, ...actionParams});
+    props.modifyMessages({ ids, ...actionParams});
   }
 
-  render() {
+  let checked = false;
+  let selectedMessages = [];
 
-    let checked = false;
-    let selectedMessages = [];
+  if (props.messagesResult) {
+    selectedMessages = props.messagesResult.messages.filter(el => el.selected);
+    checked = props.messagesResult.messages.length > 0 &&  selectedMessages.length === props.messagesResult.messages.length;
+  }
 
-    if (this.props.messagesResult) {
-      selectedMessages = this.props.messagesResult.messages.filter(el => el.selected);
-      checked = this.props.messagesResult.messages.length > 0 &&  selectedMessages.length === this.props.messagesResult.messages.length;
-    }
+  return (
+    <div className="msg-toolbar">
+      <div className="pl-2 py-2 pr-4 d-flex align-items-center bd-highlight ">
+        <div className="d-flex align-content-center align-items-center">
+          <div>
+            <Checkbox checked={checked} onChange={onSelectionChange} />
+          </div>
+          <div />
 
-    return (
-      <div className="msg-toolbar">
-        <div className="pl-2 py-2 pr-4 d-flex align-items-center bd-highlight ">
-          <div className="d-flex align-content-center align-items-center">
+          <div className="ml-auto p-2 bd-highlight">
             <div>
-              <Checkbox checked={checked} onChange={this.onSelectionChange} />
-            </div>
-            <div />
-
-            <div className="ml-auto p-2 bd-highlight">
-              <div>
-                {selectedMessages.length ? (
-                  <ListActionButtons onClick={this.modifyMessages} />
-                ) : null}
-              </div>
+              {selectedMessages.length ? (
+                <ListActionButtons onClick={modifyMessages} />
+              ) : null}
             </div>
           </div>
-
-          <Pager
-            nextToken={this.props.nextToken}
-            prevToken={this.props.prevToken}
-            navigateToPrevPage={this.navigateToPrevPage}
-            navigateToNextPage={this.navigateToNextPage}
-          />
         </div>
+
+        <Pager
+          nextToken={props.nextToken}
+          prevToken={props.prevToken}
+          navigateToPrevPage={navigateToPrevPage}
+          navigateToNextPage={navigateToNextPage}
+        />
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 const mapStateToProps = state => ({

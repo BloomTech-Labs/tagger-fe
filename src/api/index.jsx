@@ -1,5 +1,5 @@
 import { MAX_RESULTS } from "../constants";
-import {getBody, isHTML} from './utils';
+import { getBody, isHTML } from './utils';
 
 const getLabelDetailPromise = async (labelId) => {
   return await window.gapi.client.gmail.users.labels.get({
