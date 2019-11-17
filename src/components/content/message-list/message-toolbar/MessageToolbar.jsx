@@ -10,7 +10,7 @@ const MessageToolbar = (props) => {
 
   const getClickHandler = (action) => {
     return evt => {
-      this.props.onClick(action);
+      props.onClick(action);
     };
   }
 

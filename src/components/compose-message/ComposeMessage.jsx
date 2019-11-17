@@ -1,17 +1,14 @@
-import React, { PureComponent } from "react";
+import React, { useReducer, useEffect } from "react";
 import { sendMessage } from "../../api";
 import { getValidEmails } from "../../utils";
 
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  InputGroup,
-  InputGroupAddon,
-  Input
-} from "reactstrap";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import ModalHeader from 'react-bootstrap/ModalHeader';
+import ModalBody from 'react-bootstrap/ModalBody';
+import ModalFooter from 'react-bootstrap/ModalFooter';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -20,169 +17,171 @@ import ReactQuill from "react-quill";
 import "../../../node_modules/react-quill/dist/quill.snow.css";
 import "./composeMessage.scss";
 
-export class Compose extends PureComponent {
-  constructor(props) {
-    super(props);
+const Compose = (props) => {
+  const [state, setState] = useReducer((state, newState) => (
+    {...state, ...newState}
+  ));
 
-    this.state = {
-      displayModal: false,
-      to: props.to || "",
-      cc: props.cc || "",
-      bcc: props.bcc || "",
-      subject: props.subject || "",
-      content: props.content || ""
-    };
-
-    this.showModal = this.showModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.sendEmail = this.sendEmail.bind(this);
-    this.setField = this.setField.bind(this);
-  }
-
-  showModal() {
-    this.setState({
+  const showModal = () => {
+    setState({
       displayModal: true
     });
   }
 
-  closeModal() {
-    this.setState({
+  const closeModal = () => {
+    setState({
       displayModal: false
     });
   }
 
-  handleChange(value) {
-    this.setState({ content: value });
+  const handleChange = (value) => {
+    setState({ content: value });
   }
 
-  sendEmail() {
-    const validTo = getValidEmails(this.state.to);
+  const sendEmail = () => {
+    const validTo = getValidEmails(state.to);
 
     if (
       !validTo.length ||
-      this.state.subject.trim() === "" ||
-      this.state.content === ""
+      state.subject.trim() === "" ||
+      state.content === ""
     ) {
       return;
     }
 
     const headers = {
       To: validTo.join(", "),
-      Subject: this.state.subject
+      Subject: state.subject
     };
 
-    const validCc = getValidEmails(this.state.cc);
+    const validCc = getValidEmails(state.cc);
     if (validCc.length) {
       headers.Cc = validCc.join(", ");
     }
 
-    const validBcc = getValidEmails(this.state.bcc);
+    const validBcc = getValidEmails(state.bcc);
     if (validBcc.length) {
       headers.Bcc = validBcc.join(", ");
     }
 
     sendMessage({
       headers,
-      body: this.state.content
+      body: state.content
     }).then(_ => {      
-      this.closeModal();
-      this.resetFields();
+      closeModal();
+      resetFields();
     });
 
-    this.closeModal();
+    closeModal();
   }
 
-  resetFields() {
-    this.setState({
-      to: this.props.to || "",
-      cc: this.props.cc || "",
-      bcc: this.props.bcc || "",
-      subject: this.props.subject || "",
-      content: this.props.content || ""
+  const resetFields = () => {
+    setState({
+      to: props.to || "",
+      cc: props.cc || "",
+      bcc: props.bcc || "",
+      subject: props.subject || "",
+      content: props.content || ""
     });
   }
 
-  setField(field, trimValue = true) {
+  const setField = (field, trimValue = true) => {
     return evt => {
-      this.setState({
+      setState({
         [field]: trimValue ? evt.target.value.trim() : evt.target.value 
       });
     };
   }
 
-  isInvalid(field) {
-    const fieldValue = this.state[field].trim();
+  const isInvalid = (field) => {
+    const fieldValue = state[field].trim();
     return fieldValue.length > 0 && !getValidEmails(fieldValue).length;
   }
 
-  
-  render() {
-    return (
-      <React.Fragment>
-        {
-          React.cloneElement(this.props.children, {
-            onClick: this.showModal
-          })
-        }
-        {this.state.displayModal ? (
+  useEffect(() => {
+    setState({
+      displayModal: false,
+      to: props.to || "",
+      cc: props.cc || "",
+      bcc: props.bcc || "",
+      subject: props.subject || "",
+      content: props.content || ""
+    })
+  }, []);
+
+  return (
+    <React.Fragment>
+      {
+        React.cloneElement(props.children, {
+          onClick: showModal
+        })
+      }
+      {state && state.displayModal ? (
           <Modal
-            isOpen={this.state.displayModal}
+            show={state.displayModal}
             className="compose-dialog"
             size="lg"
-            onOpened={this.onModalOpened}
+            onHide={closeModal}
             backdrop="static"
             centered={true}
           >
-            <ModalHeader toggle={this.closeModal}>Compose Message</ModalHeader>
+            <ModalHeader closeButton>
+              <Modal.Title>Compose Message</Modal.Title>
+            </ModalHeader>
             <ModalBody>
               <div className="message-fields">
                 <InputGroup>
-                  <InputGroupAddon addonType="prepend">To:</InputGroupAddon>
-                  <Input
+                  <InputGroup.Prepend>
+                    <InputGroup.Text>To:</InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl
                     tabIndex={1}
-                    value={this.state.to}
+                    value={state.to}
                     placeholder="comma-separated email list"
-                    invalid={this.isInvalid("to")}
-                    onChange={this.setField("to")}
+                    isInvalid={isInvalid("to")}
+                    onChange={setField("to")}
                   />
                 </InputGroup>
                 <InputGroup>
-                  <InputGroupAddon addonType="prepend">Cc:</InputGroupAddon>
-                  <Input
+                  <InputGroup.Prepend>
+                    <InputGroup.Text>Cc:</InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl
                     tabIndex={2}
-                    value={this.state.cc}
+                    value={state.cc}
                     placeholder="comma-separated email list"
-                    invalid={this.isInvalid("cc")}
-                    onChange={this.setField("cc")}
+                    isInvalid={isInvalid("cc")}
+                    onChange={setField("cc")}
                   />
                 </InputGroup>
                 <InputGroup>
-                  <InputGroupAddon addonType="prepend">Bcc:</InputGroupAddon>
-                  <Input
+                  <InputGroup.Prepend>
+                    <InputGroup.Text>Bcc:</InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl
                     tabIndex={3}
                     placeholder="comma-separated email list"
-                    invalid={this.isInvalid("bcc")}
-                    onChange={this.setField("bcc")}
+                    isInvalid={isInvalid("bcc")}
+                    onChange={setField("bcc")}
                   />
                 </InputGroup>
                 <InputGroup>
-                  <InputGroupAddon addonType="prepend">
-                    Subject:
-                  </InputGroupAddon>
-                  <Input
+                  <InputGroup.Prepend>
+                    <InputGroup.Text>Subject:</InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl
                     tabIndex={4}
                     placeholder=""
-                    value={this.state.subject}
-                    onChange={this.setField("subject", false)}
+                    value={state.subject}
+                    onChange={setField("subject", false)}
                   />
                 </InputGroup>
               </div>
               <div className="editor-wrapper">
                 <ReactQuill
                   tabIndex={5}
-                  value={this.state.content}
-                  onChange={this.handleChange}
+                  value={state.content}
+                  onChange={handleChange}
                 />
               </div>
             </ModalBody>
@@ -191,20 +190,18 @@ export class Compose extends PureComponent {
                 className="mr-auto font-weight-bold"
                 size="lg"
                 color="primary"
-                onClick={this.sendEmail}
-                title="Send message"
+                onClick={sendEmail}
               >
                 Send
               </Button>{" "}
-              <Button title="Discard" color="light" onClick={this.closeModal}>
+              <Button variant="light" onClick={closeModal}>
                 <FontAwesomeIcon icon={faTrash} />
               </Button>
             </ModalFooter>
           </Modal>
         ) : null}
-      </React.Fragment>
-    );
-  }
+    </React.Fragment>
+  );
 }
 
 export default Compose;
