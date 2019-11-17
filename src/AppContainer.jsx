@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect, withRouter } from "react-router-dom";
 import Main from "./components/main/Main";
 import Login from "./components/login/Login";
@@ -16,80 +16,59 @@ import {
   AUTH_IN_PROGRESS
 } from "./constants";
 
-export class AppContainer extends Component {
+const AppContainer = (props) => {
+  const [signInStatus, setSignInStatus] = useState(SIGNED_OUT);
+  const [googleUser, setGoogleUser] = useState(undefined);
 
-  constructor(props) {
-    super(props);
+  useEffect(() => {
+    mountScripts().then(init);
+  }, [])
 
-    this.state = {
-      signInStatus: SIGNED_OUT,
-      googleUser: undefined
-    }
-
-    this.init = this.init.bind(this);
-    this.initClient = this.initClient.bind(this);
-    this.onSignout = this.onSignout.bind(this);
-    this.onSignInSuccess = this.onSignInSuccess.bind(this);
-    this.onSignIn = this.onSignIn.bind(this);
+  const init = () => {
+    window.gapi.load("client:auth2", initClient);
   }
 
-  componentDidMount() {
-    mountScripts().then(this.init);
-  }
-
-  init() {
-    window.gapi.load("client:auth2", this.initClient);
-  }
-
-  initClient() {
+  const initClient = () => {
     checkSignInStatus()
-    .then(this.onSignInSuccess)
+    .then(onSignInSuccess)
     .catch(_ => {
-      this.setState({
-        signInStatus: AUTH_FAIL
-      })
+      setSignInStatus(AUTH_FAIL)
     });
   }
 
-  onSignout() {
-    this.props.signOut();
+  const onSignout = () => {
+    props.signOut();
   }
 
-  onSignIn() {
-    signIn().then(this.onSignInSuccess);
+  const onSignIn = () => {
+    signIn().then(onSignInSuccess);
   }
 
-  onSignInSuccess(googleUser) {
-    this.setState({
-      signInStatus: AUTH_SUCCESS,
-      googleUser
-    });
+  const onSignInSuccess = (googleUser) => {
+    setSignInStatus(AUTH_SUCCESS);
+    setGoogleUser(googleUser);
   }
 
-  renderView() {
-
-    const { signInStatus } = this.state;
+  const renderView = () => {
 
     if (signInStatus === AUTH_SUCCESS) {
-      return <Main googleUser={this.state.googleUser} />;
+      return <Main googleUser={googleUser} />;
     } else if (signInStatus === AUTH_IN_PROGRESS) {
       return <Authenticating />;
     } else {
-      return <Login onSignIn={this.onSignIn} />;
+      return <Login onSignIn={onSignIn} />;
     }
   }
 
-  render() {
-    return (
-      <React.Fragment>
-        {this.props.location.pathname === "/" ? (
-          <Redirect to="/inbox" />
-        ) : (
-          this.renderView()
-        )}
-      </React.Fragment>
-    );
-  }
+  return (
+    <React.Fragment>
+      {props.location.pathname === "/" ? (
+        <Redirect to="/inbox" />
+      ) : (
+        renderView()
+      )}
+    </React.Fragment>
+  );
 }
 
 export default withRouter(AppContainer);

@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { useEffect, useState } from "react";
 
 import ComposeMessage from "../compose-message/ComposeMessage";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -18,30 +18,19 @@ import LabelItem from "./LabelItem";
 
 import "./sidebar.scss";
 
-export class Sidebar extends PureComponent {
-  constructor(props) {
-    super(props);
+const Sidebar = (props) => {
+  const [selectedLabel, setSelectedLabel] = useState();
+  
+  useEffect(() => {
+    setSelectedLabel(props.pathname)
+  }, [props.pathname])
 
-    this.state = {
-      selectedLabel: props.pathname
-    };
-
-    //this.renderLabels = this.renderLabels.bind(this);
-    this.navigateToList = this.navigateToList.bind(this);
+  const navigateToList = (evt, labelId) => {
+    const label = props.labelsResult.labels.find(el => el.id === labelId);
+    props.onLabelClick(label || { id: "" });
   }
 
-  componentDidMount() {
-    //this.props.getLabelList(); //.then(labels => {});
-    /*  */
-    //this.props.getLabelMessages();
-  }
-
-  navigateToList(evt, labelId) {
-    const label = this.props.labelsResult.labels.find(el => el.id === labelId);
-    this.props.onLabelClick(label || { id: "" });
-  }
-
-  renderItems(labelList) {
+  const renderItems = (labelList) => {
     if (labelList.length === 0) {
       return <div />;
     }
@@ -63,13 +52,13 @@ export class Sidebar extends PureComponent {
 
     return (
       <React.Fragment>
-        {this.renderFolders(labelGroups.system)}
-        {this.renderLabels(sortedLabels)}
+        {renderFolders(labelGroups.system)}
+        {renderLabels(sortedLabels)}
       </React.Fragment>
     );
   }
 
-  renderFolders(labels) {
+  const renderFolders = (labels) => {
     const inboxLabel = {
       ...labels.find(el => el.id === "INBOX"),
       name: "Inbox",
@@ -105,7 +94,7 @@ export class Sidebar extends PureComponent {
           return (
             <LabelItem
               key={el.id + "_label"}
-              onClick={this.navigateToList}
+              onClick={navigateToList}
               name={el.name}
               id={el.id}
               messagesUnread={el.messagesUnread}
@@ -118,7 +107,7 @@ export class Sidebar extends PureComponent {
     );
   }
 
-  renderLabels(labels) {
+  const renderLabels = (labels) => {
     return (
       <React.Fragment>
         <li key="olders-nav-title" className="pl-2 nav-title">
@@ -133,7 +122,7 @@ export class Sidebar extends PureComponent {
           return (
             <LabelItem
               key={el.id + "_label"}
-              onClick={this.navigateToList}
+              onClick={navigateToList}
               name={el.name}
               id={el.id}
               messagesUnread={el.messagesUnread}
@@ -146,30 +135,28 @@ export class Sidebar extends PureComponent {
     );
   }
 
-  render() {
-    return (
-      <nav className="d-flex flex-column text-truncate left-panel">
-        <div className="compose-panel">
-          <div className="d-flex justify-content-center p-2 compose-btn">
-            <ComposeMessage
-              subject=""
-              to=""
-            >
-              <button className="btn btn-dark align-self-center w-75 font-weight-bold">
-                Compose
-              </button>
-            </ComposeMessage>
-          </div>
+  return (
+    <nav className="d-flex flex-column text-truncate left-panel">
+      <div className="compose-panel">
+        <div className="d-flex justify-content-center p-2 compose-btn">
+          <ComposeMessage
+            subject=""
+            to=""
+          >
+            <button className="btn btn-dark align-self-center w-75 font-weight-bold">
+              Compose
+            </button>
+          </ComposeMessage>
         </div>
-        <PerfectScrollbar
-          component="ul"
-          className="d-flex flex-column border-0 m-0 sidebar"
-        >
-          {this.renderItems(this.props.labelsResult.labels)}
-        </PerfectScrollbar>
-      </nav>
-    );
-  }
+      </div>
+      <PerfectScrollbar
+        component="ul"
+        className="d-flex flex-column border-0 m-0 sidebar"
+      >
+        {renderItems(props.labelsResult.labels)}
+      </PerfectScrollbar>
+    </nav>
+  );
 }
 
 export default Sidebar;

@@ -1,43 +1,34 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export class LabelItem extends PureComponent {
+const LabelItem = (props) => {
 
-  constructor(props) {
-    super(props);
-
-    this.onClick = this.onClick.bind(this);
-
+  const onClick = (evt) => {
+    props.onClick(evt, props.id);
   }
 
-  onClick(evt) {
-    this.props.onClick(evt, this.props.id);
-  }
+  const { name, messagesUnread } = props;
+  const iconProps = props.iconProps;
 
-  render() {
-    const {name, messagesUnread} = this.props;
-    const iconProps = this.props.iconProps;
+  let selected = props.selected ? " selected" : "";
 
-    let selected = this.props.selected ? " selected" : "";
+  const messagesUnreadLocale = messagesUnread.toLocaleString();
+  return (
+    <li
+      className={`text-truncate text-left text-dark pl-4 pr-5 py-2 border-0 ${selected}`}
+      title={
+        name + (messagesUnread > 0 ? ` (${messagesUnreadLocale})` : "")
+      }
+      onClick={onClick}
+    >
+      <FontAwesomeIcon size="sm" {...iconProps} />
+      {name}
 
-    const messagesUnreadLocale = messagesUnread.toLocaleString();
-    return (
-      <li
-        className={`text-truncate text-left text-dark pl-4 pr-5 py-2 border-0 ${selected}`}
-        title={
-          name + (messagesUnread > 0 ? ` (${messagesUnreadLocale})` : "")
-        }
-        onClick={this.onClick}
-      >
-        <FontAwesomeIcon size="sm" {...iconProps} />
-        {name}
-
-        {messagesUnread > 0 ? (
-          <div className={"msg-count"}>{messagesUnreadLocale}</div>
-        ) : null}
-      </li>
-    );
-  }
+      {messagesUnread > 0 ? (
+        <div className={"msg-count"}>{messagesUnreadLocale}</div>
+      ) : null}
+    </li>
+  );
 }
 
 export default LabelItem;
