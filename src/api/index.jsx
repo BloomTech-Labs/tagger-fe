@@ -101,7 +101,13 @@ const getMessageHeader = async (id) => {
           // for more headers
         ]
       });
-      return messages.result;
+      //These five lines will print the name & email address of every message rendering in the user's inbox. Useful for a user's list of contacts.
+      // Object.values(messages.result.payload.headers).forEach(i => {
+      //   if (i.name === "From") {
+      //     console.log(Object.values(i)[1]);
+      //   }
+      // }) 
+      // return messages.result;
 };
 
 export const getMessage = async(messageId) => {  
