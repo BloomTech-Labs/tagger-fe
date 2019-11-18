@@ -1,0 +1,25 @@
+.contact-list {
+    width: 30%;
+    margin: 0 1% 0 .5%;
+}
+
+.user-card {
+    margin: 0.8% 0 0.8% 0;
+    border-radius: 5px;
+    background: lightgray;
+    box-shadow: .3px .3px #888888;
+    display: flex;
+    height: 120px;
+}
+
+.user-card img {
+    margin: 5% 5%;
+    width: 15%;
+    height: 15%;
+}
+
+.user-text-container {
+display: flex;
+flex-direction: column;
+margin: 5% 0 10% 0;
+}
