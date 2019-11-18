@@ -107,7 +107,7 @@ const getMessageHeader = async (id) => {
       //     console.log(Object.values(i)[1]);
       //   }
       // }) 
-      // return messages.result;
+      return messages.result;
 };
 
 export const getMessage = async(messageId) => {  
