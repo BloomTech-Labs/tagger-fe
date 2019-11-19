@@ -82,7 +82,7 @@ const Main = (props) => {
       props.setSearchQuery("");
       const {pathname} = props.location;
       if (newPathToPush === pathname) {
-        getLabelMessages({labelIds: [label.id] });
+        getLabelMessages({ labelIds: [label.id] });
         return;
       }
     }

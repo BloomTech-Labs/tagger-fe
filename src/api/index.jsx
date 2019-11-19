@@ -1,6 +1,18 @@
 import { MAX_RESULTS } from "../constants";
 import { getBody, isHTML } from './utils';
 
+export const getContactList = async () => {
+  const gapi = window.gapi;
+  gapi.client.load('people', 'v1', () => {
+    gapi.client.people.people.connections.list({
+      'resourceName': 'people/me',
+      'pageSize': 10,
+      'personFields': 'names,emailAddresses',
+    })
+    .then(res => console.log(res.result.connections));
+  })
+}
+
 const getLabelDetailPromise = async (labelId) => {
   return await window.gapi.client.gmail.users.labels.get({
       userId: "me",

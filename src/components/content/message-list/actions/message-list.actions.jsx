@@ -1,6 +1,7 @@
 import { getMessageList } from "../../../../api";
 import { getMessage } from "../../../../api";
 import { batchModify } from "../../../../api";
+import { getContactList } from "../../../../api";
 import { selectLabel } from "../../../sidebar/sidebar.actions";
 
 export const GET_MESSAGES = "GET_MESSAGES";
@@ -31,6 +32,9 @@ export const getLabelMessages = ({
   if (searchQuery !== "") {
     dispatch(selectLabel("-1"));
   }
+
+  // logs list of contacts associated with Google account, to be used in the future
+  getContactList();
 
   getMessageList({ labelIds, maxResults: 20, q: searchQuery, pageToken }).then(response => {
     dispatch({
