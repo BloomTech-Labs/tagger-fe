@@ -4,6 +4,7 @@ import { bindActionCreators, compose } from "redux";
 import Header from "../header/Header";
 import Sidebar from "../sidebar/Sidebar";
 import NotFound from "../not-found/NotFound";
+import ContactList from '../contact-list/ContactList'
 
 import MessageList from "../content/message-list/MessageList";
 import MessageContent from "../content/message-list/message-content/MessageContent";
@@ -168,6 +169,14 @@ const Main = (props) => {
             labelsResult={props.labelsResult}
             onLabelClick={loadLabelMessages}
           />
+
+          {/* Here's where the Contact List will go. Component and will it render?*/}
+      {/* <div className="new-div">
+      </div> */}
+
+      <ContactList>
+        </ContactList>
+
           <article className="d-flex flex-column position-relative">
             <Switch>
               {renderLabelRoutes(props)}
