@@ -1,6 +1,6 @@
 .contact-list-container {
     width: 20%;
-    margin: 0 1% 0 .5%;
+    margin: 0 0.5%;
 }
 
 .user-card {
@@ -10,6 +10,12 @@
     box-shadow: .3px .3px #888888;
     display: flex;
     height: 120px;
+    overflow-y: hidden;
+    padding: 0.5rem;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .user-card img {
