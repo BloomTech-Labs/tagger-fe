@@ -21,10 +21,25 @@ const ContactList = (props) => {
         props.getUserContacts();
     }
 
+    const handleContactSearch = (evt) => {
+        console.log(evt.currentTarget);
+        props.setSearchQuery(evt.currentTarget.value);  
+        performSearch();
+      }
+    
+      const performSearch = () => {
+        const searchParams = {}
+        if (!props.searchQuery || props.searchQuery === "") {
+          searchParams.labelIds = ["INBOX"];
+        }
+        props.getLabelMessages({...searchParams})
+      };
+
     return (
         <PerfectScrollbar className="contact-list-container">
             {props.contactsResult.contacts.map(contact => {
                 return (
+                    <button onClick={handleContactSearch} value={contact.names[0].displayName}>
                     <div key={contact.etag} className="user-card">
                         <img alt={`${contact.names[0].displayName}'s profile`}></img>
                         <div className="user-text-container">
@@ -32,6 +47,7 @@ const ContactList = (props) => {
                             <p>Hi Erin, we'll be meeting on Friday to discuss the proposal...</p>
                         </div>
                     </div>
+                    </button>
                 )
             })}
         </PerfectScrollbar>

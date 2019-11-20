@@ -174,7 +174,11 @@ const Main = (props) => {
       {/* <div className="new-div">
       </div> */}
 
-      <ContactList>
+      <ContactList
+            searchQuery={props.searchQuery}
+            setSearchQuery={props.setSearchQuery}
+            getLabelMessages={getLabelMessages} 
+      >
         </ContactList>
 
           <article className="d-flex flex-column position-relative">
