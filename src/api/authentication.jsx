@@ -10,7 +10,8 @@ export const initGmailClient = (apiKey, clientId) => {
 
   // Array of API discovery doc URLs for APIs
   const DISCOVERY_DOCS = [
-    "https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"
+    "https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest",
+    "https://people.googleapis.com/$discovery/rest?version=v1"
   ];
 
   // Authorization scopes required by the API; multiple scopes can be
