@@ -9,8 +9,6 @@ import { getUserContacts } from "../contact-list/actions/contact-list.actions";
 
 import "./contact-list.scss";
 
-//Have to add this component below a scrollbar region like the sidebar and messageList
-
 const ContactList = (props) => {
 
     useEffect(() => {
@@ -21,9 +19,8 @@ const ContactList = (props) => {
         props.getUserContacts();
     }
 
-    const handleContactSearch = (name) => {
-        console.log(name);
-        props.setSearchQuery(name);  
+    const handleContactSearch = (email) => {
+        props.setSearchQuery(`from:${email}`);  
         performSearch();
       }
     
@@ -42,7 +39,7 @@ const ContactList = (props) => {
                     <div
                         key={contact.etag}
                         className="user-card"
-                        onClick={() => handleContactSearch(contact.names[0].displayName)}
+                        onClick={() => handleContactSearch(contact.emailAddresses[0].value)}
                     >
                         <img alt={`${contact.names[0].displayName}`}></img>
                         <div className="user-text-container">
