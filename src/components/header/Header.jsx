@@ -6,6 +6,8 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import debounce from "lodash/debounce";
 
+import TagsList from "./tags-list/TagsList";
+
 const Header = (props) => {
 
   const handleSearchClick = (evt) => {
@@ -33,40 +35,45 @@ const Header = (props) => {
   const picUrl = userInfo.Paa;
 
   return (
-    <header className="d-flex p-3 align-content-center align-items-center header">
-      <div className="header-logo justify-content-center">
-        <Link to="/inbox">REACT GMAIL CLIENT</Link>
-      </div>
-
-      <div className="header-search">
-        <div className="input-group w-75 ml-1 mr-auto">
-          <input
-            type="search"
-            className="form-control border-light"
-            placeholder="Search mail"
-            value={props.searchQuery}
-            onChange={handleInputChange}
-          />
-          <div className="input-group-append" onClick={handleSearchClick}>
-            <button
-              className="btn btn-light btn-outline-light bg-white text-dark"
-              type="button"
-            >
-              <FontAwesomeIcon icon={faSearch} />
-            </button>
+    <div className="header-container">
+      <header className="d-flex p-3 align-content-center align-items-center header">
+        <div className="header-logo justify-content-center">
+          <Link to="/inbox">Tagger</Link>
+        </div>
+  
+        <div className="header-search">
+          <div className="input-group w-75 ml-1 mr-auto">
+            <input
+              type="search"
+              className="form-control border-light"
+              placeholder="Search mail"
+              value={props.searchQuery}
+              onChange={handleInputChange}
+            />
+            <div className="input-group-append" onClick={handleSearchClick}>
+              <button
+                className="btn btn-light btn-outline-light bg-white text-dark"
+                type="button"
+              >
+                <FontAwesomeIcon icon={faSearch} />
+              </button>
+            </div>
+          </div>
+          <div>
+            <span className="user-name" title={email}>
+              {fullName}
+            </span>
+  
+            <img className="mx-2 profile-pic" src={picUrl} alt="" />
           </div>
         </div>
-        <div>
-          <span className="user-name" title={email}>
-            {fullName}
-          </span>
-
-          <img className="mx-2 profile-pic" src={picUrl} alt="" />
-        </div>
+  
+        <Signout onSignout={props.onSignout} />
+      </header>
+      <div className="header">
+        <TagsList />
       </div>
-
-      <Signout onSignout={props.onSignout} />
-    </header>
+    </div>
   );
 }
 
