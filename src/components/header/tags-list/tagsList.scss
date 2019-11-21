@@ -1,0 +1,25 @@
+.tags-container {
+    display: flex;
+    justify-content: center;
+}
+
+.tag-tab {
+    padding: 0.75rem 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: center;
+    width: 5%;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &.active {
+        background-color: lightgray;
+        outline: none;
+    }
+}
