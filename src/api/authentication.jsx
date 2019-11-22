@@ -38,6 +38,7 @@ export const checkSignInStatus = () => {
       const googleAuthInstance = gapi.auth2.getAuthInstance();
 
       const isSignedIn = googleAuthInstance.isSignedIn.get();
+      // console.log(googleAuthInstance, isSignedIn);
 
       if (isSignedIn) {
         // Listen for sign-in state changes.
@@ -45,9 +46,12 @@ export const checkSignInStatus = () => {
           updateSigninStatus(isSignedIn);
         });
 
+
         console.log("AUTH_SUCCESS from checkSignInStatus");
 
+
         resolve(googleAuthInstance.currentUser.Ab);
+
 
       } else {
         reject();
@@ -60,6 +64,11 @@ export const checkSignInStatus = () => {
 
     
   
+};
+
+export const sendAuth = () => {
+  const googleAuthObj = window.gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse();
+  console.log("User ID for backend: ", googleAuthObj);
 };
 
 // Listener for sign-in state

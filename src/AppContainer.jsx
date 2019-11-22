@@ -5,7 +5,7 @@ import Login from "./components/login/Login";
 import Authenticating from "./components/authenticating/Authenticating";
 import 'react-perfect-scrollbar/dist/css/styles.css';
 
-import { signOut, signIn, checkSignInStatus } from "./api/authentication";
+import { signOut, signIn, checkSignInStatus, sendAuth } from "./api/authentication";
 import { mountScripts } from "./api/scripts";
 
 import {
@@ -19,6 +19,8 @@ import {
 const AppContainer = (props) => {
   const [signInStatus, setSignInStatus] = useState(SIGNED_OUT);
   const [googleUser, setGoogleUser] = useState(undefined);
+
+  const [id_token, setId_Token] = useState(undefined);
 
   useEffect(() => {
     mountScripts().then(init);
@@ -47,6 +49,7 @@ const AppContainer = (props) => {
   const onSignInSuccess = (googleUser) => {
     setSignInStatus(AUTH_SUCCESS);
     setGoogleUser(googleUser);
+    sendAuth(id_token);
   }
 
   const renderView = () => {
