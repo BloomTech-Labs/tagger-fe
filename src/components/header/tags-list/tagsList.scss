@@ -1,14 +1,17 @@
 .tags-container {
     display: flex;
+    flex-direction: column-reverse;
     justify-content: center;
+    // align-items: center;
 }
 
 .tag-tab {
     padding: 0.75rem 0;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    text-align: center;
-    width: 5%;
+    text-align: left;
+    margin-left: 20%;
+    // width: 5%;
 
     &:hover {
         cursor: pointer;

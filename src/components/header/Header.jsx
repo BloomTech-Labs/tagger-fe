@@ -6,7 +6,6 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import debounce from "lodash/debounce";
 
-import TagsList from "./tags-list/TagsList";
 
 const Header = (props) => {
 
@@ -71,7 +70,6 @@ const Header = (props) => {
         <Signout onSignout={props.onSignout} />
       </header>
       <div className="header">
-        <TagsList />
       </div>
     </div>
   );
