@@ -39,6 +39,7 @@ const ContactList = (props) => {
             {props.contactsResult.contacts.map(contact => {
                 return (
                     <ContactCard
+                        key={contact.etag}
                         contact={contact}
                         handleContactSearch={handleContactSearch}
                     />
