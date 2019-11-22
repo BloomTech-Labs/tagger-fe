@@ -67,8 +67,18 @@ export const checkSignInStatus = () => {
 };
 
 export const sendAuth = () => {
+  //Receive an authorization token from Gmail after a user signs in successfully.
   const googleAuthObj = window.gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse();
   console.log("User ID for backend: ", googleAuthObj);
+
+  //Create a post request and pass the auth token to backend.
+  // const cred = new XMLHttpRequest();
+  // cred.open('POST', 'https://yourbackend.example.com/tokensignin');
+  // cred.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  // cred.onload = function() {
+  //   console.log('Signed in as: ' + cred.responseText);
+  // };
+  // cred.send('idtoken=' + id_token);
 };
 
 // Listener for sign-in state
