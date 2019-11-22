@@ -5,6 +5,7 @@ import Header from "../header/Header";
 import Sidebar from "../sidebar/Sidebar";
 import NotFound from "../not-found/NotFound";
 import ContactList from '../contact-list/ContactList'
+import "../main/_main.scss";
 
 import MessageList from "../content/message-list/MessageList";
 import MessageContent from "../content/message-list/message-content/MessageContent";
@@ -32,6 +33,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const Main = (props) => {
   const [signedInUser, setSignedInUser] = useState();
+  const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
     /* Label list is fetched from here 
@@ -148,6 +150,12 @@ const Main = (props) => {
     })
   }
 
+
+  const toggleDash = () => {
+    setToggle(!toggle);
+  }
+
+
   const renderInboxViewport = () => {
 
     if (props.labelsResult.labels.length < 1) {
@@ -161,7 +169,9 @@ const Main = (props) => {
           setSearchQuery={props.setSearchQuery}
           getLabelMessages={getLabelMessages} 
           searchQuery={props.searchQuery}
+          toggleDash={toggleDash}
         />
+
         <section className="main hbox space-between">
           <Sidebar
             getLabelList={getLabelList}
@@ -170,11 +180,11 @@ const Main = (props) => {
             onLabelClick={loadLabelMessages}
           />
 
-          <ContactList
+          {/* <ContactList
             searchQuery={props.searchQuery}
             setSearchQuery={props.setSearchQuery}
             getLabelMessages={getLabelMessages} 
-          />
+          /> */}
           
           <article className="d-flex flex-column position-relative">
             <Switch>
@@ -195,8 +205,69 @@ const Main = (props) => {
       </Fragment>
     );
   }
+
+  const renderContactViewport = () => {
+
+    if (props.labelsResult.labels.length < 1) {
+      return renderSpinner();
+    }
+
+    return (
+      <Fragment>
+        <Header googleUser={props.googleUser} 
+          onSignout={onSignout} 
+          setSearchQuery={props.setSearchQuery}
+          getLabelMessages={getLabelMessages} 
+          searchQuery={props.searchQuery}
+          toggleDash={toggleDash}
+        />
+
+        <section className="main hbox space-between">
+          <div className="contact-view">
+          <Sidebar
+            getLabelList={getLabelList}
+            pathname={props.location.pathname}
+            labelsResult={props.labelsResult}
+            onLabelClick={loadLabelMessages}
+          />
+          </div>
+
+          <ContactList
+            searchQuery={props.searchQuery}
+            setSearchQuery={props.setSearchQuery}
+            getLabelMessages={getLabelMessages} 
+          />
+          
+          {/* <article className="d-flex flex-column position-relative">
+            <Switch>
+              {renderLabelRoutes(props)}
+              <Route
+                exact
+                path="/notfound"
+                component={NotFound}
+              />
+              <Route
+                exact
+                path="/:id([a-zA-Z0-9]+)"
+                component={MessageContent}
+              />
+            </Switch>
+          </article> */}
+        </section>
+      </Fragment>
+    );
+  }
+
+
   
-  return renderInboxViewport();
+  if (!toggle) {
+    return renderInboxViewport();
+  } else {
+    return renderContactViewport();
+  }
+
+
+
 }
 
 const mapStateToProps = state => ({
