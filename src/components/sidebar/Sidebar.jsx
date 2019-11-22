@@ -112,17 +112,20 @@ const Sidebar = (props) => {
         <li key="olders-nav-title" className="pl-2 nav-title">
           Labels
         </li>
-        {labels.map(el => {
+        {labels.filter(el => el.name.includes('tagger_')).map(el => {
           const iconProps = {
             icon: faCircle,
             color: el.color ? el.color.backgroundColor : "gainsboro",
             size: "sm"
           };
+
+          const name = el.name.substring(7);
+
           return (
             <LabelItem
               key={el.id + "_label"}
               onClick={navigateToList}
-              name={el.name}
+              name={name}
               id={el.id}
               messagesUnread={el.messagesUnread}
               iconProps={iconProps}
