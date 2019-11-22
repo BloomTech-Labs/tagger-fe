@@ -9,6 +9,27 @@ export const getContactList = async () => {
   })
 };
 
+export const getContactLatestSnippet = async (q) => {
+  const message = await window.gapi.client.gmail.users.messages
+    .list({
+      userId: "me",
+      q,
+      maxResults: 1
+    });
+
+  let messageId;
+  
+  if (message.result.messages) {
+    messageId = await message.result.messages[0].id;
+    return await getMessageSnippet(messageId);
+  }
+}
+
+const getMessageSnippet = async (messageId) => {
+  const message = await getMessage(messageId);
+  return message.result.snippet;
+}
+
 const getLabelDetailPromise = async (labelId) => {
   return await window.gapi.client.gmail.users.labels.get({
       userId: "me",
