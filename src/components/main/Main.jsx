@@ -170,17 +170,12 @@ const Main = (props) => {
             onLabelClick={loadLabelMessages}
           />
 
-          {/* Here's where the Contact List will go. Component and will it render?*/}
-      {/* <div className="new-div">
-      </div> */}
-
-      <ContactList
+          <ContactList
             searchQuery={props.searchQuery}
             setSearchQuery={props.setSearchQuery}
             getLabelMessages={getLabelMessages} 
-      >
-        </ContactList>
-
+          />
+          
           <article className="d-flex flex-column position-relative">
             <Switch>
               {renderLabelRoutes(props)}
@@ -200,7 +195,7 @@ const Main = (props) => {
       </Fragment>
     );
   }
-
+  
   return renderInboxViewport();
 }
 

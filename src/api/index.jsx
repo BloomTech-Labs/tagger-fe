@@ -128,7 +128,9 @@ export const getMessage = async(messageId) => {
 
   const { result } = response;
 
-  let body = getBody(result.payload, "text/html");        
+  let body = getBody(result.payload, "text/html");
+  
+  console.log(body);
 
   if (body === "") {
     body = getBody(result.payload, "text/plain");

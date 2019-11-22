@@ -41,9 +41,8 @@ const ContactList = (props) => {
                         className="user-card"
                         onClick={() => handleContactSearch(contact.emailAddresses[0].value)}
                     >
-                        <img alt={`${contact.names[0].displayName}`}></img>
                         <div className="user-text-container">
-                            <h3>{contact.names[0].displayName}</h3>
+                            <h4>{contact.names[0].displayName}</h4>
                             <p>Hi Erin, we'll be meeting on Friday to discuss the proposal...</p>
                         </div>
                     </div>
