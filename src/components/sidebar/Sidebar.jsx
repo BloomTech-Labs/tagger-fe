@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import ComposeMessage from "../compose-message/ComposeMessage";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import TagsList from "../header/tags-list/TagsList";
 import groupBy from "lodash/groupBy";
 import sortBy from "lodash/sortBy";
 
@@ -154,7 +153,6 @@ const Sidebar = (props) => {
         className="d-flex flex-column border-0 m-0 sidebar"
       >
         {renderItems(props.labelsResult.labels)}
-        <TagsList />
       </PerfectScrollbar>
     </nav>
   );
