@@ -7,6 +7,8 @@ import { bindActionCreators } from "redux";
 
 import { getUserContacts } from "../contact-list/actions/contact-list.actions";
 
+import ContactCard from "./contact-card/ContactCard";
+
 import "./contact-list.scss";
 
 const ContactList = (props) => {
@@ -36,16 +38,10 @@ const ContactList = (props) => {
         <PerfectScrollbar className="contact-list-container">
             {props.contactsResult.contacts.map(contact => {
                 return (
-                    <div
-                        key={contact.etag}
-                        className="user-card"
-                        onClick={() => handleContactSearch(contact.emailAddresses[0].value)}
-                    >
-                        <div className="user-text-container">
-                            <h4>{contact.names[0].displayName}</h4>
-                            <p>Hi Erin, we'll be meeting on Friday to discuss the proposal...</p>
-                        </div>
-                    </div>
+                    <ContactCard
+                        contact={contact}
+                        handleContactSearch={handleContactSearch}
+                    />
                 )
             })}
         </PerfectScrollbar>
