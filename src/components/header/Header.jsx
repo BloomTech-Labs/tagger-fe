@@ -38,6 +38,7 @@ const Header = (props) => {
       <header className="d-flex p-3 align-content-center align-items-center header">
         <div className="header-logo justify-content-center">
           <Link to="/inbox">Tagger</Link>
+          <button onClick={props.toggleDash}>Dashboard/Contacts</button>
         </div>
   
         <div className="header-search">

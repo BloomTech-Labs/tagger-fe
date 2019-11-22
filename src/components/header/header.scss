@@ -5,15 +5,24 @@
     display: flex;
     flex: 1 1;
     font-weight: 600;
+    justify-content: space-between !important;
+
+
     a {
       color: #FFF;
       text-decoration: none;
+      margin-left: 5px;
+    }
+    button {
+      margin-right: 5px;
+      border-radius: 15px;
+      background: yellow;
     }
   }
 
   .header-search {
     display: flex;
-    flex: 5 1;
+    flex: 3 1;
     .user-name {
       cursor: default;
       user-select: none;
