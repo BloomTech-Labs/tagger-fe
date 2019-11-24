@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import ComposeMessage from "../compose-message/ComposeMessage";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import TagsList from "../header/tags-list/TagsList";
 import groupBy from "lodash/groupBy";
 import sortBy from "lodash/sortBy";
 
@@ -113,17 +112,20 @@ const Sidebar = (props) => {
         <li key="olders-nav-title" className="pl-2 nav-title">
           Labels
         </li>
-        {labels.map(el => {
+        {labels.filter(el => el.name.includes('tagger_')).map(el => {
           const iconProps = {
             icon: faCircle,
             color: el.color ? el.color.backgroundColor : "gainsboro",
             size: "sm"
           };
+
+          const name = el.name.substring(7);
+
           return (
             <LabelItem
               key={el.id + "_label"}
               onClick={navigateToList}
-              name={el.name}
+              name={name}
               id={el.id}
               messagesUnread={el.messagesUnread}
               iconProps={iconProps}
@@ -154,7 +156,6 @@ const Sidebar = (props) => {
         className="d-flex flex-column border-0 m-0 sidebar"
       >
         {renderItems(props.labelsResult.labels)}
-        <TagsList />
       </PerfectScrollbar>
     </nav>
   );
