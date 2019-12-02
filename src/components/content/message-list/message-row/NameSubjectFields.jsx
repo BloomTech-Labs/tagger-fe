@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { connect } from "react-redux";
 
@@ -6,8 +6,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const NameSubjectFields = props => {
+  const [contactExists, setContactExists] = useState(false);
 
-  console.log(props.contactsResult);
+  useEffect(() => {
+    checkIfContactExists(props.contactsResult.contacts);
+  }, [])
+
+  const checkIfContactExists = contacts => {
+    let match = false;
+
+    contacts.map(contact => {
+      if (props.fromName.name === contact.names[0].displayName) {
+        return match = true;
+      }
+    })
+
+    return setContactExists(match);
+  }
 
   const createContact = evt => {
     evt.stopPropagation();
@@ -49,7 +64,7 @@ const NameSubjectFields = props => {
       <div className="wrapper align-items-center text-2">
         <div className="text from-name">
           {props.fromName.name}
-          {props.hover
+          {props.hover && !contactExists
           ? <FontAwesomeIcon
               className="ml-2"
               icon={faUserPlus}
