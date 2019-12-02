@@ -1,22 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-
-import { getUserContacts } from "../../../contact-list/actions/contact-list.actions";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const NameSubjectFields = props => {
-
-  useEffect(() => {
-    getUserContacts();
-  }, [])
-
-  const getUserContacts = () => {
-    props.getUserContacts();
-  }
 
   console.log(props.contactsResult);
 
@@ -78,13 +67,6 @@ const mapStateToProps = state => ({
   contactsResult: state.contactsResult
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    { getUserContacts },
-    dispatch
-  );
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(NameSubjectFields);

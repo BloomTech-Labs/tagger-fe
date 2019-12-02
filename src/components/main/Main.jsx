@@ -12,6 +12,7 @@ import MessageContent from "../content/message-list/message-content/MessageConte
 
 import { Route, Switch, withRouter } from "react-router-dom";
 
+import { getUserContacts } from "../contact-list/actions/contact-list.actions";
 import { getLabels } from "../sidebar/sidebar.actions";
 
 import {
@@ -40,6 +41,7 @@ const Main = (props) => {
     so that we can declare Routes by labelId 
     before rendering anything else */
     getLabelList();
+    getUserContacts();
   }, []);
 
   useEffect(() => {
@@ -60,6 +62,10 @@ const Main = (props) => {
       } 
     }
   }, [props.signedInUser]);
+
+  const getUserContacts = () => {
+    props.getUserContacts();
+  }
 
   const navigateToNextPage = (token) => {
     const searchParam = props.location.search;
@@ -284,6 +290,7 @@ const mapDispatchToProps = dispatch =>
     {
       getLabels,
       getLabelMessages,
+      getUserContacts,
       emptyLabelMessages,
       toggleSelected,
       selectLabel,

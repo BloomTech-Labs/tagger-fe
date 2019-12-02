@@ -1,25 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import PerfectScrollbar from "react-perfect-scrollbar";
 
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-
-import { getUserContacts } from "../contact-list/actions/contact-list.actions";
 
 import ContactCard from "./contact-card/ContactCard";
 
 import "./contact-list.scss";
 
 const ContactList = (props) => {
-
-    useEffect(() => {
-        getUserContacts();
-    }, [])
-
-    const getUserContacts = () => {
-        props.getUserContacts();
-    }
 
     const handleContactSearch = (email) => {
         props.setSearchQuery(`from:${email}`);  
@@ -53,13 +42,6 @@ const mapStateToProps = state => ({
     contactsResult: state.contactsResult
   });
   
-const mapDispatchToProps = dispatch =>
-    bindActionCreators(
-        { getUserContacts },
-        dispatch
-    );
-  
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(ContactList);
