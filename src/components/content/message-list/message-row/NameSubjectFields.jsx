@@ -1,43 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { getUserContacts } from "../../../contact-list/actions/contact-list.actions";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
-export default props => {
+const NameSubjectFields = props => {
 
-  const createContact = (evt) => {
+  useEffect(() => {
+    getUserContacts();
+  }, [])
+
+  const getUserContacts = () => {
+    props.getUserContacts();
+  }
+
+  console.log(props.contactsResult);
+
+  const createContact = evt => {
     evt.stopPropagation();
 
     if (props.fromName.givenName) {
-      return window.gapi.client.request({
-        'method': "POST",
-        'path': 'https://people.googleapis.com/v1/people:createContact',
-        'datatype': 'jsonp',
-        'body': {
-          "names": [
-            {
-              "givenName": props.fromName.givenName,
-              "familyName": props.fromName.familyName
-            }
-          ],
-          "emailAddresses": [
-            {
-              "value": props.fromEmail
-            }
-          ]
-        }
-      })
-      .then(res => console.log(res));
-    }
-
-    return window.gapi.client.request({
-      'method': "POST",
-      'path': 'https://people.googleapis.com/v1/people:createContact',
-      'datatype': 'jsonp',
-      'body': {
+      return window.gapi.client.people.people.createContact({
         "names": [
           {
-            "givenName": props.fromName.name
+            "givenName": props.fromName.givenName,
+            "familyName": props.fromName.familyName
           }
         ],
         "emailAddresses": [
@@ -45,7 +36,21 @@ export default props => {
             "value": props.fromEmail
           }
         ]
-      }
+      })
+      .then(res => console.log(res));
+    }
+
+    return window.gapi.client.people.people.createContact({
+      "names": [
+        {
+          "givenName": props.fromName.name
+        }
+      ],
+      "emailAddresses": [
+        {
+          "value": props.fromEmail
+        }
+      ]
     })
     .then(res => console.log(res));
   }
@@ -68,3 +73,18 @@ export default props => {
     </div>
   );
 };
+
+const mapStateToProps = state => ({
+  contactsResult: state.contactsResult
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    { getUserContacts },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NameSubjectFields);
