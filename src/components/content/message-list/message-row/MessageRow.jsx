@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 import MesssageCheckbox from "./MessageCheckbox";
@@ -8,6 +8,7 @@ import AttachmentDateFields from "./AttachmentDateFields";
 import {getNameEmail} from '../../../../utils';
 
 const MessageItem = (props) => {
+  const [hover, setHover] = useState(false);
 
   const onSelectionChange = (evt) => {
     props.onSelectionChange(evt.target.checked, props.data.id);
@@ -19,6 +20,7 @@ const MessageItem = (props) => {
 
   const getFromName = (from) => {
     const nameEmail = getNameEmail(from);
+    console.log(nameEmail.email);
     return nameEmail.name;
   }
 
@@ -62,9 +64,11 @@ const MessageItem = (props) => {
       />
       <div
         onClick={getMessage}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
         className={`table-row px-2 py-3${unread}`}
       >
-        <NameSubjectFields fromName={fromName} subject={subject} />
+        <NameSubjectFields fromName={fromName} subject={subject} hover={hover} />
         <AttachmentDateFields
           formattedDate={formattedDate}
           hasAttachment={

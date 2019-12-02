@@ -222,21 +222,23 @@ const Main = (props) => {
           toggleDash={toggleDash}
         />
 
-        <section className="main hbox space-between">
-          <div className="contact-view">
+        <section className="main hbox">
           <Sidebar
             getLabelList={getLabelList}
             pathname={props.location.pathname}
             labelsResult={props.labelsResult}
             onLabelClick={loadLabelMessages}
           />
-          </div>
 
           <ContactList
             searchQuery={props.searchQuery}
             setSearchQuery={props.setSearchQuery}
             getLabelMessages={getLabelMessages} 
           />
+
+          <div className="contacts-view-container d-flex position-relative">
+            Hi
+          </div>
           
           {/* <article className="d-flex flex-column position-relative">
             <Switch>
