@@ -139,6 +139,7 @@ const Main = (props) => {
               parentLabel={labelsResult.labels.find(el => el.id === routeProps.match.path.slice(1))}
               searchQuery={props.searchQuery}
               searchterm={searchterm}
+              toggle={toggle}
             />
           ) 
         }}
