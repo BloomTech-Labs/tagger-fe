@@ -7,6 +7,7 @@ import NotFound from "../not-found/NotFound";
 import ContactList from '../contact-list/ContactList'
 import "../main/_main.scss";
 import ContactMessages from '../contact-messages/ContactMessages';
+import ContactMenu from '../contact-menu/ContactMenu';
 
 import MessageList from "../content/message-list/MessageList";
 import MessageContent from "../content/message-list/message-content/MessageContent";
@@ -284,6 +285,9 @@ const Main = (props) => {
               />
             </Switch>
           </article>
+
+          <ContactMenu/>
+
         </section>
       </Fragment>
     );
