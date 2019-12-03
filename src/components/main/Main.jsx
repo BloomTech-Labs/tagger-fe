@@ -187,7 +187,8 @@ const Main = (props) => {
           toggleDash={toggleDash}
         />
 
-        <section className="main hbox space-between">
+        <section
+        className="main hbox space-between">
           <Sidebar
             getLabelList={getLabelList}
             pathname={props.location.pathname}
