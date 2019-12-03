@@ -6,12 +6,14 @@ import Sidebar from "../sidebar/Sidebar";
 import NotFound from "../not-found/NotFound";
 import ContactList from '../contact-list/ContactList'
 import "../main/_main.scss";
+import ContactMessages from '../contact-messages/ContactMessages';
 
 import MessageList from "../content/message-list/MessageList";
 import MessageContent from "../content/message-list/message-content/MessageContent";
 
 import { Route, Switch, withRouter } from "react-router-dom";
 
+import { getUserContacts } from "../contact-list/actions/contact-list.actions";
 import { getLabels } from "../sidebar/sidebar.actions";
 
 import {
@@ -34,12 +36,14 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 const Main = (props) => {
   const [signedInUser, setSignedInUser] = useState();
   const [toggle, setToggle] = useState(false);
+  const [searchterm, setSearchterm] = useState(false);
 
   useEffect(() => {
     /* Label list is fetched from here 
     so that we can declare Routes by labelId 
     before rendering anything else */
     getLabelList();
+    getUserContacts();
   }, []);
 
   useEffect(() => {
@@ -60,6 +64,10 @@ const Main = (props) => {
       } 
     }
   }, [props.signedInUser]);
+
+  const getUserContacts = () => {
+    props.getUserContacts();
+  }
 
   const navigateToNextPage = (token) => {
     const searchParam = props.location.search;
@@ -110,7 +118,9 @@ const Main = (props) => {
 
   const renderLabelRoutes = (props) => {
     const { labelsResult } = props;
+    // console.log(labelsResult.labels);
     return labelsResult.labels.map(el => (
+      
       <Route
         key={el.id + '_route'}
         exact
@@ -128,8 +138,9 @@ const Main = (props) => {
               addInitialPageToken={addInitialPageToken}
               parentLabel={labelsResult.labels.find(el => el.id === routeProps.match.path.slice(1))}
               searchQuery={props.searchQuery}
+              searchterm={searchterm}
             />
-          )
+          ) 
         }}
       />
     ));    
@@ -155,6 +166,10 @@ const Main = (props) => {
     setToggle(!toggle);
   }
 
+  const newFunc = (cb) => {
+    setSearchterm(cb);
+  }
+
 
   const renderInboxViewport = () => {
 
@@ -172,7 +187,8 @@ const Main = (props) => {
           toggleDash={toggleDash}
         />
 
-        <section className="main hbox space-between">
+        <section
+        className="main hbox space-between">
           <Sidebar
             getLabelList={getLabelList}
             pathname={props.location.pathname}
@@ -222,23 +238,36 @@ const Main = (props) => {
           toggleDash={toggleDash}
         />
 
-        <section className="main hbox space-between">
-          <div className="contact-view">
+        <section className="main hbox">
+          
+          {/* Is the contact-view div going to break this component? It's left over from a merge conflict.
+          <div className="contact-view">  */}
+          
           <Sidebar
             getLabelList={getLabelList}
             pathname={props.location.pathname}
             labelsResult={props.labelsResult}
             onLabelClick={loadLabelMessages}
           />
-          </div>
 
           <ContactList
             searchQuery={props.searchQuery}
             setSearchQuery={props.setSearchQuery}
             getLabelMessages={getLabelMessages} 
+            searchterm={newFunc}
           />
+
+
+          <div className="contacts-view-container d-flex position-relative">
+            Hi
+          </div>
+
+          {/* <ContactMessages>
+
+          </ContactMessages> */}
+
           
-          {/* <article className="d-flex flex-column position-relative">
+          <article className="d-flex flex-column position-relative">
             <Switch>
               {renderLabelRoutes(props)}
               <Route
@@ -252,7 +281,7 @@ const Main = (props) => {
                 component={MessageContent}
               />
             </Switch>
-          </article> */}
+          </article>
         </section>
       </Fragment>
     );
@@ -282,6 +311,7 @@ const mapDispatchToProps = dispatch =>
     {
       getLabels,
       getLabelMessages,
+      getUserContacts,
       emptyLabelMessages,
       toggleSelected,
       selectLabel,

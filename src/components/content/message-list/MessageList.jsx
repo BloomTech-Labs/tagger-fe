@@ -4,6 +4,7 @@ import MessageRow from "./message-row/MessageRow";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import ContactMessageRow from '../../contact-messages/contact-message-row/ContactMessageRow';
 
 import ListToolbar from "./list-toolbar/ListToolbar";
 import ListFooter from "./list-footer/ListFooter";
@@ -23,8 +24,9 @@ const MessageList = (props) => {
   
   useEffect(() => {
     const searchParam = props.location.search;
+    // console.log("Searchparam", searchParam);
     const token = searchParam.indexOf("?") === 0 ? searchParam.slice(1) : null;
-
+    // console.log("Search", token);
     if (token && props.messagesResult.pageTokens.length === 0) {
       props.addInitialPageToken(token);
     }
@@ -42,7 +44,6 @@ const MessageList = (props) => {
     const token = searchParam.indexOf("?") === 0 ? searchParam.slice(1) : null;
 
     const labelIds = props.searchQuery === "" ? [props.parentLabel.id] : undefined;
-
     props.getLabelMessages({
       ...labelIds && {labelIds},
       pageToken: token
@@ -63,6 +64,7 @@ const MessageList = (props) => {
   }
 
   const renderMessages = () => {
+    console.log('searchterm', props.searchterm)
     if (props.messagesResult.loading) {
       return renderSpinner();
     } else if (props.messagesResult.messages.length === 0) {
@@ -72,8 +74,13 @@ const MessageList = (props) => {
         </div>
       );
     }
-
+    //Toggle is undefined....that's why the if/else won't work
+    //Step one - pass this prop correctly like I passed 'searchterm' from Contactlist up to Main.
+    //Step two - fix this ternary so that when a user hasn't clicked on a contact yet to search for their messages, there is no inbox MessageList rendered.
+    //Step three - render the UX's teams wireframe 
+console.log("toggle: ", props.toggle);
     return props.messagesResult.messages.map(el => {
+      if (!props.toggle) {
       return (
         <MessageRow
           data={el}
@@ -81,7 +88,23 @@ const MessageList = (props) => {
           onSelectionChange={onSelectionChange}
           onClick={props.getMessage}
         />
-      );
+      )} 
+      else if (!props.searchterm) {
+        return (
+        <div>No search results available</div>
+        )
+      } 
+      else {
+        return (
+          // <div>Hi!</div>
+          <ContactMessageRow
+          data={el}
+          key={el.id}
+          onSelectionChange={onSelectionChange}
+          onClick={props.getMessage}
+        />
+        )
+      }
     });
   }
 
@@ -143,6 +166,7 @@ const MessageList = (props) => {
       </PerfectScrollbar>
       <ListFooter messagesTotal={messagesTotal} />
     </React.Fragment>
+    
   );
 }
 

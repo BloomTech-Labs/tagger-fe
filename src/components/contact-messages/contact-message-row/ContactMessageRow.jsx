@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
-import MesssageCheckbox from "./MessageCheckbox";
+import MesssageCheckbox from "../../content/message-list/message-row/MessageCheckbox";
 
-import NameSubjectFields from "./NameSubjectFields";
-import AttachmentDateFields from "./AttachmentDateFields";
-import {getNameEmail} from '../../../../utils';
+import NameSubjectFields from "../../content/message-list/message-row/NameSubjectFields";
+import AttachmentDateFields from "../../content/message-list/message-row/AttachmentDateFields";
+import {getNameEmail} from '../../../utils';
+
+//edit this to display just the user's messages, rendered differently.
 
 const MessageItem = (props) => {
-  const [hover, setHover] = useState(false);
 
   const onSelectionChange = (evt) => {
     props.onSelectionChange(evt.target.checked, props.data.id);
@@ -18,17 +19,9 @@ const MessageItem = (props) => {
     props.history.push(`/${props.data.id}`);
   }
 
-  const getFromEmail = (from) => {
-    const nameEmail = getNameEmail(from);
-    return nameEmail.email;
-  }
   const getFromName = (from) => {
     const nameEmail = getNameEmail(from);
-    if (nameEmail.name.includes(" ")) {
-      nameEmail.givenName = nameEmail.name.slice(0, nameEmail.name.indexOf(" "));
-      nameEmail.familyName = nameEmail.name.slice(nameEmail.name.indexOf(" "));
-    }
-    return nameEmail;
+    return nameEmail.name;
   }
 
   const getFormattedDate = (date, fallbackDateObj) => {
@@ -61,8 +54,9 @@ const MessageItem = (props) => {
   const subjectHeader = props.data.payload.headers.find(el => el.name.toUpperCase() === "SUBJECT");
   const subject = subjectHeader ? subjectHeader.value : "";
   const fromHeader = props.data.payload.headers.find(el => el.name.toUpperCase() === "FROM");
-  let fromEmail = fromHeader ? getFromEmail(fromHeader.value) : "undefined";
   let fromName = fromHeader ? getFromName(fromHeader.value) : "undefined";
+
+
 
   return (
     <div className={`d-flex table-row-wrapper${selected}`}>
@@ -72,11 +66,9 @@ const MessageItem = (props) => {
       />
       <div
         onClick={getMessage}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
         className={`table-row px-2 py-3${unread}`}
       >
-        <NameSubjectFields fromEmail={fromEmail} fromName={fromName} subject={subject} hover={hover} />
+        <NameSubjectFields fromName={fromName} subject={subject} />
         <AttachmentDateFields
           formattedDate={formattedDate}
           hasAttachment={
