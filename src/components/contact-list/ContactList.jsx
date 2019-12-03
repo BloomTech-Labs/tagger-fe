@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PerfectScrollbar from "react-perfect-scrollbar";
 
@@ -23,6 +23,7 @@ const ContactList = (props) => {
 
     const handleContactSearch = (email) => {
         props.setSearchQuery(`from:${email}`);  
+        // console.log(email);
         performSearch();
       }
     
@@ -34,14 +35,20 @@ const ContactList = (props) => {
         props.getLabelMessages({...searchParams})
       };
 
+
+
     return (
         <PerfectScrollbar className="contact-list-container">
             {props.contactsResult.contacts.map(contact => {
                 return (
-                    <ContactCard
-                        contact={contact}
-                        handleContactSearch={handleContactSearch}
-                    />
+                    <>
+                        {/* <div>Hey look here {searchterm}</div> */}
+                        <ContactCard
+                            contact={contact}
+                            handleContactSearch={handleContactSearch}
+                            searchterm={props.searchterm}
+                        />
+                    </>
                 )
             })}
         </PerfectScrollbar>
