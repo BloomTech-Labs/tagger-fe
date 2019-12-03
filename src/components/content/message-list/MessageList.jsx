@@ -64,7 +64,6 @@ const MessageList = (props) => {
   }
 
   const renderMessages = () => {
-    console.log('searchterm', props.searchterm)
     if (props.messagesResult.loading) {
       return renderSpinner();
     } else if (props.messagesResult.messages.length === 0) {
@@ -74,11 +73,7 @@ const MessageList = (props) => {
         </div>
       );
     }
-    //Toggle is undefined....that's why the if/else won't work
-    //Step one - pass this prop correctly like I passed 'searchterm' from Contactlist up to Main.
-    //Step two - fix this ternary so that when a user hasn't clicked on a contact yet to search for their messages, there is no inbox MessageList rendered.
-    //Step three - render the UX's teams wireframe 
-console.log("toggle: ", props.toggle);
+
     return props.messagesResult.messages.map(el => {
       if (!props.toggle) {
       return (
@@ -91,12 +86,11 @@ console.log("toggle: ", props.toggle);
       )} 
       else if (!props.searchterm) {
         return (
-        <div>No search results available</div>
+        <div></div>
         )
       } 
       else {
         return (
-          // <div>Hi!</div>
           <ContactMessageRow
           data={el}
           key={el.id}
@@ -153,6 +147,7 @@ console.log("toggle: ", props.toggle);
   const messagesTotal = messagesResult.label ? messagesResult.label.result.messagesTotal : 0;
   const { nextToken, prevToken } = getPageTokens();
 
+if (!props.toggle) {
   return (
     <React.Fragment>
       <ListToolbar
@@ -161,6 +156,7 @@ console.log("toggle: ", props.toggle);
         navigateToNextPage={props.navigateToNextPage}
         navigateToPrevPage={props.navigateToPrevPage}
       />
+
       <PerfectScrollbar className="container-fluid no-gutters px-0 message-list-container">
         {renderView()}
       </PerfectScrollbar>
@@ -168,6 +164,25 @@ console.log("toggle: ", props.toggle);
     </React.Fragment>
     
   );
+} else {
+  return (
+    <React.Fragment>
+      <ListToolbar
+        nextToken={nextToken}
+        prevToken={prevToken}
+        navigateToNextPage={props.navigateToNextPage}
+        navigateToPrevPage={props.navigateToPrevPage}
+      />
+
+      <PerfectScrollbar className="container-fluid no-gutters px-0 contact-message-list">
+        {renderView()}
+      </PerfectScrollbar>
+      <ListFooter messagesTotal={messagesTotal} />
+    </React.Fragment>
+    
+  );
+}
+
 }
 
 export default MessageList;

@@ -6,8 +6,7 @@ import MesssageCheckbox from "../../content/message-list/message-row/MessageChec
 import NameSubjectFields from "../../content/message-list/message-row/NameSubjectFields";
 import AttachmentDateFields from "../../content/message-list/message-row/AttachmentDateFields";
 import {getNameEmail} from '../../../utils';
-
-//edit this to display just the user's messages, rendered differently.
+import '../contact-messages.scss';
 
 const MessageItem = (props) => {
 
@@ -59,24 +58,34 @@ const MessageItem = (props) => {
 
 
   return (
-    <div className={`d-flex table-row-wrapper${selected}`}>
-      <MesssageCheckbox
-        selected={props.data.selected}
-        onChange={onSelectionChange}
-      />
-      <div
-        onClick={getMessage}
-        className={`table-row px-2 py-3${unread}`}
-      >
-        <NameSubjectFields fromName={fromName} subject={subject} />
-        <AttachmentDateFields
-          formattedDate={formattedDate}
-          hasAttachment={
-            props.data.payload.mimeType === "multipart/mixed"
-          }
-        />
-      </div>
-    </div>
+    // <div className={`d-flex table-row-wrapper${selected}`}>
+    //   <MesssageCheckbox
+    //     selected={props.data.selected}
+    //     onChange={onSelectionChange}
+    //   />
+    //   <div
+    //     onClick={getMessage}
+    //     className={`table-row px-2 py-3${unread}`}
+    //   >
+    //     <NameSubjectFields fromName={fromName} subject={subject} />
+    //     <AttachmentDateFields
+    //       formattedDate={formattedDate}
+    //       hasAttachment={
+    //         props.data.payload.mimeType === "multipart/mixed"
+    //       }
+    //     />
+    //   </div>
+    // </div>
+
+    <section className="message-tile">
+        <div className="message-card">
+            <div className="message-subject"><NameSubjectFields fromName={fromName} subject={subject} /></div>
+        </div>
+
+        <div className="thread-count">
+        </div>
+    </section>
+
   );
 }
 

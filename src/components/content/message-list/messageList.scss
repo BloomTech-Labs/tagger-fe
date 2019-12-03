@@ -4,6 +4,12 @@
   height: 100%;
 }
 
+.contact-message-list {
+  overflow: auto;
+  position: relative;
+  height: 100%;
+  width: 65%;
+}
 
  $margin: 0px;
  $text-width: 180px;
