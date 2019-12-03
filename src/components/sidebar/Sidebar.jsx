@@ -107,7 +107,8 @@ const Sidebar = (props) => {
   }
 
   const renderLabels = (labels) => {
-    console.log(labels);
+
+    // This iterates over the labels on the user's account and checks whether or not the predefined tagger_Labels exist.
 
     let taggerLabels = ["tagger_Finance", "tagger_Personal", "tagger_Productivity", "tagger_Promotions", "tagger_Security", "tagger_Shopping", "tagger_Social"]
 
@@ -118,6 +119,21 @@ const Sidebar = (props) => {
         }
       })
     })
+
+    // Adds tagger_Labels to user's Gmail account.
+
+    if (taggerLabels.length) {
+      taggerLabels.map(label => {
+        window.gapi.client.gmail.users.labels.create(
+          {
+            "userId": "me",
+            "labelListVisibility": "labelHide",
+            "messageListVisibility": "hide",
+            "name": label
+          }
+        )
+      })
+    }
 
     return (
       <React.Fragment>
