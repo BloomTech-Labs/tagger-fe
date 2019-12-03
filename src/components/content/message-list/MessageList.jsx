@@ -89,11 +89,15 @@ const MessageList = (props) => {
         )
       } 
       else {
+        console.log(el);
         return (
           <ContactMessageRow
           data={el}
           key={el.id}
           onSelectionChange={onSelectionChange}
+          onClick={props.getMessage}
+          snippet={el.snippet}
+
         />
         )
       }

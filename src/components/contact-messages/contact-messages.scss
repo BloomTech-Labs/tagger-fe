@@ -1,10 +1,11 @@
 .message-tile {
-    background: grey;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border: 1px solid grey;
 }
 
 .message-card {
-    height: 200px;
-    margin-bottom: 10px;
+    height: 150px;
     padding-top: 15px;
 }
 
@@ -12,15 +13,50 @@
     margin-left: 20px;
 }
 
-.message-subject div div {
+.message-subject {
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
+    justify-content: space-between;
+    width: 100%;
+
+    div div {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
 }
 
-.message-subject div div .text {
+.message-subject div div:last-child {
     text-align: left;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 14px;
+    padding-right: 10px;
 }
 
+.message-subject > .text-4 >  div > .from-name {
+    width: 30px;
+}
+
+.message-subject > .num-4 > div > div:first-child {
+    display: none;
+}
+
+.tagger-tag {
+    width: 15%;
+    background: darkgrey;
+    border-radius: 10px;
+    text-align: center;
+    margin: 12px 0;
+}
+
+.snippet {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 12px 0;
+}
+
+.thread-count {
+    border-top: 1px solid black;
+    padding-bottom: 15px;
+    padding: 5px 0;
+}
