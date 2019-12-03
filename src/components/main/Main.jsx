@@ -240,8 +240,8 @@ const Main = (props) => {
 
         <section className="main hbox">
           
-          {/* Is the contact-view div going to break this component? It's left over from a merge conflict.
-          <div className="contact-view">  */}
+          {/* Is the contact-view div going to break this component? It's left over from a merge conflict. */}
+          <div className="contact-view"> 
           
           <Sidebar
             getLabelList={getLabelList}
@@ -249,6 +249,7 @@ const Main = (props) => {
             labelsResult={props.labelsResult}
             onLabelClick={loadLabelMessages}
           />
+          </div>
 
           <ContactList
             searchQuery={props.searchQuery}
@@ -258,9 +259,9 @@ const Main = (props) => {
           />
 
 
-          <div className="contacts-view-container d-flex position-relative">
-            Hi
-          </div>
+          {/* <div className="contacts-view-container d-flex position-relative">
+            Hi */}
+
 
           {/* <ContactMessages>
 
