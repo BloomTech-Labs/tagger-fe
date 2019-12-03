@@ -34,6 +34,7 @@ const ContactList = (props) => {
                         key={contact.etag}
                         contact={contact}
                         handleContactSearch={handleContactSearch}
+                        searchterm={props.searchterm}
                     />
                 )
             })}

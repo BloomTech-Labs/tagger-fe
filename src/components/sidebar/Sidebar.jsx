@@ -107,6 +107,18 @@ const Sidebar = (props) => {
   }
 
   const renderLabels = (labels) => {
+    console.log(labels);
+
+    let taggerLabels = ["tagger_Finance", "tagger_Personal", "tagger_Productivity", "tagger_Promotions", "tagger_Security", "tagger_Shopping", "tagger_Social"]
+
+    labels.map(label => {
+      taggerLabels.map((taggerLabel, index) => {
+        if (taggerLabel === label.name) {
+          taggerLabels.splice(index, 1);
+        }
+      })
+    })
+
     return (
       <React.Fragment>
         <li key="olders-nav-title" className="pl-2 nav-title">
