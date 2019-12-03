@@ -10,6 +10,7 @@ export const getContactList = async () => {
 };
 
 export const getContactLatestSnippet = async (q) => {
+  // console.log(await window.gapi.client.gmail.users.messages);
   const message = await window.gapi.client.gmail.users.messages
     .list({
       userId: "me",
