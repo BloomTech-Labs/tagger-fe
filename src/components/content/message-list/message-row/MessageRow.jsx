@@ -16,6 +16,21 @@ const MessageItem = (props) => {
 
   const getMessage = (evt) => {
     props.history.push(`/${props.data.id}`);
+    if (props.data.labelIds) {
+      props.data.labelIds.map(labelId => {
+        if (labelId === "UNREAD") {
+          window.gapi.client.gmail.users.messages
+              .modify({
+                "userId": "me",
+                "id": props.data.id,
+                "removeLabelIds": [
+                  "UNREAD"
+                ]
+              })
+              .then(() => {})
+        }
+      })
+    }
   }
 
   const getFromEmail = (from) => {

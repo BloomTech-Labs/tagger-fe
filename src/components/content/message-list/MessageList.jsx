@@ -81,7 +81,6 @@ const MessageList = (props) => {
           data={el}
           key={el.id}
           onSelectionChange={onSelectionChange}
-          onClick={props.getMessage}
         />
       )} 
       else if (!props.searchterm) {
@@ -98,6 +97,7 @@ const MessageList = (props) => {
           onSelectionChange={onSelectionChange}
           onClick={props.getMessage}
           snippet={el.snippet}
+
         />
         )
       }
