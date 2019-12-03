@@ -13,6 +13,7 @@ import MessageContent from "../content/message-list/message-content/MessageConte
 
 import { Route, Switch, withRouter } from "react-router-dom";
 
+import { getUserContacts } from "../contact-list/actions/contact-list.actions";
 import { getLabels } from "../sidebar/sidebar.actions";
 
 import {
@@ -42,6 +43,7 @@ const Main = (props) => {
     so that we can declare Routes by labelId 
     before rendering anything else */
     getLabelList();
+    getUserContacts();
   }, []);
 
   useEffect(() => {
@@ -62,6 +64,10 @@ const Main = (props) => {
       } 
     }
   }, [props.signedInUser]);
+
+  const getUserContacts = () => {
+    props.getUserContacts();
+  }
 
   const navigateToNextPage = (token) => {
     const searchParam = props.location.search;
@@ -181,7 +187,8 @@ const Main = (props) => {
           toggleDash={toggleDash}
         />
 
-        <section className="main hbox space-between">
+        <section
+        className="main hbox space-between">
           <Sidebar
             getLabelList={getLabelList}
             pathname={props.location.pathname}
@@ -232,14 +239,16 @@ const Main = (props) => {
         />
 
         <section className="main hbox">
-          <div className="contact-view">
+          
+          {/* Is the contact-view div going to break this component? It's left over from a merge conflict.
+          <div className="contact-view">  */}
+          
           <Sidebar
             getLabelList={getLabelList}
             pathname={props.location.pathname}
             labelsResult={props.labelsResult}
             onLabelClick={loadLabelMessages}
           />
-          </div>
 
           <ContactList
             searchQuery={props.searchQuery}
@@ -248,9 +257,15 @@ const Main = (props) => {
             searchterm={newFunc}
           />
 
+
+          <div className="contacts-view-container d-flex position-relative">
+            Hi
+          </div>
+
           {/* <ContactMessages>
 
           </ContactMessages> */}
+
           
           <article className="d-flex flex-column position-relative">
             <Switch>
@@ -296,6 +311,7 @@ const mapDispatchToProps = dispatch =>
     {
       getLabels,
       getLabelMessages,
+      getUserContacts,
       emptyLabelMessages,
       toggleSelected,
       selectLabel,
