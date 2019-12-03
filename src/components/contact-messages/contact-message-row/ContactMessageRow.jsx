@@ -55,7 +55,10 @@ const MessageItem = (props) => {
   const fromHeader = props.data.payload.headers.find(el => el.name.toUpperCase() === "FROM");
   let fromName = fromHeader ? getFromName(fromHeader.value) : "undefined";
 
-
+  let snippet = props.snippet;
+  if (snippet.length > 180) {
+    snippet = snippet.substring(0, 180);
+  }
 
   return (
     // <div className={`d-flex table-row-wrapper${selected}`}>
@@ -79,10 +82,22 @@ const MessageItem = (props) => {
 
     <section className="message-tile">
         <div className="message-card">
-            <div className="message-subject"><NameSubjectFields fromName={fromName} subject={subject} /></div>
+            <div className="message-subject">
+                <NameSubjectFields fromName={fromName} subject={subject} />
+                <AttachmentDateFields
+                    formattedDate={formattedDate}
+                    hasAttachment={
+                        props.data.payload.mimeType === "multipart/mixed"
+                    }/>
+            </div>
+            <div className="tagger-tag">Tagger Tag</div>
+                    <div className="snippet">
+                        {snippet}... 
+                    </div>
         </div>
 
         <div className="thread-count">
+                    xyz more messages
         </div>
     </section>
 
