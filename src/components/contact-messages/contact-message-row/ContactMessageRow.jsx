@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import he from "he";
 import moment from "moment";
 import MesssageCheckbox from "../../content/message-list/message-row/MessageCheckbox";
 
@@ -93,7 +94,7 @@ const MessageItem = (props) => {
           </div>
           <div className="tagger-tag">Tagger Tag</div>
           <div className="snippet">
-            {snippet}
+            {he.decode(snippet)}
           </div>
         </div>
         <hr className="my-1" />
