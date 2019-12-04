@@ -7,6 +7,7 @@ import NotFound from "../not-found/NotFound";
 import ContactList from '../contact-list/ContactList'
 import "../main/_main.scss";
 import ContactMessages from '../contact-messages/ContactMessages';
+import ContactMenu from '../contact-menu/ContactMenu';
 
 import MessageList from "../content/message-list/MessageList";
 import MessageContent from "../content/message-list/message-content/MessageContent";
@@ -139,6 +140,7 @@ const Main = (props) => {
               parentLabel={labelsResult.labels.find(el => el.id === routeProps.match.path.slice(1))}
               searchQuery={props.searchQuery}
               searchterm={searchterm}
+              toggle={toggle}
             />
           ) 
         }}
@@ -239,12 +241,17 @@ const Main = (props) => {
         />
 
         <section className="main hbox">
+          
+          {/* Is the contact-view div going to break this component? It's left over from a merge conflict. */}
+          <div className="contact-view"> 
+          
           <Sidebar
             getLabelList={getLabelList}
             pathname={props.location.pathname}
             labelsResult={props.labelsResult}
             onLabelClick={loadLabelMessages}
           />
+          </div>
 
           <ContactList
             searchQuery={props.searchQuery}
@@ -252,6 +259,11 @@ const Main = (props) => {
             getLabelMessages={getLabelMessages} 
             searchterm={newFunc}
           />
+
+
+          {/* <div className="contacts-view-container d-flex position-relative">
+            Hi */}
+
 
           {/* <ContactMessages>
 
@@ -272,6 +284,8 @@ const Main = (props) => {
               />
             </Switch>
           </article>
+            <ContactMenu
+                searchterm={searchterm}/>
         </section>
       </Fragment>
     );

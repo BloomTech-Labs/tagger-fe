@@ -30,14 +30,12 @@ const ContactList = (props) => {
         <PerfectScrollbar className="contact-list-container">
             {props.contactsResult.contacts.map(contact => {
                 return (
-                    <>
-                        {/* <div>Hey look here {searchterm}</div> */}
-                        <ContactCard
-                            contact={contact}
-                            handleContactSearch={handleContactSearch}
-                            searchterm={props.searchterm}
-                        />
-                    </>
+                    <ContactCard
+                        key={contact.etag}
+                        contact={contact}
+                        handleContactSearch={handleContactSearch}
+                        searchterm={props.searchterm}
+                    />
                 )
             })}
         </PerfectScrollbar>

@@ -10,7 +10,7 @@ const NameSubjectFields = props => {
 
   useEffect(() => {
     checkIfContactExists(props.contactsResult.contacts);
-  }, [])
+  }, [props.contactsResult])
 
   const checkIfContactExists = contacts => {
     let match = false;
@@ -41,7 +41,7 @@ const NameSubjectFields = props => {
           }
         ]
       })
-      .then(res => console.log(res));
+      .then(() => setContactExists(true));
     }
 
     return window.gapi.client.people.people.createContact({
@@ -56,7 +56,7 @@ const NameSubjectFields = props => {
         }
       ]
     })
-    .then(res => console.log(res));
+    .then(() => setContactExists(true));
   }
 
   return (

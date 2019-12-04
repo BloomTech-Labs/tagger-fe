@@ -4,6 +4,22 @@
   height: 100%;
 }
 
+.contact-message-list {
+  overflow: auto;
+  position: relative;
+    margin: auto;
+  height: 100%;
+}
+
+.contact-menu-hidden {
+  display: none;
+}
+
+.contact-menu-display {
+  display: block;
+  width: 70%;
+
+}
 
  $margin: 0px;
  $text-width: 180px;
@@ -177,4 +193,16 @@
    > div {
      height: 50px;
    }
+ }
+
+ .inner-list-div {
+   display: flex;
+ }
+
+ .inner-inner-div {
+   width: 100%;
+ }
+
+ .messages-contact-pane {
+   display: flex;
  }

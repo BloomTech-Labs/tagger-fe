@@ -13,7 +13,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm }) => {
             }) } catch  (err) {  {
                 //Console log the contacts that have no email address listed. Right now we don't have a way to search contacts by anything other than their email address.
                 // console.log(err);
-                setSnippet("No search results available.")
+                // setSnippet("No search results available.")
             }};
     }, [])
 
@@ -31,7 +31,9 @@ const ContactCard = ({ contact, handleContactSearch, searchterm }) => {
         >
             <div className="user-text-container">
                 <h4>{contact.names[0].displayName}</h4>
-                <p>{snippet || "No messages were found."}</p>
+                <div className="user-card-snippet">{snippet 
+                // ||  "No messages were found."
+                    }</div>
             </div>
         </div>
     )

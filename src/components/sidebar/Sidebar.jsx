@@ -29,7 +29,7 @@ const Sidebar = (props) => {
     props.onLabelClick(label || { id: "" });
   }
 
-  const renderItems = (labelList) => {
+  const renderItems = labelList => {
     if (labelList.length === 0) {
       return <div />;
     }
@@ -40,6 +40,33 @@ const Sidebar = (props) => {
     }, []);
 
     const labelGroups = groupBy(labels, "type");
+
+    // This block of code will execute only if user account does not contain predefined tagger_Labels.
+    // Initially labels will not render but on refresh labels will appear.
+
+    if (!labelGroups.user) {
+      let taggerLabels = ["tagger_Finance", "tagger_Personal", "tagger_Productivity", "tagger_Promotions", "tagger_Security", "tagger_Shopping", "tagger_Social"]
+
+      taggerLabels.map(async label => {
+        await window.gapi.client.gmail.users.labels.create(
+          {
+            "userId": "me",
+            "labelListVisibility": "labelHide",
+            "messageListVisibility": "hide",
+            "name": label
+          }
+        )
+        .then(res => console.log(res));
+      })
+
+      return (
+        <React.Fragment>
+          {renderFolders(labelGroups.system)}
+        </React.Fragment>
+      );
+    }
+
+    // End block.
 
     const visibleLabels = labelGroups.user.filter(
       el =>
@@ -107,6 +134,35 @@ const Sidebar = (props) => {
   }
 
   const renderLabels = (labels) => {
+
+    // This iterates over the labels on the user's account and checks whether or not the predefined tagger_Labels exist.
+
+    let taggerLabels = ["tagger_Finance", "tagger_Personal", "tagger_Productivity", "tagger_Promotions", "tagger_Security", "tagger_Shopping", "tagger_Social"]
+
+    labels.map(label => {
+      taggerLabels.map((taggerLabel, index) => {
+        if (taggerLabel === label.name) {
+          taggerLabels.splice(index, 1);
+        }
+      })
+    })
+
+    // Adds tagger_Labels to user's Gmail account.
+
+    if (taggerLabels.length) {
+      taggerLabels.map(label => {
+        window.gapi.client.gmail.users.labels.create(
+          {
+            "userId": "me",
+            "labelListVisibility": "labelHide",
+            "messageListVisibility": "hide",
+            "name": label
+          }
+        )
+        .then(res => console.log(res));
+      })
+    }
+
     return (
       <React.Fragment>
         <li key="olders-nav-title" className="pl-2 nav-title">

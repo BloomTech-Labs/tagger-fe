@@ -1,0 +1,19 @@
+.contact-menu-container {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-evenly;
+    background: lightgrey;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    margin-left: 0.5rem;
+}
+
+.banner, .menu-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu-content {
+}

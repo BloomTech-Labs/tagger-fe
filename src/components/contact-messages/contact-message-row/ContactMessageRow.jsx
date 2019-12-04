@@ -1,13 +1,13 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import he from "he";
 import moment from "moment";
 import MesssageCheckbox from "../../content/message-list/message-row/MessageCheckbox";
 
 import NameSubjectFields from "../../content/message-list/message-row/NameSubjectFields";
 import AttachmentDateFields from "../../content/message-list/message-row/AttachmentDateFields";
 import {getNameEmail} from '../../../utils';
-
-//edit this to display just the user's messages, rendered differently.
+import '../contact-messages.scss';
 
 const MessageItem = (props) => {
 
@@ -56,27 +56,53 @@ const MessageItem = (props) => {
   const fromHeader = props.data.payload.headers.find(el => el.name.toUpperCase() === "FROM");
   let fromName = fromHeader ? getFromName(fromHeader.value) : "undefined";
 
-
+  let snippet = props.snippet;
+  if (snippet.length > 180) {
+    snippet = snippet.substring(0, 180);
+  }
 
   return (
-    <div className={`d-flex table-row-wrapper${selected}`}>
-      <MesssageCheckbox
-        selected={props.data.selected}
-        onChange={onSelectionChange}
-      />
-      <div
-        onClick={getMessage}
-        className={`table-row px-2 py-3${unread}`}
-      >
-        <NameSubjectFields fromName={fromName} subject={subject} />
-        <AttachmentDateFields
-          formattedDate={formattedDate}
-          hasAttachment={
-            props.data.payload.mimeType === "multipart/mixed"
-          }
-        />
-      </div>
-    </div>
+          //This commented code is from the original application....useful as a reference but we're building new cards.
+    // <div className={`d-flex table-row-wrapper${selected}`}>
+    //   <MesssageCheckbox
+    //     selected={props.data.selected}
+    //     onChange={onSelectionChange}
+    //   />
+    //   <div
+    //     onClick={getMessage}
+    //     className={`table-row px-2 py-3${unread}`}
+    //   >
+    //     <NameSubjectFields fromName={fromName} subject={subject} />
+    //     <AttachmentDateFields
+    //       formattedDate={formattedDate}
+    //       hasAttachment={
+    //         props.data.payload.mimeType === "multipart/mixed"
+    //       }
+    //     />
+    //   </div>
+    // </div>
+
+    <section className="message-tile">
+        <div className="message-card">
+          <div className="message-subject">
+            <NameSubjectFields fromName={fromName} subject={subject} />
+            <AttachmentDateFields
+                formattedDate={formattedDate}
+                hasAttachment={
+                    props.data.payload.mimeType === "multipart/mixed"
+                }/>
+          </div>
+          <div className="tagger-tag">Tagger Tag</div>
+          <div className="snippet">
+            {he.decode(snippet)}
+          </div>
+        </div>
+        <hr className="my-1" />
+        <div className="thread-count">
+          xyz more messages
+        </div>
+    </section>
+
   );
 }
 
