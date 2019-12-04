@@ -31,9 +31,9 @@ const ContactCard = ({ contact, handleContactSearch, searchterm }) => {
         >
             <div className="user-text-container">
                 <h4>{contact.names[0].displayName}</h4>
-                <p>{snippet 
+                <div className="user-card-snippet">{snippet 
                 // ||  "No messages were found."
-                    }</p>
+                    }</div>
             </div>
         </div>
     )

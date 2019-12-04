@@ -21,4 +21,9 @@
 .user-text-container {
     display: flex;
     flex-direction: column;
+
+    .user-card-snippet {
+        max-height: 3rem;
+        overflow: hidden;
+    }
 }
