@@ -285,9 +285,8 @@ const Main = (props) => {
               />
             </Switch>
           </article>
-
-          <ContactMenu/>
-
+            <ContactMenu
+                searchterm={searchterm}/>
         </section>
       </Fragment>
     );
