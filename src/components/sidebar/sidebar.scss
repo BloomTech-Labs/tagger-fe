@@ -2,6 +2,7 @@
   background-color: #f0f3f4;
   border-width: 0px 1px 1px 0px;
   border-color: #d9dfe2;
+  height: 100%;
   .sidebar {
     overflow-y: auto;
     overflow-x: hidden;
@@ -54,4 +55,8 @@
       }
     }
   }
+}
+
+.contact-view {
+  width: 16.75vw;
 }

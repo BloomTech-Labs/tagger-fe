@@ -168,17 +168,9 @@ if (!props.toggle) {
 } else {
   return (
     <React.Fragment>
-      <ListToolbar
-        nextToken={nextToken}
-        prevToken={prevToken}
-        navigateToNextPage={props.navigateToNextPage}
-        navigateToPrevPage={props.navigateToPrevPage}
-      />
-
       <PerfectScrollbar className="container-fluid no-gutters px-0 contact-message-list">
         {renderView()}
       </PerfectScrollbar>
-      <ListFooter messagesTotal={messagesTotal} />
     </React.Fragment>
     
   );
