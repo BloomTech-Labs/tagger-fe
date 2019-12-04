@@ -61,6 +61,7 @@ const MessageItem = (props) => {
   }
 
   return (
+          //This commented code is from the original application....useful as a reference but we're building new cards.
     // <div className={`d-flex table-row-wrapper${selected}`}>
     //   <MesssageCheckbox
     //     selected={props.data.selected}
