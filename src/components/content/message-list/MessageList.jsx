@@ -5,7 +5,7 @@ import MessageRow from "./message-row/MessageRow";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ContactMessageRow from '../../contact-messages/contact-message-row/ContactMessageRow';
-
+import ContactMenu from '../../contact-menu/ContactMenu';
 import ListToolbar from "./list-toolbar/ListToolbar";
 import ListFooter from "./list-footer/ListFooter";
 
@@ -63,17 +63,7 @@ const MessageList = (props) => {
     );
   }
 
-  const renderMessages = () => {
-    if (props.messagesResult.loading) {
-      return renderSpinner();
-    } else if (props.messagesResult.messages.length === 0) {
-      return (
-        <div className="p-4 text-center">
-          There are no messages with this label.
-        </div>
-      );
-    }
-
+  const mapThroughMsgs = () => {
     return props.messagesResult.messages.map(el => {
       if (!props.toggle) {
       return (
@@ -89,18 +79,46 @@ const MessageList = (props) => {
         )
       } 
       else {
-        console.log(el);
         return (
+          <div>
           <ContactMessageRow
           data={el}
           key={el.id}
           onSelectionChange={onSelectionChange}
           onClick={props.getMessage}
-          snippet={el.snippet}
-        />
+
+          snippet={el.snippet} />
+        </div>
+
         )
       }
     });
+  }
+
+  // const contactMenu = () => {
+  //   if (!props.toggle || !props.searchterm) {
+  //     return <div className="contact-menu-hidden"></div>;
+  //   } else {
+  //     return (
+  //     <div className="contact-menu-display">
+  //       <ContactMenu/>
+  //     </div>
+  //     )
+  //   }
+  // }
+
+  const renderMessages = () => {
+    if (props.messagesResult.loading) {
+      return renderSpinner();
+    } else if (props.messagesResult.messages.length === 0) {
+      return (
+        <div className="p-4 text-center">
+          There are no messages with this label.
+        </div>
+      );
+    } else {
+      return mapThroughMsgs()
+    }
   }
 
 
@@ -168,9 +186,11 @@ if (!props.toggle) {
 } else {
   return (
     <React.Fragment>
-      <PerfectScrollbar className="container-fluid no-gutters px-0 contact-message-list">
-        {renderView()}
-      </PerfectScrollbar>
+
+        <PerfectScrollbar className="container-fluid no-gutters px-0 contact-message-list">
+          {renderView()}
+        </PerfectScrollbar>
+    
     </React.Fragment>
     
   );
