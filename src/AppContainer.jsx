@@ -4,10 +4,8 @@ import Main from "./components/main/Main";
 import Login from "./components/login/Login";
 import Authenticating from "./components/authenticating/Authenticating";
 import 'react-perfect-scrollbar/dist/css/styles.css';
-
 import { signOut, signIn, checkSignInStatus, sendAuth } from "./api/authentication";
 import { mountScripts } from "./api/scripts";
-
 import {
   SIGNED_OUT,
   SIGNED_IN,
@@ -15,21 +13,16 @@ import {
   AUTH_FAIL,
   AUTH_IN_PROGRESS
 } from "./constants";
-
 const AppContainer = (props) => {
   const [signInStatus, setSignInStatus] = useState(SIGNED_OUT);
   const [googleUser, setGoogleUser] = useState(undefined);
-
   const [id_token, setId_Token] = useState(undefined);
-
   useEffect(() => {
     mountScripts().then(init);
   }, [])
-
   const init = () => {
     window.gapi.load("client:auth2", initClient);
   }
-
   const initClient = () => {
     checkSignInStatus()
     .then(onSignInSuccess)
@@ -38,10 +31,12 @@ const AppContainer = (props) => {
     });
   }
 
+
   const onClick = () => {
     const googleAuthInstance = window.gapi.auth2.getAuthInstance();
     googleAuthInstance.grantOfflineAccess().then(res => onSignIn(res));
   }
+
 
   const onSignout = () => {
     props.signOut();
@@ -51,15 +46,12 @@ const AppContainer = (props) => {
     console.log(res.code);
     signIn().then(onSignInSuccess);
   }
-
   const onSignInSuccess = (googleUser) => {
     setSignInStatus(AUTH_SUCCESS);
     setGoogleUser(googleUser);
     sendAuth(id_token);
   }
-
   const renderView = () => {
-
     if (signInStatus === AUTH_SUCCESS) {
       return <Main googleUser={googleUser} />;
     } else if (signInStatus === AUTH_IN_PROGRESS) {
@@ -68,7 +60,6 @@ const AppContainer = (props) => {
       return <Login onSignIn={onClick} />;
     }
   }
-
   return (
     <React.Fragment>
       {props.location.pathname === "/" ? (
@@ -79,5 +70,4 @@ const AppContainer = (props) => {
     </React.Fragment>
   );
 }
-
 export default withRouter(AppContainer);
