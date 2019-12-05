@@ -4,11 +4,13 @@ import Main from "./components/main/Main";
 import Login from "./components/login/Login";
 import Authenticating from "./components/authenticating/Authenticating";
 import 'react-perfect-scrollbar/dist/css/styles.css';
-import { signOut, signIn, checkSignInStatus, sendAuth } from "./api/authentication";
+import { 
+  // signOut, 
+  signIn, checkSignInStatus, sendAuth } from "./api/authentication";
 import { mountScripts } from "./api/scripts";
 import {
   SIGNED_OUT,
-  SIGNED_IN,
+  // SIGNED_IN,
   AUTH_SUCCESS,
   AUTH_FAIL,
   AUTH_IN_PROGRESS
@@ -38,9 +40,9 @@ const AppContainer = (props) => {
   }
 
 
-  const onSignout = () => {
-    props.signOut();
-  }
+  // const onSignout = () => {
+  //   props.signOut();
+  // }
 
   const onSignIn = (res) => {
     console.log(res.code);
