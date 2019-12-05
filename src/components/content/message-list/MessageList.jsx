@@ -74,13 +74,10 @@ const MessageList = (props) => {
         />
       )} 
       else if (!props.searchterm) {
-        return (
-        <div></div>
-        )
+        return;
       } 
       else {
         return (
-          <div>
           <ContactMessageRow
           data={el}
           key={el.id}
@@ -88,7 +85,6 @@ const MessageList = (props) => {
           onClick={props.getMessage}
 
           snippet={el.snippet} />
-        </div>
 
         )
       }

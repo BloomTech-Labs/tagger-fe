@@ -6,8 +6,8 @@ const ContactMenu = (props) => {
         return (
             <div className="contact-menu-container">
                 <div className="banner">
-                    <img alt="Headshot of John Miller"/>
-                    <h2>John Miller</h2>
+                    <img alt={`Headshot of ${props.searchterm}`}/>
+                    <h2>{props.searchterm}</h2>
                 </div>
     
                 <div className="menu-content">
