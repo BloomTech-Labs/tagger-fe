@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import he from "he";
 import moment from "moment";
 import MesssageCheckbox from "../../content/message-list/message-row/MessageCheckbox";
 
@@ -83,22 +84,22 @@ const MessageItem = (props) => {
 
     <section className="message-tile">
         <div className="message-card">
-            <div className="message-subject">
-                <NameSubjectFields fromName={fromName} subject={subject} />
-                <AttachmentDateFields
-                    formattedDate={formattedDate}
-                    hasAttachment={
-                        props.data.payload.mimeType === "multipart/mixed"
-                    }/>
-            </div>
-            <div className="tagger-tag">Tagger Tag</div>
-                    <div className="snippet">
-                        {snippet}... 
-                    </div>
+          <div className="message-subject">
+            <NameSubjectFields fromName={fromName} subject={subject} />
+            <AttachmentDateFields
+                formattedDate={formattedDate}
+                hasAttachment={
+                    props.data.payload.mimeType === "multipart/mixed"
+                }/>
+          </div>
+          <div className="tagger-tag">Tagger Tag</div>
+          <div className="snippet">
+            {he.decode(snippet)}
+          </div>
         </div>
-
+        <hr className="my-1" />
         <div className="thread-count">
-                    xyz more messages
+          xyz more messages
         </div>
     </section>
 
