@@ -17,6 +17,7 @@ const NameSubjectFields = props => {
 
     contacts.map(contact => {
       if (props.fromName.name === contact.names[0].displayName) {
+        
         return match = true;
       }
     })

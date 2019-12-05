@@ -27,7 +27,7 @@ const MessageItem = (props) => {
                   "UNREAD"
                 ]
               })
-              .then(() => {  
+              .then(() => {
               })
         }
       })

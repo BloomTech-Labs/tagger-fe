@@ -5,7 +5,7 @@ import MessageRow from "./message-row/MessageRow";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ContactMessageRow from '../../contact-messages/contact-message-row/ContactMessageRow';
-import ContactMenu from '../../contact-menu/ContactMenu';
+// import ContactMenu from '../../contact-menu/ContactMenu';
 import ListToolbar from "./list-toolbar/ListToolbar";
 import ListFooter from "./list-footer/ListFooter";
 
@@ -19,8 +19,8 @@ const ViewMode = {
 
 const MessageList = (props) => {
   const [viewMode, setViewMode] = useState(ViewMode.LIST);
-  const [contentMessageId, setContentMessageId] = useState(undefined);
-  const [currentLabel, setCurrentLabel] = useState("");
+  // const [contentMessageId, setContentMessageId] = useState(undefined);
+  // const [currentLabel, setCurrentLabel] = useState("");
   
   useEffect(() => {
     const searchParam = props.location.search;

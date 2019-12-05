@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import he from "he";
 import moment from "moment";
-import MesssageCheckbox from "../../content/message-list/message-row/MessageCheckbox";
+// import MesssageCheckbox from "../../content/message-list/message-row/MessageCheckbox";
 
 import NameSubjectFields from "../../content/message-list/message-row/NameSubjectFields";
 import AttachmentDateFields from "../../content/message-list/message-row/AttachmentDateFields";
