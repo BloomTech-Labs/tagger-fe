@@ -268,7 +268,6 @@ const Main = (props) => {
           {/* <ContactMessages>
 
           </ContactMessages> */}
-
           
           <article className="d-flex flex-column position-relative">
             <Switch>

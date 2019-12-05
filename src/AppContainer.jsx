@@ -38,11 +38,17 @@ const AppContainer = (props) => {
     });
   }
 
+  const onClick = () => {
+    const googleAuthInstance = window.gapi.auth2.getAuthInstance();
+    googleAuthInstance.grantOfflineAccess().then(res => onSignIn(res));
+  }
+
   const onSignout = () => {
     props.signOut();
   }
 
-  const onSignIn = () => {
+  const onSignIn = (res) => {
+    console.log(res.code);
     signIn().then(onSignInSuccess);
   }
 
@@ -59,7 +65,7 @@ const AppContainer = (props) => {
     } else if (signInStatus === AUTH_IN_PROGRESS) {
       return <Authenticating />;
     } else {
-      return <Login onSignIn={onSignIn} />;
+      return <Login onSignIn={onClick} />;
     }
   }
 
