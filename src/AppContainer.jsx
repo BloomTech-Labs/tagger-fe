@@ -30,13 +30,18 @@ const AppContainer = (props) => {
       setSignInStatus(AUTH_FAIL)
     });
   }
+
+
   const onClick = () => {
     const googleAuthInstance = window.gapi.auth2.getAuthInstance();
     googleAuthInstance.grantOfflineAccess().then(res => onSignIn(res));
   }
+
+
   const onSignout = () => {
     props.signOut();
   }
+
   const onSignIn = (res) => {
     console.log(res.code);
     signIn().then(onSignInSuccess);
