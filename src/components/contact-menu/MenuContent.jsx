@@ -6,13 +6,13 @@ const MenuContent = props => {
     const [latestMessageId, setLatestMessageId] = useState('');
     const [numReceivedMessages, setNumReceivedMessages] = useState(0);
     const [numSentMessages, setNumSentMessages] = useState(0);
-    const [lastInteraction, setLastInteraction] = useState();
+    const [lastInteraction, setLastInteraction] = useState('Calculating...');
 
     useEffect(() => {
         getReceivedMessages(`from:${props.email}`);
         getSentMessages(`to:${props.email}`);
         getLastInteractionData(latestMessageId);
-    })
+    }, [props])
 
     const getReceivedMessages = async (q) => {
         return await window.gapi.client.gmail.users.messages
