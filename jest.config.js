@@ -79,7 +79,10 @@ module.exports = {
   // ],
 
   // A map from regular expressions to module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+  moduleFileExtensions: ['js', 'jsx', 'json', 'vue'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1'
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -167,7 +170,16 @@ module.exports = {
   // timers: "real",
 
   // A map from regular expressions to paths to transformers
-  // transform: null,
+  transform: {
+    '^.+\\.vue$': 'vue-jest',
+    '^.+\\.(js|jsx)?$': 'babel-jest',
+    ".+\\.(css|styl|less|sass|scss)$": "jest-transform-css"
+  },
+  testMatch: [
+    '<rootDir>/(tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))'
+  ],
+
+  transformIgnorePatterns: ["/node_modules/Header.jsx.+\\.js$"]
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
