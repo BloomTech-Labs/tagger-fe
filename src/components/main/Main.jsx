@@ -187,6 +187,7 @@ const Main = (props) => {
           getLabelMessages={getLabelMessages} 
           searchQuery={props.searchQuery}
           toggleDash={toggleDash}
+          toggle={toggle}
         />
 
         <section
