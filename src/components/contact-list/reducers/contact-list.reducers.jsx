@@ -7,7 +7,6 @@ const defaultContactsState = {
 export const contactsResult = (state = defaultContactsState, action) => {
     switch(action.type) {
         case GET_CONTACTS:
-                console.log(action.payload);
             return {
                 ...state,
                 contacts: action.payload

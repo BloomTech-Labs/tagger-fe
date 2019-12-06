@@ -107,7 +107,8 @@ const Compose = (props) => {
       subject: props.subject || "",
       content: props.content || ""
     })
-  }, []);
+    //Added all the above properties to dependency array. React suggested we add them, but if this breaks anything then feel free to remove from line 111
+  }, [props]);
 
   return (
     <React.Fragment>
