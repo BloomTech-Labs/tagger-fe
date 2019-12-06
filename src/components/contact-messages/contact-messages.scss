@@ -12,38 +12,32 @@
 }
 
 .message-subject {
+    font-weight: bold;
+    font-size: 1.125rem;
     display: flex;
     justify-content: space-between;
     width: 100%;
 
-    div div {
+    .text-2 {
         display: flex;
-        flex-direction: row-reverse;
-        justify-content: flex-end;
+
+        .from-name {
+            display: none;
+        }
+    }
+
+    .num {
+        padding-right: 0!important;
     }
 }
 
-.message-subject div div:last-child {
-    text-align: left;
-    font-weight: bold;
-    font-size: 14px;
-    padding-right: 10px;
-}
-
-.message-subject > .text-4 >  div > .from-name {
-    width: 30px;
-}
-
-.message-subject > .num-4 > div > div:first-child {
-    display: none;
-}
-
 .tagger-tag {
-    width: 15%;
+    width: fit-content;
     background: darkgrey;
     border-radius: 10px;
     text-align: center;
     margin: 12px 0;
+    padding: 0.25rem 0.75rem;
 }
 
 .snippet {
