@@ -5,14 +5,11 @@
     // justify-content: space-evenly;
     background: lightgrey;
     border: 1px solid lightgrey;
-    margin-left: 0.5rem;
+    margin-left: 5px;
 }
 
 .banner, .menu-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.menu-content {
 }
