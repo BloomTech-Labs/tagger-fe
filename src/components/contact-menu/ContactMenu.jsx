@@ -1,39 +1,30 @@
 import React from 'react';
+
+import MenuContent from "./MenuContent";
+
 import "./contact-menu.scss"
 
 const ContactMenu = (props) => {
-    const contactMenu = () => {
+
+    const renderContactMenu = () => {
         return (
             <div className="contact-menu-container">
                 <div className="banner">
-                    <img alt="Headshot of John Miller"/>
-                    <h2>John Miller</h2>
+                    <img alt={`Headshot of ${props.searchterm.name}`}/>
+                    <h2>{props.searchterm.name}</h2>
                 </div>
-    
-                <div className="menu-content">
-                    <h4>Total Messages</h4>
-                    <p>303</p>
-    
-                    <h4>Sent Messages</h4>
-                    <p>130</p>
-    
-                    <h4>Received Messages</h4>
-                    <p>173</p>
-    
-                    <h4>Average Message Length</h4>
-                    <p>73 words</p>
-    
-                    <h4>Last Interaction</h4>
-                    <p>2 months ago</p>
-                </div>
+
+                <MenuContent
+                    email={props.searchterm.email}
+                />
             </div>
         );
     }
 
     if (props.searchterm) {
-        return contactMenu();
+        return renderContactMenu();
     } else {
-        return <div></div>;
+        return null;
     }
 }
 
