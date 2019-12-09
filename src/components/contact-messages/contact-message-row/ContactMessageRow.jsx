@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import he from "he";
 import moment from "moment";
@@ -10,8 +10,11 @@ import {getNameEmail} from '../../../utils';
 import '../contact-messages.scss';
 
 const MessageItem = (props) => {
+  const [threadLength, setThreadLength] = useState(0);
 
-  console.log(props);
+  useEffect(() => {
+    getThread(props.data.threadId);
+  }, [props])
 
   const onSelectionChange = (evt) => {
     props.onSelectionChange(evt.target.checked, props.data.id);
@@ -46,6 +49,17 @@ const MessageItem = (props) => {
       }
     }
     return formattedDate;
+  }
+
+  const getThread = id => {
+    window.gapi.client.gmail.users.threads.get({
+      id: id,
+      userId: "me",
+      format: "full"
+    })
+      .then(res => {
+        setThreadLength(res.result.messages.length);
+      })
   }
 
   const receivedHeader = props.data.payload.headers.find(el => el.name.toUpperCase() === "X-RECEIVED");
@@ -99,10 +113,15 @@ const MessageItem = (props) => {
             {he.decode(snippet)}
           </div>
         </div>
-        <hr className="my-1" />
-        <div className="thread-count">
-          xyz more messages
-        </div>
+        {threadLength > 1 ? (
+          <>
+            <hr className="my-1" />
+            <div className="thread-count">
+              {threadLength} more messages
+            </div>
+          </>
+        ) : null}
+          
     </section>
 
   );
