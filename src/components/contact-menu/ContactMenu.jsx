@@ -16,6 +16,7 @@ const ContactMenu = (props) => {
 
                 <MenuContent
                     email={props.searchterm.email}
+                    name={props.searchterm.name}
                 />
             </div>
         );
