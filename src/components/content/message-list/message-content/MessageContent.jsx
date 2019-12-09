@@ -15,6 +15,7 @@ import MessageToolbar from "../message-toolbar/MessageToolbar";
 import "./messageContent.scss";
 
 const MessageContent = (props) => {
+
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [modal, setModal] = useState();
   
