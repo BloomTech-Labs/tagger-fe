@@ -7,7 +7,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history }) => {
 
     useEffect(() => {
         try {
-        getContactLatestSnippet(`from:${contact.emailAddresses[0].value}`)
+        getContactLatestSnippet(`from:${contact.emailAddresses ? contact.emailAddresses[0].value : contact.names[0].displayName}`)
             .then(res => {
                 res && setSnippet(he.decode(res));
             }) } catch  (err)   {
@@ -16,7 +16,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history }) => {
                 // setSnippet("No search results available.")
             };
             //Added 'contact.emailAddresses' to the dependency array on line 19. Should update this component every time a contact's email addresses change...but remove this if there's an error.
-    }, [contact.emailAddresses])
+    }, [contact])
 
     const handleSearch = () => {
 

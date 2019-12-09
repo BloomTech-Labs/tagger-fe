@@ -22,8 +22,6 @@ const ContactMessageTags = ({ labelIds }) => {
         })
     }
 
-    console.log(tags);
-
     return (
         <div className="tags-list">
             {tags.map(tag => {
