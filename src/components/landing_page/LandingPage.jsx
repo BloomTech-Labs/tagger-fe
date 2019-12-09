@@ -22,7 +22,7 @@ const LandingPage = () => {
                     <ul>
                     <li><a href="#">Home</a></li>
                     <li><a href="#">About</a></li>   
-                    <li><a href="#">Try It</a></li>  
+                    <li><a href="/inbox">Try It</a></li>  
                     </ul>  
                 </div>
             </nav>

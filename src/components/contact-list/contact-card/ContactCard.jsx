@@ -19,7 +19,8 @@ const ContactCard = ({ contact, handleContactSearch, searchterm }) => {
     }, [contact.emailAddresses])
 
     const handleSearch = () => {
-        searchterm({ name: contact.names[0].displayName, email: contact.emailAddresses[0].value })
+        searchterm({ name: contact.names[0].displayName, 
+            email: (contact.emailAddresses ? contact.emailAddresses[0].value : "none")})
         handleContactSearch(contact.names[0].displayName);
     }
 
