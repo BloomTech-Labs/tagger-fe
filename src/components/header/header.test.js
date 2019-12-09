@@ -7,6 +7,11 @@ import Header from './Header';
 
 //  https://github.com/facebook/jest/issues/6229
 // ^^maybe this will help?
+// https://www.robinwieruch.de/react-testing-jest
+// ^^I like this walkthrough
+// https://www.sitepoint.com/test-react-components-jest/
+// ^^another good walkthrough
+
 
 afterEach(rtl.cleanup);
 
