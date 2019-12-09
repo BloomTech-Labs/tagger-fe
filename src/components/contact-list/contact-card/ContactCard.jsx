@@ -19,9 +19,12 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history }) => {
     }, [contact.emailAddresses])
 
     const handleSearch = () => {
+
         history.push('/inbox');
 
-        searchterm({ name: contact.names[0].displayName, email: contact.emailAddresses[0].value })
+        searchterm({ name: contact.names[0].displayName, 
+            email: (contact.emailAddresses ? contact.emailAddresses[0].value : "none")})
+
         handleContactSearch(contact.names[0].displayName);
     }
 

@@ -187,19 +187,16 @@ const Main = (props) => {
           getLabelMessages={getLabelMessages} 
           searchQuery={props.searchQuery}
           toggleDash={toggleDash}
-          toggle={toggle}
         />
 
         <section
         className="main hbox space-between">
-          <div className="dashboard-view">
-            <Sidebar
-              getLabelList={getLabelList}
-              pathname={props.location.pathname}
-              labelsResult={props.labelsResult}
-              onLabelClick={loadLabelMessages}
-            />
-          </div>
+          <Sidebar
+            getLabelList={getLabelList}
+            pathname={props.location.pathname}
+            labelsResult={props.labelsResult}
+            onLabelClick={loadLabelMessages}
+          />
 
           {/* <ContactList
             searchQuery={props.searchQuery}
@@ -246,13 +243,14 @@ const Main = (props) => {
         <section className="main hbox">
           
           {/* Is the contact-view div going to break this component? It's left over from a merge conflict. */}
-          <div className="contact-view">  
-            <Sidebar
-              getLabelList={getLabelList}
-              pathname={props.location.pathname}
-              labelsResult={props.labelsResult}
-              onLabelClick={loadLabelMessages}
-            />
+          <div className="contact-view"> 
+          
+          <Sidebar
+            getLabelList={getLabelList}
+            pathname={props.location.pathname}
+            labelsResult={props.labelsResult}
+            onLabelClick={loadLabelMessages}
+          />
           </div>
 
           <ContactList
@@ -286,9 +284,8 @@ const Main = (props) => {
               />
             </Switch>
           </article>
-          <ContactMenu
-            searchterm={searchterm}
-          />
+            <ContactMenu
+                searchterm={searchterm}/>
         </section>
       </Fragment>
     );
