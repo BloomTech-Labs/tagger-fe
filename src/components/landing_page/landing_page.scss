@@ -1,0 +1,80 @@
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+//*********************** NAVBAR ***********************//
+.landing-nav {
+    flex: none !important;
+    height: 5%;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+
+    .logo {
+        width: 25%;
+        font-size: 30px;
+        vertical-align:middle;
+        line-height:35px;
+        padding-right: 40px;
+    }
+    ul {
+        display: flex;
+        justify-content: flex-end;
+        
+    }
+
+    ul li {
+        list-style-type: none;
+        display:inline;
+        vertical-align:middle;
+        line-height:35px;
+    }
+
+    ul li a {
+        align-items: center;
+        margin-right: 10px;
+        text-align: center;
+        font-size: 15px;
+    }
+}
+
+
+//*********************** HOMEPAGE CONTENT ***********************//
+.landing-content {
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.landing-section {
+    margin: 1.5% 0;
+    height: 100%;
+}
+
+.landing-banner {
+    background: purple;
+    height: 40%;
+
+    img {
+        width: 95%;
+    }
+}
+
+.landing-section1 {
+    background: teal;
+    display: flex;
+    flex-direction: column;
+}
+
+.landing-section2 {
+    background: orange;
+}
+
+.landing-feature {
+    width: 100%;
+    margin: 1% 0;
+    height: 32%;
+    border: 1px solid black;
+}
