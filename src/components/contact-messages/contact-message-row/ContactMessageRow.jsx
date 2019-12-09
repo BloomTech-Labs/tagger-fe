@@ -4,12 +4,14 @@ import he from "he";
 import moment from "moment";
 // import MesssageCheckbox from "../../content/message-list/message-row/MessageCheckbox";
 
+import ContactMessageTags from "./ContactMessageTags";
 import NameSubjectFields from "../../content/message-list/message-row/NameSubjectFields";
 import AttachmentDateFields from "../../content/message-list/message-row/AttachmentDateFields";
 import {getNameEmail} from '../../../utils';
 import '../contact-messages.scss';
 
 const MessageItem = (props) => {
+
   const [threadLength, setThreadLength] = useState(0);
 
   useEffect(() => {
@@ -108,7 +110,7 @@ const MessageItem = (props) => {
                     props.data.payload.mimeType === "multipart/mixed"
                 }/>
           </div>
-          <div className="tagger-tag">Tagger Tag</div>
+          <ContactMessageTags labelIds={props.data.labelIds} />
           <div className="snippet">
             {he.decode(snippet)}
           </div>
