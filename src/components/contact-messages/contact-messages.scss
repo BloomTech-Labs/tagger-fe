@@ -7,8 +7,8 @@
 }
 
 .message-card {
-    height: 150px;
-    padding-top: 15px;
+    height: fit-content;
+    padding: 1.5rem 0;
 }
 
 .message-subject {
@@ -31,20 +31,26 @@
     }
 }
 
-.tagger-tag {
-    width: fit-content;
-    background: darkgrey;
-    border-radius: 10px;
-    text-align: center;
-    margin: 12px 0;
-    padding: 0.25rem 0.75rem;
+.tags-list {
+    display: flex;
+
+    .tagger-tag {
+        width: fit-content;
+        background: darkgrey;
+        border-radius: 10px;
+        text-align: center;
+        margin: 1rem 0;
+        margin-right: 0.5rem;
+        padding: 0.25rem 0.75rem;
+    }
 }
+
 
 .snippet {
     white-space: normal;
+    margin: 1rem 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin: 12px 0;
 }
 
 .thread-count {

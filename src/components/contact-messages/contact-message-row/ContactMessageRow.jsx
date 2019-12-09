@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import he from "he";
 import moment from "moment";
 // import MesssageCheckbox from "../../content/message-list/message-row/MessageCheckbox";
 
+import ContactMessageTags from "./ContactMessageTags";
 import NameSubjectFields from "../../content/message-list/message-row/NameSubjectFields";
 import AttachmentDateFields from "../../content/message-list/message-row/AttachmentDateFields";
 import {getNameEmail} from '../../../utils';
 import '../contact-messages.scss';
 
 const MessageItem = (props) => {
+
+  const [threadLength, setThreadLength] = useState(0);
+
+  useEffect(() => {
+    getThread(props.data.threadId);
+  }, [props])
 
   const onSelectionChange = (evt) => {
     props.onSelectionChange(evt.target.checked, props.data.id);
@@ -44,6 +51,17 @@ const MessageItem = (props) => {
       }
     }
     return formattedDate;
+  }
+
+  const getThread = id => {
+    window.gapi.client.gmail.users.threads.get({
+      id: id,
+      userId: "me",
+      format: "full"
+    })
+      .then(res => {
+        setThreadLength(res.result.messages.length);
+      })
   }
 
   const receivedHeader = props.data.payload.headers.find(el => el.name.toUpperCase() === "X-RECEIVED");
@@ -92,15 +110,20 @@ const MessageItem = (props) => {
                     props.data.payload.mimeType === "multipart/mixed"
                 }/>
           </div>
-          <div className="tagger-tag">Tagger Tag</div>
+          <ContactMessageTags labelIds={props.data.labelIds} />
           <div className="snippet">
             {he.decode(snippet)}
           </div>
         </div>
-        <hr className="my-1" />
-        <div className="thread-count">
-          xyz more messages
-        </div>
+        {threadLength > 1 ? (
+          <>
+            <hr className="my-1" />
+            <div className="thread-count">
+              {threadLength} more messages
+            </div>
+          </>
+        ) : null}
+          
     </section>
 
   );

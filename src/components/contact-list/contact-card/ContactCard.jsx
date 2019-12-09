@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import he from 'he';
 import { getContactLatestSnippet } from "../../../api";
 
-const ContactCard = ({ contact, handleContactSearch, searchterm }) => {
+const ContactCard = ({ contact, handleContactSearch, searchterm, history }) => {
     const [snippet, setSnippet] = useState('');
 
     useEffect(() => {
@@ -19,8 +19,12 @@ const ContactCard = ({ contact, handleContactSearch, searchterm }) => {
     }, [contact.emailAddresses])
 
     const handleSearch = () => {
+
+        history.push('/inbox');
+
         searchterm({ name: contact.names[0].displayName, 
             email: (contact.emailAddresses ? contact.emailAddresses[0].value : "none")})
+
         handleContactSearch(contact.names[0].displayName);
     }
 

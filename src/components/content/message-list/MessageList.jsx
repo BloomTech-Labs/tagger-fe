@@ -64,30 +64,52 @@ const MessageList = (props) => {
   }
 
   const mapThroughMsgs = () => {
+    function removeDuplicates(originalArray, objKey) {
+      var trimmedArray = [];
+      var values = [];
+      var value;
+    
+      for (var i = 0; i < originalArray.length; i++) {
+        value = originalArray[i][objKey];
+    
+        if (values.indexOf(value) === -1) {
+          trimmedArray.push(originalArray[i]);
+          values.push(value);
+        }
+      }
+    
+      return trimmedArray;
+    }
+
+    const messagesUniqueThreadIds = removeDuplicates(props.messagesResult.messages, 'threadId');
+
+    if (props.toggle && props.searchterm) {
+      return messagesUniqueThreadIds.map(el => {
+        return (
+          <ContactMessageRow
+            data={el}
+            key={el.id}
+            onSelectionChange={onSelectionChange}
+            onClick={props.getMessage}
+  
+            snippet={el.snippet}
+          />
+        )
+      })
+    }
+
     return props.messagesResult.messages.map(el => {
       if (!props.toggle) {
-      return (
-        <MessageRow
-          data={el}
-          key={el.id}
-          onSelectionChange={onSelectionChange}
-        />
+        return (
+          <MessageRow
+            data={el}
+            key={el.id}
+            onSelectionChange={onSelectionChange}
+          />
       )} 
       else if (!props.searchterm) {
         return;
       } 
-      else {
-        return (
-          <ContactMessageRow
-          data={el}
-          key={el.id}
-          onSelectionChange={onSelectionChange}
-          onClick={props.getMessage}
-
-          snippet={el.snippet} />
-
-        )
-      }
     });
   }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Route } from "react-router-dom";
 import PerfectScrollbar from "react-perfect-scrollbar";
 
 import { connect } from "react-redux";
@@ -30,12 +31,21 @@ const ContactList = (props) => {
         <PerfectScrollbar className="contact-list-container">
             {props.contactsResult.contacts.map(contact => {
                 return (
-                    <ContactCard
-                        key={contact.names[0].metadata.source.id}
-                        contact={contact}
-                        handleContactSearch={handleContactSearch}
-                        searchterm={props.searchterm}
-                    />
+                    <Route
+                      key={contact.names[0].metadata.source.id}
+                      path={'/'}
+                      render={routeProps => {
+                        return (
+                          <ContactCard
+                            {...routeProps}
+                            contact={contact}
+                            handleContactSearch={handleContactSearch}
+                            searchterm={props.searchterm}
+                          />
+                        )
+                      }}
+                    >
+                    </Route>
                 )
             })}
         </PerfectScrollbar>

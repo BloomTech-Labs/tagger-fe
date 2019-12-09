@@ -280,7 +280,7 @@ const Main = (props) => {
               <Route
                 exact
                 path="/:id([a-zA-Z0-9]+)"
-                component={MessageContent}
+                render={(props) => <MessageContent {...props} toggle={toggle} />}
               />
             </Switch>
           </article>
