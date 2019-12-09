@@ -11,6 +11,8 @@ import '../contact-messages.scss';
 
 const MessageItem = (props) => {
 
+  console.log(props);
+
   const onSelectionChange = (evt) => {
     props.onSelectionChange(evt.target.checked, props.data.id);
   }
