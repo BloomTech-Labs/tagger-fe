@@ -4,6 +4,10 @@
     border: 1px solid rgba(128,128,128,0.25);
     padding: 0 2rem;
     width: 100%;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .message-card {

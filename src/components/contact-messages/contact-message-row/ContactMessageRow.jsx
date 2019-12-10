@@ -15,7 +15,7 @@ const MessageItem = (props) => {
   const [threadLength, setThreadLength] = useState(0);
 
   useEffect(() => {
-    getThread(props.data.threadId);
+    getThreadLength(props.data.threadId);
   }, [props])
 
   const onSelectionChange = (evt) => {
@@ -24,6 +24,22 @@ const MessageItem = (props) => {
 
   const getMessage = (evt) => {
     props.history.push(`/${props.data.id}`);
+    if (props.data.labelIds) {
+      props.data.labelIds.map(labelId => {
+        if (labelId === "UNREAD") {
+          window.gapi.client.gmail.users.messages
+              .modify({
+                "userId": "me",
+                "id": props.data.id,
+                "removeLabelIds": [
+                  "UNREAD"
+                ]
+              })
+              .then(() => {
+              })
+        }
+      })
+    }
   }
 
   const getFromName = (from) => {
@@ -53,7 +69,7 @@ const MessageItem = (props) => {
     return formattedDate;
   }
 
-  const getThread = id => {
+  const getThreadLength = id => {
     window.gapi.client.gmail.users.threads.get({
       id: id,
       userId: "me",
@@ -100,7 +116,10 @@ const MessageItem = (props) => {
     //   </div>
     // </div>
 
-    <section className="message-tile">
+      <section
+        className="message-tile"
+        onClick={getMessage}
+      >
         <div className="message-card">
           <div className="message-subject">
             <NameSubjectFields fromName={fromName} subject={subject} />
