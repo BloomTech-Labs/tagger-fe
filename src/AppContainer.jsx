@@ -3,6 +3,7 @@ import { Redirect, withRouter } from "react-router-dom";
 import Main from "./components/main/Main";
 import Login from "./components/login/Login";
 import Authenticating from "./components/authenticating/Authenticating";
+import LandingPage from './components/landing_page/LandingPage';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { 
   // signOut, 
@@ -15,6 +16,8 @@ import {
   AUTH_FAIL,
   AUTH_IN_PROGRESS
 } from "./constants";
+
+
 const AppContainer = (props) => {
   const [signInStatus, setSignInStatus] = useState(SIGNED_OUT);
   const [googleUser, setGoogleUser] = useState(undefined);
@@ -48,11 +51,13 @@ const AppContainer = (props) => {
     console.log(res.code);
     signIn().then(onSignInSuccess);
   }
+
   const onSignInSuccess = (googleUser) => {
     setSignInStatus(AUTH_SUCCESS);
     setGoogleUser(googleUser);
     sendAuth(id_token);
   }
+
   const renderView = () => {
     if (signInStatus === AUTH_SUCCESS) {
       return <Main googleUser={googleUser} />;
@@ -62,10 +67,11 @@ const AppContainer = (props) => {
       return <Login onSignIn={onClick} />;
     }
   }
+
   return (
     <React.Fragment>
       {props.location.pathname === "/" ? (
-        <Redirect to="/inbox" />
+        <LandingPage />
       ) : (
         renderView()
       )}
