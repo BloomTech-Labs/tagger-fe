@@ -9,7 +9,6 @@ const MenuContent = props => {
     const [lastInteraction, setLastInteraction] = useState('Calculating...');
 
     useEffect(() => {
-        console.log("Pros Email: ", props.email, "Props name: ", props.name);
         getReceivedMessages( (!props.email === "none") ? `from:${props.email}` : `from:${props.name}`);
         getSentMessages(`to:${props.email}`);
         getLastInteractionData(latestMessageId);
