@@ -41,6 +41,14 @@ const Sidebar = (props) => {
 
     const labelGroups = groupBy(labels, "type");
 
+    if (!labelGroups.user) {
+      return (
+        <React.Fragment>
+          {renderFolders(labelGroups.system)}
+        </React.Fragment>
+      )
+    }
+
     const visibleLabels = labelGroups.user.filter(
       el =>
         //el.labelListVisibility === "labelShow" ||
