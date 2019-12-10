@@ -17,21 +17,26 @@ const ContactList = (props) => {
       performSearch();
     }
   
-    const performSearch = () => {
-      const searchParams = {}
-      if (!props.searchQuery || props.searchQuery === "") {
-        searchParams.labelIds = ["INBOX"];
-      }
-      props.getLabelMessages({...searchParams})
-    };
+  const performSearch = () => {
+    const searchParams = {}
+    if (!props.searchQuery || props.searchQuery === "") {
+      searchParams.labelIds = ["INBOX"];
+    }
+    props.getLabelMessages({...searchParams})
+  };
 
   if (!props.contactsResult.contacts) {
-    return <div className="ml-4 mt-4">No contacts found.</div>;
+    return <div className="ml-4 mt-4">No contacts found.</div>
   }
 
   return (
       <PerfectScrollbar className="contact-list-container">
           {props.contactsResult.contacts.map(contact => {
+            
+              if (!contact.names) {
+                return null;
+              }
+
               return (
                   <Route
                     key={contact.names[0].metadata.source.id}
