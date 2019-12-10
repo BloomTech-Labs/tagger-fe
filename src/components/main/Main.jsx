@@ -181,12 +181,14 @@ const Main = (props) => {
 
     return (
       <Fragment>
-        <Header googleUser={props.googleUser} 
+        <Header
+          googleUser={props.googleUser} 
           onSignout={onSignout} 
           setSearchQuery={props.setSearchQuery}
           getLabelMessages={getLabelMessages} 
           searchQuery={props.searchQuery}
           toggleDash={toggleDash}
+          toggle={toggle}
         />
 
         <section
