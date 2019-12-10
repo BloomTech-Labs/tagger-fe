@@ -11,45 +11,47 @@ import "./contact-list.scss";
 
 const ContactList = (props) => {
 
-    const handleContactSearch = (email) => {
-        props.setSearchQuery(`from:${email}`);  
-        // console.log(email);
-        performSearch();
+  const handleContactSearch = (email) => {
+      props.setSearchQuery(`from:${email}`);  
+      // console.log(email);
+      performSearch();
+    }
+  
+    const performSearch = () => {
+      const searchParams = {}
+      if (!props.searchQuery || props.searchQuery === "") {
+        searchParams.labelIds = ["INBOX"];
       }
-    
-      const performSearch = () => {
-        const searchParams = {}
-        if (!props.searchQuery || props.searchQuery === "") {
-          searchParams.labelIds = ["INBOX"];
-        }
-        props.getLabelMessages({...searchParams})
-      };
+      props.getLabelMessages({...searchParams})
+    };
 
+  if (!props.contactsResult.contacts) {
+    return <div className="ml-4 mt-4">No contacts found.</div>;
+  }
 
-
-    return (
-        <PerfectScrollbar className="contact-list-container">
-            {props.contactsResult.contacts.map(contact => {
-                return (
-                    <Route
-                      key={contact.names[0].metadata.source.id}
-                      path={'/'}
-                      render={routeProps => {
-                        return (
-                          <ContactCard
-                            {...routeProps}
-                            contact={contact}
-                            handleContactSearch={handleContactSearch}
-                            searchterm={props.searchterm}
-                          />
-                        )
-                      }}
-                    >
-                    </Route>
-                )
-            })}
-        </PerfectScrollbar>
-    );
+  return (
+      <PerfectScrollbar className="contact-list-container">
+          {props.contactsResult.contacts.map(contact => {
+              return (
+                  <Route
+                    key={contact.names[0].metadata.source.id}
+                    path={'/'}
+                    render={routeProps => {
+                      return (
+                        <ContactCard
+                          {...routeProps}
+                          contact={contact}
+                          handleContactSearch={handleContactSearch}
+                          searchterm={props.searchterm}
+                        />
+                      )
+                    }}
+                  >
+                  </Route>
+              )
+          })}
+      </PerfectScrollbar>
+  );
 }
 
 

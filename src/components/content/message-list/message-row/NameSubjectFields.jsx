@@ -15,6 +15,10 @@ const NameSubjectFields = props => {
   const checkIfContactExists = contacts => {
     let match = false;
 
+    if (!contacts) {
+      return;
+    }
+
     contacts.map(contact => {
       if (props.fromName.name === contact.names[0].displayName) {
         
