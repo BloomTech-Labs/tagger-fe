@@ -4,12 +4,17 @@ import { bindActionCreators, compose } from "redux";
 import Header from "../header/Header";
 import Sidebar from "../sidebar/Sidebar";
 import NotFound from "../not-found/NotFound";
+import ContactList from '../contact-list/ContactList'
+import "../main/_main.scss";
+// import ContactMessages from '../contact-messages/ContactMessages';
+import ContactMenu from '../contact-menu/ContactMenu';
 
 import MessageList from "../content/message-list/MessageList";
 import MessageContent from "../content/message-list/message-content/MessageContent";
 
 import { Route, Switch, withRouter } from "react-router-dom";
 
+import { getUserContacts } from "../contact-list/actions/contact-list.actions";
 import { getLabels } from "../sidebar/sidebar.actions";
 
 import {
@@ -31,12 +36,15 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const Main = (props) => {
   const [signedInUser, setSignedInUser] = useState();
+  const [toggle, setToggle] = useState(false);
+  const [searchterm, setSearchterm] = useState(false);
 
   useEffect(() => {
     /* Label list is fetched from here 
     so that we can declare Routes by labelId 
     before rendering anything else */
     getLabelList();
+    getUserContacts();
   }, []);
 
   useEffect(() => {
@@ -57,6 +65,10 @@ const Main = (props) => {
       } 
     }
   }, [props.signedInUser]);
+
+  const getUserContacts = () => {
+    props.getUserContacts();
+  }
 
   const navigateToNextPage = (token) => {
     const searchParam = props.location.search;
@@ -82,7 +94,7 @@ const Main = (props) => {
       props.setSearchQuery("");
       const {pathname} = props.location;
       if (newPathToPush === pathname) {
-        getLabelMessages({labelIds: [label.id] });
+        getLabelMessages({ labelIds: [label.id] });
         return;
       }
     }
@@ -107,7 +119,9 @@ const Main = (props) => {
 
   const renderLabelRoutes = (props) => {
     const { labelsResult } = props;
+    // console.log(labelsResult.labels);
     return labelsResult.labels.map(el => (
+      
       <Route
         key={el.id + '_route'}
         exact
@@ -125,8 +139,10 @@ const Main = (props) => {
               addInitialPageToken={addInitialPageToken}
               parentLabel={labelsResult.labels.find(el => el.id === routeProps.match.path.slice(1))}
               searchQuery={props.searchQuery}
+              searchterm={searchterm}
+              toggle={toggle}
             />
-          )
+          ) 
         }}
       />
     ));    
@@ -147,6 +163,16 @@ const Main = (props) => {
     })
   }
 
+
+  const toggleDash = () => {
+    setToggle(!toggle);
+  }
+
+  const newFunc = (cb) => {
+    setSearchterm(cb);
+  }
+
+
   const renderInboxViewport = () => {
 
     if (props.labelsResult.labels.length < 1) {
@@ -155,19 +181,31 @@ const Main = (props) => {
 
     return (
       <Fragment>
-        <Header googleUser={props.googleUser} 
+        <Header
+          googleUser={props.googleUser} 
           onSignout={onSignout} 
           setSearchQuery={props.setSearchQuery}
           getLabelMessages={getLabelMessages} 
           searchQuery={props.searchQuery}
+          toggleDash={toggleDash}
+          toggle={toggle}
         />
-        <section className="main hbox space-between">
+
+        <section
+        className="main hbox space-between">
           <Sidebar
             getLabelList={getLabelList}
             pathname={props.location.pathname}
             labelsResult={props.labelsResult}
             onLabelClick={loadLabelMessages}
           />
+
+          {/* <ContactList
+            searchQuery={props.searchQuery}
+            setSearchQuery={props.setSearchQuery}
+            getLabelMessages={getLabelMessages} 
+          /> */}
+          
           <article className="d-flex flex-column position-relative">
             <Switch>
               {renderLabelRoutes(props)}
@@ -188,7 +226,83 @@ const Main = (props) => {
     );
   }
 
-  return renderInboxViewport();
+  const renderContactViewport = () => {
+
+    if (props.labelsResult.labels.length < 1) {
+      return renderSpinner();
+    }
+
+    return (
+      <Fragment>
+        <Header googleUser={props.googleUser} 
+          onSignout={onSignout} 
+          setSearchQuery={props.setSearchQuery}
+          getLabelMessages={getLabelMessages} 
+          searchQuery={props.searchQuery}
+          toggleDash={toggleDash}
+        />
+
+        <section className="main hbox">
+          
+          {/* Is the contact-view div going to break this component? It's left over from a merge conflict. */}
+          <div className="contact-view"> 
+          
+          <Sidebar
+            getLabelList={getLabelList}
+            pathname={props.location.pathname}
+            labelsResult={props.labelsResult}
+            onLabelClick={loadLabelMessages}
+          />
+          </div>
+
+          <ContactList
+            searchQuery={props.searchQuery}
+            setSearchQuery={props.setSearchQuery}
+            getLabelMessages={getLabelMessages} 
+            searchterm={newFunc}
+          />
+
+
+          {/* <div className="contacts-view-container d-flex position-relative">
+            Hi */}
+
+
+          {/* <ContactMessages>
+
+          </ContactMessages> */}
+          
+          <article className="d-flex flex-column position-relative">
+            <Switch>
+              {renderLabelRoutes(props)}
+              <Route
+                exact
+                path="/notfound"
+                component={NotFound}
+              />
+              <Route
+                exact
+                path="/:id([a-zA-Z0-9]+)"
+                render={(props) => <MessageContent {...props} toggle={toggle} />}
+              />
+            </Switch>
+          </article>
+            <ContactMenu
+                searchterm={searchterm}/>
+        </section>
+      </Fragment>
+    );
+  }
+
+
+  
+  if (!toggle) {
+    return renderInboxViewport();
+  } else {
+    return renderContactViewport();
+  }
+
+
+
 }
 
 const mapStateToProps = state => ({
@@ -203,6 +317,7 @@ const mapDispatchToProps = dispatch =>
     {
       getLabels,
       getLabelMessages,
+      getUserContacts,
       emptyLabelMessages,
       toggleSelected,
       selectLabel,

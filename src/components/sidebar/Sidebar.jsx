@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import ComposeMessage from "../compose-message/ComposeMessage";
 import PerfectScrollbar from "react-perfect-scrollbar";
-
 import groupBy from "lodash/groupBy";
 import sortBy from "lodash/sortBy";
 
@@ -30,7 +29,7 @@ const Sidebar = (props) => {
     props.onLabelClick(label || { id: "" });
   }
 
-  const renderItems = (labelList) => {
+  const renderItems = labelList => {
     if (labelList.length === 0) {
       return <div />;
     }
@@ -41,6 +40,14 @@ const Sidebar = (props) => {
     }, []);
 
     const labelGroups = groupBy(labels, "type");
+
+    if (!labelGroups.user) {
+      return (
+        <React.Fragment>
+          {renderFolders(labelGroups.system)}
+        </React.Fragment>
+      )
+    }
 
     const visibleLabels = labelGroups.user.filter(
       el =>
@@ -108,22 +115,26 @@ const Sidebar = (props) => {
   }
 
   const renderLabels = (labels) => {
+
     return (
       <React.Fragment>
         <li key="olders-nav-title" className="pl-2 nav-title">
           Labels
         </li>
-        {labels.map(el => {
+        {labels.filter(el => el.name.includes('tagger_')).map(el => {
           const iconProps = {
             icon: faCircle,
             color: el.color ? el.color.backgroundColor : "gainsboro",
             size: "sm"
           };
+
+          const name = el.name.substring(7);
+
           return (
             <LabelItem
               key={el.id + "_label"}
               onClick={navigateToList}
-              name={el.name}
+              name={name}
               id={el.id}
               messagesUnread={el.messagesUnread}
               iconProps={iconProps}

@@ -1,0 +1,63 @@
+.message-tile {
+    margin: 0.5rem 0;
+    border-radius: 12px;
+    border: 1px solid rgba(128,128,128,0.25);
+    padding: 0 2rem;
+    width: 100%;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.message-card {
+    height: fit-content;
+    padding: 1.5rem 0;
+}
+
+.message-subject {
+    font-weight: bold;
+    font-size: 1.125rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .text-2 {
+        display: flex;
+
+        .from-name {
+            display: none;
+        }
+    }
+
+    .num {
+        padding-right: 0!important;
+    }
+}
+
+.tags-list {
+    display: flex;
+
+    .tagger-tag {
+        width: fit-content;
+        background: darkgrey;
+        border-radius: 10px;
+        text-align: center;
+        margin: 1rem 0;
+        margin-right: 0.5rem;
+        padding: 0.25rem 0.75rem;
+    }
+}
+
+
+.snippet {
+    white-space: normal;
+    margin: 1rem 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.thread-count {
+    padding-bottom: 15px;
+    padding: 5px 0;
+}

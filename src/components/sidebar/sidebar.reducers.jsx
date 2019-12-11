@@ -7,7 +7,6 @@ const defaultLabelState = {
 export const labelsResult = (state = defaultLabelState, action) => {
   switch (action.type) {
     case GET_LABELS:
-    console.log(action.payload);
       return {
         ...state,
         labels: action.payload

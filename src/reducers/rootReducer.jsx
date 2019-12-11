@@ -4,6 +4,7 @@ import { signInStatusResult } from "./gapi.reducers";
 
 import { labelsResult } from "../components/sidebar/sidebar.reducers";
 import { messagesResult, emailMessageResult, pageTokens, searchQuery } from "../components/content/message-list/reducers/message-list.reducers";
+import { contactsResult } from "../components/contact-list/reducers/contact-list.reducers";
 
 export default combineReducers({
   signedOutReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   messagesResult,
   emailMessageResult,
   pageTokens,
-  searchQuery
+  searchQuery,
+  contactsResult
 });

@@ -1,0 +1,150 @@
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    // height: 100%;
+}
+
+//*********************** NAVBAR ***********************//
+.landing-nav {
+    flex: none !important;
+    // height: 5%;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+
+    .logo {
+        width: 25%;
+        font-size: 30px;
+        vertical-align:middle;
+        line-height:35px;
+        padding-right: 40px;
+    }
+    ul {
+        display: flex;
+        justify-content: flex-end;
+        
+    }
+
+    ul li {
+        list-style-type: none;
+        display:inline;
+        vertical-align:middle;
+        line-height:35px;
+    }
+
+    ul li a {
+        align-items: center;
+        margin-right: 10px;
+        text-align: center;
+        font-size: 15px;
+    }
+}
+
+
+//*********************** HOMEPAGE CONTENT ***********************//
+.landing-content {
+    width: 90%;
+    // height: 100%;
+    margin: 0 auto;
+}
+
+.landing-section {
+    margin: 1.5% 0;
+    // height: 100%;
+}
+
+.landing-banner {
+    background: purple;
+    height: 300px;
+
+    img {
+        width: 95%;
+    }
+}
+
+.landing-section1 {
+    display: flex;
+    flex-direction: column;
+
+    .bottom-border {
+        width: 80%;
+        margin: 0 auto;
+        margin-top: 40px;
+        border-bottom: 1px solid grey;
+    }
+}
+
+.landing-section2 {
+    background: orange;
+}
+
+.landing-feature {
+    width: 100%;
+    margin: 1% 0;
+    // height: 32%;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 80px;
+
+
+    p {
+        font-size: 14px;
+        text-align: center;
+        margin: 0 auto;
+    }
+    h3 {
+        text-align: center;
+    }
+    .product-img {
+        width: 35%;
+        height: auto;
+    }
+
+    div {
+        width: 35%;
+        margin: 0 7%;
+    }
+    img {
+        width: 55%;
+        height: auto;
+        margin: 0 7%;
+        border-radius: 5px;
+    }
+
+}
+
+.feature-3 {
+    margin-bottom: 80px;
+}
+
+.landing-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: black;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+
+
+    ul li, address {
+        list-style-type: none;
+        vertical-align:middle;
+        line-height:35px;
+        text-align: center;
+    }
+
+    ul li a {
+        color: white;
+    }
+    address {
+        margin-left: 8%;
+    }
+
+    ul {
+        margin-right: 8%;
+    }
+}

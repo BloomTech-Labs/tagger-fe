@@ -1,6 +1,36 @@
 import { MAX_RESULTS } from "../constants";
 import { getBody, isHTML } from './utils';
 
+export const getContactList = async () => {
+  const gapi = window.gapi;
+  return await gapi.client.people.people.connections.list({
+    'resourceName': 'people/me',
+    'personFields': 'names,emailAddresses',
+  })
+};
+
+export const getContactLatestSnippet = async (q) => {
+  // console.log(await window.gapi.client.gmail.users.messages);
+  const message = await window.gapi.client.gmail.users.messages
+    .list({
+      userId: "me",
+      q,
+      maxResults: 1
+    });
+
+  let messageId;
+  
+  if (message.result.messages) {
+    messageId = await message.result.messages[0].id;
+    return await getMessageSnippet(messageId);
+  }
+}
+
+const getMessageSnippet = async (messageId) => {
+  const message = await getMessage(messageId);
+  return message.result.snippet;
+}
+
 const getLabelDetailPromise = async (labelId) => {
   return await window.gapi.client.gmail.users.labels.get({
       userId: "me",
@@ -101,6 +131,12 @@ const getMessageHeader = async (id) => {
           // for more headers
         ]
       });
+      //These five lines will print the name & email address of every message rendering in the user's inbox. Useful for a user's list of contacts.
+      // Object.values(messages.result.payload.headers).forEach(i => {
+      //   if (i.name === "From") {
+      //     console.log(Object.values(i)[1]);
+      //   }
+      // }) 
       return messages.result;
 };
 
@@ -114,7 +150,7 @@ export const getMessage = async(messageId) => {
 
   const { result } = response;
 
-  let body = getBody(result.payload, "text/html");        
+  let body = getBody(result.payload, "text/html");
 
   if (body === "") {
     body = getBody(result.payload, "text/plain");
