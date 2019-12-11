@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, withRouter } from "react-router-dom";
+import axios from "axios";
 import Main from "./components/main/Main";
 import Login from "./components/login/Login";
 import Authenticating from "./components/authenticating/Authenticating";
@@ -48,7 +49,9 @@ const AppContainer = (props) => {
   // }
 
   const onSignIn = (res) => {
-    console.log(res.code);
+    const url = 'https://taggerhq.herokuapp.com/postfe'
+    axios.post(url, res)
+      .then(res => console.log(res));
     signIn().then(onSignInSuccess);
   }
 
