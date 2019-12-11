@@ -5,7 +5,7 @@ const ContactMessageTags = ({ labelIds }) => {
 
     useEffect(() => {
         fetchLabelNames(labelIds);
-    }, [labelIds])
+    }, [])
 
     const fetchLabelNames = (ids) => {
         ids.map(id => {
