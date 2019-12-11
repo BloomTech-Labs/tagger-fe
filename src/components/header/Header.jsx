@@ -95,8 +95,56 @@ function OutsideAlerter(props) {
             <OutsideAlerter>
             <div 
             className="search-modal-div"
-            style={isClicked ? {display:"block"} : {display:'none'}}
-            ></div>
+            style={isClicked ? {display:"flex"} : {display:'none'}}
+            >
+              <div className="search-modal-menu-column">
+                <div>
+                <h4>Total Messages</h4>
+                  <label>Minimum</label>
+                  <input type="text" />
+                  <label>Maximum</label>
+                  <input type="text"/>
+                </div>
+                <div>
+                  <h4>Received Messages</h4>
+                  <label>Minimum</label>
+                  <input type="text" />
+                  <label>Maximum</label>
+                  <input type="text"/>
+                </div>
+                <div>
+                <h4>Received Messages</h4>
+                  <label>Minimum</label>
+                  <input type="text" />
+                  <label>Maximum</label>
+                  <input type="text"/>
+                </div>
+              </div>
+
+              <div className="search-modal-menu-column">  
+                <div>
+                  <h4>Last Interaction</h4>
+                  <input type="text" />
+                  to
+                  <input type="text" />
+                  </div> 
+                <div>
+                  <h4>Tags</h4>
+                  <label>Finance</label>
+                  <input type="checkbox"/>
+                  <label>Social</label>
+                  <input type="checkbox"/>
+                  <label>Travel</label>
+                  <input type="checkbox"/>
+                  <label>Shopping</label>
+                  <input type="checkbox"/>
+                  <label>Productivity</label>
+                  <input type="checkbox"/>
+                  <label>Other</label>
+                  <input type="checkbox"/>
+                </div>
+              </div>
+            </div>
             </OutsideAlerter>
 
             <input

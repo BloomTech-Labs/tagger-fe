@@ -36,8 +36,18 @@
   top: 100%;
   right: 0;
   width: 100%;
-  height: 100px;
+  height: 1000px;
   z-index: 2;
   margin-right: auto;
   margin-left: .25rem;
+  display: flex;
+
+  h4, label, input {
+    color: black;
+  }
+
+  .search-modal-menu-column {
+    width: 40%;
+  }
+
 }
