@@ -24,8 +24,6 @@ const ThreadMessage = (props) => {
         }
     }, [emailBody]);
 
-    console.log(props.subject);
-
     return (
         <React.Fragment>
             <div className="thread-message-container">

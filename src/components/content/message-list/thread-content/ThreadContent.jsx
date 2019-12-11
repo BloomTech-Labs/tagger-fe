@@ -6,8 +6,6 @@ import ThreadMessage from "./ThreadMessage";
 
 const ThreadContent = (props) => {
 
-    console.log(props);
-
     return (
         <PerfectScrollbar className="container-fluid no-gutters px-0 thread-message-list">
             {props.thread.map(message => {
