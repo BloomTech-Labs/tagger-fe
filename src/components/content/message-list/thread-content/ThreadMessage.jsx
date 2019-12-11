@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 
 import { getMessage } from "../../../../api/";
 
+import '../thread-content/threadMessage.scss';
+
 const ThreadMessage = (props) => {
     const [emailBody, setEmailBody] = useState();
 
-    const iframeReff = React.createRef();
-    
-    console.log(iframeReff);
+    const iframeRef = React.createRef();
 
     useEffect(() => {
         const messageId = props.id;
@@ -15,8 +15,8 @@ const ThreadMessage = (props) => {
     }, []);
 
     useEffect(() => {
-        if (iframeReff.current) {
-            const { body } = iframeReff.current.contentWindow.document;
+        if (iframeRef.current) {
+            const { body } = iframeRef.current.contentWindow.document;
             body.style.margin = "0px";
             body.style.fontFamily = "Arial, Helvetica, sans-serif";
             body.style.fontSize = "13px";
@@ -24,16 +24,25 @@ const ThreadMessage = (props) => {
         }
     }, [emailBody]);
 
+    console.log(props.subject);
+
     return (
         <React.Fragment>
-            <iframe
-                ref={iframeReff}
-                title="Thread message"
-                id={props.id}
-                style={{
-                    display: "block"
-                }}
-            />
+            <div className="thread-message-container">
+                <h3>{props.subject}</h3>
+                <iframe
+                    ref={iframeRef}
+                    title="Thread message"
+                    id={props.id}
+                    style={{
+                        display: "block",
+                        height: "25vh",
+                        width: "100%",
+                        border: "none",
+                        margin: "auto"
+                    }}
+                />
+            </div>
         </React.Fragment>
     )
 }
