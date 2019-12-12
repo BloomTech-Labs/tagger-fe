@@ -79,10 +79,10 @@ function OutsideAlerter(props) {
   return (
     <div className="header-container">
       <header className="d-flex p-3 align-content-center align-items-center header">
-        <div className="header-logo justify-content-center">
-          <Link to="/inbox">Tagger</Link>
+        <div className="header-logo justify-content-center align-items-center">
+          <Link className="header-link" to="/inbox">Tagger</Link>
           <button 
-            className="btn btn-light align-self-center mr-2 font-weight-bold"
+            className="toggle-btn btn bg-white text-dark align-self-center mr-2 font-weight-bold"
             onClick={props.toggleDash}
           >
             {props.toggle === false ? 'Contacts' : 'Dashboard'}
@@ -101,7 +101,7 @@ function OutsideAlerter(props) {
 
             <input
               type="search"
-              className="form-control border-light"
+              className="form-control"
               placeholder="Search mail"
               value={props.searchQuery}
               onClick={handleInputClick}
@@ -109,7 +109,7 @@ function OutsideAlerter(props) {
             />
             <div className="input-group-append" onClick={handleSearchClick}>
               <button
-                className="btn btn-light btn-outline-light bg-white text-dark"
+                className="search-btn btn btn-light bg-white text-dark"
                 type="button"
               >
                 <FontAwesomeIcon icon={faSearch} />
@@ -127,8 +127,6 @@ function OutsideAlerter(props) {
   
         <Signout onSignout={props.onSignout} />
       </header>
-      <div className="header">
-      </div>
     </div>
   );
 }

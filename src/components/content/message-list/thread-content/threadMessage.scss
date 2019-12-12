@@ -1,13 +1,14 @@
+@import '../../../../stylesheets/variables';
+
 .thread-message-container {
-    border: 1px solid rgba(128, 128, 128, 0.25);
-    border-radius: 12px;
+    background: $component-bg;
     margin-bottom: 1.5rem;
     padding: 1rem;
     width: 100%;
 }
 
 .thread-message-from {
-    margin-bottom: 1rem;
+    margin: 1rem 0 1.5rem 0;
 }
 
 .thread-message-header {

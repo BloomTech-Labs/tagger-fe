@@ -1,7 +1,7 @@
+@import '../../stylesheets/variables';
+
 .left-panel {
-  background-color: #f0f3f4;
-  border-width: 0px 1px 1px 0px;
-  border-color: #d9dfe2;
+  background-color: $sidebar-bg;
   height: 100%;
   .sidebar {
     overflow-y: auto;
