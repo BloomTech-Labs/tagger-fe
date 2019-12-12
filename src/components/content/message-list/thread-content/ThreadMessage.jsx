@@ -9,7 +9,6 @@ import { getMessage } from "../../../../api/";
 import '../thread-content/threadMessage.scss';
 
 const ThreadMessage = (props) => {
-    console.log(props);
 
     const [emailBody, setEmailBody] = useState();
 
@@ -33,6 +32,9 @@ const ThreadMessage = (props) => {
     return (
         <React.Fragment>
             <div className="thread-message-container">
+                <div className="thread-message-from">
+                    <h5>{props.from}</h5>
+                </div>
                 <div className="thread-message-header">
                     <h4>{props.subject}</h4>
                     <h6>{moment(Number(props.timestamp)).fromNow()}</h6>
@@ -42,12 +44,13 @@ const ThreadMessage = (props) => {
                     ref={iframeRef}
                     title="Thread message"
                     id={props.id}
+                    scrolling="no"
                     style={{
                         display: "block",
                         height: "25vh",
                         width: "100%",
                         border: "none",
-                        margin: "auto"
+                        margin: "2rem 0 0 0"
                     }}
                 />
             </div>
