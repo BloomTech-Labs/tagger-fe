@@ -63,6 +63,7 @@ export const getMessageList = async ({ labelIds, maxResults, q, pageToken }) => 
   };
 }
 
+
 export const flattenMessagesWithLabel = async (messages, labelIds) => {
   if (!labelIds) {
     return {
