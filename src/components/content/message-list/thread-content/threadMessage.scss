@@ -6,6 +6,12 @@
     width: 100%;
 }
 
+.thread-message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .thread-message-list {
     padding-right: 15px!important;
 }

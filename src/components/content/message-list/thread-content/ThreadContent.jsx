@@ -10,6 +10,7 @@ const ThreadContent = (props) => {
         <PerfectScrollbar className="container-fluid no-gutters px-0 thread-message-list">
             {props.thread.map(message => {
                 let subject = '';
+                let timestamp = message.internalDate;
                 message.payload.headers.map(header => {
                     if (header.name === 'Subject') {
                         subject = header.value;
@@ -20,7 +21,9 @@ const ThreadContent = (props) => {
                     <ThreadMessage
                         key={message.id}
                         id={message.id}
+                        labelIds={message.labelIds}
                         subject={subject}
+                        timestamp={timestamp}
                     />
                 )
             })}
