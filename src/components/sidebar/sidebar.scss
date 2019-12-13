@@ -1,7 +1,7 @@
+@import '../../stylesheets/variables';
+
 .left-panel {
-  background-color: #f0f3f4;
-  border-width: 0px 1px 1px 0px;
-  border-color: #d9dfe2;
+  background-color: $sidebar-bg;
   height: 100%;
   .sidebar {
     overflow-y: auto;
@@ -36,9 +36,9 @@
         position: absolute;
         right: 5px;
         top: 5px;
-        background-color: #e9ecef;
+        background-color: $brand-color;
         padding: 2px 8px;
-        color: #000;
+        color: #ffffff;
         border-radius: 11px;
         font-size: 0.833335rem;
         padding: 2px 8px 3px 8px;
@@ -57,6 +57,6 @@
   }
 }
 
-.contact-view, .dashboard-view {
-  width: 16.75vw;
+.sidebar-container {
+  width: 16vw;
 }

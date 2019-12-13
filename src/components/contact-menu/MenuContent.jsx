@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import ProgressBar from 'react-bootstrap/ProgressBar';
+
 import moment from "moment";
 
 const MenuContent = props => {
@@ -52,17 +54,25 @@ const MenuContent = props => {
 
     return (
         <div className="menu-content">
-            <h4>Total Messages</h4>
-            <p>{numReceivedMessages && numSentMessages ? numReceivedMessages + numSentMessages : numReceivedMessages || numSentMessages}</p>
+            <div className="messages-stats">
+                <p>Total Messages</p>
+                <ProgressBar now={100} label={numReceivedMessages && numSentMessages ? numReceivedMessages + numSentMessages : numReceivedMessages || numSentMessages} />
+            </div>
 
-            <h4>Sent Messages</h4>
-            <p>{numSentMessages}</p>
+            <div className="messages-stats">
+                <p>Sent Messages</p>
+                <ProgressBar now={(numSentMessages / (numSentMessages + numReceivedMessages)) * 100} label={numSentMessages} />
+            </div>
 
-            <h4>Received Messages</h4>
-            <p>{numReceivedMessages}</p>
+            <div className="messages-stats">
+                <p>Received Messages</p>
+                <ProgressBar now={(numReceivedMessages / (numSentMessages + numReceivedMessages)) * 100} label={numReceivedMessages} />
+            </div>
 
-            <h4>Last Interaction</h4>
-            <p>{lastInteraction}</p>
+            <div className="last-interaction">
+                <p>Last Interaction:</p>
+                <p>{lastInteraction || "No interactions recorded."}</p>
+            </div>
         </div>
     )
 }
