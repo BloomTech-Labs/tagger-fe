@@ -83,7 +83,7 @@ const NameSubjectFields = props => {
         </div>
         <div className="text subject-tags">
           <div>{props.subject}</div>
-          {!props.toggle ? <MessageTags labelIds={props.labelIds} /> : null}
+          {props.toggle === false ? <MessageTags labelIds={props.labelIds} /> : null}
         </div>
       </div>
     </div>
