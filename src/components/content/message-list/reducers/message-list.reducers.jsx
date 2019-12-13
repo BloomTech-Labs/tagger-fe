@@ -30,6 +30,7 @@ export const messagesResult = (state = defaultMessagesState, action) => {
       if (nextPageToken && pageTokens.indexOf(nextPageToken) === -1) {
         pageTokens.push(nextPageToken);
       }
+      console.log(action.payload);
       return {
         ...stateClone,
         ...action.payload,
