@@ -197,12 +197,14 @@ const Main = (props) => {
 
         <section
         className="main hbox space-between">
-          <Sidebar
-            getLabelList={getLabelList}
-            pathname={props.location.pathname}
-            labelsResult={props.labelsResult}
-            onLabelClick={loadLabelMessages}
-          />
+          <div className="sidebar-container">
+            <Sidebar
+              getLabelList={getLabelList}
+              pathname={props.location.pathname}
+              labelsResult={props.labelsResult}
+              onLabelClick={loadLabelMessages}
+            />
+          </div>
 
           {/* <ContactList
             searchQuery={props.searchQuery}
@@ -210,7 +212,7 @@ const Main = (props) => {
             getLabelMessages={getLabelMessages} 
           /> */}
           
-          <article className="d-flex flex-column position-relative">
+          <article className="inbox d-flex flex-column position-relative">
             <Switch>
               {renderLabelRoutes(props)}
               <Route
@@ -250,15 +252,13 @@ const Main = (props) => {
 
         <section className="main hbox">
           
-          {/* Is the contact-view div going to break this component? It's left over from a merge conflict. */}
-          <div className="contact-view"> 
-          
-          <Sidebar
-            getLabelList={getLabelList}
-            pathname={props.location.pathname}
-            labelsResult={props.labelsResult}
-            onLabelClick={loadLabelMessages}
-          />
+          <div className="sidebar-container">
+            <Sidebar
+              getLabelList={getLabelList}
+              pathname={props.location.pathname}
+              labelsResult={props.labelsResult}
+              onLabelClick={loadLabelMessages}
+            />
           </div>
 
           <ContactList

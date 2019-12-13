@@ -1,3 +1,14 @@
+@import '../../stylesheets/variables';
+
 .contacts-view-container {
     width: 62.3vw;
+}
+
+.main {
+    background: $main-bg;
+}
+
+.inbox {
+    background: #ffffff;
+    border-left: 1px solid $border-main;
 }

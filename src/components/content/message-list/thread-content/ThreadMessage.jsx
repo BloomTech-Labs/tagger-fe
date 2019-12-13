@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 
+import moment from "moment";
+
+import ContactMessageTags from "../../../contact-messages/contact-message-row/ContactMessageTags";
+
 import { getMessage } from "../../../../api/";
 
 import '../thread-content/threadMessage.scss';
 
 const ThreadMessage = (props) => {
+
     const [emailBody, setEmailBody] = useState();
 
     const iframeRef = React.createRef();
@@ -27,7 +32,14 @@ const ThreadMessage = (props) => {
     return (
         <React.Fragment>
             <div className="thread-message-container">
-                <h3>{props.subject}</h3>
+                <div className="thread-message-from">
+                    <h5>{props.from}</h5>
+                </div>
+                <div className="thread-message-header">
+                    <h4>{props.subject}</h4>
+                    <h6>{moment(Number(props.timestamp)).fromNow()}</h6>
+                </div>
+                <ContactMessageTags labelIds={props.labelIds} />
                 <iframe
                     ref={iframeRef}
                     title="Thread message"
@@ -37,7 +49,7 @@ const ThreadMessage = (props) => {
                         height: "25vh",
                         width: "100%",
                         border: "none",
-                        margin: "auto"
+                        margin: "2rem 0 0 0"
                     }}
                 />
             </div>

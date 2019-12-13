@@ -1,5 +1,8 @@
+@import '../../stylesheets/variables';
+
 .header {
-  background-color: #6c757d;
+  background-color: $header-bg;
+  border-bottom: 1px solid #ced4da;
   color: #fff;
   .header-logo {
     display: flex;
@@ -9,7 +12,8 @@
 
 
     a {
-      color: #FFF;
+      color: $brand-color;
+      font-size: 1.5rem;
       text-decoration: none;
       margin-left: 5px;
     }
@@ -23,6 +27,7 @@
       user-select: none;
     }
     .profile-pic {
+      border-radius: 50%;
       height: 28px;
       width: auto;
     }
@@ -40,14 +45,23 @@
   z-index: 2;
   margin-right: auto;
   margin-left: .25rem;
-  display: flex;
-
-  h4, label, input {
+    display: flex;
+  
+    h4, label, input {
     color: black;
   }
 
   .search-modal-menu-column {
     width: 40%;
+  }
+
+}
+
+.search-btn, .signout-btn, .toggle-btn {
+  border-color: #ced4da;
+
+  &:hover {
+    cursor: pointer;
   }
 
 }
