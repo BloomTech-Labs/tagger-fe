@@ -14,6 +14,7 @@
     "jest-transform-css": "^2.0.0",
     "moment": "^2.24.0",
     "node-sass": "^4.13.0",
+    "postcss": "*",
     "react": "^16.10.2",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.10.2",
@@ -26,6 +27,7 @@
     "react-testing-library": "^8.0.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
+    "sass-lint": "*",
     "update": "^0.7.4"
   },
   "devDependencies": {
@@ -41,7 +43,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sass": "node ./tasks/sass.js",
+    "sass-lint": "node ./tasks/sass-lint.js",
+    "postcss": "node ./tasks/postcss.js"
   },
   "jest": {
     "moduleNameMapper": {
