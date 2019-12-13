@@ -1,13 +1,13 @@
 import React from "react";
 
-import PerfectScrollbar from "react-perfect-scrollbar";
+import Scrollbar from "react-scrollbars-custom";
 
 import ThreadMessage from "./ThreadMessage";
 
 const ThreadContent = (props) => {
 
     return (
-            <PerfectScrollbar>
+            <Scrollbar>
                 {props.thread.map(message => {
                     let from = '';
                     let subject = '';
@@ -33,7 +33,7 @@ const ThreadContent = (props) => {
                         />
                     )
                 })}
-            </PerfectScrollbar>
+            </Scrollbar>
     )
 }
 

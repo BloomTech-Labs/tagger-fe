@@ -206,7 +206,7 @@ const Main = (props) => {
             getLabelMessages={getLabelMessages} 
           /> */}
           
-          <article className="d-flex flex-column position-relative">
+          <article className="inbox d-flex flex-column position-relative">
             <Switch>
               {renderLabelRoutes(props)}
               <Route
