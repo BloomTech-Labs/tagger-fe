@@ -44,7 +44,6 @@ const ThreadMessage = (props) => {
                     ref={iframeRef}
                     title="Thread message"
                     id={props.id}
-                    scrolling="no"
                     style={{
                         display: "block",
                         height: "25vh",

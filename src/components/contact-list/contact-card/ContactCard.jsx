@@ -69,7 +69,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history }) => {
             <div className="user-text-container">
                 <div className="user-card-header">
                     <h4>{contact.names[0].displayName}</h4>
-                    <h6>{lastInteraction}</h6>
+                    <h6>{lastInteraction || "No interactions recorded."}</h6>
                 </div>
                 <div className="user-card-snippet">{snippet || "No messages were found."}</div>
             </div>

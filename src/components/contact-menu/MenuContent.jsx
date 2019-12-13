@@ -70,7 +70,7 @@ const MenuContent = props => {
 
             <div className="last-interaction">
                 <p>Last Interaction:</p>
-                <p>{lastInteraction}</p>
+                <p>{lastInteraction || "No interactions recorded."}</p>
             </div>
         </div>
     )
