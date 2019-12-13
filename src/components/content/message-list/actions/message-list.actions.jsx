@@ -19,7 +19,7 @@ export const MODIFY_MESSAGES_SUCCESS = "MODIFY_MESSAGES_SUCCESS";
 export const MODIFY_MESSAGES_FAILED = "MODIFY_MESSAGES_FAILED";
 export const SET_SEARCH_QUERY = "SET_SEARCH_QUERY";
 
-let filter = false;
+let filter = true;
 let resLength = 0;
 if (filter) {
   resLength = 1000;
