@@ -1,6 +1,6 @@
+import React from 'react'
 import {create, act} from 'react-test-renderer';
 import App from './App'//or import App from './index
-
 
 //render the component
 let root;

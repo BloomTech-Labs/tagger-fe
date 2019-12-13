@@ -1,15 +1,11 @@
 
 // Run npm test -- --coverage (note extra -- in the middle) to include a coverage report like this:
-
-
-
 // ADD TO PACKAGE.JSON
 // RUN COVERAGE TEST
 
 // {
 //     "presets": ["@babel/preset-env"]
 //   }
-
 
 describe('signedOutReducer reducer', () => {
     it('should return initial state', () => {
@@ -21,9 +17,6 @@ describe('signedOutReducer reducer', () => {
         expect()
     })
 })
-
-
-
 
 describe('actions', () => {
     it('should create an action to add a todo', () => {

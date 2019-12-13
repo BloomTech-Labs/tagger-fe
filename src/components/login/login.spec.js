@@ -1,10 +1,8 @@
 import React from 'react';
-import {render, fireEvent} from 'react-testing-library';
-import "jest-dom/index-expect"
-import "react-testing-library/cleanup-after-each";
-
+import {render, fireEvent, cleanup} from '@testing-library/react';
+// import "jest-dom/index-expect"
+// import "react-testing-library/cleanup-after-each";
 import GoogleButton from './Login'
-
 import TestRenderer from 'react-test-renderer'
 import {
     SIGNED_OUT,
@@ -16,7 +14,6 @@ import {
   } from "../constants"
 
 afterEach(cleanup)
-
 
 describe("<GoogleButton />", () => {
     it("renders google button", () => {
@@ -30,7 +27,5 @@ describe("<GoogleButton />", () => {
     //     const display = getByTestId("display");
     //     expect(display).toHaveClass("display panel");
     //   });
-
-
 
 })
