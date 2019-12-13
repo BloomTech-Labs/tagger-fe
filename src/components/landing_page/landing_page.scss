@@ -1,6 +1,7 @@
 .landing-container {
     display: flex;
     flex-direction: column;
+    width: 80%
     // height: 100%;
 }
 
@@ -11,6 +12,7 @@
     text-align: center;
     display: flex;
     justify-content: space-between;
+    
 
     .logo {
         width: 25%;
@@ -37,6 +39,7 @@
         margin-right: 10px;
         text-align: center;
         font-size: 15px;
+
     }
 }
 

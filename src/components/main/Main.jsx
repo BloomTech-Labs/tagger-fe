@@ -38,6 +38,7 @@ const Main = (props) => {
   const [signedInUser, setSignedInUser] = useState();
   const [toggle, setToggle] = useState(false);
   const [searchterm, setSearchterm] = useState(false);
+  const [filter, setFilter] = useState('Test Email');
 
   useEffect(() => {
     /* Label list is fetched from here 
@@ -141,6 +142,7 @@ const Main = (props) => {
               searchQuery={props.searchQuery}
               searchterm={searchterm}
               toggle={toggle}
+              filter={filter}
             />
           ) 
         }}
@@ -189,6 +191,8 @@ const Main = (props) => {
           searchQuery={props.searchQuery}
           toggleDash={toggleDash}
           toggle={toggle}
+          filter={filter}
+          setFilter={setFilter}
         />
 
         <section
@@ -242,6 +246,8 @@ const Main = (props) => {
           getLabelMessages={getLabelMessages} 
           searchQuery={props.searchQuery}
           toggleDash={toggleDash}
+          filter={filter}
+          setFilter={setFilter}
         />
 
         <section className="main hbox">
