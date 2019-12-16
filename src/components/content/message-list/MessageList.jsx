@@ -5,7 +5,6 @@ import MessageRow from "./message-row/MessageRow";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ContactMessageRow from '../../contact-messages/contact-message-row/ContactMessageRow';
-// import ContactMenu from '../../contact-menu/ContactMenu';
 import ListToolbar from "./list-toolbar/ListToolbar";
 import ListFooter from "./list-footer/ListFooter";
 
@@ -22,8 +21,10 @@ const MessageList = (props) => {
   // const [contentMessageId, setContentMessageId] = useState(undefined);
   // const [currentLabel, setCurrentLabel] = useState("");
   const [filteredMsgsResult, setFilteredMsgsResult] = useState(props.messagesResult);
-  const [filterArray, setFilterArray] = useState([]);
   const [numSentMessages, setNumSentMessages] = useState({});
+
+  // "Filter" value from Header...if true, filters to whatever is the return value in newMsgs
+  const filter = false;
 
   // useEffect(() => {
     // getReceivedMessages( (!props.email === "none") ? `from:${props.email}` : `from:${props.name}`);
@@ -73,28 +74,38 @@ const MessageList = (props) => {
     );
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
   const mapThroughMsgs = () => {
     //This will receive either "sentMessages" or "receivedMessages" from <Header> depending on which filter the user chooses.
-    // const filterArray = [];
-
-    let sizesObj = {};
+    
+      
 
     const getSentMessages = async (q) => {
+      let sizesObj = [];
       return await window.gapi.client.gmail.users.messages
           .list({
               userId: "me",
               q
           })
           .then(res => {
-            // console.log(res.result.resultSizeEstimate);
-
-               sizesObj[q] = res.result.resultSizeEstimate;
+              sizesObj.push({email: [q, res.result.resultSizeEstimate]});
+            
           })
-  }
+      }
 
 
-
-    ///////////////////////////////////////    ///////////////////////////////////////    ///////////////////////////////////////
 
     function removeDuplicates(originalArray, objKey) {
       var trimmedArray = [];
@@ -109,9 +120,8 @@ const MessageList = (props) => {
           values.push(value);
         }
       }
-      console.log("MessageResults in DashboardView: ", trimmedArray);
+      // console.log("MessageResults in DashboardView: ", trimmedArray);
 
-      // WHAT IS SETFILTERARRAY DOING?
       
       // takes in all of the messages in MessageList.
       const newArr = trimmedArray.map(r => {
@@ -127,24 +137,30 @@ const MessageList = (props) => {
         
             //changes "filterArray" to an object of the id, "To/From" field, and the email address of every message in MessageList. IF MESSAGELIST CHANGES THERE WILL BE AN INFINITE LOOP
         return {msgId: r.id, name: headerArray[index].name, value: msgVal};
-
       });
-      console.log("newArr: ", newArr);
+      console.log("NewArr before: ", newArr);
 
       //INFINITE LOOP HAPPENS WHEN I HAVE USESTATE UPDATING WITH THE OUTPUT OF MY MAP FUNCTION ON LINE 114...BECAUSE IT RE-RENDERS MESSAGELIST, WHICH RE-RENDERS NEWARR, WHICH RE-RENDERS MESSAGELIST, WHICH...
-//NO HOOK STATE CHANGES HERE.
-
-      // console.log("The new array is: ", filterArray);
-
+      //NO HOOK STATE CHANGES HERE.
 
       newArr.forEach(i => {
         getSentMessages(`to:${i.value}`);
       })
-      console.log("SizesObj: ", sizesObj);
 
+      console.log("NewArr after: ", newArr);
+
+      // sizesObj.filter(f => {
+      //   console.log(f);
+      //   return f.value > 3
+      // });
       // const filteredList = newArr.filter(j => { j.num > 3 });
- 
+      // changedArr;
 
+      // var changedArr = sizesObj.filter(function(f) {
+
+      //   return f.size > 3;
+      // });
+      // console.log("New sizesObj: ", changedArr);
 
       //HERE I'M DESPERATELY CLOSE TO FILTERING EVERYTHING BASED ON TEMP....WHICH IS THE CURRENT ELEMENT IN FILTER METHOD....BUT FOR SOME REASON I CAN'T ACCESS THE KEY-VALUE PAIR INSICE SIZESOBJ...WHICH MEANS I CAN'T FILTER BASED ON SIZE IN LINE 162 LIKE I'M TRYING.....SO CLOSE!!!!
       trimmedArray.filter(f => {
@@ -157,19 +173,31 @@ const MessageList = (props) => {
             temp.lastIndexOf("<") + 1, 
             temp.lastIndexOf(">"))} 
         temp = "to:" + temp;
-            console.log(temp);
 
-        return (f[temp] > 30);
+        return (temp > 0);
       })
-      // console.log(sizesObj["to:1axc0ltp4oyianfnqhq808zdnz73a9c9bun1n0@bf06b.hubspotemail.net"]);
-      // console.log(sizesObj);
-      console.log("blubdub:", blubdub);
 
       //remember that trimmedArray here DOESN'T return the array...it's returned on line 205, and THAT props.messageResults.messages is what I need to filter.
       return trimmedArray;
     }
 
 
+      /////// *** STEP 4 *** /////
+      // what's left to do here, is match temp string to the user's selection in Header.
+    const newMsgs = props.messagesResult.messages.filter(f => {
+      let index = f.payload.headers.findIndex(n => {
+        return n.name ==="To"
+      })
+      let temp = f.payload.headers[index].value;
+      if (temp.includes("<")) {
+        temp = temp.substring(
+          temp.lastIndexOf("<") + 1, 
+          temp.lastIndexOf(">"))} 
+      temp = "to:" + temp;
+
+      return (temp === "to:tngo97@gmail.com");
+    })
+          /////// *** STEP 4 *** /////
 
 
 
@@ -178,12 +206,27 @@ const MessageList = (props) => {
 
 
 
-    const messagesUniqueThreadIds = removeDuplicates(props.messagesResult.messages, 'threadId');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const messagesUniqueThreadIds = removeDuplicates(filter ? newMsgs : props.messagesResult.messages, 'threadId');
     
 
     //The two filters here --> these are where a user searches for a term AND their filter gets applied. Filter is coming from Header and lines 93 and 111 will change based on useState input.
     if (props.toggle && props.searchterm) {
-      console.log("messageResults in ContactView: ", messagesUniqueThreadIds);
+      // console.log("messageResults in ContactView: ", messagesUniqueThreadIds);
       return messagesUniqueThreadIds
       // .filter(arr => {
       //   // console.log("Contacts: ", arr.snippet);
@@ -202,7 +245,7 @@ const MessageList = (props) => {
         )
       })
     }
-    return props.messagesResult.messages
+    return (filter ? newMsgs : props.messagesResult.messages)
     // .filter(arr => {
     //   // console.log(arr.snippet);
       // return arr.snippet === props.filter
@@ -221,6 +264,26 @@ const MessageList = (props) => {
       } 
     });
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   const renderMessages = () => {
     if (props.messagesResult.loading) {
