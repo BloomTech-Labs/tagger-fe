@@ -7,90 +7,12 @@ import { Link } from "react-router-dom";
 import debounce from "lodash/debounce";
 import moment from "moment";
 
-//
-//Scrap earlier notes -- now I'm just filtering in MessageList. I send the filter from here to MessageList using props.filter...so I just need to update that here using props.setFilter.
-
-//Look at line 16 of MenuContent...somehow, I need to filter using those results, but I ALSO need to get those results for a user's searchQuery.
-
-
-/*
-1. Find the full array of messageResults...not the 20-message page token.
-2a. Run a map function against each sender in this array...
-2b. ...and filter THAT array based on the user's input.
-
-*/
-
-
-
-// Step 1. Paste code for total messages & sent messages & etc. so I have access to that data for xyz user.
-// Step 2. Pull searchQuery from teh searchbar, and pair it with step 1's data but search through ALL users.
-// Step 3. Change performSearch (or w/e it's called) so it can make requests to GAPI using new parameters like date range.
-
-//Here's the problem -- Teddy code is receiving props.name and props.email from ContactList click of one ContactCard. Those are needed for these GAPI queries. AND my search query must search ALL messages/contacts with these search params, NOT just one user.
-
-//I do have access to props.searchQuery -- easy way to grab user;'s search (step 2).
-//I think performSearch default is whatever inbox is specified in "from:"/"sent:"...
-
-//No...maybe....I just filtered the rendered messages based on what's selected in Header here. Send the prop or change state somehow to pass the filter to the message-rendering component.
-
 const Header = (props) => {
   const [isClicked, setIsClicked] = useState(false);
   const [latestMessageId, setLatestMessageId] = useState('');
   const [numReceivedMessages, setNumReceivedMessages] = useState(0);
   const [numSentMessages, setNumSentMessages] = useState(0);
   const [lastInteraction, setLastInteraction] = useState('Calculating...');
-
-
-// PASTED CODE FROM MENUCONTENT  **STARTS HERE**
-
-
-  // useEffect(() => {
-  //     getReceivedMessages( (!props.email === "none") ? `from:${props.email}` : `from:${props.name}`);
-  //     getSentMessages(`to:${props.email}`);
-  //     getLastInteractionData(latestMessageId);
-  // }, [props])
-
-  // const getReceivedMessages = async (q) => {
-  //   console.log(window.gapi.client.gmail.users.messages);
-  //     return await window.gapi.client.gmail.users.messages
-  //         .list({
-  //             userId: "me",
-  //             q
-  //         })
-  //         .then(res => {
-  //             setLatestMessageId(res.result.messages[0].id);
-  //             setNumReceivedMessages(res.result.resultSizeEstimate);
-  //         });
-  // }
-
-  // const getSentMessages = async (q) => {
-  //     return await window.gapi.client.gmail.users.messages
-  //         .list({
-  //             userId: "me",
-  //             q
-  //         })
-  //         .then(res => {
-  //             setNumSentMessages(res.result.resultSizeEstimate);
-  //         })
-  // }
-
-  // const getLastInteractionData = async id => {
-  //     return await window.gapi.client.gmail.users.messages
-  //         .get({
-  //             userId: "me",
-  //             id: id
-  //         })
-  //         .then(res => {
-  //             const date = res.result.internalDate;
-  //             setLastInteraction(moment(Number(date)).fromNow());
-  //         })
-  // }
-
-
-// PASTED CODE FROM MENUCONTENT **ENDS HERE**
-
-
-
 
   const handleSearchClick = (evt) => {
     if (props.searchQuery !== "") {
@@ -106,6 +28,11 @@ const Header = (props) => {
   const handleInputChange = (evt) => {
     props.setSearchQuery(evt.target.value);  
     performSearch();
+  }
+
+  const handleFilterChange = (e) => {
+    props.setFilter(e.target.value);
+    console.log(e.target.value);
   }
 
   const performSearch = debounce(() => {
@@ -151,10 +78,6 @@ function OutsideAlerter(props) {
 //**
 //*
 
-
-
-
-
   const userInfo = props.googleUser.w3;
   const email = userInfo.U3;
   const fullName = userInfo.ig;
@@ -175,61 +98,6 @@ function OutsideAlerter(props) {
   
         <div className="header-search">
           <div className="input-group w-75 ml-1 mr-auto">
-            
-            <OutsideAlerter>
-            <div 
-            className="search-modal-div"
-            style={isClicked ? {display:"flex"} : {display:'none'}}
-            >
-              <div className="search-modal-menu-column">
-                <div>
-                <h4>Total Messages</h4>
-                  <label>Minimum</label>
-                  <input type="text" />
-                  <label>Maximum</label>
-                  <input type="text"/>
-                </div>
-                <div>
-                  <h4>Received Messages</h4>
-                  <label>Minimum</label>
-                  <input type="text" />
-                  <label>Maximum</label>
-                  <input type="text"/>
-                </div>
-                <div>
-                <h4>Received Messages</h4>
-                  <label>Minimum</label>
-                  <input type="text" />
-                  <label>Maximum</label>
-                  <input type="text"/>
-                </div>
-              </div>
-
-              <div className="search-modal-menu-column">  
-                <div>
-                  <h4>Last Interaction</h4>
-                  <input type="text" />
-                  to
-                  <input type="text" />
-                  </div> 
-                <div>
-                  <h4>Tags</h4>
-                  <label>Finance</label>
-                  <input type="checkbox"/>
-                  <label>Social</label>
-                  <input type="checkbox"/>
-                  <label>Travel</label>
-                  <input type="checkbox"/>
-                  <label>Shopping</label>
-                  <input type="checkbox"/>
-                  <label>Productivity</label>
-                  <input type="checkbox"/>
-                  <label>Other</label>
-                  <input type="checkbox"/>
-                </div>
-              </div>
-            </div>
-            </OutsideAlerter>
 
             <input
               type="search"
@@ -247,8 +115,69 @@ function OutsideAlerter(props) {
                 <FontAwesomeIcon icon={faSearch} />
               </button>
             </div>
+
+            {/* <OutsideAlerter>
+            <div 
+            className="search-modal-div"
+            style={isClicked ? {display:"flex"} : {display:'none'}}
+            > */}
+              <div className="search-modal-menu-column">
+              <div className="center-text">
+                <select
+                className="search-dropdown-list"
+                onChange={handleFilterChange}
+                >
+                  <option defaultValue="selected">Sent Messages</option>
+                  {/* <option value="">
+                    <input value=""></input> - 
+                    <input value=""></input>
+                  </option> */}
+                  <option value={14}>1 - 4</option>
+                  <option value={59}>5 - 9</option>
+                  <option value={1019}>10 - 19</option>
+                  <option value={2049}>20 - 49</option>
+                  <option value={501000}>50+</option>
+                </select></div>
+
+                <div className="center-text">
+                <select
+                className="search-dropdown-list"
+                >
+                  <option selected="selected">Received Messages</option>
+                  {/* <option value="">
+                    <input value=""></input> - 
+                    <input value=""></input>
+                  </option> */}
+                  <option value="">1 - 4</option>
+                  <option value="">5 - 9</option>
+                  <option value="">10 - 19</option>
+                  <option value="">20 - 49</option>
+                  <option value="">50 - 99</option>
+                </select></div>
+
+                <div className="center-text">
+                <select
+                className="search-dropdown-list"
+                >
+                  <option selected="selected">Last Interaction</option>
+                  {/* <option value="">
+                    <input value=""></input> - 
+                    <input value=""></input>
+                  </option> */}
+                  <option value="">Last Week</option>
+                  <option value="">Last 2 Weeks</option>
+                  <option value="">Last Month</option>
+                  <option value="">Last 6 Months</option>
+                  <option value="">Last Year</option>
+                </select></div>
+              </div>
+
+
+            {/* </div> */}
+            {/* </OutsideAlerter> */}
+
           </div>
-          <div>
+          <div className="gmail-icons">
             <span className="user-name" title={email}>
               {fullName}
             </span>

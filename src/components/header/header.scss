@@ -51,10 +51,6 @@
     color: black;
   }
 
-  .search-modal-menu-column {
-    width: 40%;
-  }
-
 }
 
 .search-btn, .signout-btn, .toggle-btn {
@@ -64,4 +60,39 @@
     cursor: pointer;
   }
 
+}
+
+.search-modal-menu-column {
+  width: 50%;
+  display: flex;
+}
+
+.search-dropdown-list {
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-group {
+  width: 85% !important;
+}
+
+select {
+  // width: 400px;
+  text-indent: 5px;
+  border: 0.7px solid lightgrey;
+  text-align-last: center;
+  color: rgb(105,105,105);
+  height: 80%;
+}
+.center-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // text-align: center;
+  width: 31%;
+  margin: 1px;
+  height: 100%;
+  margin: 0 5px;
 }

@@ -40,7 +40,8 @@ const Main = (props) => {
   const [signedInUser, setSignedInUser] = useState();
   const [toggle, setToggle] = useLocalStorage('view', false);
   const [searchterm, setSearchterm] = useState(false);
-  const [filter, setFilter] = useState('Test Email');
+  const [filter, setFilter] = useState(false);
+
 
   useEffect(() => {
     /* Label list is fetched from here 

@@ -39,21 +39,6 @@ const MessageList = (props) => {
     });
   }, [])
 
-  //Update this based on the user's filter input in Header.
-  const testReducer = () => {
-    setFilter(!filter);
-  }
-
-  useEffect(() => {
-    setFilteredMsgsResult(filterLogic());
-
-    filteredMsgsResult.forEach(i => {
-
-      props.getFilterCounts(i);
-    })
-
-  }, [filter])
-
   useEffect(() => {
     const searchParam = props.location.search;
     const token = searchParam.indexOf("?") === 0 ? searchParam.slice(1) : null;
@@ -80,7 +65,19 @@ const MessageList = (props) => {
     );
   }
 
+  ///////// FILTER LOGIC /////////
 
+  //Update this based on the user's filter input in Header.
+  const testReducer = () => {
+    setFilter(!filter);
+  }
+
+useEffect(() => {
+  setFilteredMsgsResult(filterLogic());
+  filteredMsgsResult.forEach(i => {
+    props.getFilterCounts(i);
+  })
+}, [filter])
 
 const filterLogic = () => {
   const uniqueContacts = props.messagesResult.messages.map(r => {
@@ -108,6 +105,10 @@ const filterLogic = () => {
 
   return distinctContacts;
 }
+
+  ///////// FILTER LOGIC /////////
+
+
 
   const mapThroughMsgs = () => {
 
@@ -152,11 +153,28 @@ const filterLogic = () => {
         } else {
           return;
         }
+        let min = null;
+        let max = null;
+        // console.log(parseInt(props.filter[0]), typeof parseInt(props.filter[0]), parseInt(props.filter[2]), typeof parseInt(props.filter[2]));
+        // console.log(num, (num > parseInt(props.filter[0])) && (num < parseInt(props.filter[2])));
 
-        return (num > 20);
+        // console.log(props.filter);
+        if (props.filter.length === 2) {
+          min = props.filter.slice(0,1);
+          max = props.filter.slice(1,2);
+        } else if  (props.filter.length === 4) {
+          min = props.filter.slice(0,2);
+          max = props.filter.slice(2,4);
+        } else {
+          min = props.filter.slice(0,2);
+          max = props.filter.slice(2,6);
+        }
+        // console.log("min: ", min, "max: ", max);
+        return ((num > parseInt(min)) && (num < parseInt(max)));
       })
       return newMsgs;
     }}
+
     const messagesUniqueThreadIds = removeDuplicates(finalMsgs(), 'threadId');
 
     //The two filters here --> these are where a user searches for a term AND their filter gets applied. Filter is coming from Header and lines 93 and 111 will change based on useState input.
