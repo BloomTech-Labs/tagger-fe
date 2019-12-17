@@ -146,6 +146,7 @@ const Main = (props) => {
               searchterm={searchterm}
               toggle={toggle}
               filter={filter}
+              setFilter={setFilter}
             />
           ) 
         }}

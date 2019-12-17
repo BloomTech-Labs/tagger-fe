@@ -19,7 +19,7 @@ const ViewMode = {
 
 const MessageList = (props) => {
     //Update this based on the user's filter input in Header.
-  const [filter, setFilter] = useState(false);
+  // const [filter, setFilter] = useState(false);
   const [viewMode, setViewMode] = useState(ViewMode.LIST);
   const [filteredMsgsResult, setFilteredMsgsResult] = useState(props.messagesResult.messages);
 
@@ -66,18 +66,15 @@ const MessageList = (props) => {
   }
 
   ///////// FILTER LOGIC /////////
-
-  //Update this based on the user's filter input in Header.
-  const testReducer = () => {
-    setFilter(!filter);
-  }
-
 useEffect(() => {
-  setFilteredMsgsResult(filterLogic());
   filteredMsgsResult.forEach(i => {
     props.getFilterCounts(i);
   })
-}, [filter])
+}, [filteredMsgsResult])
+
+useEffect(() => {
+  setFilteredMsgsResult(filterLogic());
+}, [props.filter])
 
 const filterLogic = () => {
   const uniqueContacts = props.messagesResult.messages.map(r => {
@@ -155,10 +152,7 @@ const filterLogic = () => {
         }
         let min = null;
         let max = null;
-        // console.log(parseInt(props.filter[0]), typeof parseInt(props.filter[0]), parseInt(props.filter[2]), typeof parseInt(props.filter[2]));
-        // console.log(num, (num > parseInt(props.filter[0])) && (num < parseInt(props.filter[2])));
 
-        // console.log(props.filter);
         if (props.filter.length === 2) {
           min = props.filter.slice(0,1);
           max = props.filter.slice(1,2);
@@ -167,10 +161,10 @@ const filterLogic = () => {
           max = props.filter.slice(2,4);
         } else {
           min = props.filter.slice(0,2);
-          max = props.filter.slice(2,6);
+          max = props.filter.slice(2,7);
         }
         // console.log("min: ", min, "max: ", max);
-        return ((num > parseInt(min)) && (num < parseInt(max)));
+        return ((num >= parseInt(min)) && (num <= parseInt(max)));
       })
       return newMsgs;
     }}
@@ -289,7 +283,7 @@ if (!props.toggle) {
       />
 
       <PerfectScrollbar className="container-fluid no-gutters px-0 message-list-container">
-        <button onClick={testReducer}>Click me to test</button>
+        {/* <button onClick={testReducer}>Click me to test</button> */}
         {renderView()}
       </PerfectScrollbar>
       <ListFooter messagesTotal={messagesTotal} />

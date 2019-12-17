@@ -22,7 +22,6 @@ const Header = (props) => {
 
   const handleInputClick = () => {
     setIsClicked(true);
-    console.log("Test if filter in Header: ", props.filter);
   }
 
   const handleInputChange = (evt) => {
@@ -32,7 +31,6 @@ const Header = (props) => {
 
   const handleFilterChange = (e) => {
     props.setFilter(e.target.value);
-    console.log(e.target.value);
   }
 
   const performSearch = debounce(() => {
@@ -136,7 +134,7 @@ function OutsideAlerter(props) {
                   <option value={59}>5 - 9</option>
                   <option value={1019}>10 - 19</option>
                   <option value={2049}>20 - 49</option>
-                  <option value={501000}>50+</option>
+                  <option value={5010000}>50+</option>
                 </select></div>
 
                 <div className="center-text">
