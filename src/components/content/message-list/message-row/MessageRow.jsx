@@ -92,7 +92,7 @@ const MessageItem = (props) => {
         onMouseLeave={() => setHover(false)}
         className={`table-row px-2 py-3${unread}`}
       >
-        <NameSubjectFields fromEmail={fromEmail} fromName={fromName} subject={subject} hover={hover} />
+        <NameSubjectFields fromEmail={fromEmail} fromName={fromName} subject={subject} hover={hover} toggle={props.toggle} labelIds={props.data.labelIds} />
         <AttachmentDateFields
           formattedDate={formattedDate}
           hasAttachment={

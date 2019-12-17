@@ -191,6 +191,7 @@ const filterLogic = () => {
             data={el}
             key={el.id}
             onSelectionChange={onSelectionChange}
+            toggle={props.toggle}
           />
       )} 
       else if (!props.searchterm) {

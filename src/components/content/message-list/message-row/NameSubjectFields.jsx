@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import { connect } from "react-redux";
 
+import MessageTags from "./MessageTags";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
@@ -79,7 +81,10 @@ const NameSubjectFields = props => {
             />
           : null}
         </div>
-        <div className="text">{props.subject}</div>
+        <div className="text subject-tags">
+          <div>{props.subject}</div>
+          {props.toggle === false ? <MessageTags labelIds={props.labelIds} /> : null}
+        </div>
       </div>
     </div>
   );
