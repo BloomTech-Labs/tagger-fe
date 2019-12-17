@@ -1,4 +1,4 @@
-import { getMessageList, getFullMessageList } from "../../../../api";
+import { getMessageList } from "../../../../api";
 import { getMessage } from "../../../../api";
 import { batchModify } from "../../../../api";
 import { selectLabel } from "../../../sidebar/sidebar.actions";
@@ -18,8 +18,9 @@ export const CLEAR_PAGE_TOKENS = "CLEAR_PAGE_TOKENS";
 export const MODIFY_MESSAGES_SUCCESS = "MODIFY_MESSAGES_SUCCESS";
 export const MODIFY_MESSAGES_FAILED = "MODIFY_MESSAGES_FAILED";
 export const SET_SEARCH_QUERY = "SET_SEARCH_QUERY";
+export const GET_FILTER_COUNTS = "GET_FILTER_COUNTS";
 
-let filter = false;
+let filter = true;
 let resLength = 0;
 if (filter) {
   resLength = 1000;
@@ -41,8 +42,6 @@ export const getLabelMessages = ({
     dispatch(selectLabel("-1"));
   }
 
-  //Comment out getFullMessageList and uncomment getMessageList in order to display 20 emails in inbox again.
-
   getMessageList({ labelIds, maxResults: resLength, q: searchQuery, pageToken }).then(response => {
     dispatch({
       type: GET_MESSAGES,
@@ -61,6 +60,21 @@ export const getLabelMessages = ({
   });
 };
 
+export const getFilterCounts = (q) => {
+  return async dispatch => {
+    await window.gapi.client.gmail.users.messages
+    .list({
+        userId: "me",
+        q
+    })
+    .then(res => {
+      dispatch({ type: GET_FILTER_COUNTS, payload: [q, res] });
+    })
+    .catch(err => {
+      console.log(err);
+  });
+  }
+};
 
 export const setSearchQuery = q => ({
   type: SET_SEARCH_QUERY,

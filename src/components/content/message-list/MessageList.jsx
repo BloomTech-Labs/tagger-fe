@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
+import {connect} from 'react-redux';
 import PerfectScrollbar from "react-perfect-scrollbar";
 import MessageRow from "./message-row/MessageRow";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ContactMessageRow from '../../contact-messages/contact-message-row/ContactMessageRow';
-// import ContactMenu from '../../contact-menu/ContactMenu';
 import ListToolbar from "./list-toolbar/ListToolbar";
 import ListFooter from "./list-footer/ListFooter";
+import {getFilterCounts} from './actions/message-list.actions';
 
 import "./messageList.scss";
 
@@ -18,22 +18,18 @@ const ViewMode = {
 };
 
 const MessageList = (props) => {
+    //Update this based on the user's filter input in Header.
+  const [filter, setFilter] = useState(false);
   const [viewMode, setViewMode] = useState(ViewMode.LIST);
-  // const [contentMessageId, setContentMessageId] = useState(undefined);
-  // const [currentLabel, setCurrentLabel] = useState("");
-  const [filteredMsgsResult, setFilteredMsgsResult] = useState(props.messagesResult);
+  const [filteredMsgsResult, setFilteredMsgsResult] = useState(props.messagesResult.messages);
 
-  // console.log("Check it: ", filteredMsgsResult);
   useEffect(() => {
     const searchParam = props.location.search;
-    // console.log("Searchparam", searchParam);
     const token = searchParam.indexOf("?") === 0 ? searchParam.slice(1) : null;
-    // console.log("Search", token);
     if (token && props.messagesResult.pageTokens.length === 0) {
       props.addInitialPageToken(token);
     }
 
-//HERE'S WHERE I'M STUCK RIGHT NOW....I WANT GETLABELMESSAGES TO RENDER IN THE INBOX...BUT I WANT GETFULLLABELMESSAGES TO PRINT IN THE CONSOLE...I WANT BOTH, BUT ONE SHOULD BE SEEN BY THE USER (20 MESSAGE RESULTS) AND THE OTHER SHOULD BE MY SEARCH RESULTS IN MY VENN DIAGRAM...BUT GETFULLLABELRESULTS IS JUST A SPINNING LOOP...WHY??
 
     const labelIds = props.searchQuery === "" ? [props.parentLabel.id] : undefined;
 
@@ -42,6 +38,21 @@ const MessageList = (props) => {
       pageToken: token
     });
   }, [])
+
+  //Update this based on the user's filter input in Header.
+  const testReducer = () => {
+    setFilter(!filter);
+  }
+
+  useEffect(() => {
+    setFilteredMsgsResult(filterLogic());
+
+    filteredMsgsResult.forEach(i => {
+
+      props.getFilterCounts(i);
+    })
+
+  }, [filter])
 
   useEffect(() => {
     const searchParam = props.location.search;
@@ -59,6 +70,7 @@ const MessageList = (props) => {
   const onSelectionChange = (selected, msgId) => {
     props.toggleSelected([msgId], selected);
   }
+
   
   const renderSpinner = () => {
     return (
@@ -68,7 +80,38 @@ const MessageList = (props) => {
     );
   }
 
+
+
+const filterLogic = () => {
+  const uniqueContacts = props.messagesResult.messages.map(r => {
+    let headerArray = r.payload.headers;
+    let index = headerArray.findIndex(n => {
+      return n.name ==="To"
+    })
+    let msgVal = headerArray[index].value;
+    if (msgVal.includes("<")) {
+      msgVal = msgVal.substring(
+        msgVal.lastIndexOf("<") + 1, 
+        msgVal.lastIndexOf(">"))} 
+    
+    return {msgId: r.id, name: headerArray[index].name, value: msgVal};
+  });
+
+  let noDupes = uniqueContacts.map(i => {
+    return i["value"];
+  });
+
+  const distinct = (value, index, self) => {
+    return self.indexOf(value) === index;
+  }
+  const distinctContacts = noDupes.filter(distinct);
+
+  return distinctContacts;
+}
+
   const mapThroughMsgs = () => {
+
+
     function removeDuplicates(originalArray, objKey) {
       var trimmedArray = [];
       var values = [];
@@ -86,7 +129,35 @@ const MessageList = (props) => {
       return trimmedArray;
     }
 
-    const messagesUniqueThreadIds = removeDuplicates(props.messagesResult.messages, 'threadId');
+    const finalMsgs = () => {
+      if (props.messagesResult.filterCounts == undefined || props.messagesResult.filterCounts.length === 0) {
+      return props.messagesResult.messages;
+
+    } else if ( props.messagesResult.filterCounts.length > 0) {
+      
+      const newMsgs = props.messagesResult.messages.filter(f => {
+        let index = f.payload.headers.findIndex(n => {
+          return n.name ==="To"
+        })
+        let temp = f.payload.headers[index].value;
+        if (temp.includes("<")) {
+          temp = temp.substring(
+            temp.lastIndexOf("<") + 1, 
+            temp.lastIndexOf(">"))} 
+
+        let num = 0;
+        if (props.messagesResult.filterCounts.find(x => x.id === temp)) {
+
+          num = props.messagesResult.filterCounts.find(x => x.id === temp).size
+        } else {
+          return;
+        }
+
+        return (num > 20);
+      })
+      return newMsgs;
+    }}
+    const messagesUniqueThreadIds = removeDuplicates(finalMsgs(), 'threadId');
 
     //The two filters here --> these are where a user searches for a term AND their filter gets applied. Filter is coming from Header and lines 93 and 111 will change based on useState input.
     if (props.toggle && props.searchterm) {
@@ -108,7 +179,7 @@ const MessageList = (props) => {
         )
       })
     }
-    return props.messagesResult.messages
+    return finalMsgs()
     // .filter(arr => {
     //   // console.log(arr.snippet);
       // return arr.snippet === props.filter
@@ -130,6 +201,7 @@ const MessageList = (props) => {
   }
 
   const renderMessages = () => {
+
     if (props.messagesResult.loading) {
       return renderSpinner();
     } else if (props.messagesResult.messages.length === 0) {
@@ -159,7 +231,6 @@ const MessageList = (props) => {
     if (props.messagesResult.loading) {
       return { nextToken: null, prevToken: null }
     }
-    console.log("Look: ", messagesResult);
     const { messagesResult, location } = props;
     const pathname = location.pathname;
     let prevToken;
@@ -200,6 +271,7 @@ if (!props.toggle) {
       />
 
       <PerfectScrollbar className="container-fluid no-gutters px-0 message-list-container">
+        <button onClick={testReducer}>Click me to test</button>
         {renderView()}
       </PerfectScrollbar>
       <ListFooter messagesTotal={messagesTotal} />
@@ -221,4 +293,13 @@ if (!props.toggle) {
 
 }
 
-export default MessageList;
+const mapStateToProps = state => {
+  return {
+      filterCount: state.filterCounts,
+      messages: state.messages
+  }
+}
+
+export default connect(
+  mapStateToProps, {getFilterCounts}
+)(MessageList);

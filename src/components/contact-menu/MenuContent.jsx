@@ -15,7 +15,7 @@ const MenuContent = props => {
         getSentMessages(`to:${props.email}`);
         getLastInteractionData(latestMessageId);
     }, [props])
-    console.log("Changes: ", latestMessageId, numReceivedMessages, numSentMessages, lastInteraction);
+    // console.log("Changes: ", latestMessageId, numReceivedMessages, numSentMessages, lastInteraction);
 
     const getReceivedMessages = async (q) => {
         return await window.gapi.client.gmail.users.messages
