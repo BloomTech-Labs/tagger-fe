@@ -11,17 +11,24 @@ import {
   ADD_INITIAL_PAGE_TOKEN,
   CLEAR_PAGE_TOKENS,
   MODIFY_MESSAGES_SUCCESS,
-  SET_SEARCH_QUERY
+  SET_SEARCH_QUERY,
+  GET_FILTER_COUNTS
 } from "../actions/message-list.actions";
 
-const defaultMessagesState = {
+export const defaultMessagesState = {
   messages: [],
   loading: true,
-  pageTokens: []
+  pageTokens: [],
+  filterCounts: []
 };
 
 export const messagesResult = (state = defaultMessagesState, action) => {
   switch (action.type) {
+    case GET_FILTER_COUNTS: 
+    return {
+        ...state,
+        filterCounts: [...state.filterCounts, {id: action.payload[0], size: action.payload[1].result.resultSizeEstimate}]
+    };
     case GET_MESSAGES:
       const stateClone = {...state};
       stateClone.nextPageToken = null;
@@ -30,7 +37,6 @@ export const messagesResult = (state = defaultMessagesState, action) => {
       if (nextPageToken && pageTokens.indexOf(nextPageToken) === -1) {
         pageTokens.push(nextPageToken);
       }
-      console.log(action.payload);
       return {
         ...stateClone,
         ...action.payload,
