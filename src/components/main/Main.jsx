@@ -14,6 +14,8 @@ import MessageContent from "../content/message-list/message-content/MessageConte
 
 import { Route, Switch, withRouter } from "react-router-dom";
 
+import { useLocalStorage } from "../../utils";
+
 import { getUserContacts } from "../contact-list/actions/contact-list.actions";
 import { getLabels } from "../sidebar/sidebar.actions";
 
@@ -36,7 +38,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const Main = (props) => {
   const [signedInUser, setSignedInUser] = useState();
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useLocalStorage('view', false);
   const [searchterm, setSearchterm] = useState(false);
   const [filter, setFilter] = useState('Test Email');
 
