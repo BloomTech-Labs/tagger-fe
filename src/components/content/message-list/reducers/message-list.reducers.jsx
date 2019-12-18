@@ -26,9 +26,12 @@ export const messagesResult = (state = defaultMessagesState, action) => {
   switch (action.type) {
     case GET_FILTER_COUNTS: 
     return {
-        ...state,
-        filterCounts: [...state.filterCounts, {id: action.payload[0], size: action.payload[1].result.resultSizeEstimate}]
-    };
+      ...state,
+      //This filter is supposed to keep filterCounts from double-counting and adding duplicates...but it won't work for some reason.
+      filterCounts: [...state.filterCounts.filter(i => {
+        return i !== {id: action.payload[0], size: action.payload[1].result.resultSizeEstimate}
+      }), {id: action.payload[0], size: action.payload[1].result.resultSizeEstimate}]
+  };
     case GET_MESSAGES:
       const stateClone = {...state};
       stateClone.nextPageToken = null;

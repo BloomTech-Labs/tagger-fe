@@ -68,6 +68,7 @@ export const getFilterCounts = (q) => {
         q
     })
     .then(res => {
+      console.log(res);
       dispatch({ type: GET_FILTER_COUNTS, payload: [q, res] });
     })
     .catch(err => {
