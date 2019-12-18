@@ -30,6 +30,7 @@ const Header = (props) => {
   }
 
   const handleFilterChange = (e) => {
+    props.setFilterType(e.target.getAttribute("name"));
     props.setFilter(e.target.value);
   }
 
@@ -123,9 +124,10 @@ function OutsideAlerter(props) {
               <div className="center-text">
                 <select
                 className="search-dropdown-list"
+                name="sent"
                 onChange={handleFilterChange}
                 >
-                  <option defaultValue="selected">Sent Messages</option>
+                  <option defaultValue="selected" value={0}>Sent Messages</option>
                   {/* <option value="">
                     <input value=""></input> - 
                     <input value=""></input>
@@ -140,17 +142,19 @@ function OutsideAlerter(props) {
                 <div className="center-text">
                 <select
                 className="search-dropdown-list"
+                name="from"
+                onChange={handleFilterChange}
                 >
-                  <option selected="selected">Received Messages</option>
+                  <option selected="selected" value={0}>Received Messages</option>
                   {/* <option value="">
                     <input value=""></input> - 
                     <input value=""></input>
                   </option> */}
-                  <option value="">1 - 4</option>
-                  <option value="">5 - 9</option>
-                  <option value="">10 - 19</option>
-                  <option value="">20 - 49</option>
-                  <option value="">50 - 99</option>
+                  <option value={14}>1 - 4</option>
+                  <option value={59}>5 - 9</option>
+                  <option value={1019}>10 - 19</option>
+                  <option value={2049}>20 - 49</option>
+                  <option value={5010000}>50 - 99</option>
                 </select></div>
 
                 <div className="center-text">

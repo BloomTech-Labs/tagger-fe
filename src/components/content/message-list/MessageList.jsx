@@ -100,6 +100,7 @@ const filterLogic = () => {
   }
   const distinctContacts = noDupes.filter(distinct);
 
+  console.log(distinctContacts);
   return distinctContacts;
 }
 
@@ -135,7 +136,11 @@ const filterLogic = () => {
       
       const newMsgs = props.messagesResult.messages.filter(f => {
         let index = f.payload.headers.findIndex(n => {
+          if (props.filterType === "sent") {
           return n.name ==="To"
+          } else if (props.filterType === "from") {
+            return n.name === "From"
+          }
         })
         let temp = f.payload.headers[index].value;
         if (temp.includes("<")) {
@@ -159,9 +164,12 @@ const filterLogic = () => {
         } else if  (props.filter.length === 4) {
           min = props.filter.slice(0,2);
           max = props.filter.slice(2,4);
-        } else {
+        } else if  (props.filter.length === 7) {
           min = props.filter.slice(0,2);
           max = props.filter.slice(2,7);
+        } else {
+          min = 0;
+          max = 10000;
         }
         // console.log("min: ", min, "max: ", max);
         return ((num >= parseInt(min)) && (num <= parseInt(max)));

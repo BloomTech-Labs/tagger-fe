@@ -41,6 +41,7 @@ const Main = (props) => {
   const [toggle, setToggle] = useLocalStorage('view', false);
   const [searchterm, setSearchterm] = useState(false);
   const [filter, setFilter] = useState(false);
+  const [filterType, setFilterType] = useState("");
 
 
   useEffect(() => {
@@ -147,6 +148,8 @@ const Main = (props) => {
               toggle={toggle}
               filter={filter}
               setFilter={setFilter}
+              filterType={filterType}
+              setFilterType={setFilterType}
             />
           ) 
         }}
@@ -197,6 +200,8 @@ const Main = (props) => {
           toggle={toggle}
           filter={filter}
           setFilter={setFilter}
+          filterType={filterType}
+          setFilterType={setFilterType}
         />
 
         <section
@@ -252,6 +257,8 @@ const Main = (props) => {
           toggleDash={toggleDash}
           filter={filter}
           setFilter={setFilter}
+          filterType={filterType}
+          setFilterType={setFilterType}
         />
 
         <section className="main hbox">
