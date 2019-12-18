@@ -21,7 +21,7 @@ const MessageList = (props) => {
     //Update this based on the user's filter input in Header.
   // const [filter, setFilter] = useState(false);
   const [viewMode, setViewMode] = useState(ViewMode.LIST);
-  const [filteredMsgsResult, setFilteredMsgsResult] = useState(props.messagesResult.messages);
+  const [filteredMsgsResult, setFilteredMsgsResult] = useState([]);
 
   useEffect(() => {
     const searchParam = props.location.search;
@@ -67,22 +67,48 @@ const MessageList = (props) => {
 
   ///////// FILTER LOGIC /////////
 useEffect(() => {
-  filteredMsgsResult.forEach(i => {
-    props.getFilterCounts(i);
-  })
+  // console.log("useEffect triggered. here's what changed: ", filteredMsgsResult);
+  if (filteredMsgsResult === undefined) {
+    return;
+  } else {
+    filteredMsgsResult.forEach(i => {
+      props.getFilterCounts(i);
+    });
+  }
+
 }, [filteredMsgsResult])
 
 useEffect(() => {
+  // console.log("useEffect triggered. here's what changed: ", props.filter);
   setFilteredMsgsResult(filterLogic());
 }, [props.filter])
 
 const filterLogic = () => {
+  // console.log("filterLogic is running", props.filter);
+  if ((props.messagesResult.filterCounts === [] && props.filter === false) || (props.messagesResult.filterCounts.length === 0 && props.filter === false)) {
+    // console.log("nope");
+    return;
+
+  } else { 
+  // if ( props.messagesResult.filterCounts.length > 0 || (props.messagesResult.filterCounts === [] && props.filter)) {
+      // console.log("ran it!");
   const uniqueContacts = props.messagesResult.messages.map(r => {
     let headerArray = r.payload.headers;
     let index = headerArray.findIndex(n => {
-      return n.name ==="To"
+      // console.log("r is: ", r);
+      // console.log("n is: ", n);
+      if (props.filterType === "sent") {
+        return n.name ==="To"
+        } else if (props.filterType === "from") {
+          return n.name === "From"
+        } 
     })
-    let msgVal = headerArray[index].value;
+    let msgVal = undefined;
+    // console.log("index is: ", index, "Header array is: ", headerArray, "FilterType is: ", props.filterType);
+    if (index != null) {
+    msgVal = headerArray[index].value;
+    // console.log("msgVal is: ", msgVal);
+    }
     if (msgVal.includes("<")) {
       msgVal = msgVal.substring(
         msgVal.lastIndexOf("<") + 1, 
@@ -100,8 +126,9 @@ const filterLogic = () => {
   }
   const distinctContacts = noDupes.filter(distinct);
 
-  console.log(distinctContacts);
+  // console.log(distinctContacts);
   return distinctContacts;
+}
 }
 
   ///////// FILTER LOGIC /////////
@@ -129,32 +156,42 @@ const filterLogic = () => {
     }
 
     const finalMsgs = () => {
-      if (props.messagesResult.filterCounts == undefined || props.messagesResult.filterCounts.length === 0) {
+      console.log("FilterCounts is: ", props.messagesResult.filterCounts);
+      if ((props.messagesResult.filterCounts == [] && props.filter === false) || props.messagesResult.filterCounts.length === 0) {
       return props.messagesResult.messages;
 
     } else if ( props.messagesResult.filterCounts.length > 0) {
-      
+      console.log("ran it!");
       const newMsgs = props.messagesResult.messages.filter(f => {
+        console.log("f is: ", f);
         let index = f.payload.headers.findIndex(n => {
           if (props.filterType === "sent") {
           return n.name ==="To"
           } else if (props.filterType === "from") {
             return n.name === "From"
-          }
+          } 
         })
-        let temp = f.payload.headers[index].value;
+        let temp = undefined;
+        if (index != null) {
+          console.log(index);
+          temp = f.payload.headers[index].value;
+          console.log(temp);
+        }
+
         if (temp.includes("<")) {
           temp = temp.substring(
             temp.lastIndexOf("<") + 1, 
             temp.lastIndexOf(">"))} 
 
         let num = 0;
+
         if (props.messagesResult.filterCounts.find(x => x.id === temp)) {
 
           num = props.messagesResult.filterCounts.find(x => x.id === temp).size
         } else {
           return;
         }
+
         let min = null;
         let max = null;
 
