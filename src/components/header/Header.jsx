@@ -6,6 +6,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import debounce from "lodash/debounce";
 import moment from "moment";
+import axios from "axios";
 
 const Header = (props) => {
   const [isClicked, setIsClicked] = useState(false);
@@ -20,13 +21,13 @@ const Header = (props) => {
     }    
   }
 
-  const handleInputClick = () => {
+  const handleInputClick = (evt) => {
     setIsClicked(true);
   }
 
   const handleInputChange = (evt) => {
-    props.setSearchQuery(evt.target.value);  
-    performSearch();
+    props.setSearchQuery(evt.target.value);
+    performSemanticSearch(evt.target.value);
   }
 
   const handleFilterChange = (e) => {
@@ -40,6 +41,15 @@ const Header = (props) => {
       searchParams.labelIds = ["INBOX"];
     }
     props.getLabelMessages({...searchParams})
+  }, 1000);
+
+  const performSemanticSearch = debounce(q => {
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
+    axios.post(proxyurl + 'http://tagger-search-test.us-east-2.elasticbeanstalk.com/',
+      { "search": q })
+      .then(res => props.setSearchQuery(`{${res.data.search} ${res.data.search_two} ${res.data.search_three}}`))
+      .then(() => performSearch());
   }, 1000);
 
 
