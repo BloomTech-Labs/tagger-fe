@@ -220,6 +220,7 @@ const Main = (props) => {
             getLabelMessages={getLabelMessages} 
           /> */}
           
+
           <article className="inbox d-flex flex-column position-relative">
             <Switch>
               {renderLabelRoutes(props)}
@@ -277,7 +278,6 @@ const Main = (props) => {
             getLabelMessages={getLabelMessages} 
             searchterm={newFunc}
           />
-
 
           {/* <div className="contacts-view-container d-flex position-relative">
             Hi */}
