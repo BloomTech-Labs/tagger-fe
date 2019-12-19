@@ -46,9 +46,9 @@ const Header = (props) => {
   const performSemanticSearch = debounce(q => {
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
-    axios.post(proxyurl + 'http://tagger-search-test.us-east-2.elasticbeanstalk.com/',
-      { "search": q })
-      .then(res => props.setSearchQuery(`{${res.data.search} ${res.data.search_two} ${res.data.search_three}}`))
+    axios.post(proxyurl + 'http://tagger-search-api.us-east-2.elasticbeanstalk.com/',
+      { "query": q })
+      .then(res => props.setSearchQuery(`{${res.data.search1} ${res.data.search2} ${res.data.search3}}`))
       .then(() => performSearch());
   }, 1000);
 
