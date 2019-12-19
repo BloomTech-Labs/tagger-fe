@@ -9,6 +9,7 @@ import moment from "moment";
 import axios from "axios";
 
 const Header = (props) => {
+  const [cancel, setCancel] = useState();
   const [isClicked, setIsClicked] = useState(false);
   const [latestMessageId, setLatestMessageId] = useState('');
   const [numReceivedMessages, setNumReceivedMessages] = useState(0);
@@ -17,7 +18,7 @@ const Header = (props) => {
 
   const handleSearchClick = (evt) => {
     if (props.searchQuery !== "") {
-      performSearch();
+      performSemanticSearch(props.searchQuery);
     }    
   }
 
@@ -27,12 +28,22 @@ const Header = (props) => {
 
   const handleInputChange = (evt) => {
     props.setSearchQuery(evt.target.value);
-    performSemanticSearch(evt.target.value);
+    performSearch(evt.target.value);
+  }
+
+  const handleKeyPress = evt => {
+    if (evt.which === 13) {
+      performSemanticSearch(props.searchQuery);
+    }
   }
 
   const handleFilterChange = (e) => {
     props.setFilterType(e.target.getAttribute("name"));
     props.setFilter(e.target.value);
+  }
+
+  const handleSubmit = evt => {
+    performSemanticSearch(props.searchQuery);
   }
 
   const performSearch = debounce(() => {
@@ -43,14 +54,34 @@ const Header = (props) => {
     props.getLabelMessages({...searchParams})
   }, 1000);
 
-  const performSemanticSearch = debounce(q => {
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+  const performSemanticSearch = q => {
+    const proxyurl = "https://intense-taiga-39400.herokuapp.com/";
 
-    axios.post(proxyurl + 'http://tagger-search-api.us-east-2.elasticbeanstalk.com/',
-      { "query": q })
-      .then(res => props.setSearchQuery(`{${res.data.search1} ${res.data.search2} ${res.data.search3}}`))
+    const createCancelToken = () => axios.CancelToken.source();
+
+    if (cancel) {
+      cancel.cancel();
+    }
+    const cancelToken = createCancelToken();
+    setCancel(cancelToken);
+
+    const postData = { "query": q };
+
+    axios.post(proxyurl + 'http://tagger-search-api.us-east-2.elasticbeanstalk.com/', postData, {
+      cancelToken: cancelToken.token
+    })
+      .then(res => {
+        if (!res.data.search2) {
+          props.setSearchQuery(res.data.search1);
+        } else props.setSearchQuery(`{${res.data.search1} ${res.data.search2} ${res.data.search3}}`)
+      })
+      .catch(err => {
+        if (axios.isCancel(err) || err) {
+          console.log(err)
+        }
+       })
       .then(() => performSearch());
-  }, 1000);
+  }
 
 
 /////////////
@@ -115,6 +146,7 @@ function OutsideAlerter(props) {
               value={props.searchQuery}
               onClick={handleInputClick}
               onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
             />
             <div className="input-group-append" onClick={handleSearchClick}>
               <button
