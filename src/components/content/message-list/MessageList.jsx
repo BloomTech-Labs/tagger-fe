@@ -8,6 +8,7 @@ import ContactMessageRow from '../../contact-messages/contact-message-row/Contac
 import ListToolbar from "./list-toolbar/ListToolbar";
 import ListFooter from "./list-footer/ListFooter";
 import {getFilterCounts} from './actions/message-list.actions';
+import moment from 'moment';
 
 import "./messageList.scss";
 
@@ -67,7 +68,6 @@ const MessageList = (props) => {
 
   ///////// FILTER LOGIC /////////
 useEffect(() => {
-  // console.log("useEffect triggered. here's what changed: ", filteredMsgsResult);
   if (filteredMsgsResult === undefined) {
     return;
   } else {
@@ -79,24 +79,18 @@ useEffect(() => {
 }, [filteredMsgsResult])
 
 useEffect(() => {
-  // console.log("useEffect triggered. here's what changed: ", props.filter);
   setFilteredMsgsResult(filterLogic());
 }, [props.filter])
 
 const filterLogic = () => {
-  // console.log("filterLogic is running", props.filter);
   if ((props.messagesResult.filterCounts === [] && props.filter === false) || (props.messagesResult.filterCounts.length === 0 && props.filter === false)) {
-    // console.log("nope");
     return;
 
   } else { 
   // if ( props.messagesResult.filterCounts.length > 0 || (props.messagesResult.filterCounts === [] && props.filter)) {
-      // console.log("ran it!");
   const uniqueContacts = props.messagesResult.messages.map(r => {
     let headerArray = r.payload.headers;
     let index = headerArray.findIndex(n => {
-      // console.log("r is: ", r);
-      // console.log("n is: ", n);
       if (props.filterType === "sent") {
         return n.name ==="To"
         } else if (props.filterType === "from") {
@@ -104,10 +98,8 @@ const filterLogic = () => {
         } 
     })
     let msgVal = undefined;
-    // console.log("index is: ", index, "Header array is: ", headerArray, "FilterType is: ", props.filterType);
     if (index != null) {
     msgVal = headerArray[index].value;
-    // console.log("msgVal is: ", msgVal);
     }
     if (msgVal.includes("<")) {
       msgVal = msgVal.substring(
@@ -126,7 +118,6 @@ const filterLogic = () => {
   }
   const distinctContacts = noDupes.filter(distinct);
 
-  // console.log(distinctContacts);
   return distinctContacts;
 }
 }
@@ -155,15 +146,18 @@ const filterLogic = () => {
       return trimmedArray;
     }
 
+    // const date = res.result.internalDate;
+    // setLastInteraction(moment(Number(date)).fromNow());
+    // if internalDate > (Now - filter length of time)
+    // I have every relevant email message (filterCounts)...but I need to ADD the most recent message from each.
+    //For that, when I call GAPI, before I fill up filterCounts in state, I need to sort the array of each contact's messages and retrieve the date/time of the MOST RECENT message.
+
     const finalMsgs = () => {
-      console.log("FilterCounts is: ", props.messagesResult.filterCounts);
       if ((props.messagesResult.filterCounts == [] && props.filter === false) || props.messagesResult.filterCounts.length === 0) {
       return props.messagesResult.messages;
 
     } else if ( props.messagesResult.filterCounts.length > 0) {
-      console.log("ran it!");
       const newMsgs = props.messagesResult.messages.filter(f => {
-        console.log("f is: ", f);
         let index = f.payload.headers.findIndex(n => {
           if (props.filterType === "sent") {
           return n.name ==="To"
@@ -173,9 +167,7 @@ const filterLogic = () => {
         })
         let temp = undefined;
         if (index != null) {
-          console.log(index);
           temp = f.payload.headers[index].value;
-          console.log(temp);
         }
 
         if (temp.includes("<")) {

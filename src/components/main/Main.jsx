@@ -124,7 +124,6 @@ const Main = (props) => {
 
   const renderLabelRoutes = (props) => {
     const { labelsResult } = props;
-    // console.log(labelsResult.labels);
     return labelsResult.labels.map(el => (
       
       <Route

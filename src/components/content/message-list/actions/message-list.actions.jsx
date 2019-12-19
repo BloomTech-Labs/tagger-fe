@@ -20,14 +20,6 @@ export const MODIFY_MESSAGES_FAILED = "MODIFY_MESSAGES_FAILED";
 export const SET_SEARCH_QUERY = "SET_SEARCH_QUERY";
 export const GET_FILTER_COUNTS = "GET_FILTER_COUNTS";
 
-let filter = true;
-let resLength = 0;
-if (filter) {
-  resLength = 1000;
-} else {
-  resLength = 20;
-}
-
 export const getLabelMessages = ({
   labelIds,
   q = "",
@@ -42,7 +34,7 @@ export const getLabelMessages = ({
     dispatch(selectLabel("-1"));
   }
 
-  getMessageList({ labelIds, maxResults: resLength, q: searchQuery, pageToken }).then(response => {
+  getMessageList({ labelIds, maxResults: 20, q: searchQuery, pageToken }).then(response => {
     dispatch({
       type: GET_MESSAGES,
       payload: response
@@ -68,7 +60,6 @@ export const getFilterCounts = (q) => {
         q
     })
     .then(res => {
-      console.log(res);
       dispatch({ type: GET_FILTER_COUNTS, payload: [q, res] });
     })
     .catch(err => {
