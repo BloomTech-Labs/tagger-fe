@@ -4,6 +4,7 @@
     width: 20%;
     margin-left: 1.5rem;
     margin-right: 1.5rem;
+
 }
 
 .user-card {
@@ -16,6 +17,7 @@
 
     &:hover {
         cursor: pointer;
+        background:  rgba(47, 134, 255, .04);;
     }
 
     .user-card-header {
@@ -35,4 +37,8 @@
         max-height: 3rem;
         overflow: hidden;
     }
+}
+
+.user-selected {
+    background: rgba(47, 134, 255, .13);
 }

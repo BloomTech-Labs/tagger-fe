@@ -3,7 +3,7 @@ import he from 'he';
 import moment from 'moment';
 import { getContactLatestSnippet } from "../../../api";
 
-const ContactCard = ({ contact, handleContactSearch, searchterm, history }) => {
+const ContactCard = ({ contact, handleContactSearch, searchterm, history, isSelected, setIsSelected }) => {
     const [snippet, setSnippet] = useState('');
     const [lastInteraction, setLastInteraction] = useState('Calculating...');
 
@@ -51,7 +51,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history }) => {
     }
 
     const handleSearch = () => {
-
+        setIsSelected(contact.etag);
         history.push('/inbox');
 
         searchterm({ name: contact.names[0].displayName, 
@@ -63,7 +63,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history }) => {
     return (
         <div
             key={contact.etag}
-            className="user-card"
+            className={ isSelected === contact.etag ? "user-card user-selected" : "user-card"}
             onClick={handleSearch}
         >
             <div className="user-text-container">

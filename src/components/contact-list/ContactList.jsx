@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import { Route } from "react-router-dom";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -10,6 +10,7 @@ import ContactCard from "./contact-card/ContactCard";
 import "./contact-list.scss";
 
 const ContactList = (props) => {
+  const [isSelected, setIsSelected] = useState(false);
 
   const handleContactSearch = (email) => {
       props.setSearchQuery(`from:${email}`);  
@@ -48,6 +49,8 @@ const ContactList = (props) => {
                           contact={contact}
                           handleContactSearch={handleContactSearch}
                           searchterm={props.searchterm}
+                          isSelected={isSelected}
+                          setIsSelected={setIsSelected}
                         />
                       )
                     }}

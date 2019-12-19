@@ -9,6 +9,7 @@ import ListToolbar from "./list-toolbar/ListToolbar";
 import ListFooter from "./list-footer/ListFooter";
 import {getFilterCounts} from './actions/message-list.actions';
 import moment from 'moment';
+import MessageIcon from "../../images/MessagesIcon";
 
 import "./messageList.scss";
 
@@ -332,6 +333,11 @@ if (!props.toggle) {
     <React.Fragment>
 
         <PerfectScrollbar className="container-fluid no-gutters px-0 contact-message-list">
+        
+        <div className={props.searchterm === false ? "no-searchterm" : "yes-searchterm"}>
+           <MessageIcon />
+           </div>
+        
           {renderView()}
         </PerfectScrollbar>
     
