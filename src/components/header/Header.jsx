@@ -167,7 +167,7 @@ function OutsideAlerter(props) {
                   <option value={5010000}>50 - 99</option>
                 </select></div>
 
-                <div className="center-text">
+              {/*  <div className="center-text">
                 <select
                 className="search-dropdown-list"
                 >
@@ -175,14 +175,14 @@ function OutsideAlerter(props) {
                   {/* <option value="">
                     <input value=""></input> - 
                     <input value=""></input>
-                  </option> */}
+                  </option> 
                   <option value="">Last Week</option>
                   <option value="">Last 2 Weeks</option>
                   <option value="">Last Month</option>
                   <option value="">Last 6 Months</option>
                   <option value="">Last Year</option>
-                </select></div>
-              </div>
+                </select></div>*/}
+              </div> 
 
 
             {/* </div> */}

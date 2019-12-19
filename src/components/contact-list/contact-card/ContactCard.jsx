@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {connect} from 'react-redux';
 import he from 'he';
 import moment from 'moment';
 import { getContactLatestSnippet } from "../../../api";
@@ -26,6 +27,8 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history }) => {
                 getLastInteractionData(res);
             })
     }, [contact]);
+
+    // console.log(props.messagesResult.filterCounts);
 
     const getReceivedMessages = async (q) => {
         return await window.gapi.client.gmail.users.messages
@@ -67,6 +70,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history }) => {
             onClick={handleSearch}
         >
             <div className="user-text-container">
+                <h2>Hi there</h2>
                 <div className="user-card-header">
                     <h4>{contact.names[0].displayName}</h4>
                     <h6>{lastInteraction || "No interactions recorded."}</h6>
@@ -77,4 +81,12 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history }) => {
     )
 }
 
-export default ContactCard;
+const mapStateToProps = state => {
+    return {
+        filterCount: state.filterCounts,
+    }
+  }
+  
+  export default connect(
+    mapStateToProps, {}
+  )(ContactCard);

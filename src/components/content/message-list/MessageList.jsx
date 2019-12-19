@@ -28,7 +28,6 @@ const MessageList = (props) => {
     const searchParam = props.location.search;
     const token = searchParam.indexOf("?") === 0 ? searchParam.slice(1) : null;
     if (token && props.messagesResult.pageTokens.length === 0) {
-      console.log('is this called?');
       props.addInitialPageToken(token);
     }
 
