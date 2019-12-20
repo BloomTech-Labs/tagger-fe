@@ -1,5 +1,8 @@
+@import '../../stylesheets/variables';
+
 .header {
-  background-color: #6c757d;
+  background-color: $header-bg;
+  border-bottom: 1px solid #ced4da;
   color: #fff;
   .header-logo {
     display: flex;
@@ -9,7 +12,8 @@
 
 
     a {
-      color: #FFF;
+      color: $brand-color;
+      font-size: 1.5rem;
       text-decoration: none;
       margin-left: 5px;
     }
@@ -23,6 +27,7 @@
       user-select: none;
     }
     .profile-pic {
+      border-radius: 50%;
       height: 28px;
       width: auto;
     }
@@ -36,8 +41,58 @@
   top: 100%;
   right: 0;
   width: 100%;
-  height: 100px;
+  height: 300px;
   z-index: 2;
   margin-right: auto;
   margin-left: .25rem;
+    display: flex;
+  
+    h4, label, input {
+    color: black;
+  }
+
+}
+
+.search-btn, .signout-btn, .toggle-btn {
+  border-color: #ced4da;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+}
+
+.search-modal-menu-column {
+  width: 50%;
+  display: flex;
+}
+
+.search-dropdown-list {
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-group {
+  width: 85% !important;
+}
+
+select {
+  // width: 400px;
+  text-indent: 5px;
+  border: 0.7px solid lightgrey;
+  text-align-last: center;
+  color: rgb(105,105,105);
+  height: 80%;
+}
+.center-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // text-align: center;
+  width: 40%;
+  margin: 1px;
+  height: 100%;
+  margin: 0 5px;
 }

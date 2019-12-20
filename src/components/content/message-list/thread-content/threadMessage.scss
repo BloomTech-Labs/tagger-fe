@@ -1,0 +1,22 @@
+@import '../../../../stylesheets/variables';
+
+.thread-message-container {
+    background: $component-bg;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    width: 100%;
+}
+
+.thread-message-from {
+    margin: 1rem 0 1.5rem 0;
+}
+
+.thread-message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ScrollbarsCustom-TrackY {
+    width: 7px!important;
+}

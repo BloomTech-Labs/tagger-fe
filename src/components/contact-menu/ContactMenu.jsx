@@ -1,6 +1,7 @@
 import React from 'react';
 
 import MenuContent from "./MenuContent";
+import avatarName from '../images/avatarName.svg';
 
 import "./contact-menu.scss"
 
@@ -10,7 +11,8 @@ const ContactMenu = (props) => {
         return (
             <div className="contact-menu-container">
                 <div className="banner">
-                    <img alt={`Headshot of ${props.searchterm.name}`}/>
+                    <img className="content-avatar" src={avatarName} />
+                    {/* <img alt={`Headshot of ${props.searchterm.name}`}/> */}
                     <h2>{props.searchterm.name}</h2>
                 </div>
 

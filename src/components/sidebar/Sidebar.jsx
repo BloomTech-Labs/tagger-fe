@@ -4,6 +4,14 @@ import ComposeMessage from "../compose-message/ComposeMessage";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import groupBy from "lodash/groupBy";
 import sortBy from "lodash/sortBy";
+// import taEvents from '../images/Ellipse 63.svg'
+// import taEntertainment from '../images/Ellipse 64.svg'
+// import taFinance from '../images/Ellipse 65.svg'
+// import taProductivity from '../images/Ellipse 66.svg'
+// import taShopping from '../images/Ellipse 67.svg'
+// import taSocial from '../images/Ellipse 68.svg'
+// import taTravel from '../images/Ellipse 69.svg'
+// import taOther from '../images/Ellipse 70.svg'
 
 import {
   faInbox,
@@ -14,6 +22,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import LabelItem from "./LabelItem";
+import TaggerLabelItem from "./TaggerLabelItem";
 
 import "./sidebar.scss";
 
@@ -93,9 +102,6 @@ const Sidebar = (props) => {
 
     return (
       <React.Fragment>
-        <li key="olders-nav-title" className="pl-2 nav-title">
-          Folders
-        </li>
         {folders.map(el => {
           const iconProps = { icon: el.icon, size: "lg" };
           return (
@@ -116,22 +122,41 @@ const Sidebar = (props) => {
 
   const renderLabels = (labels) => {
 
+    const taggerIcon = (el) => {
+      if (el.name === "tagger_Entertainment") {
+        return <circle cx="6.5" cy="6.5" r="6.5" fill="#BD6906"/>
+      } else if (el.name === "tagger_Events"){
+        return <circle cx="6.5" cy="6.5" r="6.5" fill="#FD9D2C"/>
+      } else if (el.name === "tagger_Finance"){
+        return <circle cx="6.5" cy="6.5" r="6.5" fill="#E7DD00"/>
+      } else if (el.name === "tagger_Other"){
+        return <circle cx="6.5" cy="6.5" r="6.5" fill="#777777"/>
+      } else if (el.name === "tagger_Productivity"){
+        return <circle cx="6.5" cy="6.5" r="6.5" fill="#06B2BD"/>
+      } else if (el.name === "tagger_Shopping"){
+        return <circle cx="6.5" cy="6.5" r="6.5" fill="#2C84FD"/>
+      } else if (el.name === "tagger_Social"){
+        return <circle cx="6.5" cy="6.5" r="6.5" fill="#FF0099"/>
+      } else if (el.name === "tagger_Travel"){
+        return <circle cx="6.5" cy="6.5" r="6.5" fill="#42F68A"/>
+      }
+    }
+
     return (
       <React.Fragment>
         <li key="olders-nav-title" className="pl-2 nav-title">
-          Labels
+          Tags
         </li>
         {labels.filter(el => el.name.includes('tagger_')).map(el => {
           const iconProps = {
-            icon: faCircle,
+            icon: taggerIcon(el),
             color: el.color ? el.color.backgroundColor : "gainsboro",
             size: "sm"
           };
 
           const name = el.name.substring(7);
-
           return (
-            <LabelItem
+            <TaggerLabelItem
               key={el.id + "_label"}
               onClick={navigateToList}
               name={name}

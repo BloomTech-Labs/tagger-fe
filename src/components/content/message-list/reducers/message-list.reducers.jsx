@@ -11,17 +11,27 @@ import {
   ADD_INITIAL_PAGE_TOKEN,
   CLEAR_PAGE_TOKENS,
   MODIFY_MESSAGES_SUCCESS,
-  SET_SEARCH_QUERY
+  SET_SEARCH_QUERY,
+  GET_FILTER_COUNTS
 } from "../actions/message-list.actions";
 
-const defaultMessagesState = {
+export const defaultMessagesState = {
   messages: [],
   loading: true,
-  pageTokens: []
+  pageTokens: [],
+  filterCounts: []
 };
 
 export const messagesResult = (state = defaultMessagesState, action) => {
   switch (action.type) {
+    case GET_FILTER_COUNTS: 
+    return {
+      ...state,
+      //This filter is supposed to keep filterCounts from double-counting and adding duplicates...but it won't work for some reason.
+      filterCounts: [...state.filterCounts.filter(i => {
+        return i !== {id: action.payload[0], size: action.payload[1].result.resultSizeEstimate}
+      }), {id: action.payload[0], size: action.payload[1].result.resultSizeEstimate}]
+  };
     case GET_MESSAGES:
       const stateClone = {...state};
       stateClone.nextPageToken = null;

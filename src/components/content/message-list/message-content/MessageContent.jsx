@@ -10,14 +10,16 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
+import ThreadContent from "../thread-content/ThreadContent";
 import MessageToolbar from "../message-toolbar/MessageToolbar";
 
 import "./messageContent.scss";
 
 const MessageContent = (props) => {
-
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [modal, setModal] = useState();
+  const [threadLength, setThreadLength] = useState(0);
+  const [thread, setThread] = useState([]);
   
   const iframeRef = React.createRef();
 
@@ -29,6 +31,11 @@ const MessageContent = (props) => {
   // Wasn't sure how to split componentDidMount and componentDidUpdate within a single useEffect call and get it to work so here it is split into two useEffect calls.
   useEffect(() => {
     const { emailMessageResult } = props;
+
+    if (emailMessageResult.result) {
+      checkIfThread(emailMessageResult.result.threadId);
+    }
+
     if (!emailMessageResult.loading) {
       if (!emailMessageResult.failed) {
         if (iframeRef.current) {
@@ -59,6 +66,19 @@ const MessageContent = (props) => {
     return <Redirect to="/notfound" />;
   }
 
+  const checkIfThread = id => {
+    window.gapi.client.gmail.users.threads.get({
+      id: id,
+      userId: "me",
+      format: "full"
+    })
+      .then(res => {
+        if (res.result.messages.length > 1) {
+          setThread(res.result.messages);
+        };
+      })
+  }
+
   const modifyMessage = (addLabelIds, removeLabelIds) => {
     const id = props.emailMessageResult.result.id;
     const actionParams = {
@@ -71,6 +91,10 @@ const MessageContent = (props) => {
 
   if (props.emailMessageResult.loading) {
     return renderSpinner();
+  }
+
+  if (thread.length > 1) {
+    return <ThreadContent thread={thread} />
   }
 
   return (

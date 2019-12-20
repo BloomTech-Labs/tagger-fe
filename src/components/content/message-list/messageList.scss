@@ -207,6 +207,25 @@
    display: flex;
  }
 
-.contact-message-list {
-  padding-right: 15px!important;
+ .subject-tags {
+  display: flex;
+  align-items: center;
+
+  .email-tag {
+    font-weight: 400;
+    margin: 0;
+    margin-left: 1rem;
+  }
+}
+
+.no-searchterm {
+  display: flex;
+  margin: 0 auto !important;
+  align-items: center;
+  justify-content: center;
+  padding-top: 300px;
+}
+
+.yes-searchterm {
+  display: none;
 }

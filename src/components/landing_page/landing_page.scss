@@ -11,6 +11,7 @@
     text-align: center;
     display: flex;
     justify-content: space-between;
+    
 
     .logo {
         width: 25%;
@@ -37,6 +38,7 @@
         margin-right: 10px;
         text-align: center;
         font-size: 15px;
+
     }
 }
 
@@ -54,7 +56,6 @@
 }
 
 .landing-banner {
-    background: purple;
     height: 300px;
 
     img {

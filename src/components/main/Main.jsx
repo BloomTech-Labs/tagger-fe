@@ -14,6 +14,8 @@ import MessageContent from "../content/message-list/message-content/MessageConte
 
 import { Route, Switch, withRouter } from "react-router-dom";
 
+import { useLocalStorage } from "../../utils";
+
 import { getUserContacts } from "../contact-list/actions/contact-list.actions";
 import { getLabels } from "../sidebar/sidebar.actions";
 
@@ -36,8 +38,11 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const Main = (props) => {
   const [signedInUser, setSignedInUser] = useState();
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useLocalStorage('view', false);
   const [searchterm, setSearchterm] = useState(false);
+  const [filter, setFilter] = useState(false);
+  const [filterType, setFilterType] = useState("");
+
 
   useEffect(() => {
     /* Label list is fetched from here 
@@ -119,7 +124,6 @@ const Main = (props) => {
 
   const renderLabelRoutes = (props) => {
     const { labelsResult } = props;
-    // console.log(labelsResult.labels);
     return labelsResult.labels.map(el => (
       
       <Route
@@ -141,6 +145,10 @@ const Main = (props) => {
               searchQuery={props.searchQuery}
               searchterm={searchterm}
               toggle={toggle}
+              filter={filter}
+              setFilter={setFilter}
+              filterType={filterType}
+              setFilterType={setFilterType}
             />
           ) 
         }}
@@ -189,16 +197,22 @@ const Main = (props) => {
           searchQuery={props.searchQuery}
           toggleDash={toggleDash}
           toggle={toggle}
+          filter={filter}
+          setFilter={setFilter}
+          filterType={filterType}
+          setFilterType={setFilterType}
         />
 
         <section
         className="main hbox space-between">
-          <Sidebar
-            getLabelList={getLabelList}
-            pathname={props.location.pathname}
-            labelsResult={props.labelsResult}
-            onLabelClick={loadLabelMessages}
-          />
+          <div className="sidebar-container">
+            <Sidebar
+              getLabelList={getLabelList}
+              pathname={props.location.pathname}
+              labelsResult={props.labelsResult}
+              onLabelClick={loadLabelMessages}
+            />
+          </div>
 
           {/* <ContactList
             searchQuery={props.searchQuery}
@@ -206,7 +220,8 @@ const Main = (props) => {
             getLabelMessages={getLabelMessages} 
           /> */}
           
-          <article className="d-flex flex-column position-relative">
+
+          <article className="inbox d-flex flex-column position-relative">
             <Switch>
               {renderLabelRoutes(props)}
               <Route
@@ -240,19 +255,21 @@ const Main = (props) => {
           getLabelMessages={getLabelMessages} 
           searchQuery={props.searchQuery}
           toggleDash={toggleDash}
+          filter={filter}
+          setFilter={setFilter}
+          filterType={filterType}
+          setFilterType={setFilterType}
         />
 
         <section className="main hbox">
           
-          {/* Is the contact-view div going to break this component? It's left over from a merge conflict. */}
-          <div className="contact-view"> 
-          
-          <Sidebar
-            getLabelList={getLabelList}
-            pathname={props.location.pathname}
-            labelsResult={props.labelsResult}
-            onLabelClick={loadLabelMessages}
-          />
+          <div className="sidebar-container">
+            <Sidebar
+              getLabelList={getLabelList}
+              pathname={props.location.pathname}
+              labelsResult={props.labelsResult}
+              onLabelClick={loadLabelMessages}
+            />
           </div>
 
           <ContactList
@@ -261,7 +278,6 @@ const Main = (props) => {
             getLabelMessages={getLabelMessages} 
             searchterm={newFunc}
           />
-
 
           {/* <div className="contacts-view-container d-flex position-relative">
             Hi */}

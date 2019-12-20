@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const LabelItem = (props) => {
+const TaggerLabelItem = (props) => {
 
   const onClick = (evt) => {
     props.onClick(evt, props.id);
@@ -22,7 +22,10 @@ const LabelItem = (props) => {
       onClick={onClick}
     >
       
-      <FontAwesomeIcon size="sm" {...iconProps} />
+
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {iconProps.icon}
+        </svg>
       {name}
 
       {messagesUnread > 0 ? (
@@ -32,4 +35,4 @@ const LabelItem = (props) => {
   );
 }
 
-export default LabelItem;
+export default TaggerLabelItem;

@@ -5,27 +5,83 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import debounce from "lodash/debounce";
-
+import moment from "moment";
+import axios from "axios";
 
 const Header = (props) => {
+  const [cancel, setCancel] = useState();
   const [isClicked, setIsClicked] = useState(false);
+  const [latestMessageId, setLatestMessageId] = useState('');
+  const [numReceivedMessages, setNumReceivedMessages] = useState(0);
+  const [numSentMessages, setNumSentMessages] = useState(0);
+  const [lastInteraction, setLastInteraction] = useState('Calculating...');
 
   const handleSearchClick = (evt) => {
-    if (props.searhQuery !== "") {
-      performSearch();
+    if (props.searchQuery !== "") {
+      performSemanticSearch(props.searchQuery);
     }    
   }
 
-  const handleInputClick = () => {
+  const handleInputClick = (evt) => {
     setIsClicked(true);
-    console.log(isClicked);
   }
 
   const handleInputChange = (evt) => {
-    props.setSearchQuery(evt.target.value);  
-    performSearch();
+    props.setSearchQuery(evt.target.value);
+    performSearch(evt.target.value);
   }
 
+  const handleKeyPress = evt => {
+    if (evt.which === 13) {
+      performSemanticSearch(props.searchQuery);
+    }
+  }
+
+  const handleFilterChange = (e) => {
+    props.setFilterType(e.target.getAttribute("name"));
+    props.setFilter(e.target.value);
+  }
+
+  const handleSubmit = evt => {
+    performSemanticSearch(props.searchQuery);
+  }
+
+  const performSearch = debounce(() => {
+    const searchParams = {}
+    if (!props.searchQuery || props.searchQuery === "") {
+      searchParams.labelIds = ["INBOX"];
+    }
+    props.getLabelMessages({...searchParams})
+  }, 1000);
+
+  const performSemanticSearch = q => {
+    const proxyurl = "https://intense-taiga-39400.herokuapp.com/";
+
+    const createCancelToken = () => axios.CancelToken.source();
+
+    if (cancel) {
+      cancel.cancel();
+    }
+    const cancelToken = createCancelToken();
+    setCancel(cancelToken);
+
+    const postData = { "query": q };
+
+    axios.post(proxyurl + 'http://tagger-search-api.us-east-2.elasticbeanstalk.com/', postData, {
+      cancelToken: cancelToken.token
+    })
+      .then(res => {
+        if (!res.data.search2) {
+          props.setSearchQuery(res.data.search1);
+        } else props.setSearchQuery(`{${res.data.search1} ${res.data.search2} ${res.data.search3}}`)
+      })
+      .catch(err => {
+        if (axios.isCancel(err) || err) {
+          console.log(err)
+        }
+       })
+      .then(() => performSearch());
+  }
 
 
 /////////////
@@ -59,17 +115,8 @@ function OutsideAlerter(props) {
 
   return <div ref={wrapperRef}>{props.children}</div>;
 }
-//
-
-
-
-  const performSearch = debounce(() => {
-    const searchParams = {}
-    if (!props.searchQuery || props.searchQuery === "") {
-      searchParams.labelIds = ["INBOX"];
-    }
-    props.getLabelMessages({...searchParams})
-  }, 1000);
+//**
+//*
 
   const userInfo = props.googleUser.w3;
   const email = userInfo.U3;
@@ -79,10 +126,10 @@ function OutsideAlerter(props) {
   return (
     <div className="header-container">
       <header className="d-flex p-3 align-content-center align-items-center header">
-        <div className="header-logo justify-content-center">
-          <Link to="/inbox">Tagger</Link>
+        <div className="header-logo justify-content-center align-items-center">
+          <Link className="header-link" to="/inbox">Tagger</Link>
           <button 
-            className="btn btn-light align-self-center mr-2 font-weight-bold"
+            className="toggle-btn btn bg-white text-dark align-self-center mr-2 font-weight-bold"
             onClick={props.toggleDash}
           >
             {props.toggle === false ? 'Contacts' : 'Dashboard'}
@@ -91,32 +138,90 @@ function OutsideAlerter(props) {
   
         <div className="header-search">
           <div className="input-group w-75 ml-1 mr-auto">
-            
-            <OutsideAlerter>
-            <div 
-            className="search-modal-div"
-            style={isClicked ? {display:"block"} : {display:'none'}}
-            ></div>
-            </OutsideAlerter>
 
             <input
               type="search"
-              className="form-control border-light"
+              className="form-control"
               placeholder="Search mail"
               value={props.searchQuery}
               onClick={handleInputClick}
               onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
             />
             <div className="input-group-append" onClick={handleSearchClick}>
               <button
-                className="btn btn-light btn-outline-light bg-white text-dark"
+                className="search-btn btn btn-light bg-white text-dark"
                 type="button"
               >
                 <FontAwesomeIcon icon={faSearch} />
               </button>
             </div>
+
+            {/* <OutsideAlerter>
+            <div 
+            className="search-modal-div"
+            style={isClicked ? {display:"flex"} : {display:'none'}}
+            > */}
+              <div className="search-modal-menu-column">
+              <div className="center-text">
+                <select
+                className="search-dropdown-list"
+                name="sent"
+                onChange={handleFilterChange}
+                >
+                  <option defaultValue="selected" value={0}>Sent Messages</option>
+                  {/* <option value="">
+                    <input value=""></input> - 
+                    <input value=""></input>
+                  </option> */}
+                  <option value={14}>1 - 4</option>
+                  <option value={59}>5 - 9</option>
+                  <option value={1019}>10 - 19</option>
+                  <option value={2049}>20 - 49</option>
+                  <option value={5010000}>50+</option>
+                </select></div>
+
+                <div className="center-text">
+                <select
+                className="search-dropdown-list"
+                name="from"
+                onChange={handleFilterChange}
+                >
+                  <option selected="selected" value={0}>Received Messages</option>
+                  {/* <option value="">
+                    <input value=""></input> - 
+                    <input value=""></input>
+                  </option> */}
+                  <option value={14}>1 - 4</option>
+                  <option value={59}>5 - 9</option>
+                  <option value={1019}>10 - 19</option>
+                  <option value={2049}>20 - 49</option>
+                  <option value={5010000}>50 - 99</option>
+                </select></div>
+
+              {/*  <div className="center-text">
+                <select
+                className="search-dropdown-list"
+                >
+                  <option selected="selected">Last Interaction</option>
+                  {/* <option value="">
+                    <input value=""></input> - 
+                    <input value=""></input>
+                  </option> 
+                  <option value="">Last Week</option>
+                  <option value="">Last 2 Weeks</option>
+                  <option value="">Last Month</option>
+                  <option value="">Last 6 Months</option>
+                  <option value="">Last Year</option>
+                </select></div>*/}
+              </div> 
+
+
+            {/* </div> */}
+            {/* </OutsideAlerter> */}
+
           </div>
-          <div>
+          <div className="gmail-icons">
             <span className="user-name" title={email}>
               {fullName}
             </span>
@@ -127,8 +232,6 @@ function OutsideAlerter(props) {
   
         <Signout onSignout={props.onSignout} />
       </header>
-      <div className="header">
-      </div>
     </div>
   );
 }

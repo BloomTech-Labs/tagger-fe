@@ -4,6 +4,7 @@ import { batchModify } from "../../../../api";
 import { selectLabel } from "../../../sidebar/sidebar.actions";
 
 export const GET_MESSAGES = "GET_MESSAGES";
+export const GET_ALL_MESSAGES = "GET_ALL_MESSAGES";
 export const GET_MESSAGES_LOAD_IN_PROGRESS = "GET_MESSAGES_LOAD_IN_PROGRESS";
 export const GET_MESSAGES_FAILED = 'GET_MESSAGES_FAILED';
 export const TOGGLE_SELECTED = "TOGGLE_SELECTED";
@@ -17,6 +18,7 @@ export const CLEAR_PAGE_TOKENS = "CLEAR_PAGE_TOKENS";
 export const MODIFY_MESSAGES_SUCCESS = "MODIFY_MESSAGES_SUCCESS";
 export const MODIFY_MESSAGES_FAILED = "MODIFY_MESSAGES_FAILED";
 export const SET_SEARCH_QUERY = "SET_SEARCH_QUERY";
+export const GET_FILTER_COUNTS = "GET_FILTER_COUNTS";
 
 export const getLabelMessages = ({
   labelIds,
@@ -25,8 +27,8 @@ export const getLabelMessages = ({
 }) => (dispatch, getState) => {
   dispatch(setMessageListLoadInProgress());
 
-  const state = getState();
-  const {searchQuery} = state;
+  let state = getState();
+  let {searchQuery} = state;
 
   if (searchQuery !== "") {
     dispatch(selectLabel("-1"));
@@ -48,6 +50,22 @@ export const getLabelMessages = ({
       payload: err
     })
   });
+};
+
+export const getFilterCounts = (q) => {
+  return async dispatch => {
+    await window.gapi.client.gmail.users.messages
+    .list({
+        userId: "me",
+        q
+    })
+    .then(res => {
+      dispatch({ type: GET_FILTER_COUNTS, payload: [q, res] });
+    })
+    .catch(err => {
+      console.log(err);
+  });
+  }
 };
 
 export const setSearchQuery = q => ({
