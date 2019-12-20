@@ -48,7 +48,7 @@
         margin-right: 1rem;
       }
       &:not(.selected):not(.nav-title):hover {
-        background-color: #fafafa !important;
+        background-color: rgba(47, 134, 255, .08) !important;
       }
       &.selected {
         background-color: #d9dfe3;

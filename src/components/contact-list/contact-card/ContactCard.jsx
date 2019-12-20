@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import he from 'he';
 import moment from 'moment';
 import { getContactLatestSnippet } from "../../../api";
+import {Animated} from "react-animated-css";
 
 const ContactCard = ({ contact, handleContactSearch, searchterm, history, isSelected, setIsSelected }) => {
     const [snippet, setSnippet] = useState('');
@@ -61,6 +62,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history, isSele
     }
 
     return (
+        <Animated animationIn="fadeInLeft" animationOut="fadeOutRight" animationInDuration={500} animationOutDuration={400} isVisible={true}>
         <div
             key={contact.etag}
             className={ isSelected === contact.etag ? "user-card user-selected" : "user-card"}
@@ -74,6 +76,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history, isSele
                 <div className="user-card-snippet">{snippet || "No messages were found."}</div>
             </div>
         </div>
+        </Animated>
     )
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import he from "he";
 import moment from "moment";
+import {Animated} from "react-animated-css";
 // import MesssageCheckbox from "../../content/message-list/message-row/MessageCheckbox";
 
 import ContactMessageTags from "./ContactMessageTags";
@@ -115,9 +116,10 @@ const MessageItem = (props) => {
     //     />
     //   </div>
     // </div>
+<Animated animationIn="fadeInRight" animationOut="fadeOutLeft" animationInDuration={600} animationOutDuration={400} isVisible={true}>
 
       <section
-        className="message-tile"
+        className="message-tile "
         onClick={getMessage}
       >
         <div className="message-card">
@@ -144,6 +146,7 @@ const MessageItem = (props) => {
         ) : null}
           
     </section>
+    </Animated>
 
   );
 }

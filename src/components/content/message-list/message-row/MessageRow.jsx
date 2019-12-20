@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 import MesssageCheckbox from "./MessageCheckbox";
+import {Animated} from "react-animated-css";
 
 import NameSubjectFields from "./NameSubjectFields";
 import AttachmentDateFields from "./AttachmentDateFields";
@@ -81,6 +82,7 @@ const MessageItem = (props) => {
   let fromName = fromHeader ? getFromName(fromHeader.value) : "undefined";
 
   return (
+    <Animated animationIn="pulse" animationOut="fadeOutLeft" animationInDuration={375} animationOutDuration={400} isVisible={true}>
     <div className={`d-flex table-row-wrapper${selected}`}>
       <MesssageCheckbox
         selected={props.data.selected}
@@ -101,6 +103,7 @@ const MessageItem = (props) => {
         />
       </div>
     </div>
+    </Animated>
   );
 }
 
