@@ -82,7 +82,7 @@ const MessageItem = (props) => {
   let fromName = fromHeader ? getFromName(fromHeader.value) : "undefined";
 
   return (
-    <Animated animationIn="pulse" animationOut="fadeOutLeft" animationInDuration={375} animationOutDuration={400} isVisible={true}>
+    // <Animated animationIn="pulse" animationOut="fadeOutLeft" animationInDuration={375} animationOutDuration={400} isVisible={true}>
     <div className={`d-flex table-row-wrapper${selected}`}>
       <MesssageCheckbox
         selected={props.data.selected}
@@ -103,7 +103,7 @@ const MessageItem = (props) => {
         />
       </div>
     </div>
-    </Animated>
+    // </Animated>
   );
 }
 
