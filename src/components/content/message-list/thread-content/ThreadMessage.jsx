@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import moment from "moment";
-
 import ContactMessageTags from "../../../contact-messages/contact-message-row/ContactMessageTags";
 
 import { getMessage } from "../../../../api/";

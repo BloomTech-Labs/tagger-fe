@@ -1,7 +1,6 @@
 import React from "react";
 
 import Scrollbar from "react-scrollbars-custom";
-
 import ThreadMessage from "./ThreadMessage";
 
 const ThreadContent = (props) => {
