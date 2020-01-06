@@ -42,8 +42,8 @@
 
     .tagger-tag {
         width: fit-content;
-        background: #565AB5;
-        color: #ffffff;
+        background: lighten(#565AB5, 30%);
+        color: darken(#565AB5, 10%);
         border-radius: 10px;
         text-align: center;
         margin: 1rem 0;
