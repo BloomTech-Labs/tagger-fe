@@ -6,19 +6,22 @@
 
 //*********************** NAVBAR ***********************//
 .landing-nav {
+    width: 90%;
+    margin: 0 auto;
     flex: none !important;
     // height: 5%;
     text-align: center;
     display: flex;
     justify-content: space-between;
     
+    @media (min-width: 950px) {
+        width: 75%;
+    }
 
     .logo {
-        width: 25%;
         font-size: 30px;
         vertical-align:middle;
         line-height:35px;
-        padding-right: 40px;
     }
     ul {
         display: flex;
@@ -33,12 +36,14 @@
         line-height:35px;
     }
 
-    ul li a {
+    ul li {
         align-items: center;
         margin-right: 10px;
         text-align: center;
         font-size: 15px;
-
+    }
+    ul li:last-child {
+        margin-right: 0px;
     }
 }
 
@@ -48,6 +53,13 @@
     width: 90%;
     // height: 100%;
     margin: 0 auto;
+
+    @media (min-width: 950px) {
+        width: 75%;
+    }
+    @media (max-width: 650px) {
+        width: 95%;
+    }
 }
 
 .landing-section {
@@ -68,10 +80,14 @@
     flex-direction: column;
 
     .bottom-border {
-        width: 80%;
+        width:100%;
         margin: 0 auto;
-        margin-top: 40px;
+        margin-top: 50px;
         border-bottom: 1px solid grey;
+
+        @media (max-width: 650px) {
+            margin-top: 30px;
+        }
     }
 }
 
@@ -87,37 +103,60 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 80px;
+    margin-top: 50px;
+
+    @media (max-width: 650px) {
+        flex-direction: column;
+        margin-top: 5px;
+    }
 
 
     p {
         font-size: 14px;
-        text-align: center;
+        text-align: left;
         margin: 0 auto;
     }
     h3 {
-        text-align: center;
+        text-align: left;
+    }
+    div {
+        @media (max-width: 650px) {
+            width: 100% !important;
+            margin-bottom: 15px;
+        }
+        @media (min-width: 950px) {
+            // width: 75%;
+        }
     }
     .product-img {
-        width: 35%;
+        width: 45%;
         height: auto;
+        
+        @media (max-width: 650px) {
+            width: 100%;
+        }
     }
 
     div {
-        width: 35%;
-        margin: 0 7%;
+        width: 45%;
+        // margin: 0 7%;
     }
     img {
         width: 55%;
         height: auto;
-        margin: 0 7%;
+        // margin: 0 7%;
         border-radius: 5px;
     }
 
 }
 
+.feature-2 {
+    @media (max-width: 650px) {
+        flex-direction: column-reverse !important;
+    }
+}
 .feature-3 {
-    margin-bottom: 80px;
+    margin-bottom: 40px;
 }
 
 .landing-footer {
