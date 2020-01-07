@@ -5,7 +5,7 @@ import Main from "./components/main/Main";
 import Login from "./components/login/Login";
 import Authenticating from "./components/authenticating/Authenticating";
 import LandingPage from "./components/landing_page/LandingPage";
-import AboutUs from "./components/about_us/AboutUs";
+import AboutUs from "./components/landing_page/about_us/AboutUs";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import {
   // signOut,
