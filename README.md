@@ -1,11 +1,15 @@
-#Tagger - Smarter Email
+# Tagger - Smarter Email
 
 You can find the project at [Tagger](https://taggerhq.com/).
 
 ## Contributors
-[Michael Chrupcala](https://github.com/mchrupcala)  |  
+|[Michael Chrupcala](https://github.com/mchrupcala)  |  
 [Teddy Ngo](https://github.com/teddyhn)  |  
 [Marcus Jones](https://github.com/jonesy212)        |  
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | 
+|                 [<img src="https://ca.slack-edge.com/T4JUEB3ME-UJKJRJAPJ-3af635a5f445-512" width = "200" />](https://github.com/mchrupcala)                       |                      [<img src="https://ca.slack-edge.com/T4JUEB3ME-UL5V3G7A9-f4a14f4623d7-512" width = "200" />](https://github.com/teddyhn)                       |                      [<img src="https://ca.slack-edge.com/T4JUEB3ME-UJB5Y3VS4-52dc043b8f1e-512" width = "200" />](https://github.com/jonesy212)                       |       
+|[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/mchrupcala)                 |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/teddyhn)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/jonesy212)                  |
+| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/michaelchrupcala/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/theodore-ngo/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/marcus-jones-0227a66b/) |
 
 
 ## Project Overview
@@ -19,7 +23,7 @@ Introducing, [Tagger](https://taggerhq.com/)!
 [Product Canvas](https://www.notion.so/Tagger-Smarter-Email-01673a2ed9e54cb8834b959ad39f7de2)
 
 
-##Features:
+## Features:
 
 - Read, Send, Reply, Move to Trash.
 
@@ -35,7 +39,7 @@ Introducing, [Tagger](https://taggerhq.com/)!
 
 - Responsive Viewport (with Bootstrap and CSS3 flexbox styling)
 
-###Tech Stack
+### Tech Stack
 
 - [x] React
 
@@ -58,8 +62,8 @@ Introducing, [Tagger](https://taggerhq.com/)!
 - [x] Bootstrap
 
 
-###Based on /elongineer's React Gmail Client - **Instructions below**
-*https://github.com/elongineer/react-gmail-client*
+### Based on /elongineer's React Gmail Client - **Instructions below**
+| *https://github.com/elongineer/react-gmail-client*
 
 A simple Gmail client made with [Create-React-App](https://github.com/facebook/create-react-app) + [React-Redux](https://github.com/reduxjs/react-redux), using [Gmail's public Javascript API](https://developers.google.com/gmail/api/). It also uses [React Router](https://github.com/ReactTraining/react-router) to add some routing features.
 
