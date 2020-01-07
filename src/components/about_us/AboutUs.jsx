@@ -1,31 +1,36 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import shane from "./img/shane.jpg";
-import richelle from "./img/richelle.jpg";
-import matthew from "./img/matthew.jpg";
-import michael from "./img/michael.jpg";
-import teddy from "./img/teddy.jpg";
-import quinton from "./img/quinton.jpg";
-import edwin from "./img/edwin.jpg";
-import marcus from "./img/matthew.jpg";
-import jay from "./img/jay.jpg";
-import samuel from "./img/samuel.jpg";
-import john from "./img/john.jpg";
+import shane from "./img/shane.png";
+import richelle from "./img/richelle.png";
+import matthew from "./img/matthew.png";
+import michael from "./img/michael.png";
+import teddy from "./img/teddy.png";
+import quinton from "./img/quinton.png";
+import edwin from "./img/edwin.png";
+import marcus from "./img/matthew.png";
+import jay from "./img/jay.png";
+import samuel from "./img/samuel.png";
+import john from "./img/john.png";
 
 const AboutUs = () => {
   const [count, setCount] = useState(1);
+  const titles = [
+    "UX Designer",
+    "Web Developer",
+    "Data Scientist",
+    "Team Leader"
+  ];
   const imgs = {
-    1: richelle,
-    2: matthew,
-    3: michael,
-    4: teddy,
-    5: quinton,
-    6: edwin,
-    7: marcus,
-    8: jay,
-    9: samuel,
-    10: john,
-    11: shane
+    1: { pic: richelle, role: titles[0] },
+    2: { pic: matthew, role: titles[0] },
+    3: { pic: michael, role: titles[1] },
+    4: { pic: teddy, role: titles[1] },
+    5: { pic: quinton, role: titles[1] },
+    6: { pic: edwin, role: titles[1] },
+    7: { pic: marcus, role: titles[1] },
+    8: { pic: jay, role: titles[2] },
+    9: { pic: samuel, role: titles[2] },
+    10: { pic: john, role: titles[2] },
+    11: { pic: shane, role: titles[3] }
   };
   const handleCount = action => {
     if (action === "forward" && count === 11) {
@@ -43,14 +48,14 @@ const AboutUs = () => {
 
   return (
     <div>
-      <button onClick={() => handleCount("forward")}>y</button>
-      <FontAwesomeIcon icon="arrow" />
+      <button onClick={() => handleCount("back")}>back</button>
       <img
-        src={imgs[count]}
+        src={imgs[count].pic}
         alt="aboutUs"
-        style={{ width: "50px", height: "50px" }}
+        style={{ width: "250px", height: "300px" }}
       />
-      <button onClick={() => handleCount("back")}>x</button>
+      <button onClick={() => handleCount("forward")}>forward</button>
+      <h2>{imgs[count].role}</h2>
     </div>
   );
 };
