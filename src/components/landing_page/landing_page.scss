@@ -62,9 +62,38 @@
     }
 }
 
+.landing-content2 {
+    // width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // height: 100%;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 80px;
+
+    // @media (min-width: 950px) {
+    //     width: 75%;
+    // }
+    // @media (max-width: 650px) {
+    //     width: 95%;
+    // }
+}
+
+.carousel-button {
+    height: 30px;
+    width: 80px;
+
+    border-radius: 100px;
+    margin: 0 25px;
+}
+
 .landing-section {
     margin: 1.5% 0;
-    // height: 100%;
+}
+
+.team-pic {
+    margin: 0 15px;
 }
 
 .landing-banner {
