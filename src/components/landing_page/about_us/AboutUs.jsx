@@ -69,7 +69,7 @@ const AboutUs = () => {
           <a href="/about">About</a>
         </li>
         <li>
-          <a href="/inbox">Try It</a>
+          <a href="/inbox">Sign In</a>
         </li>
       </ul>
     </div>

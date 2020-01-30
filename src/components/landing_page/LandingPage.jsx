@@ -16,6 +16,13 @@ const LandingPage = () => {
     backgroundImage: `url(${img1})`,
     backgroundSize: "cover"
   };
+
+
+  const redirectUrl = "http://localhost:3000/inbox";
+  const response = "token"
+  const client = '765722368782-j3bqp7gm072b0vd1lv97kgh2mnp37b7j.apps.googleusercontent.com';
+
+
   return (
     <section className="landing-container">
       <nav className="landing-nav">
@@ -29,7 +36,7 @@ const LandingPage = () => {
               <a href="/about">About</a>
             </li>
             <li>
-              <a href="/inbox">Try It</a>
+              <a href={`https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//mail.google.com/&redirect_uri=${redirectUrl}&response_type=${response}&client_id=${client}`}>Sign In</a>
             </li>
           </ul>
         </div>
