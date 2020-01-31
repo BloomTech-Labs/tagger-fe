@@ -46,10 +46,10 @@ const MessageContent = (props) => {
           body.innerHTML = props.emailMessageResult.body;
         }
       } else {
-        if (!errorMessage) {
-          setErrorMessage(emailMessageResult.error.result.error.message);
-          setModal(true);
-        }
+        // if (!errorMessage) {
+        //   setErrorMessage(emailMessageResult.error.result.error.message);
+        //   setModal(true);
+        // }
       }
     }
   }, [props.emailMessageResult])

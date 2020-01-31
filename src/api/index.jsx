@@ -1,13 +1,13 @@
 import { MAX_RESULTS } from "../constants";
 import { getBody, isHTML } from './utils';
 
-export const getContactList = async () => {
-  const gapi = window.gapi;
-  return await gapi.client.people.people.connections.list({
-    'resourceName': 'people/me',
-    'personFields': 'names,emailAddresses',
-  })
-};
+// export const getContactList = async () => {
+//   const gapi = window.gapi;
+//   return await gapi.client.people.people.connections.list({
+//     'resourceName': 'people/me',
+//     'personFields': 'names,emailAddresses',
+//   })
+// };
 
 export const getContactLatestSnippet = async (q) => {
   const message = await window.gapi.client.gmail.users.messages
@@ -45,11 +45,11 @@ const getLabelDetails = async (labelList) => {
   return Promise.all(labelPromises);
 };
 
-export const getLabelList = async () => {
-  const labelIds = await window.gapi.client.gmail.users.labels.list({userId: "me"});
-  const labelDetails = await getLabelDetails(labelIds);
-  return labelDetails.map(el => el.result);
-}
+// export const getLabelList = async () => {
+//   const labelIds = await window.gapi.client.gmail.users.labels.list({userId: "me"});
+//   const labelDetails = await getLabelDetails(labelIds);
+//   return labelDetails.map(el => el.result);
+// }
 
 export const getMessageList = async ({ labelIds, maxResults, q, pageToken }) => {
   const rawList = await getMessageRawList({ labelIds, maxResults, pageToken, q });

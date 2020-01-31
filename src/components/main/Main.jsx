@@ -16,7 +16,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 
 import { useLocalStorage } from "../../utils";
 
-import { getUserContacts } from "../contact-list/actions/contact-list.actions";
+// import { getUserContacts } from "../contact-list/actions/contact-list.actions";
 import { getLabels } from "../sidebar/sidebar.actions";
 
 import {
@@ -72,7 +72,7 @@ const Main = (props) => {
   }, [props.signedInUser]);
 
   const getUserContacts = () => {
-    props.getUserContacts();
+    // props.getUserContacts();
   }
 
   const navigateToNextPage = (token) => {
@@ -183,9 +183,9 @@ const Main = (props) => {
 
   const renderInboxViewport = () => {
 
-    if (props.labelsResult.labels.length < 1) {
-      return renderSpinner();
-    }
+    // if (props.labelsResult.labels.length < 1) {
+    //   return renderSpinner();
+    // }
 
     return (
       <Fragment>
@@ -333,7 +333,7 @@ const mapDispatchToProps = dispatch =>
     {
       getLabels,
       getLabelMessages,
-      getUserContacts,
+      // getUserContacts,
       emptyLabelMessages,
       toggleSelected,
       selectLabel,
