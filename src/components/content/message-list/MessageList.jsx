@@ -59,13 +59,13 @@ const MessageList = (props) => {
   }
 
   
-  const renderSpinner = () => {
-    return (
-      <div className="d-flex h-100 justify-content-center align-items-center  ">
-        <FontAwesomeIcon icon={faSpinner} spin size="5x" />
-      </div>
-    );
-  }
+  // const renderSpinner = () => {
+  //   return (
+  //     <div className="d-flex h-100 justify-content-center align-items-center  ">
+  //       <FontAwesomeIcon icon={faSpinner} spin size="5x" />
+  //     </div>
+  //   );
+  // }
 
   ///////// FILTER LOGIC /////////
 useEffect(() => {
@@ -250,32 +250,32 @@ const filterLogic = () => {
     });
   }
 
-  const renderMessages = () => {
+  // const renderMessages = () => {
 
-    if (props.messagesResult.loading) {
-      return renderSpinner();
-    } else if (props.messagesResult.messages.length === 0) {
-      return (
-        <div className="p-4 text-center">
-          There are no messages with this label.
-        </div>
-      );
-    } else {
-      return mapThroughMsgs()
-    }
-  }
+  //   if (props.messagesResult.loading) {
+  //     return renderSpinner();
+  //   } else if (props.messagesResult.messages.length === 0) {
+  //     return (
+  //       <div className="p-4 text-center">
+  //         There are no messages with this label.
+  //       </div>
+  //     );
+  //   } else {
+  //     return mapThroughMsgs()
+  //   }
+  // }
 
 
-  const renderView = () => {
-    switch (viewMode) {
+  // const renderView = () => {
+  //   switch (viewMode) {
 
-      case ViewMode.EDIT:
-        return props.renderEditView();
+  //     case ViewMode.EDIT:
+  //       return props.renderEditView();
 
-      default:
-        return renderMessages();
-    }
-  }
+  //     default:
+  //       return renderMessages();
+  //   }
+  // }
 
   const getPageTokens = () => {
     if (props.messagesResult.loading) {
@@ -310,25 +310,25 @@ const filterLogic = () => {
   const messagesTotal = messagesResult.label ? messagesResult.label.result.messagesTotal : 0;
   const { nextToken, prevToken } = getPageTokens();
 
-if (!props.toggle) {
-  return (
-    <React.Fragment>
-      <ListToolbar
-        nextToken={nextToken}
-        prevToken={prevToken}
-        navigateToNextPage={props.navigateToNextPage}
-        navigateToPrevPage={props.navigateToPrevPage}
-      />
+// if (!props.toggle) {
+//   return (
+//     <React.Fragment>
+//       <ListToolbar
+//         nextToken={nextToken}
+//         prevToken={prevToken}
+//         navigateToNextPage={props.navigateToNextPage}
+//         navigateToPrevPage={props.navigateToPrevPage}
+//       />
 
-      <PerfectScrollbar className="container-fluid no-gutters px-0 message-list-container">
-        {/* <button onClick={testReducer}>Click me to test</button> */}
-        {renderView()}
-      </PerfectScrollbar>
-      <ListFooter messagesTotal={messagesTotal} />
-    </React.Fragment>
+//       <PerfectScrollbar className="container-fluid no-gutters px-0 message-list-container">
+//         {/* <button onClick={testReducer}>Click me to test</button> */}
+//         {renderView()}
+//       </PerfectScrollbar>
+//       <ListFooter messagesTotal={messagesTotal} />
+//     </React.Fragment>
     
-  );
-} else {
+//   );
+// } else {
   return (
     <React.Fragment>
 
@@ -338,13 +338,13 @@ if (!props.toggle) {
            <MessageIcon />
            </div>
         
-          {renderView()}
+          {/* {renderView()} */}
         </PerfectScrollbar>
     
     </React.Fragment>
     
   );
-}
+// }
 
 }
 

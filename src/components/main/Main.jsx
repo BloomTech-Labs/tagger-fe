@@ -156,13 +156,13 @@ const Main = (props) => {
     ));    
   }
 
-  const renderSpinner = () => {
-    return (
-      <div className="d-flex h-100 align-items-center justify-content-center">
-        <FontAwesomeIcon icon={faSpinner} spin size="5x" />
-      </div>
-    )
-  }
+  // const renderSpinner = () => {
+  //   return (
+  //     <div className="d-flex h-100 align-items-center justify-content-center">
+  //       <FontAwesomeIcon icon={faSpinner} spin size="5x" />
+  //     </div>
+  //   )
+  // }
 
   const onSignout = () => {
     signOut().then(_ => {
@@ -243,9 +243,9 @@ const Main = (props) => {
 
   const renderContactViewport = () => {
 
-    if (props.labelsResult.labels.length < 1) {
-      return renderSpinner();
-    }
+    // if (props.labelsResult.labels.length < 1) {
+    //   return renderSpinner();
+    // }
 
     return (
       <Fragment>

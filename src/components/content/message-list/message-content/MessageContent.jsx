@@ -54,13 +54,13 @@ const MessageContent = (props) => {
     }
   }, [props.emailMessageResult])
 
-  const renderSpinner = () => {
-    return (
-      <div className="d-flex h-100 justify-content-center align-items-center  ">
-        <FontAwesomeIcon icon={faSpinner} spin size="5x" />
-      </div>
-    );
-  }
+  // const renderSpinner = () => {
+  //   return (
+  //     <div className="d-flex h-100 justify-content-center align-items-center  ">
+  //       <FontAwesomeIcon icon={faSpinner} spin size="5x" />
+  //     </div>
+  //   );
+  // }
 
   const renderErrorModal = () => {
     return <Redirect to="/notfound" />;
@@ -89,9 +89,9 @@ const MessageContent = (props) => {
     props.history.goBack();
   }
 
-  if (props.emailMessageResult.loading) {
-    return renderSpinner();
-  }
+  // if (props.emailMessageResult.loading) {
+  //   return renderSpinner();
+  // }
 
   if (thread.length > 1) {
     return <ThreadContent thread={thread} />
@@ -104,7 +104,7 @@ const MessageContent = (props) => {
         messageResult={props.emailMessageResult}
       />
       <div className="d-flex justify-content-center align-items-center message-content">
-        {props.emailMessageResult.loading ? renderSpinner() : null}
+        {/* {props.emailMessageResult.loading ? renderSpinner() : null} */}
         {errorMessage ? (
           renderErrorModal()
         ) : (
