@@ -9,6 +9,7 @@ import "./messageToolbar.scss";
 const MessageToolbar = (props) => {
 
   const getClickHandler = (action) => {
+    console.log("getClickHandler from MessageToolbar")
     return evt => {
       props.onClick(action);
     };

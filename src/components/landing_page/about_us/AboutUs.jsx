@@ -43,6 +43,7 @@ const AboutUs = () => {
     5: [{ pic: shane, role: titles[3], name: "Shane Gooch" }]
   };
   const handleCount = action => {
+    console.log("handleCount() in landing_page/about_us/AboutUs.jsx")
     if (action === "forward" && count === 5) {
       setCount(1);
     } else if (action === "back" && count === 1) {

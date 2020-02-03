@@ -11,10 +11,12 @@ const NameSubjectFields = props => {
   const [contactExists, setContactExists] = useState(false);
 
   useEffect(() => {
+    console.log("useEffect from NameSubjectFields")
     checkIfContactExists(props.contactsResult.contacts);
   }, [props.contactsResult])
 
   const checkIfContactExists = contacts => {
+    console.log("checkIgContactExists from NameSubjectFields")
     let match = false;
 
     if (!contacts) {
@@ -34,6 +36,7 @@ const NameSubjectFields = props => {
   }
 
   const createContact = evt => {
+    console.log("createContact from NameSubjectField")
     evt.stopPropagation();
 
     if (props.fromName.givenName) {

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const LabelItem = (props) => {
 
   const onClick = (evt) => {
+    console.log("onClick() in sidebar/Labelitem.jsx")
     props.onClick(evt, props.id);
   }
 

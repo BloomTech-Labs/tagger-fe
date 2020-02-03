@@ -14,11 +14,13 @@ const ThreadMessage = (props) => {
     const iframeRef = React.createRef();
 
     useEffect(() => {
+        console.log("useEffect, getMessage from ThreadMessage")
         const messageId = props.id;
         getMessage(messageId).then(res => setEmailBody(res.body));
     }, []);
 
     useEffect(() => {
+        console.log("useEffect iframeRef from ThreadMessage")
         if (iframeRef.current) {
             const { body } = iframeRef.current.contentWindow.document;
             body.style.margin = "0px";

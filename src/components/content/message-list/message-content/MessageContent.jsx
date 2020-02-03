@@ -24,12 +24,14 @@ const MessageContent = (props) => {
   const iframeRef = React.createRef();
 
   useEffect(() => {
+    console.log("useEffect, getEmailMessage from MessageContent")
     const messageId = props.match.params.id;
     props.getEmailMessage(messageId);
   }, []);
 
   // Wasn't sure how to split componentDidMount and componentDidUpdate within a single useEffect call and get it to work so here it is split into two useEffect calls.
   useEffect(() => {
+    console.log("useEffect, checkIfThread from MessageContent")
     const { emailMessageResult } = props;
 
     if (emailMessageResult.result) {
@@ -63,10 +65,12 @@ const MessageContent = (props) => {
   // }
 
   const renderErrorModal = () => {
+    console.log("renderErrorModal from MessageContent")
     return <Redirect to="/notfound" />;
   }
 
   const checkIfThread = id => {
+    console.log("checkIfThread from MessageContent")
     window.gapi.client.gmail.users.threads.get({
       id: id,
       userId: "me",
@@ -80,6 +84,7 @@ const MessageContent = (props) => {
   }
 
   const modifyMessage = (addLabelIds, removeLabelIds) => {
+    console.log("modifyMessage from MessageContent")
     const id = props.emailMessageResult.result.id;
     const actionParams = {
       ...(addLabelIds && { addLabelIds }),

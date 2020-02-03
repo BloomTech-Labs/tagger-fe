@@ -5,6 +5,7 @@ import './listToolbar.scss';
 
 const ListActionButtons = (props) => {
   const getClickHandler = (action) => {
+    console.log("getClickHandler from ListActionButtons")
     return evt => {
       props.onClick(action);
     };

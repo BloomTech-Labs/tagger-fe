@@ -36,7 +36,9 @@ const LandingPage = () => {
               <a href="/about">About</a>
             </li>
             <li>
-              <a href={`https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//mail.google.com/&redirect_uri=${redirectUrl}&response_type=${response}&client_id=${client}`}>Sign In</a>
+              <a href={`https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//mail.google.com/&redirect_uri=${redirectUrl}&response_type=${response}&client_id=${client}`}>
+                Sign In
+              </a>
             </li>
           </ul>
         </div>
