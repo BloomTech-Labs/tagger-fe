@@ -1,15 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
+import { createBrowserHistory } from 'history';
 import configureStore from './store';
+import ReactGA from 'react-ga'
 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+// Google Analytics
+const trackingId = "UA-157555402-1";
+
+ReactGA.initialize(trackingId);
+ReactGA.set({
+  userId: auth.currentUserId(),
+  // any data that is relevant to the user session
+  // that you would like to track with google analytics
+})
+
+history.listen(location => {
+    ReactGA.set({ page: location.pathname }); // Update the user's current page
+    ReactGA.pageview(location.pathname); // Record a pageview for the given page
+  });
+// End Google Analytics
+
+
 //ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(
-    <Provider store={configureStore()}>
+    <Provider store={configureStore()} history={history}>
         <App />
     </Provider>,
     document.getElementById('root')

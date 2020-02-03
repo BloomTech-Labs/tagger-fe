@@ -9,6 +9,8 @@ import emails from "./images/email_dash.png";
 import gif1 from "./images/gif1.gif";
 import gif2 from "./images/gif2.gif";
 
+
+
 const LandingPage = () => {
   const bannerStyle = {
     backgroundPosition: "center",
