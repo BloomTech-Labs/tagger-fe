@@ -106,8 +106,10 @@ function useOutsideAlerter(ref) {
     }
   }
 
+
+
   useEffect(() => {
-    console.log("useEffect() in header/Header.jsx")
+    alert("Header.jsx rendered")
     // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
     return () => {

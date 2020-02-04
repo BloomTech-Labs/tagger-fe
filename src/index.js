@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import { createBrowserHistory } from 'history';
 import configureStore from './store';
 import ReactGA from 'react-ga'
+import React from "react";
 
 import './index.css';
 import App from './App';
@@ -14,7 +15,7 @@ const history = createBrowserHistory();
 
 ReactGA.initialize(trackingId);
 ReactGA.set({
-  userId: auth.currentUserId(),
+  // userId: auth.currentUserId(),
   // any data that is relevant to the user session
   // that you would like to track with google analytics
 })

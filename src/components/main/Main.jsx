@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators, compose } from "redux";
+import axios from "axios";
 import Header from "../header/Header";
 import Sidebar from "../sidebar/Sidebar";
 import NotFound from "../not-found/NotFound";
@@ -42,16 +43,59 @@ const Main = (props) => {
   const [searchterm, setSearchterm] = useState(false);
   const [filter, setFilter] = useState(false);
   const [filterType, setFilterType] = useState("");
+  const [emailRetrieved, setEmailRetrieved] = useState(false)  // << Move to Redux @ earliest convenience.
 
 
   useEffect(() => {
     console.log("useEffect() in main/Main.jsx")
+
+    if(!emailRetrieved){
+      // If user email not retrieved, retrieve email from Auth token
+      const url = props.history.location.hash;
+      const token = extractTokenFromUrl(url)
+      getEmailAndIdFromToken(token)
+      .then((res) => {
+        console.log("RES: ", res)
+        const email = res.email
+        const user_id = res.user_id
+        setEmailRetrieved(true) // The task of storing this variable should be switched from useState to Redux Store.
+      })
+    }
+
     /* Label list is fetched from here 
     so that we can declare Routes by labelId 
     before rendering anything else */
     getLabelList();
     getUserContacts();
   }, []);
+
+  const extractTokenFromUrl = (urlString) => {
+    // Pulls OAuth access token from page URL
+    const newSplit = urlString.split("");
+    const tokenStartIndex = newSplit.findIndex(element => element === "=");
+    const tokenEndIndex = newSplit.findIndex(element => element === "&");
+    const token = newSplit
+      .splice(tokenStartIndex + 1, tokenEndIndex - tokenStartIndex - 1)
+      .join("");
+    return token;
+  }
+
+  const getEmailAndIdFromToken = (token) => {
+    // API call to derive user email and ID from OAuth access token
+    const apiKey = process.env.REACT_APP_APIKEY
+    return axios.get(`https://people.googleapis.com/v1/people/me?personFields=emailAddresses&key=${apiKey}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((res) => {
+      const email = res.data.emailAddresses[0].value
+      const user_id = res.data.emailAddresses[0].metadata.source.id
+      return {email, user_id}
+    })
+    
+  };
 
   useEffect(() => {
     console.log("useEffect() in main/Main.jsx")
@@ -201,56 +245,57 @@ const Main = (props) => {
     // }
 
     return (
-      <Fragment>
-        <Header
-          googleUser={props.googleUser} 
-          onSignout={onSignout} 
-          setSearchQuery={props.setSearchQuery}
-          getLabelMessages={getLabelMessages} 
-          searchQuery={props.searchQuery}
-          toggleDash={toggleDash}
-          toggle={toggle}
-          filter={filter}
-          setFilter={setFilter}
-          filterType={filterType}
-          setFilterType={setFilterType}
-        />
+      // <Fragment>
+      //   <Header
+      //     googleUser={props.googleUser} 
+      //     onSignout={onSignout} 
+      //     setSearchQuery={props.setSearchQuery}
+      //     getLabelMessages={getLabelMessages} 
+      //     searchQuery={props.searchQuery}
+      //     toggleDash={toggleDash}
+      //     toggle={toggle}
+      //     filter={filter}
+      //     setFilter={setFilter}
+      //     filterType={filterType}
+      //     setFilterType={setFilterType}
+      //   />
 
-        <section
-        className="main hbox space-between">
-          <div className="sidebar-container">
-            <Sidebar
-              getLabelList={getLabelList}
-              pathname={props.location.pathname}
-              labelsResult={props.labelsResult}
-              onLabelClick={loadLabelMessages}
-            />
-          </div>
+      //   <section
+      //   className="main hbox space-between">
+      //     <div className="sidebar-container">
+      //       <Sidebar
+      //         getLabelList={getLabelList}
+      //         pathname={props.location.pathname}
+      //         labelsResult={props.labelsResult}
+      //         onLabelClick={loadLabelMessages}
+      //       />
+      //     </div>
 
-          {/* <ContactList
-            searchQuery={props.searchQuery}
-            setSearchQuery={props.setSearchQuery}
-            getLabelMessages={getLabelMessages} 
-          /> */}
+      //     {/* <ContactList
+      //       searchQuery={props.searchQuery}
+      //       setSearchQuery={props.setSearchQuery}
+      //       getLabelMessages={getLabelMessages} 
+      //     /> */}
           
 
-          <article className="inbox d-flex flex-column position-relative">
-            <Switch>
-              {renderLabelRoutes(props)}
-              <Route
-                exact
-                path="/notfound"
-                component={NotFound}
-              />
-              <Route
-                exact
-                path="/:id([a-zA-Z0-9]+)"
-                component={MessageContent}
-              />
-            </Switch>
-          </article>
-        </section>
-      </Fragment>
+      //     <article className="inbox d-flex flex-column position-relative">
+      //       <Switch>
+      //         {renderLabelRoutes(props)}
+      //         <Route
+      //           exact
+      //           path="/notfound"
+      //           component={NotFound}
+      //         />
+      //         <Route
+      //           exact
+      //           path="/:id([a-zA-Z0-9]+)"
+      //           component={MessageContent}
+      //         />
+      //       </Switch>
+      //     </article>
+      //   </section>
+      // </Fragment>
+      <div>1</div>
     );
   }
 
@@ -262,64 +307,65 @@ const Main = (props) => {
     // }
 
     return (
-      <Fragment>
-        <Header googleUser={props.googleUser} 
-          onSignout={onSignout} 
-          setSearchQuery={props.setSearchQuery}
-          getLabelMessages={getLabelMessages} 
-          searchQuery={props.searchQuery}
-          toggleDash={toggleDash}
-          filter={filter}
-          setFilter={setFilter}
-          filterType={filterType}
-          setFilterType={setFilterType}
-        />
+      // <Fragment>
+      //   <Header googleUser={props.googleUser} 
+      //     onSignout={onSignout} 
+      //     setSearchQuery={props.setSearchQuery}
+      //     getLabelMessages={getLabelMessages} 
+      //     searchQuery={props.searchQuery}
+      //     toggleDash={toggleDash}
+      //     filter={filter}
+      //     setFilter={setFilter}
+      //     filterType={filterType}
+      //     setFilterType={setFilterType}
+      //   />
 
-        <section className="main hbox">
+      //   <section className="main hbox">
           
-          <div className="sidebar-container">
-            <Sidebar
-              getLabelList={getLabelList}
-              pathname={props.location.pathname}
-              labelsResult={props.labelsResult}
-              onLabelClick={loadLabelMessages}
-            />
-          </div>
+      //     <div className="sidebar-container">
+      //       <Sidebar
+      //         getLabelList={getLabelList}
+      //         pathname={props.location.pathname}
+      //         labelsResult={props.labelsResult}
+      //         onLabelClick={loadLabelMessages}
+      //       />
+      //     </div>
 
-          <ContactList
-            searchQuery={props.searchQuery}
-            setSearchQuery={props.setSearchQuery}
-            getLabelMessages={getLabelMessages} 
-            searchterm={newFunc}
-          />
+      //     <ContactList
+      //       searchQuery={props.searchQuery}
+      //       setSearchQuery={props.setSearchQuery}
+      //       getLabelMessages={getLabelMessages} 
+      //       searchterm={newFunc}
+      //     />
 
-          {/* <div className="contacts-view-container d-flex position-relative">
-            Hi */}
+      //     {/* <div className="contacts-view-container d-flex position-relative">
+      //       Hi */}
 
 
-          {/* <ContactMessages>
+      //     {/* <ContactMessages>
 
-          </ContactMessages> */}
+      //     </ContactMessages> */}
           
-          <article className="d-flex flex-column position-relative">
-            <Switch>
-              {renderLabelRoutes(props)}
-              <Route
-                exact
-                path="/notfound"
-                component={NotFound}
-              />
-              <Route
-                exact
-                path="/:id([a-zA-Z0-9]+)"
-                render={(props) => <MessageContent {...props} toggle={toggle} />}
-              />
-            </Switch>
-          </article>
-            <ContactMenu
-                searchterm={searchterm}/>
-        </section>
-      </Fragment>
+      //     <article className="d-flex flex-column position-relative">
+      //       <Switch>
+      //         {renderLabelRoutes(props)}
+      //         <Route
+      //           exact
+      //           path="/notfound"
+      //           component={NotFound}
+      //         />
+      //         <Route
+      //           exact
+      //           path="/:id([a-zA-Z0-9]+)"
+      //           render={(props) => <MessageContent {...props} toggle={toggle} />}
+      //         />
+      //       </Switch>
+      //     </article>
+      //       <ContactMenu
+      //           searchterm={searchterm}/>
+      //   </section>
+      // </Fragment>
+      <div>2</div>
     );
   }
 

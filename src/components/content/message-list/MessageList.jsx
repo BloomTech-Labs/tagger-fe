@@ -26,6 +26,7 @@ const MessageList = (props) => {
   const [filteredMsgsResult, setFilteredMsgsResult] = useState([]);
 
   useEffect(() => {
+    alert("Message list rendered")
     console.log("useEffect, addInitialPageToken from MessageList")
     const searchParam = props.location.search;
     const token = searchParam.indexOf("?") === 0 ? searchParam.slice(1) : null;
