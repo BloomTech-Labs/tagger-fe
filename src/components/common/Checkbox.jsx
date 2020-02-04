@@ -6,6 +6,7 @@ const Checkbox = (props) => {
 
   useEffect(() => {
     setIsChecked(!!props.checked)
+    console.log("useEffect(setIsChecked)")
   }, [props.checked])
 
   return (

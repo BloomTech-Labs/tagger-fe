@@ -18,23 +18,27 @@ import "../../../node_modules/react-quill/dist/quill.snow.css";
 import "./composeMessage.scss";
 
 const Compose = (props) => {
+  console.log('Compose() from compose-message/ComposeMessage.jsx')
   const [state, setState] = useReducer((state, newState) => (
     {...state, ...newState}
   ));
 
   const showModal = () => {
+    console.log("showModal, ComposeMessage")
     setState({
       displayModal: true
     });
   }
 
   const closeModal = () => {
+    console.log("closeModal, ComposeMessage")
     setState({
       displayModal: false
     });
   }
 
   const handleChange = (value) => {
+    console.log("handleChange, ComposeMessage")
     setState({ content: value });
   }
 
@@ -76,6 +80,7 @@ const Compose = (props) => {
   }
 
   const resetFields = () => {
+    console.log("resetField, ComposeMessage")
     setState({
       to: props.to || "",
       cc: props.cc || "",
@@ -86,6 +91,7 @@ const Compose = (props) => {
   }
 
   const setField = (field, trimValue = true) => {
+    console.log("setField, ComposeMessage")
     return evt => {
       setState({
         [field]: trimValue ? evt.target.value.trim() : evt.target.value 
@@ -95,10 +101,12 @@ const Compose = (props) => {
 
   const isInvalid = (field) => {
     const fieldValue = state[field].trim();
+    console.log("isInvalid, ComposeMessage")
     return fieldValue.length > 0 && !getValidEmails(fieldValue).length;
   }
 
   useEffect(() => {
+    console.log("useEffect, resets fields and closes modal")
     setState({
       displayModal: false,
       to: props.to || "",

@@ -12,10 +12,12 @@ const MessageItem = (props) => {
   const [hover, setHover] = useState(false);
 
   const onSelectionChange = (evt) => {
+    console.log("onSelectionChange from MessageRow")
     props.onSelectionChange(evt.target.checked, props.data.id);
   }
 
   const getMessage = (evt) => {
+    console.log("getMessage from MessageRow")
     props.history.push(`/${props.data.id}`);
     if (props.data.labelIds) {
       props.data.labelIds.map(labelId => {
@@ -36,10 +38,12 @@ const MessageItem = (props) => {
   }
 
   const getFromEmail = (from) => {
+    console.log("getFromEmail from MessageRow")
     const nameEmail = getNameEmail(from);
     return nameEmail.email;
   }
   const getFromName = (from) => {
+    console.log("getFromName from MessageRow")
     const nameEmail = getNameEmail(from);
     if (nameEmail.name.includes(" ")) {
       nameEmail.givenName = nameEmail.name.slice(0, nameEmail.name.indexOf(" "));
@@ -49,6 +53,7 @@ const MessageItem = (props) => {
   }
 
   const getFormattedDate = (date, fallbackDateObj) => {
+    console.log("getFormattedDate from MessageRow")
     let messageDate = moment(date);
     if (!messageDate.isValid()) {
       messageDate = moment(fallbackDateObj.parserFn(fallbackDateObj.date));

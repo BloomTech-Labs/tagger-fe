@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const TaggerLabelItem = (props) => {
 
   const onClick = (evt) => {
+    console.log("onClick() in sidebar/TaggerLabelItem.jsx")
     props.onClick(evt, props.id);
   }
 

@@ -26,6 +26,7 @@ const MessageList = (props) => {
   const [filteredMsgsResult, setFilteredMsgsResult] = useState([]);
 
   useEffect(() => {
+    console.log("useEffect, addInitialPageToken from MessageList")
     const searchParam = props.location.search;
     const token = searchParam.indexOf("?") === 0 ? searchParam.slice(1) : null;
     if (token && props.messagesResult.pageTokens.length === 0) {
@@ -42,6 +43,7 @@ const MessageList = (props) => {
   }, [])
 
   useEffect(() => {
+    console.log("useEffect, getLabelMessages from MessageList")
     const searchParam = props.location.search;
     const token = searchParam.indexOf("?") === 0 ? searchParam.slice(1) : null;
 
@@ -55,20 +57,22 @@ const MessageList = (props) => {
 
 
   const onSelectionChange = (selected, msgId) => {
+    console.log("onSelectionChange from MessageList")
     props.toggleSelected([msgId], selected);
   }
 
   
-  const renderSpinner = () => {
-    return (
-      <div className="d-flex h-100 justify-content-center align-items-center  ">
-        <FontAwesomeIcon icon={faSpinner} spin size="5x" />
-      </div>
-    );
-  }
+  // const renderSpinner = () => {
+  //   return (
+  //     <div className="d-flex h-100 justify-content-center align-items-center  ">
+  //       <FontAwesomeIcon icon={faSpinner} spin size="5x" />
+  //     </div>
+  //   );
+  // }
 
   ///////// FILTER LOGIC /////////
 useEffect(() => {
+  console.log("useEffect, getFilterCounts from MessageList")
   if (filteredMsgsResult === undefined) {
     return;
   } else {
@@ -80,10 +84,12 @@ useEffect(() => {
 }, [filteredMsgsResult])
 
 useEffect(() => {
+  console.log("useEffect setFilteredMsgsResult from MessageList")
   setFilteredMsgsResult(filterLogic());
 }, [props.filter])
 
 const filterLogic = () => {
+  console.log("filterLogic from MessageList")
   if ((props.messagesResult.filterCounts === [] && props.filter === false) || (props.messagesResult.filterCounts.length === 0 && props.filter === false)) {
     return;
 
@@ -111,10 +117,12 @@ const filterLogic = () => {
   });
 
   let noDupes = uniqueContacts.map(i => {
+    console.log("noDupes from MessageList")
     return i["value"];
   });
 
   const distinct = (value, index, self) => {
+    console.log("distinct from MessageList")
     return self.indexOf(value) === index;
   }
   const distinctContacts = noDupes.filter(distinct);
@@ -131,6 +139,7 @@ const filterLogic = () => {
 
 
     function removeDuplicates(originalArray, objKey) {
+      console.log("removeDuplicates from MessageList")
       var trimmedArray = [];
       var values = [];
       var value;
@@ -154,6 +163,7 @@ const filterLogic = () => {
     //For that, when I call GAPI, before I fill up filterCounts in state, I need to sort the array of each contact's messages and retrieve the date/time of the MOST RECENT message.
 
     const finalMsgs = () => {
+      console.log("finalMsgs from MessageList")
       if ((props.messagesResult.filterCounts == [] && props.filter === false) || props.messagesResult.filterCounts.length === 0) {
       return props.messagesResult.messages;
 
@@ -250,34 +260,35 @@ const filterLogic = () => {
     });
   }
 
-  const renderMessages = () => {
+  // const renderMessages = () => {
 
-    if (props.messagesResult.loading) {
-      return renderSpinner();
-    } else if (props.messagesResult.messages.length === 0) {
-      return (
-        <div className="p-4 text-center">
-          There are no messages with this label.
-        </div>
-      );
-    } else {
-      return mapThroughMsgs()
-    }
-  }
+  //   if (props.messagesResult.loading) {
+  //     return renderSpinner();
+  //   } else if (props.messagesResult.messages.length === 0) {
+  //     return (
+  //       <div className="p-4 text-center">
+  //         There are no messages with this label.
+  //       </div>
+  //     );
+  //   } else {
+  //     return mapThroughMsgs()
+  //   }
+  // }
 
 
-  const renderView = () => {
-    switch (viewMode) {
+  // const renderView = () => {
+  //   switch (viewMode) {
 
-      case ViewMode.EDIT:
-        return props.renderEditView();
+  //     case ViewMode.EDIT:
+  //       return props.renderEditView();
 
-      default:
-        return renderMessages();
-    }
-  }
+  //     default:
+  //       return renderMessages();
+  //   }
+  // }
 
   const getPageTokens = () => {
+    console.log("getPageTokens from MessageList")
     if (props.messagesResult.loading) {
       return { nextToken: null, prevToken: null }
     }
@@ -310,25 +321,25 @@ const filterLogic = () => {
   const messagesTotal = messagesResult.label ? messagesResult.label.result.messagesTotal : 0;
   const { nextToken, prevToken } = getPageTokens();
 
-if (!props.toggle) {
-  return (
-    <React.Fragment>
-      <ListToolbar
-        nextToken={nextToken}
-        prevToken={prevToken}
-        navigateToNextPage={props.navigateToNextPage}
-        navigateToPrevPage={props.navigateToPrevPage}
-      />
+// if (!props.toggle) {
+//   return (
+//     <React.Fragment>
+//       <ListToolbar
+//         nextToken={nextToken}
+//         prevToken={prevToken}
+//         navigateToNextPage={props.navigateToNextPage}
+//         navigateToPrevPage={props.navigateToPrevPage}
+//       />
 
-      <PerfectScrollbar className="container-fluid no-gutters px-0 message-list-container">
-        {/* <button onClick={testReducer}>Click me to test</button> */}
-        {renderView()}
-      </PerfectScrollbar>
-      <ListFooter messagesTotal={messagesTotal} />
-    </React.Fragment>
+//       <PerfectScrollbar className="container-fluid no-gutters px-0 message-list-container">
+//         {/* <button onClick={testReducer}>Click me to test</button> */}
+//         {renderView()}
+//       </PerfectScrollbar>
+//       <ListFooter messagesTotal={messagesTotal} />
+//     </React.Fragment>
     
-  );
-} else {
+//   );
+// } else {
   return (
     <React.Fragment>
 
@@ -338,13 +349,13 @@ if (!props.toggle) {
            <MessageIcon />
            </div>
         
-          {renderView()}
+          {/* {renderView()} */}
         </PerfectScrollbar>
     
     </React.Fragment>
     
   );
-}
+// }
 
 }
 

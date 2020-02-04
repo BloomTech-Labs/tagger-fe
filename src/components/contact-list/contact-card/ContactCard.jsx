@@ -9,6 +9,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history, isSele
     const [lastInteraction, setLastInteraction] = useState('Calculating...');
 
     useEffect(() => {
+        console.log("useEffect, getContactLatestSnippet from ContactCard")
         try {
         getContactLatestSnippet(`from:${contact.emailAddresses ? contact.emailAddresses[0].value : contact.names[0].displayName}`)
             .then(res => {
@@ -22,6 +23,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history, isSele
     }, [contact])
 
     useEffect(() => {
+        console.log("useEffect, getReceivedMessages from ContactCard")
         getReceivedMessages(`from:${contact.emailAddresses ? contact.emailAddresses[0].value : contact.names[0].displayName}`)
             .then(res => {
                 getLastInteractionData(res);
@@ -29,6 +31,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history, isSele
     }, [contact]);
 
     const getReceivedMessages = async (q) => {
+        console.log("getReceivedMessages from ContactCard")
         return await window.gapi.client.gmail.users.messages
             .list({
                 userId: "me",
@@ -40,6 +43,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history, isSele
     }
 
     const getLastInteractionData = async id => {
+        console.log("getLastInteractionData from ContactCard")
         return await window.gapi.client.gmail.users.messages
             .get({
                 userId: "me",
@@ -52,6 +56,7 @@ const ContactCard = ({ contact, handleContactSearch, searchterm, history, isSele
     }
 
     const handleSearch = () => {
+        console.log("handleSearch from ContactCard")
         setIsSelected(contact.etag);
         history.push('/inbox');
 

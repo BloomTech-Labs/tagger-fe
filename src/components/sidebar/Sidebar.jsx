@@ -30,15 +30,18 @@ const Sidebar = (props) => {
   const [selectedLabel, setSelectedLabel] = useState();
   
   useEffect(() => {
+    console.log("useEffect() in sidebar/Sidebar.jsx")
     setSelectedLabel(props.pathname)
   }, [props.pathname])
 
   const navigateToList = (evt, labelId) => {
+    console.log("navigateToList() in sidebar/Sidebar.jsx")
     const label = props.labelsResult.labels.find(el => el.id === labelId);
     props.onLabelClick(label || { id: "" });
   }
 
   const renderItems = labelList => {
+    console.log("renderItems() in sidebar/Sidebar.jsx")
     if (labelList.length === 0) {
       return <div />;
     }
@@ -75,6 +78,7 @@ const Sidebar = (props) => {
   }
 
   const renderFolders = (labels) => {
+    console.log("renderFolders() in sidebar/Sidebar.jsx")
     const inboxLabel = {
       ...labels.find(el => el.id === "INBOX"),
       name: "Inbox",
@@ -121,6 +125,8 @@ const Sidebar = (props) => {
   }
 
   const renderLabels = (labels) => {
+
+    console.log("renderLabels() in sidebar/Sidebar.jsx")
 
     const taggerIcon = (el) => {
       if (el.name === "tagger_Entertainment") {

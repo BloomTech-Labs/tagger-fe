@@ -16,7 +16,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 
 import { useLocalStorage } from "../../utils";
 
-import { getUserContacts } from "../contact-list/actions/contact-list.actions";
+// import { getUserContacts } from "../contact-list/actions/contact-list.actions";
 import { getLabels } from "../sidebar/sidebar.actions";
 
 import {
@@ -45,6 +45,7 @@ const Main = (props) => {
 
 
   useEffect(() => {
+    console.log("useEffect() in main/Main.jsx")
     /* Label list is fetched from here 
     so that we can declare Routes by labelId 
     before rendering anything else */
@@ -53,6 +54,7 @@ const Main = (props) => {
   }, []);
 
   useEffect(() => {
+    console.log("useEffect() in main/Main.jsx")
     setSignedInUser(props.signedInUser);
 
     const { labels } = props.labelsResult;
@@ -72,10 +74,12 @@ const Main = (props) => {
   }, [props.signedInUser]);
 
   const getUserContacts = () => {
-    props.getUserContacts();
+    console.log("getUserContacts() in main/Main.jsx")
+    // props.getUserContacts();
   }
 
   const navigateToNextPage = (token) => {
+    console.log("navigateToNextPage() in main/Main.jsx")
     const searchParam = props.location.search;
     const currentToken = searchParam.indexOf("?") === 0 ? searchParam.slice(1) : "";
     props.setPageTokens({
@@ -85,10 +89,12 @@ const Main = (props) => {
   }
 
   const navigateToPrevPage = (token) => {
+    console.log("navigateToPrevPage() in main/Main.jsx")
     props.history.push(token);
   }
 
   const loadLabelMessages = (label) => {
+    console.log("loadLabelMessages() in main/Main.jsx")
     const currentSearchQuery = props.searchQuery;
     props.clearPageTokens();
     props.selectLabel(label.id);    
@@ -109,20 +115,24 @@ const Main = (props) => {
   
 
   const getLabelList = () => {
+    console.log("getLabelList() in main/Main.jsx")
     props.getLabels();
   }
 
   const getLabelMessages = ({ labelIds, q, pageToken }) => {
+    console.log("getLabelMessages) in main/Main.jsx")
     props.emptyLabelMessages();    
     props.getLabelMessages({labelIds, q, pageToken});
   }
 
 
   const addInitialPageToken = (token) => {
+    console.log("addInitialPageToken() in main/Main.jsx")
     props.addInitialPageToken(token);
   }
 
   const renderLabelRoutes = (props) => {
+    console.log("renderLabelRoutes() in main/Main.jsx")
     const { labelsResult } = props;
     return labelsResult.labels.map(el => (
       
@@ -156,36 +166,39 @@ const Main = (props) => {
     ));    
   }
 
-  const renderSpinner = () => {
-    return (
-      <div className="d-flex h-100 align-items-center justify-content-center">
-        <FontAwesomeIcon icon={faSpinner} spin size="5x" />
-      </div>
-    )
-  }
+  // const renderSpinner = () => {
+  //   return (
+  //     <div className="d-flex h-100 align-items-center justify-content-center">
+  //       <FontAwesomeIcon icon={faSpinner} spin size="5x" />
+  //     </div>
+  //   )
+  // }
 
   const onSignout = () => {
-    signOut().then(_ => {
-      props.history.replace('inbox');
-      window.location.reload(true);
-    })
+    console.log("onSignout() in main/Main.jsx")
+    // signOut().then(_ => {
+    //   props.history.replace('inbox');
+    //   window.location.reload(true);
+    // })
   }
 
 
   const toggleDash = () => {
+    console.log("toggleDash() in main/Main.jsx")
     setToggle(!toggle);
   }
 
   const newFunc = (cb) => {
+    console.log("newFunc() in main/Main.jsx")
     setSearchterm(cb);
   }
 
 
   const renderInboxViewport = () => {
 
-    if (props.labelsResult.labels.length < 1) {
-      return renderSpinner();
-    }
+    // if (props.labelsResult.labels.length < 1) {
+    //   return renderSpinner();
+    // }
 
     return (
       <Fragment>
@@ -242,10 +255,11 @@ const Main = (props) => {
   }
 
   const renderContactViewport = () => {
+    console.log("renderContactViewport() in main/Main.jsx")
 
-    if (props.labelsResult.labels.length < 1) {
-      return renderSpinner();
-    }
+    // if (props.labelsResult.labels.length < 1) {
+    //   return renderSpinner();
+    // }
 
     return (
       <Fragment>
@@ -333,7 +347,7 @@ const mapDispatchToProps = dispatch =>
     {
       getLabels,
       getLabelMessages,
-      getUserContacts,
+      // getUserContacts,
       emptyLabelMessages,
       toggleSelected,
       selectLabel,

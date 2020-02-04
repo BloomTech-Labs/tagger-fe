@@ -17,36 +17,43 @@ const Header = (props) => {
   const [lastInteraction, setLastInteraction] = useState('Calculating...');
 
   const handleSearchClick = (evt) => {
+    console.log("handleSearchClick() in header/Header.jsx")
     if (props.searchQuery !== "") {
       performSemanticSearch(props.searchQuery);
     }    
   }
 
   const handleInputClick = (evt) => {
+    console.log("handleInputClick() in header/Header.jsx")
     setIsClicked(true);
   }
 
   const handleInputChange = (evt) => {
+    console.log("handleInputChange() in header/Header.jsx")
     props.setSearchQuery(evt.target.value);
     performSearch(evt.target.value);
   }
 
   const handleKeyPress = evt => {
+    console.log("handleKeyPress() in header/Header.jsx")
     if (evt.which === 13) {
       performSemanticSearch(props.searchQuery);
     }
   }
 
   const handleFilterChange = (e) => {
+    console.log("handleFilterChange() in header/Header.jsx")
     props.setFilterType(e.target.getAttribute("name"));
     props.setFilter(e.target.value);
   }
 
   const handleSubmit = evt => {
+    console.log("handleSubmit() in header/Header.jsx")
     performSemanticSearch(props.searchQuery);
   }
 
   const performSearch = debounce(() => {
+    console.log("performSearch() in header/Header.jsx")
     const searchParams = {}
     if (!props.searchQuery || props.searchQuery === "") {
       searchParams.labelIds = ["INBOX"];
@@ -55,6 +62,7 @@ const Header = (props) => {
   }, 1000);
 
   const performSemanticSearch = q => {
+    console.log("performSemanticSearch() in header/Header.jsx")
     const proxyurl = "https://intense-taiga-39400.herokuapp.com/";
 
     const createCancelToken = () => axios.CancelToken.source();
@@ -87,16 +95,19 @@ const Header = (props) => {
 /////////////
 //  code for useOutsideAlerter and useRef hook from https://codesandbox.io/s/outside-alerter-hooks-lmr2y?module=%2Fsrc%2FOutsideAlerter.js
 function useOutsideAlerter(ref) {
+  console.log("useOutsideAlerter() in header/Header.jsx")
   /**
    * Alert if clicked on outside of element
    */
   function handleClickOutside(event) {
+    console.log("handleClickOutside() in header/Header.jsx")
     if (ref.current && !ref.current.contains(event.target) && isClicked) {
       setIsClicked(false);
     }
   }
 
   useEffect(() => {
+    console.log("useEffect() in header/Header.jsx")
     // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -110,6 +121,7 @@ function useOutsideAlerter(ref) {
  * Component that alerts if you click outside of it
  */
 function OutsideAlerter(props) {
+  console.log("OutsideAlerter() in header/Header.jsx")
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
 
@@ -118,10 +130,15 @@ function OutsideAlerter(props) {
 //**
 //*
 
-  const userInfo = props.googleUser.w3;
-  const email = userInfo.U3;
-  const fullName = userInfo.ig;
-  const picUrl = userInfo.Paa;
+  const userInfo = "props.googleUser.w3";
+  const email = "userInfo.U3";
+  const fullName = "userInfo.ig";
+  const picUrl = "userInfo.Paa";
+
+  // const userInfo = props.googleUser.w3;
+  // const email = userInfo.U3;
+  // const fullName = userInfo.ig;
+  // const picUrl = userInfo.Paa;
 
   return (
     <div className="header-container">

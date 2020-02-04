@@ -16,10 +16,12 @@ const MessageItem = (props) => {
   const [threadLength, setThreadLength] = useState(0);
 
   useEffect(() => {
+    console.log("useEffect from ContactMessageRow")
     getThreadLength(props.data.threadId);
   }, [props])
 
   const onSelectionChange = (evt) => {
+    console.log("onSelectionChange from ContactMessageRow")
     props.onSelectionChange(evt.target.checked, props.data.id);
   }
 
@@ -44,11 +46,13 @@ const MessageItem = (props) => {
   }
 
   const getFromName = (from) => {
+    console.log("getFromName from ContactMessageRow")
     const nameEmail = getNameEmail(from);
     return nameEmail.name;
   }
 
   const getFormattedDate = (date, fallbackDateObj) => {
+    console.log("getFormattedDate from ContactMessageRow")
     let messageDate = moment(date);
     if (!messageDate.isValid()) {
       messageDate = moment(fallbackDateObj.parserFn(fallbackDateObj.date));
@@ -71,6 +75,7 @@ const MessageItem = (props) => {
   }
 
   const getThreadLength = id => {
+    console.log("getThreadLength from ContactMessageRow")
     window.gapi.client.gmail.users.threads.get({
       id: id,
       userId: "me",

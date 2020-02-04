@@ -4,10 +4,12 @@ const ContactMessageTags = ({ labelIds }) => {
     const [tags, setTags] = useState([]);
 
     useEffect(() => {
+        console.log("useEffect from ContactMessageTags")
         fetchLabelNames(labelIds);
     }, [])
 
     const fetchLabelNames = (ids) => {
+        console.log("fetchLabelNames from ContactMessageTags")
         ids.map(id => {
             window.gapi.client.gmail.users.labels.get({
                 id: id,

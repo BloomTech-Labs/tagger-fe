@@ -10,15 +10,18 @@ import ContactCard from "./contact-card/ContactCard";
 import "./contact-list.scss";
 
 const ContactList = (props) => {
+  console.log("ContactList() in contactList/ContactList.jsx")
   const [isSelected, setIsSelected] = useState(false);
 
   const handleContactSearch = (email) => {
+    console.log("handleContactSearch() in contactList/ContactList.jsx")
       props.setSearchQuery(`from:${email}`);  
       // console.log(email);
       performSearch();
     }
   
   const performSearch = () => {
+    console.log("performSearch from ContactList")
     const searchParams = {}
     if (!props.searchQuery || props.searchQuery === "") {
       searchParams.labelIds = ["INBOX"];

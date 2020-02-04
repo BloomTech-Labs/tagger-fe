@@ -26,19 +26,21 @@ const AppContainer = props => {
   const [signInStatus, setSignInStatus] = useState(SIGNED_OUT);
   const [googleUser, setGoogleUser] = useState(undefined);
   const [id_token, setId_Token] = useState(undefined);
-  useEffect(() => {
-    mountScripts().then(init);
-  }, []);
-  const init = () => {
-    window.gapi.load("client:auth2", initClient);
-  };
-  const initClient = () => {
-    checkSignInStatus()
-      .then(onSignInSuccess)
-      .catch(_ => {
-        setSignInStatus(AUTH_FAIL);
-      });
-  };
+  // useEffect(() => {
+  //   mountScripts().then(init);
+  // }, []);
+
+  // const init = () => {
+  //   window.gapi.load("client:auth2", initClient);
+  // };
+
+  // const initClient = () => {
+  //   checkSignInStatus()
+  //     .then(onSignInSuccess)
+  //     .catch(_ => {
+  //       setSignInStatus(AUTH_FAIL);
+  //     });
+  // };
 
   const onClick = () => {
     const googleAuthInstance = window.gapi.auth2.getAuthInstance();
@@ -62,13 +64,13 @@ const AppContainer = props => {
   };
 
   const renderView = () => {
-    if (signInStatus === AUTH_SUCCESS) {
+    // if (signInStatus === AUTH_SUCCESS) {
       return <Main googleUser={googleUser} />;
-    } else if (signInStatus === AUTH_IN_PROGRESS) {
-      return <Authenticating />;
-    } else {
-      return <Login onSignIn={onClick} />;
-    }
+    // } else if (signInStatus === AUTH_IN_PROGRESS) {
+    //   return <Authenticating />;
+    // } else {
+    //   return <Login onSignIn={onClick} />;
+    // }
   };
 
   return (

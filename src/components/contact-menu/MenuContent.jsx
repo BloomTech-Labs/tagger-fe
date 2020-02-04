@@ -11,6 +11,7 @@ const MenuContent = props => {
     const [lastInteraction, setLastInteraction] = useState('Calculating...');
 
     useEffect(() => {
+        console.log("useEffect from MenuContent")
         getReceivedMessages( (!props.email === "none") ? `from:${props.email}` : `from:${props.name}`);
         getSentMessages(`to:${props.email}`);
         getLastInteractionData(latestMessageId);
@@ -18,6 +19,7 @@ const MenuContent = props => {
     // console.log("Changes: ", latestMessageId, numReceivedMessages, numSentMessages, lastInteraction);
 
     const getReceivedMessages = async (q) => {
+        console.log("GetReceivedMessages from MenuContent")
         return await window.gapi.client.gmail.users.messages
             .list({
                 userId: "me",
@@ -30,6 +32,7 @@ const MenuContent = props => {
     }
 
     const getSentMessages = async (q) => {
+        console.log("getSetMessages from MenuContent")
         return await window.gapi.client.gmail.users.messages
             .list({
                 userId: "me",
@@ -41,6 +44,7 @@ const MenuContent = props => {
     }
 
     const getLastInteractionData = async id => {
+        console.log("getLastInteractionData from MenuContact")
         return await window.gapi.client.gmail.users.messages
             .get({
                 userId: "me",

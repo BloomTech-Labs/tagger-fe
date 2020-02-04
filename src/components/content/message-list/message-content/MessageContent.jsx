@@ -24,12 +24,14 @@ const MessageContent = (props) => {
   const iframeRef = React.createRef();
 
   useEffect(() => {
+    console.log("useEffect, getEmailMessage from MessageContent")
     const messageId = props.match.params.id;
     props.getEmailMessage(messageId);
   }, []);
 
   // Wasn't sure how to split componentDidMount and componentDidUpdate within a single useEffect call and get it to work so here it is split into two useEffect calls.
   useEffect(() => {
+    console.log("useEffect, checkIfThread from MessageContent")
     const { emailMessageResult } = props;
 
     if (emailMessageResult.result) {
@@ -46,27 +48,29 @@ const MessageContent = (props) => {
           body.innerHTML = props.emailMessageResult.body;
         }
       } else {
-        if (!errorMessage) {
-          setErrorMessage(emailMessageResult.error.result.error.message);
-          setModal(true);
-        }
+        // if (!errorMessage) {
+        //   setErrorMessage(emailMessageResult.error.result.error.message);
+        //   setModal(true);
+        // }
       }
     }
   }, [props.emailMessageResult])
 
-  const renderSpinner = () => {
-    return (
-      <div className="d-flex h-100 justify-content-center align-items-center  ">
-        <FontAwesomeIcon icon={faSpinner} spin size="5x" />
-      </div>
-    );
-  }
+  // const renderSpinner = () => {
+  //   return (
+  //     <div className="d-flex h-100 justify-content-center align-items-center  ">
+  //       <FontAwesomeIcon icon={faSpinner} spin size="5x" />
+  //     </div>
+  //   );
+  // }
 
   const renderErrorModal = () => {
+    console.log("renderErrorModal from MessageContent")
     return <Redirect to="/notfound" />;
   }
 
   const checkIfThread = id => {
+    console.log("checkIfThread from MessageContent")
     window.gapi.client.gmail.users.threads.get({
       id: id,
       userId: "me",
@@ -80,6 +84,7 @@ const MessageContent = (props) => {
   }
 
   const modifyMessage = (addLabelIds, removeLabelIds) => {
+    console.log("modifyMessage from MessageContent")
     const id = props.emailMessageResult.result.id;
     const actionParams = {
       ...(addLabelIds && { addLabelIds }),
@@ -89,9 +94,9 @@ const MessageContent = (props) => {
     props.history.goBack();
   }
 
-  if (props.emailMessageResult.loading) {
-    return renderSpinner();
-  }
+  // if (props.emailMessageResult.loading) {
+  //   return renderSpinner();
+  // }
 
   if (thread.length > 1) {
     return <ThreadContent thread={thread} />
@@ -104,7 +109,7 @@ const MessageContent = (props) => {
         messageResult={props.emailMessageResult}
       />
       <div className="d-flex justify-content-center align-items-center message-content">
-        {props.emailMessageResult.loading ? renderSpinner() : null}
+        {/* {props.emailMessageResult.loading ? renderSpinner() : null} */}
         {errorMessage ? (
           renderErrorModal()
         ) : (

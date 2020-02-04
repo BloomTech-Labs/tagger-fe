@@ -13,6 +13,7 @@ const MessageToolbar = (props) => {
   const [selectedMessageIds, setSelectedMessageIds] = useState([]);
 
   const onSelectionChange = (evt) => {
+    console.log("onSelectionChange from ListToolbar")
     const checked = evt.target.checked;
 
     const messageIds = props.messagesResult.messages.reduce((acc, el) => {
@@ -26,14 +27,17 @@ const MessageToolbar = (props) => {
   }
 
   const navigateToNextPage = () => {
+    console.log("navigateToNextPage from ListToolbar")
     props.navigateToNextPage(props.nextToken);
   }
 
   const navigateToPrevPage = () => {
+    console.log("navigateToPrevPage from ListToolbar")
     props.navigateToPrevPage(props.prevToken);
   }
 
   const modifyMessages = (addLabelIds, removeLabelIds) => {
+    console.log("modifyMessages from ListToolbar")
     const ids = props.messagesResult.messages.filter(el => el.selected).map(el => el.id);
     const actionParams = {
       ...addLabelIds && {addLabelIds},
