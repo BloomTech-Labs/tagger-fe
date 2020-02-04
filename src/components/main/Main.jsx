@@ -245,57 +245,57 @@ const Main = (props) => {
     // }
 
     return (
-      // <Fragment>
-      //   <Header
-      //     googleUser={props.googleUser} 
-      //     onSignout={onSignout} 
-      //     setSearchQuery={props.setSearchQuery}
-      //     getLabelMessages={getLabelMessages} 
-      //     searchQuery={props.searchQuery}
-      //     toggleDash={toggleDash}
-      //     toggle={toggle}
-      //     filter={filter}
-      //     setFilter={setFilter}
-      //     filterType={filterType}
-      //     setFilterType={setFilterType}
-      //   />
+      <Fragment>
+        <Header
+          googleUser={props.googleUser} 
+          onSignout={onSignout} 
+          setSearchQuery={props.setSearchQuery}
+          getLabelMessages={getLabelMessages} 
+          searchQuery={props.searchQuery}
+          toggleDash={toggleDash}
+          toggle={toggle}
+          filter={filter}
+          setFilter={setFilter}
+          filterType={filterType}
+          setFilterType={setFilterType}
+        />
 
-      //   <section
-      //   className="main hbox space-between">
-      //     <div className="sidebar-container">
-      //       <Sidebar
-      //         getLabelList={getLabelList}
-      //         pathname={props.location.pathname}
-      //         labelsResult={props.labelsResult}
-      //         onLabelClick={loadLabelMessages}
-      //       />
-      //     </div>
+        <section
+        className="main hbox space-between">
+          <div className="sidebar-container">
+            <Sidebar
+              getLabelList={getLabelList}
+              pathname={props.location.pathname}
+              labelsResult={props.labelsResult}
+              onLabelClick={loadLabelMessages}
+            />
+          </div>
 
-      //     {/* <ContactList
-      //       searchQuery={props.searchQuery}
-      //       setSearchQuery={props.setSearchQuery}
-      //       getLabelMessages={getLabelMessages} 
-      //     /> */}
+          {/* <ContactList
+            searchQuery={props.searchQuery}
+            setSearchQuery={props.setSearchQuery}
+            getLabelMessages={getLabelMessages} 
+          /> */}
           
 
-      //     <article className="inbox d-flex flex-column position-relative">
-      //       <Switch>
-      //         {renderLabelRoutes(props)}
-      //         <Route
-      //           exact
-      //           path="/notfound"
-      //           component={NotFound}
-      //         />
-      //         <Route
-      //           exact
-      //           path="/:id([a-zA-Z0-9]+)"
-      //           component={MessageContent}
-      //         />
-      //       </Switch>
-      //     </article>
-      //   </section>
-      // </Fragment>
-      <div>1</div>
+          <article className="inbox d-flex flex-column position-relative">
+            <Switch>
+              {renderLabelRoutes(props)}
+              <Route
+                exact
+                path="/notfound"
+                component={NotFound}
+              />
+              <Route
+                exact
+                path="/:id([a-zA-Z0-9]+)"
+                component={MessageContent}
+              />
+            </Switch>
+          </article>
+        </section>
+      </Fragment>
+      // <div>1</div>
     );
   }
 
@@ -307,65 +307,65 @@ const Main = (props) => {
     // }
 
     return (
-      // <Fragment>
-      //   <Header googleUser={props.googleUser} 
-      //     onSignout={onSignout} 
-      //     setSearchQuery={props.setSearchQuery}
-      //     getLabelMessages={getLabelMessages} 
-      //     searchQuery={props.searchQuery}
-      //     toggleDash={toggleDash}
-      //     filter={filter}
-      //     setFilter={setFilter}
-      //     filterType={filterType}
-      //     setFilterType={setFilterType}
-      //   />
+      <Fragment>
+        <Header googleUser={props.googleUser} 
+          onSignout={onSignout} 
+          setSearchQuery={props.setSearchQuery}
+          getLabelMessages={getLabelMessages} 
+          searchQuery={props.searchQuery}
+          toggleDash={toggleDash}
+          filter={filter}
+          setFilter={setFilter}
+          filterType={filterType}
+          setFilterType={setFilterType}
+        />
 
-      //   <section className="main hbox">
+        <section className="main hbox">
           
-      //     <div className="sidebar-container">
-      //       <Sidebar
-      //         getLabelList={getLabelList}
-      //         pathname={props.location.pathname}
-      //         labelsResult={props.labelsResult}
-      //         onLabelClick={loadLabelMessages}
-      //       />
-      //     </div>
+          <div className="sidebar-container">
+            <Sidebar
+              getLabelList={getLabelList}
+              pathname={props.location.pathname}
+              labelsResult={props.labelsResult}
+              onLabelClick={loadLabelMessages}
+            />
+          </div>
 
-      //     <ContactList
-      //       searchQuery={props.searchQuery}
-      //       setSearchQuery={props.setSearchQuery}
-      //       getLabelMessages={getLabelMessages} 
-      //       searchterm={newFunc}
-      //     />
+          <ContactList
+            searchQuery={props.searchQuery}
+            setSearchQuery={props.setSearchQuery}
+            getLabelMessages={getLabelMessages} 
+            searchterm={newFunc}
+          />
 
-      //     {/* <div className="contacts-view-container d-flex position-relative">
-      //       Hi */}
+          {/* <div className="contacts-view-container d-flex position-relative">
+            Hi */}
 
 
-      //     {/* <ContactMessages>
+          {/* <ContactMessages>
 
-      //     </ContactMessages> */}
+          </ContactMessages> */}
           
-      //     <article className="d-flex flex-column position-relative">
-      //       <Switch>
-      //         {renderLabelRoutes(props)}
-      //         <Route
-      //           exact
-      //           path="/notfound"
-      //           component={NotFound}
-      //         />
-      //         <Route
-      //           exact
-      //           path="/:id([a-zA-Z0-9]+)"
-      //           render={(props) => <MessageContent {...props} toggle={toggle} />}
-      //         />
-      //       </Switch>
-      //     </article>
-      //       <ContactMenu
-      //           searchterm={searchterm}/>
-      //   </section>
-      // </Fragment>
-      <div>2</div>
+          <article className="d-flex flex-column position-relative">
+            <Switch>
+              {renderLabelRoutes(props)}
+              <Route
+                exact
+                path="/notfound"
+                component={NotFound}
+              />
+              <Route
+                exact
+                path="/:id([a-zA-Z0-9]+)"
+                render={(props) => <MessageContent {...props} toggle={toggle} />}
+              />
+            </Switch>
+          </article>
+            <ContactMenu
+                searchterm={searchterm}/>
+        </section>
+      </Fragment>
+      // <div>2</div>
     );
   }
 
