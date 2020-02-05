@@ -37,7 +37,7 @@ const LandingPage = () => {
             </li>
             <li>
               <a href={`https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//mail.google.com/ profile https%3A//www.googleapis.com/auth/userinfo.email https%3A//www.googleapis.com/auth/user.emails.read&redirect_uri=${redirectUrl}&response_type=${response}&client_id=${client}`}>
-                OG Sign In
+                Sign In
               </a>
             </li>
           </ul>
