@@ -30,6 +30,10 @@ import {
   setSearchQuery
 } from "../content/message-list/actions/message-list.actions";
 
+import {
+  sampleFunction
+} from "../../actions/actions"
+
 import { selectLabel } from '../sidebar/sidebar.actions';
 import { signOut } from '../../api/authentication';
 
@@ -58,9 +62,14 @@ const Main = (props) => {
         console.log("RES: ", res)
         const email = res.email
         const user_id = res.user_id
-        setEmailRetrieved(true) // The task of storing this variable should be switched from useState to Redux Store.
+        setEmailRetrieved(true)
+        console.log("test", props.sampleState)
+        props.sampleFunction() // The task of storing this variable should be switched from useState to Redux Store.
+        console.log("test2", props)
       })
     }
+    
+
 
     /* Label list is fetched from here 
     so that we can declare Routes by labelId 
@@ -69,8 +78,9 @@ const Main = (props) => {
     getUserContacts();
   }, []);
 
+
   const extractTokenFromUrl = (urlString) => {
-    // Pulls OAuth access token from page URL
+    // Parses OAuth access token from page URL
     const newSplit = urlString.split("");
     const tokenStartIndex = newSplit.findIndex(element => element === "=");
     const tokenEndIndex = newSplit.findIndex(element => element === "&");
@@ -79,6 +89,7 @@ const Main = (props) => {
       .join("");
     return token;
   }
+
 
   const getEmailAndIdFromToken = (token) => {
     // API call to derive user email and ID from OAuth access token
@@ -94,8 +105,8 @@ const Main = (props) => {
       const user_id = res.data.emailAddresses[0].metadata.source.id
       return {email, user_id}
     })
-    
   };
+
 
   useEffect(() => {
     console.log("useEffect() in main/Main.jsx")
@@ -381,11 +392,16 @@ const Main = (props) => {
 
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => (
+  
+  {
   labelsResult: state.labelsResult,
   messagesResult: state.messagesResult,
   pageTokens: state.pageTokens,
-  searchQuery: state.searchQuery
+  searchQuery: state.searchQuery,
+
+  // LABS20
+  sampleState: state.userReducer.sampleState
 });
 
 const mapDispatchToProps = dispatch =>
@@ -400,7 +416,10 @@ const mapDispatchToProps = dispatch =>
       setPageTokens,
       addInitialPageToken,
       clearPageTokens,
-      setSearchQuery
+      setSearchQuery,
+
+      // LABS20
+      sampleFunction
     },
     dispatch
   );
