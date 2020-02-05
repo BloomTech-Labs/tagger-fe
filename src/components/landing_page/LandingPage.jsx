@@ -36,13 +36,19 @@ const LandingPage = () => {
               <a href="/about">About</a>
             </li>
             <li>
+              {/* <a href={`https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//mail.google.com/&redirect_uri=${redirectUrl}&response_type=${response}&client_id=${client}`}>
+                Sign In Testing
+              </a> */}
               <a href={`https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//mail.google.com/ profile https%3A//www.googleapis.com/auth/userinfo.email https%3A//www.googleapis.com/auth/user.emails.read&redirect_uri=${redirectUrl}&response_type=${response}&client_id=${client}`}>
-                Sign In
+                OG Sign In
               </a>
             </li>
           </ul>
         </div>
       </nav>
+{/* 
+\      https%3A//www.googleapis.com/auth/gmail.compose
+      https%3A//www.googleapis.com/auth/gmail.send */}
 
       <div className="landing-content">
         <div

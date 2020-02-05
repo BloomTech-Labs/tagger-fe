@@ -8,14 +8,19 @@ import {
     GET_EMAIL_USERID_SUCCESS,
     GET_EMAIL_USERID_FAILURE,
     
+    GET_EMAILS_START,
+    GET_EMAILS_SUCCESS,
+    GET_EMAILS_FAILURE,
+    
 } from "../actions/actions";
 
 const initialState = {
     sampleState: true,
-    emailAddress: "",
-    user_id: null,
+    emailAddress: "", // derived from OAuth token
+    user_id: null, // derived from OAuth token
     isEmailAddressAndIdRetrieved: false,
-    areEmailsRetrieved: false
+    areEmailsRetrieved: false,
+    emails: []
 };
   
 export const userReducer = (state = initialState, action) => {
@@ -42,7 +47,7 @@ export const userReducer = (state = initialState, action) => {
 
     // =========================================
 
-    //               GET USER EMAIL AND ID 
+    //         GET USER EMAIL AND ID 
 
         case GET_EMAIL_USERID_START:
             return {
@@ -61,9 +66,29 @@ export const userReducer = (state = initialState, action) => {
                 ...state,
             };
 
+
+    // =========================================
+
+    //           GET USER EMAILS
+
+        case GET_EMAILS_START:
+            return {
+                ...state,
+            };
+        case GET_EMAILS_SUCCESS:
+            return {
+                ...state,
+                emails: action.payload.emails,
+                areEmailsRetrieved: true
+            };
+        case GET_EMAILS_FAILURE:
+            return {
+                ...state,
+            };
+
     // =========================================
 
         default:
-        return state;
+            return state;
     }
 };

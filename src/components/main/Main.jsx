@@ -32,7 +32,8 @@ import {
 
 import {
   sampleFunction,
-  getUserEmailAndId
+  getUserEmailAndId,
+  getEmails,
 } from "../../actions/actions"
 
 import { selectLabel } from '../sidebar/sidebar.actions';
@@ -53,27 +54,26 @@ const Main = (props) => {
   useEffect(() => {
     console.log("useEffect() in main/Main.jsx")
 
+    const url = props.history.location.hash;
+      const token = extractTokenFromUrl(url)
+
     if(!props.isEmailAddressAndIdRetrieved){
       // If user data not retrieved, retrieve data from Auth token
-      const url = props.history.location.hash;
-      const token = extractTokenFromUrl(url)
-      props.getUserEmailAndId(token)
+      props.getUserEmailAndId(token).then((res)=> {console.log("GETUSERDATA RES: ", res)})
     } else if (!props.areEmailsRetrieved) {
-      // If user data retrieved AND emails not retrieved, retrieve emails
+      // Else if user data retrieved AND emails not retrieved, retrieve emails
       const user_email = props.emailAddress
-      const user_id = props.user_id
-      // hitBackEndHere(whatever BE needs)
+      props.getEmails(user_email, token).then((res) => {console.log("GETEMAILS RES: ", res)})
     }
 
-    
-
+    console.log("EMAILS: ", props.emails)
 
     /* Label list is fetched from here 
     so that we can declare Routes by labelId 
     before rendering anything else */
     getLabelList();
     getUserContacts();
-  }, [props.isEmailAddressAndIdRetrieved]);
+  }, [props.isEmailAddressAndIdRetrieved, props.areEmailsRetrieved]);
 
 
   const extractTokenFromUrl = (urlString) => {
@@ -403,6 +403,7 @@ const mapStateToProps = state => (
   user_id: state.userReducer.user_id,
   isEmailAddressAndIdRetrieved: state.userReducer.isEmailAddressAndIdRetrieved,
   areEmailsRetrieved: state.userReducer.areEmailsRetrieved,
+  emails: state.userReducer.emails,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -421,7 +422,8 @@ const mapDispatchToProps = dispatch =>
 
       // LABS20
       sampleFunction,
-      getUserEmailAndId
+      getUserEmailAndId,
+      getEmails
     },
     dispatch
   );
