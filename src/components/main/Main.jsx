@@ -31,7 +31,8 @@ import {
 } from "../content/message-list/actions/message-list.actions";
 
 import {
-  sampleFunction
+  sampleFunction,
+  getUserEmailAndId
 } from "../../actions/actions"
 
 import { selectLabel } from '../sidebar/sidebar.actions';
@@ -47,27 +48,23 @@ const Main = (props) => {
   const [searchterm, setSearchterm] = useState(false);
   const [filter, setFilter] = useState(false);
   const [filterType, setFilterType] = useState("");
-  const [emailRetrieved, setEmailRetrieved] = useState(false)  // << Move to Redux @ earliest convenience.
 
 
   useEffect(() => {
     console.log("useEffect() in main/Main.jsx")
 
-    if(!emailRetrieved){
-      // If user email not retrieved, retrieve email from Auth token
+    if(!props.isEmailAddressAndIdRetrieved){
+      // If user data not retrieved, retrieve data from Auth token
       const url = props.history.location.hash;
       const token = extractTokenFromUrl(url)
-      getEmailAndIdFromToken(token)
-      .then((res) => {
-        console.log("RES: ", res)
-        const email = res.email
-        const user_id = res.user_id
-        setEmailRetrieved(true)
-        console.log("test", props.sampleState)
-        props.sampleFunction() // The task of storing this variable should be switched from useState to Redux Store.
-        console.log("test2", props)
-      })
+      props.getUserEmailAndId(token)
+    } else if (!props.areEmailsRetrieved) {
+      // If user data retrieved AND emails not retrieved, retrieve emails
+      const user_email = props.emailAddress
+      const user_id = props.user_id
+      // hitBackEndHere(whatever BE needs)
     }
+
     
 
 
@@ -76,7 +73,7 @@ const Main = (props) => {
     before rendering anything else */
     getLabelList();
     getUserContacts();
-  }, []);
+  }, [props.isEmailAddressAndIdRetrieved]);
 
 
   const extractTokenFromUrl = (urlString) => {
@@ -401,7 +398,11 @@ const mapStateToProps = state => (
   searchQuery: state.searchQuery,
 
   // LABS20
-  sampleState: state.userReducer.sampleState
+  sampleState: state.userReducer.sampleState,
+  emailAddress: state.userReducer.emailAddress,
+  user_id: state.userReducer.user_id,
+  isEmailAddressAndIdRetrieved: state.userReducer.isEmailAddressAndIdRetrieved,
+  areEmailsRetrieved: state.userReducer.areEmailsRetrieved,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -419,7 +420,8 @@ const mapDispatchToProps = dispatch =>
       setSearchQuery,
 
       // LABS20
-      sampleFunction
+      sampleFunction,
+      getUserEmailAndId
     },
     dispatch
   );

@@ -16,5 +16,7 @@ export default combineReducers({
   pageTokens,
   searchQuery,
   contactsResult,
+
+  // LABS20
   userReducer
 });

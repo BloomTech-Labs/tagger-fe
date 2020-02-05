@@ -27,6 +27,10 @@ export const SAMPLE_FUNCTION_START = "SAMPLE_FUNCTION_START";
 export const SAMPLE_FUNCTION_SUCCESS = "SAMPLE_FUNCTION_SUCCESS";
 export const SAMPLE_FUNCTION_FAILURE = "SAMPLE_FUNCTION_FAILURE";
 
+export const GET_EMAIL_USERID_START = "GET_EMAIL_USERID_START";
+export const GET_EMAIL_USERID_SUCCESS = "GET_EMAIL_USERID_SUCCESS";
+export const GET_EMAIL_USERID_FAILURE = "GET_EMAIL_USERID_FAILURE";
+
 export const sampleFunction = (sampleId) => dispatch => {
     console.log("Sample function action trigger")
     // dispatch({ type: SAMPLE_FUNCTION_START, payload: {sampleKey: "sampleValue"} });
@@ -39,19 +43,24 @@ export const sampleFunction = (sampleId) => dispatch => {
 
 // PROMISE EXAMPLE______________________________________________________________
 
-// export const sampleFunction = (sampleId) => dispatch => {
-//   axios
-//     .delete(`${url}api/emails/${sampleId}`, sampleId)
-
-//     .then(res => {
-//       dispatch({ type: SAMPLE_FUNCTION_SUCCESS, payload: res.data });
-//       console.log(res.data);
-//     })
-
-//     .catch(err => {
-//       console.log(err.response);
-//       dispatch({ type: SAMPLE_FUNCTION_FAILURE });
-//     });
-
-//   console.log(sampleVar);
-// };
+export const getUserEmailAndId = (token) => dispatch => {
+  dispatch({ type: GET_EMAIL_USERID_START });
+  const apiKey = process.env.REACT_APP_APIKEY
+  return axios
+    .get(`https://people.googleapis.com/v1/people/me?personFields=emailAddresses&key=${apiKey}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+    })
+    .then(res => {
+      const emailAddress = res.data.emailAddresses[0].value
+      const user_id = res.data.emailAddresses[0].metadata.source.id
+      dispatch({ type: GET_EMAIL_USERID_SUCCESS, payload: {emailAddress, user_id} });
+      return { emailAddress, user_id}
+    })
+    .catch(err => {
+      console.log(err.response);
+      dispatch({ type: GET_EMAIL_USERID_FAILURE });
+    });
+};
