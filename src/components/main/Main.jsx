@@ -37,7 +37,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 
 const Main = (props) => {
-  console.log(props.messagesResult, "messagesResult from Props);
+  console.log(props.messagesResult, "messagesResult from Props");
   console.log(props, "all props");
   const [signedInUser, setSignedInUser] = useState();
   const [toggle, setToggle] = useLocalStorage('view', false);
