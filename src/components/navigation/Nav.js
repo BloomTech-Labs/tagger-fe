@@ -38,6 +38,7 @@ S.Button = styled.button`
   font-size: 22px;
   margin: 13px 2vw;
   height: 39px;
+  min-width: 100px;
   width: 5vw;
   border: solid lightgray 2px;
   border-radius: 3px;
