@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 
-import {
-  sampleFunction,
-  getUserEmailAndId,
-  getEmails
-} from "../../actions/actions";
+import { sampleFunction, getUserEmailAndId, getEmails } from "../../actions";
 
 const S = {};
 
@@ -41,12 +37,6 @@ const Inbox = props => {
 };
 
 const mapStateToProps = state => ({
-  labelsResult: state.labelsResult,
-  messagesResult: state.messagesResult,
-  pageTokens: state.pageTokens,
-  searchQuery: state.searchQuery,
-
-  // LABS20
   sampleState: state.userReducer.sampleState,
   emailAddress: state.userReducer.emailAddress,
   user_id: state.userReducer.user_id,
@@ -54,6 +44,16 @@ const mapStateToProps = state => ({
   areEmailsRetrieved: state.userReducer.areEmailsRetrieved,
   emails: state.userReducer.emails
 });
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      sampleFunction,
+      getUserEmailAndId,
+      getEmails
+    },
+    dispatch
+  );
 
 export default compose(
   withRouter,
