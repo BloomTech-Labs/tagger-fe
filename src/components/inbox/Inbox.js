@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
+import Emails from "./Emails";
 
 
 import { getUserEmailAndId, getEmails, changeIsLoggedIn } from "../../actions";
@@ -19,7 +20,6 @@ const S = {
 
 const Inbox = props => {
   useEffect(() => {
-    console.log("Is logged in?: ", props.isLoggedIn)
     props.changeIsLoggedIn(true)
 
     const url = props.history.location.hash;
@@ -28,13 +28,13 @@ const Inbox = props => {
     if (!props.isEmailAddressAndIdRetrieved) {
       // If user data not retrieved, retrieve email address and user_id from Auth token
       props.getUserEmailAndId(token).then(res => {
-        console.log("GETUSERDATA RES: ", res);
+        // console.log("GETUSERDATA RES: ", res);
       });
     } else if (!props.areEmailsRetrieved) {
       // Else if user data retrieved AND emails not retrieved, retrieve emails
       const user_email = props.emailAddress;
       props.getEmails(user_email, token).then(res => {
-        console.log("GETEMAILS RES: ", res);
+        // console.log("GETEMAILS RES: ", res);
       });
     }
 
@@ -53,7 +53,13 @@ const Inbox = props => {
   }
 
 
-  return <S.Container><Sidebar /></S.Container>;
+
+  return (
+  <S.Container>
+    <Sidebar />
+    <Emails />
+  </S.Container>);
+
 };
 
 const mapStateToProps = ({ imap, user }) => ({

@@ -75,7 +75,6 @@ export const getEmails = (emailAddress, token) => dispatch => {
       token: imapAccessHash
     })
     .then(res => {
-      console.log("GET_EMAILS_RES: ", res);
       const emails = res.data.map(emailObj => {
         return {
           html: emailObj.html,
@@ -88,11 +87,41 @@ export const getEmails = (emailAddress, token) => dispatch => {
           tags: emailObj.tags
         };
       });
-      dispatch({ type: GET_EMAILS_SUCCESS, payload: { emails: emails } });
+      dispatch({ type: GET_EMAILS_SUCCESS, payload: emails });
       return emails;
     })
     .catch(err => {
       dispatch({ type: GET_EMAILS_FAILURE, payload: err });
       return err;
     });
+};
+// =============================================================================
+// C H A N G E   I S   D I S P L A Y I N G   T H R E A D
+
+export const CHANGE_IS_DISPLAYING_THREAD = "CHANGE_IS_DISPLAYING_THREAD";
+
+export const changeIsDisplayingThread = (bool) => dispatch => {
+    // Set a switch that displays (true) or hides (false) the thread between the user and another email-address
+    dispatch({ type: CHANGE_IS_DISPLAYING_THREAD, payload: bool });
+};
+
+
+
+// =============================================================================
+// C H A N G E   I S   D I S P L A Y I N G   A N A L Y T I C S   B A R 
+export const CHANGE_IS_DISPLAYING_ANALYTICS = "CHANGE_IS_DISPLAYING_ANALYTICS";
+
+export const changeIsDisplayingAnalytics = (bool) => dispatch => {
+    // Set a switch that displays (true) or hides (false) the analytics bar
+    dispatch({ type: CHANGE_IS_DISPLAYING_ANALYTICS, payload: bool });
+};
+
+
+// =============================================================================
+// C H A N G E   T H R E A D   C O N T A C T
+export const CHANGE_THREAD_CONTACT = "CHANGE_THREAD_CONTACT";
+
+export const changeThreadContact = (fromEmailAddress) => dispatch => {
+    // Set the contact whose conversation is displayed in Thread.js
+    dispatch({ type: CHANGE_THREAD_CONTACT, payload: {fromEmailAddress} });
 };

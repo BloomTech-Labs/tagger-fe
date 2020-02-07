@@ -22,7 +22,7 @@ export const imapReducer = (state = initialState, {type, payload}) => {
     case GET_EMAILS_SUCCESS:
       return {
         ...state,
-        emails: payload.emails,
+        emails: payload,
         areEmailsRetrieved: true
       };
     case GET_EMAILS_FAILURE:
