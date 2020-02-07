@@ -96,3 +96,12 @@ export const getEmails = (emailAddress, token) => dispatch => {
       return err;
     });
 };
+// =============================================================================
+// CHANGE IS DISPLAYING THREAD____________________________________________________________________
+
+export const CHANGE_IS_DISPLAYING_THREAD = "CHANGE_IS_DISPLAYING_THREAD";
+
+export const changeIsDisplayingThread = (bool) => dispatch => {
+    // Set a switch that displays (true) or hides (false) the thread between the user and another email-address
+    dispatch({ type: CHANGE_IS_DISPLAYING_THREAD, payload: bool });
+};

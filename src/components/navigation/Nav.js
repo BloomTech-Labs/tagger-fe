@@ -5,6 +5,7 @@ const S = {};
 
 S.Container = styled.div`
   border: solid black 1px;
+  height: 64px;
 `;
 
 const Nav = props => {

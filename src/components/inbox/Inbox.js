@@ -3,14 +3,17 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
+import Emails from "./Emails";
 
 
 import { getUserEmailAndId, getEmails, changeIsLoggedIn } from "../../actions";
 
 const S = {
   Container: styled.div`
-    border: solid black 1px;
-    font-size: 1.4rem === 14px
+    display: flex;
+    height: calc(100vh - 64px);
+    border: solid black 3px;
+    justify-content: flex-end;
   `,
 };
 
@@ -52,7 +55,10 @@ const Inbox = props => {
   }
 
 
-  return <S.Container>Inbox</S.Container>;
+  return (
+  <S.Container>
+    <Emails />
+  </S.Container>);
 };
 
 const mapStateToProps = ({ imap, user }) => ({
