@@ -16,12 +16,14 @@ import Inbox from "./Inbox";
 
 const S = {
   Container: styled.div`
+
     display: flex;
     flex-direction: column;
     // height: calc(100vh-64px);
     height: 100vh;
     width: 230px;
     border: 1px solid #cccccc;
+
   `,
   Button: styled.div`
     display: flex;

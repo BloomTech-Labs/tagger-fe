@@ -4,10 +4,12 @@ import thunk from "redux-thunk";
 
 import {imapReducer} from "./imapReducer";
 import {userReducer} from "./userReducer"
+import {inboxReducer} from "./inboxReducer"
 
 const rootReducer = combineReducers({
   imap: imapReducer,
-  user: userReducer
+  user: userReducer,
+  inbox: inboxReducer,
 });
 
 let store;
