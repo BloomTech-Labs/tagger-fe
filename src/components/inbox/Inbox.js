@@ -36,13 +36,12 @@ const Inbox = props => {
   return <S.Container>Inbox</S.Container>;
 };
 
-const mapStateToProps = state => ({
-  sampleState: state.userReducer.sampleState,
-  emailAddress: state.userReducer.emailAddress,
-  user_id: state.userReducer.user_id,
-  isEmailAddressAndIdRetrieved: state.userReducer.isEmailAddressAndIdRetrieved,
-  areEmailsRetrieved: state.userReducer.areEmailsRetrieved,
-  emails: state.userReducer.emails
+const mapStateToProps = ({ imap, user }) => ({
+  emailAddress: user.emailAddress,
+  user_id: user.user_id,
+  isEmailAddressAndIdRetrieved: user.isEmailAddressAndIdRetrieved,
+  areEmailsRetrieved: imap.areEmailsRetrieved,
+  emails: imap.emails
 });
 
 const mapDispatchToProps = dispatch =>

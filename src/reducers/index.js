@@ -3,9 +3,11 @@ import logger from "redux-logger";
 import thunk from "redux-thunk";
 
 import imapReducer from "./imapReducer";
+import userReducer from "./userReducer"
 
 const rootReducer = combineReducers({
-  imap: imapReducer
+  imap: imapReducer,
+  user: userReducer
 });
 
 let store;
