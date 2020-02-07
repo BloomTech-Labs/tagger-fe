@@ -11,7 +11,7 @@ const S = {
     Container: styled.div`
         width: 100%;
         height: ${props => props.heightInPx}px;
-        border: solid red 1px;
+        // border: solid red 1px;
         box-sizing: border-box;
         font-size: .8rem;
         text-align: center;

@@ -21,7 +21,7 @@ const S = {
     // height: calc(100vh-64px);
     height: 100%;
     width: 230px;
-    border: 1px solid red;
+    // border: 1px solid red;
     box-sizing: border-box;
 
   `,

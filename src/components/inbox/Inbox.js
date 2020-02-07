@@ -12,7 +12,7 @@ import Sidebar from "./Sidebar";
 const S = {
   Container: styled.div`
     display: flex;
-    height: calc(100vh-64px);
+    height: calc(100vh - 64px);
   `,
 };
 

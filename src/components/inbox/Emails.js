@@ -17,6 +17,7 @@ const S = {
     border: solid green 2px;
     width: calc(100% - 230px);
     display: flex;
+    height: calc(100-64px)
     box-sizing: border-box;
   `,
 };
