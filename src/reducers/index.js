@@ -2,10 +2,14 @@ import { createStore, compose, combineReducers, applyMiddleware } from "redux";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
 
-import imapReducer from "./imapReducer";
+import {imapReducer} from "./imapReducer";
+import {userReducer} from "./userReducer"
+import {inboxReducer} from "./inboxReducer"
 
 const rootReducer = combineReducers({
-  imap: imapReducer
+  imap: imapReducer,
+  user: userReducer,
+  inbox: inboxReducer,
 });
 
 let store;

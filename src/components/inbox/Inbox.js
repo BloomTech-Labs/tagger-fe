@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
+import { bindActionCreators, compose } from "redux";
+import { connect } from "react-redux";
+import Emails from "./Emails";
 
-import { sampleFunction, getUserEmailAndId, getEmails } from "../../actions";
 
-const S = {};
+import { getUserEmailAndId, getEmails, changeIsLoggedIn } from "../../actions";
+import Sidebar from "./Sidebar";
 
-S.Container = styled.div`
-  border: solid black 1px;
-`;
+const S = {
+  Container: styled.div`
+    display: flex;
+    height: calc(100vh - 64px);
+  `,
+};
+
+
 
 const Inbox = props => {
   useEffect(() => {
-    console.log("useEffect() in main/Main.jsx");
+    props.changeIsLoggedIn(true)
 
     const url = props.history.location.hash;
     const token = extractTokenFromUrl(url);
@@ -20,37 +28,55 @@ const Inbox = props => {
     if (!props.isEmailAddressAndIdRetrieved) {
       // If user data not retrieved, retrieve email address and user_id from Auth token
       props.getUserEmailAndId(token).then(res => {
-        console.log("GETUSERDATA RES: ", res);
+        // console.log("GETUSERDATA RES: ", res);
       });
     } else if (!props.areEmailsRetrieved) {
       // Else if user data retrieved AND emails not retrieved, retrieve emails
       const user_email = props.emailAddress;
       props.getEmails(user_email, token).then(res => {
-        console.log("GETEMAILS RES: ", res);
+        // console.log("GETEMAILS RES: ", res);
       });
     }
 
     console.log("EMAILS: ", props.emails);
   }, [props.isEmailAddressAndIdRetrieved, props.areEmailsRetrieved]);
 
-  return <S.Container>Inbox</S.Container>;
+  function extractTokenFromUrl(urlString){
+    // Parses OAuth access token from page URL
+    const newSplit = urlString.split("");
+    const tokenStartIndex = newSplit.findIndex(element => element === "=");
+    const tokenEndIndex = newSplit.findIndex(element => element === "&");
+    const token = newSplit
+      .splice(tokenStartIndex + 1, tokenEndIndex - tokenStartIndex - 1)
+      .join("");
+    return token;
+  }
+
+
+
+  return (
+  <S.Container>
+    <Sidebar />
+    <Emails />
+  </S.Container>);
+
 };
 
-const mapStateToProps = state => ({
-  sampleState: state.userReducer.sampleState,
-  emailAddress: state.userReducer.emailAddress,
-  user_id: state.userReducer.user_id,
-  isEmailAddressAndIdRetrieved: state.userReducer.isEmailAddressAndIdRetrieved,
-  areEmailsRetrieved: state.userReducer.areEmailsRetrieved,
-  emails: state.userReducer.emails
+const mapStateToProps = ({ imap, user }) => ({
+  emailAddress: user.emailAddress,
+  user_id: user.user_id,
+  isEmailAddressAndIdRetrieved: user.isEmailAddressAndIdRetrieved,
+  areEmailsRetrieved: imap.areEmailsRetrieved,
+  emails: imap.emails,
+  isLoggedIn: user.isLoggedIn
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      sampleFunction,
       getUserEmailAndId,
-      getEmails
+      getEmails,
+      changeIsLoggedIn
     },
     dispatch
   );

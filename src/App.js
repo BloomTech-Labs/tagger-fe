@@ -1,24 +1,63 @@
 import React from "react";
-<<<<<<< HEAD
-import "./App.css";
-
-function App() {
-  return <div className="App"></div>;
-=======
 import { Route, Switch, withRouter } from "react-router-dom";
 import "./App.css";
+import styled from "styled-components";
+import { bindActionCreators, compose } from "redux";
+import { connect } from "react-redux";
 
-import LandingPage from "./components/LandingPage";
+import LandingPage from "./components/landing/LandingPage";
+import Inbox from "./components/inbox/Inbox";
+import Nav from "./components/navigation/Nav";
+import Sidebar from "./components/inbox/Sidebar";
+
+const S = {
+  Container: styled.div`
+    // width: calc(100vw - (100vw - 100%));
+    width: 100%;
+    border: solid red 1px;
+    margin: 0px;
+    height: calc(100vh - (100vh - 100%));
+    font-size: 1.1rem;
+
+  `
+  
+}
+
 
 function App(props) {
   return (
-    <div className="App">
+    <S.Container className="App">
+      {props.isLoggedIn ? <Nav /> : null}
       <Switch>
+
+        {/* TO SAVE TIME IN DEVELOPMENT, UNCOMMENT TO OVERRIDE "/" */}
+        {/* <Route exact path="/" component={Inbox}></Route> */}
+
+
+
         <Route exact path="/" component={LandingPage}></Route>
+        <Route path="/inbox" component={Inbox}></Route>
+
+        
       </Switch>
-    </div>
+      {/* <Route path="/inbox" component={Sidebar}></Route> */}
+    </S.Container>
   );
->>>>>>> 0d5870466e83f716bb84675428afb7f1f43cc2ed
 }
 
-export default withRouter(App);
+const mapStateToProps = ({ imap, user }) => ({
+  isLoggedIn: user.isLoggedIn
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+
+    },
+    dispatch
+  );
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(App);
