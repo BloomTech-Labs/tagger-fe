@@ -9,7 +9,6 @@ S.Container = styled.div`
 
 const Nav = props => {
   return <S.Container>Nav</S.Container>;
-  <S.Container />;
 };
 
 export default Nav;

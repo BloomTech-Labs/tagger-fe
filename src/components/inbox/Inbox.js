@@ -5,16 +5,21 @@ import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 
 
-import { getUserEmailAndId, getEmails } from "../../actions";
+import { getUserEmailAndId, getEmails, changeIsLoggedIn } from "../../actions";
 
-const S = {};
+const S = {
+  Container: styled.div`
+    border: solid black 1px;
+    font-size: 1.4rem === 14px
+  `,
+};
 
-S.Container = styled.div`
-  border: solid black 1px;
-`;
+
 
 const Inbox = props => {
   useEffect(() => {
+    console.log("Is logged in?: ", props.isLoggedIn)
+    props.changeIsLoggedIn(true)
 
     const url = props.history.location.hash;
     const token = extractTokenFromUrl(url);
@@ -55,14 +60,16 @@ const mapStateToProps = ({ imap, user }) => ({
   user_id: user.user_id,
   isEmailAddressAndIdRetrieved: user.isEmailAddressAndIdRetrieved,
   areEmailsRetrieved: imap.areEmailsRetrieved,
-  emails: imap.emails
+  emails: imap.emails,
+  isLoggedIn: user.isLoggedIn
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getUserEmailAndId,
-      getEmails
+      getEmails,
+      changeIsLoggedIn
     },
     dispatch
   );
