@@ -97,11 +97,22 @@ export const getEmails = (emailAddress, token) => dispatch => {
     });
 };
 // =============================================================================
-// CHANGE IS DISPLAYING THREAD____________________________________________________________________
+// C H A N G E   I S   D I S P L A Y I N G   T H R E A D
 
 export const CHANGE_IS_DISPLAYING_THREAD = "CHANGE_IS_DISPLAYING_THREAD";
 
 export const changeIsDisplayingThread = (bool) => dispatch => {
     // Set a switch that displays (true) or hides (false) the thread between the user and another email-address
     dispatch({ type: CHANGE_IS_DISPLAYING_THREAD, payload: bool });
+};
+
+
+
+// =============================================================================
+// C H A N G E   I S   D I S P L A Y I N G   A N A L Y T I C S   B A R 
+export const CHANGE_IS_DISPLAYING_ANALYTICS = "CHANGE_IS_DISPLAYING_ANALYTICS";
+
+export const changeIsDisplayingAnalytics = (bool) => dispatch => {
+    // Set a switch that displays (true) or hides (false) the analytics bar
+    dispatch({ type: CHANGE_IS_DISPLAYING_ANALYTICS, payload: bool });
 };

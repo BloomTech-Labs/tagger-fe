@@ -3,8 +3,11 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
+
+
 import Snippets from "./Snippets";
 import Thread from "./Thread";
+import AnalyticsBar from "./AnalyticsBar";
 
 
 import { getUserEmailAndId, getEmails, changeIsLoggedIn } from "../../actions";
@@ -14,6 +17,7 @@ const S = {
     border: solid green 2px;
     width: calc(100% - 200px);
     display: flex;
+    box-sizing: border-box;
   `,
 };
 
@@ -25,18 +29,16 @@ const Emails = props => {
     <S.Container>
         <Snippets />
         {props.isDisplayingThread ? <Thread /> : null}
+        {props.isDisplayingAnalytics && props.isDisplayingThread ? <AnalyticsBar /> : null}
     </S.Container>
   );
 };
 
 const mapStateToProps = ({ imap, user, inbox }) => ({
-  emailAddress: user.emailAddress,
-  user_id: user.user_id,
-  isEmailAddressAndIdRetrieved: user.isEmailAddressAndIdRetrieved,
   areEmailsRetrieved: imap.areEmailsRetrieved,
   emails: imap.emails,
-  isLoggedIn: user.isLoggedIn,
-  isDisplayingThread: inbox.isDisplayingThread
+  isDisplayingThread: inbox.isDisplayingThread,
+  isDisplayingAnalytics: inbox.isDisplayingAnalytics
 });
 
 const mapDispatchToProps = dispatch =>

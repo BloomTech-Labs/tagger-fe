@@ -5,12 +5,15 @@ import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 
 
-import { getUserEmailAndId, getEmails, changeIsLoggedIn } from "../../actions";
+import { changeIsDisplayingAnalytics } from "../../actions";
 
 const S = {
   Container: styled.div`
     border: solid red 5px;
-    width: 75%;
+    width: 75%; // 40 if displaying analyticsbar
+    height: 100%;
+    box-sizing: border-box;
+
   `,
 };
 
@@ -18,26 +21,32 @@ const S = {
 
 const Thread = props => {
 
+  const toggleIsDisplayingAnalytics = () => {
+    props.changeIsDisplayingAnalytics(!props.isDisplayingAnalytics)
+  }
+
   return (
     <S.Container>
-        Thread
+        <h1>Thread</h1>
+        <button onClick = {() => toggleIsDisplayingAnalytics()}>Toggle Analytics ON/OFF</button>
     </S.Container>
   );
 };
 
-const mapStateToProps = ({ imap, user }) => ({
+const mapStateToProps = ({ imap, user, inbox }) => ({
   emailAddress: user.emailAddress,
   user_id: user.user_id,
   isEmailAddressAndIdRetrieved: user.isEmailAddressAndIdRetrieved,
   areEmailsRetrieved: imap.areEmailsRetrieved,
   emails: imap.emails,
-  isLoggedIn: user.isLoggedIn
+  isLoggedIn: user.isLoggedIn,
+  isDisplayingAnalytics: inbox.isDisplayingAnalytics
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-     
+     changeIsDisplayingAnalytics
     },
     dispatch
   );

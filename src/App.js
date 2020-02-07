@@ -16,6 +16,7 @@ const S = {
     border: solid red 1px;
     margin: 0px;
     height: calc(100vh - (100vh - 100%));
+    font-size: 1.1rem;
 
   `
   

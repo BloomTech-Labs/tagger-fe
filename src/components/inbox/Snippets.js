@@ -9,7 +9,7 @@ import { changeIsDisplayingThread } from "../../actions";
 
 const S = {
   Container: styled.div`
-    width: ${props => props.widthPercent}%;
+    width: ${props => props.widthPercentage}%;
     height: 100%;
     border: solid black 3px;
   `,
@@ -24,16 +24,15 @@ const Snippets = props => {
   }
 
   return (
-    <S.Container widthPercent = {props.isDisplayingThread ? 25 : 100}>
-        Snippets
-        <button onClick = {() => toggleIsDisplayingThread()}></button>
+    <S.Container widthPercentage = {props.isDisplayingThread ? 25 : 100}>
+        <h1>Snippets</h1>
+        <button onClick = {() => toggleIsDisplayingThread()}>Toggle Thread ON/OFF</button>
     </S.Container>
   );
 };
 
 const mapStateToProps = ({ imap, user, inbox }) => ({
   isDisplayingThread: inbox.isDisplayingThread,
-  
 });
 
 const mapDispatchToProps = dispatch =>
