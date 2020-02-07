@@ -23,8 +23,8 @@ import {
       case GET_EMAIL_USERID_SUCCESS:
         return {
           ...state,
-          emailAddress: action.payload.emailAddress,
-          user_id: action.payload.user_id,
+          emailAddress: payload.emailAddress,
+          user_id: payload.user_id,
           isEmailAddressAndIdRetrieved: true
         };
       case GET_EMAIL_USERID_FAILURE:

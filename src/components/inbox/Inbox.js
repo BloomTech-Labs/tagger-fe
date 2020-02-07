@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
+import { bindActionCreators, compose } from "redux";
+import { connect } from "react-redux";
 
-import { sampleFunction, getUserEmailAndId, getEmails } from "../../actions";
+
+import { getUserEmailAndId, getEmails } from "../../actions";
 
 const S = {};
 
@@ -12,7 +15,6 @@ S.Container = styled.div`
 
 const Inbox = props => {
   useEffect(() => {
-    console.log("useEffect() in main/Main.jsx");
 
     const url = props.history.location.hash;
     const token = extractTokenFromUrl(url);
@@ -33,6 +35,18 @@ const Inbox = props => {
     console.log("EMAILS: ", props.emails);
   }, [props.isEmailAddressAndIdRetrieved, props.areEmailsRetrieved]);
 
+  function extractTokenFromUrl(urlString){
+    // Parses OAuth access token from page URL
+    const newSplit = urlString.split("");
+    const tokenStartIndex = newSplit.findIndex(element => element === "=");
+    const tokenEndIndex = newSplit.findIndex(element => element === "&");
+    const token = newSplit
+      .splice(tokenStartIndex + 1, tokenEndIndex - tokenStartIndex - 1)
+      .join("");
+    return token;
+  }
+
+
   return <S.Container>Inbox</S.Container>;
 };
 
@@ -47,7 +61,6 @@ const mapStateToProps = ({ imap, user }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      sampleFunction,
       getUserEmailAndId,
       getEmails
     },

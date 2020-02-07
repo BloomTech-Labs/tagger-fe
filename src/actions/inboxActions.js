@@ -51,6 +51,7 @@ export const getUserEmailAndId = oAuthToken => dispatch => {
     })
     .catch(err => {
       dispatch({ type: GET_EMAIL_USERID_FAILURE, payload: err });
+      return err
     });
 };
 
