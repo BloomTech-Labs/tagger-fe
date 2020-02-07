@@ -3,6 +3,16 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faInbox,
+  faFile,
+  faPaperPlane,
+  faTrash,
+  faTags,
+  faExclamationTriangle
+} from "@fortawesome/free-solid-svg-icons";
+import Inbox from "./Inbox";
 
 const S = {
   Container: styled.div`
@@ -34,10 +44,12 @@ const S = {
     line-height: 16px;
   `,
   P: styled.p`
+    display: flex;
+    justify-content: space-between;
     font-size: 1rem;
     font-family: Roboto;
     font-style: normal;
-    font-weight: 900;
+    font-weight: 500;
     line-height: 20px;
     letter-spacing: 0.2px;
     color: #454545;
@@ -50,7 +62,7 @@ const S = {
     height: 1px;
   `,
   Tags: styled.p`
-  font-size: 0.9rem;
+    font-size: 0.9rem;
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
@@ -66,13 +78,31 @@ const Sidebar = props => {
     <S.Container>
       <S.Button>
         <S.Compose>+ Compose</S.Compose>
-        <S.P>Inbox</S.P>
-        <S.P>Drafts</S.P>
-        <S.P>Sent</S.P>
-        <S.P>Trash</S.P>
-        <S.P>Spam</S.P>
+        <S.P>
+          <FontAwesomeIcon icon={faInbox} />
+          Inbox
+        </S.P>
+        <S.P>
+          <FontAwesomeIcon icon={faFile} />
+          Drafts
+        </S.P>
+        <S.P>
+          <FontAwesomeIcon icon={faPaperPlane} />
+          Sent
+        </S.P>
+        <S.P>
+          <FontAwesomeIcon icon={faTrash} />
+          Trash
+        </S.P>
+        <S.P>
+          <FontAwesomeIcon icon={faExclamationTriangle} />
+          Spam
+        </S.P>
         <S.Divider></S.Divider>
-        <S.P>Tags</S.P>
+        <S.P>
+          <FontAwesomeIcon icon={faTags} />
+          Tags
+        </S.P>
         <S.Tags>Social</S.Tags>
         <S.Tags>Finance</S.Tags>
         <S.Tags>Entertainment</S.Tags>
