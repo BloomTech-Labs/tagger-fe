@@ -10,7 +10,7 @@ import { changeIsDisplayingAnalytics } from "../../actions";
 const S = {
   Container: styled.div`
     border: solid red 5px;
-    width: 75%; // 40 if displaying analyticsbar
+    width: 75%; // 
     height: 100%;
     box-sizing: border-box;
     overflow-y: auto;
