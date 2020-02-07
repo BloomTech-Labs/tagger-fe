@@ -16,14 +16,12 @@ import Inbox from "./Inbox";
 
 const S = {
   Container: styled.div`
-
     display: flex;
     flex-direction: column;
-    // height: calc(100vh-64px);
+    height: calc(100vh-64px);
     height: 100vh;
     width: 230px;
     border: 1px solid #cccccc;
-
   `,
   Button: styled.div`
     display: flex;
@@ -48,12 +46,11 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 25%;
+    margin-top: 20%;
   `,
 
   Folder: styled.div`
     margin-top: 10%;
-    margin-bottom: 3%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -78,7 +75,7 @@ const S = {
     flex-direction: column;
     align-items: center;
     margin-top: 5%;
-    border-top:
+    border-top: ;
   `,
   Tags: styled.p`
     font-size: 0.9rem;
@@ -121,13 +118,11 @@ const Sidebar = props => {
         </S.Folder>
       </S.FolderContainer>
       <S.Divider></S.Divider>
-
       <S.TagContainer>
         <S.Folder>
           <FontAwesomeIcon icon={faTags} />
           Tags
         </S.Folder>
-
         <S.Tags>Social</S.Tags>
         <S.Tags>Finance</S.Tags>
         <S.Tags>Entertainment</S.Tags>
