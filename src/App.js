@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import LandingPage from "./components/landing/LandingPage";
 import Inbox from "./components/inbox/Inbox";
 import Nav from "./components/navigation/Nav";
+import Sidebar from "./components/inbox/Sidebar";
 
 const S = {
   Container: styled.div`
@@ -39,6 +40,7 @@ function App(props) {
 
         
       </Switch>
+      {/* <Route path="/inbox" component={Sidebar}></Route> */}
     </S.Container>
   );
 }

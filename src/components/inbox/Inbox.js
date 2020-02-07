@@ -7,13 +7,12 @@ import Emails from "./Emails";
 
 
 import { getUserEmailAndId, getEmails, changeIsLoggedIn } from "../../actions";
+import Sidebar from "./Sidebar";
 
 const S = {
   Container: styled.div`
     display: flex;
-    height: calc(100vh - 64px);
-    border: solid black 3px;
-    justify-content: flex-end;
+    height: calc(100vh-64px);
   `,
 };
 
@@ -54,10 +53,13 @@ const Inbox = props => {
   }
 
 
+
   return (
   <S.Container>
+    <Sidebar />
     <Emails />
   </S.Container>);
+
 };
 
 const mapStateToProps = ({ imap, user }) => ({
