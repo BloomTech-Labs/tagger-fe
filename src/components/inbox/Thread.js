@@ -14,7 +14,6 @@ const S = {
     height: 100%;
     box-sizing: border-box;
     overflow-y: auto;
-
   `,
 };
 

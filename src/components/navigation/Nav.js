@@ -98,11 +98,11 @@ const Nav = props => {
             placeholder="Search for people, conversations, files..."
           ></S.Input>
           <S.Magnify type="submit">
-            <i class="fa fa-search"></i>
+            <i className="fa fa-search"></i>
           </S.Magnify>
         </S.Search>
         <S.Button>
-          <i class="fa fa-filter"></i> Filters
+          <i className="fa fa-filter"></i> Filters
         </S.Button>
       </S.Form>
       <S.User>
