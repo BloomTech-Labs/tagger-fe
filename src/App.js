@@ -28,9 +28,16 @@ function App(props) {
     <S.Container className="App">
       {props.isLoggedIn ? <Nav /> : null}
       <Switch>
-        {/* <Route exact path="/" component={LandingPage}></Route> */}
-        {/* <Route path="/inbox" component={Inbox}></Route> */}
-        <Route exact path="/" component={Inbox}></Route>
+
+        {/* TO SAVE TIME IN DEVELOPMENT, UNCOMMENT TO OVERRIDE "/" */}
+        {/* <Route exact path="/" component={Inbox}></Route> */}
+
+
+
+        <Route exact path="/" component={LandingPage}></Route>
+        <Route path="/inbox" component={Inbox}></Route>
+
+        
       </Switch>
     </S.Container>
   );

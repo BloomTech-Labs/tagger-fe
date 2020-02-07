@@ -88,7 +88,7 @@ export const getEmails = (emailAddress, token) => dispatch => {
           tags: emailObj.tags
         };
       });
-      dispatch({ type: GET_EMAILS_SUCCESS, payload: { emails: emails } });
+      dispatch({ type: GET_EMAILS_SUCCESS, payload: emails });
       return emails;
     })
     .catch(err => {

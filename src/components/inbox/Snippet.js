@@ -22,7 +22,9 @@ const Snippet = (props) => {
 
     return (
         <S.Container heightInPx = {props.isDisplayingThread ? (props.isDisplayingAnalytics ? 100 : 80) : 60}>
-            <h3>Snippet of email {props.email}</h3>
+            {/* <h3>{props.email.fromName}</h3> */}
+            <span>{props.email.subject}</span>
+            {/* <span>{props.email.text}</span> */}
         </S.Container>
     )
 

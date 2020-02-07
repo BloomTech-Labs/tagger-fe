@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   areEmailsRetrieved: false,
-  emails: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+  emails: [],
   errors: null
 };
 
@@ -20,9 +20,10 @@ export const imapReducer = (state = initialState, {type, payload}) => {
         areEmailsRetrieved: false
       };
     case GET_EMAILS_SUCCESS:
+      console.log("PAYLOAD: ", payload)
       return {
         ...state,
-        emails: payload.emails,
+        emails: payload,
         areEmailsRetrieved: true
       };
     case GET_EMAILS_FAILURE:
