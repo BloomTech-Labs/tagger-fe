@@ -16,13 +16,13 @@ import Inbox from "./Inbox";
 
 const S = {
   Container: styled.div`
-    display: inline-block;
-    flex-direction: row;
+
+    display: flex;
+    flex-direction: column;
     // height: calc(100vh-64px);
-    height: 100%;
+    height: 100vh;
     width: 230px;
-    // border: 1px solid red;
-    box-sizing: border-box;
+    border: 1px solid #cccccc;
 
   `,
   Button: styled.div`
@@ -44,9 +44,19 @@ const S = {
     font-size: 14px;
     line-height: 16px;
   `,
-  P: styled.p`
+  FolderContainer: styled.div`
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25%;
+  `,
+
+  Folder: styled.div`
+    margin-top: 10%;
+    margin-bottom: 3%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
     font-size: 1rem;
     font-family: Roboto;
     font-style: normal;
@@ -54,13 +64,21 @@ const S = {
     line-height: 20px;
     letter-spacing: 0.2px;
     color: #454545;
-    width: 41px;
+    width: 60px;
   `,
   Divider: styled.div`
     position: absolute;
     border: 1 px solid #cccccc;
     width: 141px;
     height: 1px;
+  `,
+
+  TagContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5%;
+    border-top:
   `,
   Tags: styled.p`
     font-size: 0.9rem;
@@ -79,31 +97,37 @@ const Sidebar = props => {
     <S.Container>
       <S.Button>
         <S.Compose>+ Compose</S.Compose>
-        <S.P>
+      </S.Button>
+      <S.FolderContainer>
+        <S.Folder>
           <FontAwesomeIcon icon={faInbox} />
           Inbox
-        </S.P>
-        <S.P>
+        </S.Folder>
+        <S.Folder>
           <FontAwesomeIcon icon={faFile} />
           Drafts
-        </S.P>
-        <S.P>
+        </S.Folder>
+        <S.Folder>
           <FontAwesomeIcon icon={faPaperPlane} />
           Sent
-        </S.P>
-        <S.P>
+        </S.Folder>
+        <S.Folder>
           <FontAwesomeIcon icon={faTrash} />
           Trash
-        </S.P>
-        <S.P>
+        </S.Folder>
+        <S.Folder>
           <FontAwesomeIcon icon={faExclamationTriangle} />
           Spam
-        </S.P>
-        <S.Divider></S.Divider>
-        <S.P>
+        </S.Folder>
+      </S.FolderContainer>
+      <S.Divider></S.Divider>
+
+      <S.TagContainer>
+        <S.Folder>
           <FontAwesomeIcon icon={faTags} />
           Tags
-        </S.P>
+        </S.Folder>
+
         <S.Tags>Social</S.Tags>
         <S.Tags>Finance</S.Tags>
         <S.Tags>Entertainment</S.Tags>
@@ -112,7 +136,7 @@ const Sidebar = props => {
         <S.Tags>Shopping</S.Tags>
         <S.Tags>Travel</S.Tags>
         <S.Tags>Other</S.Tags>
-      </S.Button>
+      </S.TagContainer>
     </S.Container>
   );
 };
