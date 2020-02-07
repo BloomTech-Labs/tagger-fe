@@ -15,22 +15,30 @@ S.Form = styled.form`
   height: 64px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+  width: 50vw;
+`;
+
+S.Search = styled.div`
+  background: white;
+  position: relative;
+  width: 40vw;
 `;
 
 S.Input = styled.input`
-  font-size: 16px;
-  margin-top: 20px;
-  height: 24px;
-  width: 40vw;
+  font-size: 32px;
+  margin-top: 5px;
+  height: 48px;
   background-color: lightgray;
   color: black;
+  width: 40vw;
+  display: block;
 `;
 
 S.Button = styled.button`
-  font-size: 14px;
-  margin: 20px 2vw;
-  height: 29px;
+  font-size: 22px;
+  margin: 13px 2vw;
+  height: 39px;
   width: 5vw;
   border: solid lightgray 2px;
   border-radius: 3px;
@@ -39,7 +47,7 @@ S.Button = styled.button`
 `;
 
 S.Header = styled.h1`
-  font-size: 26px;
+  font-size: 32px;
   color: #2f86ff;
   margin: 8px 2vw;
   font-weight: bolder;
@@ -62,17 +70,39 @@ S.Signout = styled.div`
   font-weight: bolder;
 `;
 
+S.Magnify = styled.button`
+  margin: 2px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0px 20px;
+  z-index: 2;
+  height: 100%;
+`;
+
 const Nav = props => {
   return (
     <S.Container>
       <S.Header>Tagger</S.Header>
       <S.Form>
-        <S.Input
-          type="text"
-          name="search"
-          placeholder="Search for people, conversations, files..."
-        ></S.Input>
-        <S.Button>Filters</S.Button>
+        <S.Search>
+          <S.Input
+            type="text"
+            name="search"
+            placeholder="Search for people, conversations, files..."
+          ></S.Input>
+          <S.Magnify type="submit">
+            <i class="fa fa-search"></i>
+          </S.Magnify>
+        </S.Search>
+        <S.Button>
+          <i class="fa fa-filter"></i> Filters
+        </S.Button>
       </S.Form>
       <S.User>
         <S.Avatar
