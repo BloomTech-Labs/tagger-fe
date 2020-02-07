@@ -14,6 +14,7 @@ const S = {
     height: calc(100vh-64px);
     border: solid black 3px;
     overflow-y: auto;
+    padding: .5%;
   `,
 };
 
@@ -27,8 +28,8 @@ const Snippets = props => {
 
   return (
     <S.Container widthPercentage = {props.isDisplayingThread ? 25 : 100}>
-        <h1>Snippets</h1>
-        <button onClick = {() => toggleIsDisplayingThread()}>Toggle Thread ON/OFF</button>
+        {/* <h1>Snippets</h1>
+        <button onClick = {() => toggleIsDisplayingThread()}>Toggle Thread ON/OFF</button> */}
         {props.emails.map((email) => {
           return (
             <Snippet key = {email.message_id} email = {email}/> // emails in redux are currently numbers 1-10 in an array
