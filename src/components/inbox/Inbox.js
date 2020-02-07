@@ -6,11 +6,12 @@ import { connect } from "react-redux";
 
 
 import { getUserEmailAndId, getEmails, changeIsLoggedIn } from "../../actions";
+import Sidebar from "./Sidebar";
 
 const S = {
   Container: styled.div`
-    border: solid black 1px;
-    font-size: 1.4rem === 14px
+    display: flex;
+    height: calc(100vh-64px);
   `,
 };
 
@@ -52,7 +53,7 @@ const Inbox = props => {
   }
 
 
-  return <S.Container>Inbox</S.Container>;
+  return <S.Container><Sidebar /></S.Container>;
 };
 
 const mapStateToProps = ({ imap, user }) => ({
