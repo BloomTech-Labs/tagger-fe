@@ -1,0 +1,15 @@
+import React from "react";
+import styled from "styled-components";
+
+const S = {};
+
+S.Container = styled.div`
+  border: solid black 1px;
+`;
+
+const Nav = props => {
+  return <S.Container>Nav</S.Container>;
+  <S.Container />;
+};
+
+export default Nav;
