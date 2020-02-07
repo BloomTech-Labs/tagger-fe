@@ -13,6 +13,7 @@ const S = {
     width: 75%; // 40 if displaying analyticsbar
     height: 100%;
     box-sizing: border-box;
+    overflow-y: auto;
 
   `,
 };

@@ -13,6 +13,7 @@ const S = {
     width: ${props => props.widthPercentage}%;
     height: 100%;
     border: solid black 3px;
+    overflow-y: auto;
   `,
 };
 
