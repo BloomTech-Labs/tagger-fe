@@ -15,7 +15,7 @@ import { getUserEmailAndId, getEmails, changeIsLoggedIn } from "../../actions";
 const S = {
   Container: styled.div`
     border: solid green 2px;
-    width: calc(100% - 200px);
+    width: calc(100% - 230px);
     display: flex;
     box-sizing: border-box;
   `,

@@ -18,11 +18,12 @@ const S = {
   Container: styled.div`
     display: inline-block;
     flex-direction: row;
-    position: absolute;
     // height: calc(100vh-64px);
-    height: 954px;
+    height: 100%;
     width: 230px;
     border: 1px solid red;
+    box-sizing: border-box;
+
   `,
   Button: styled.div`
     display: flex;
