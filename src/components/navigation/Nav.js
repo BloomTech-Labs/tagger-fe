@@ -4,7 +4,6 @@ import styled from "styled-components";
 const S = {};
 
 S.Container = styled.div`
-  border: solid black 1px;
   height: 64px;
   display: flex;
   flex-direction: row;
