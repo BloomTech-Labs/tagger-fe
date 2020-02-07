@@ -52,7 +52,7 @@ S.Input = styled.input`
 S.Button = styled.button`
   height: 100%;
   min-width: 100px;
-  width: 5vw;
+  width: 30vw;
   border: solid lightgray 2px;
   border-radius: 3px;
   color: gray;

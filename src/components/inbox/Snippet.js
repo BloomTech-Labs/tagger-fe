@@ -19,6 +19,7 @@ const S = {
         flex-direction: column;
         align-items: flex-start;
         padding: 0px 1%;
+        margin-top: .5%;
 
     `,
     SnipHeader: styled.div`
@@ -42,6 +43,7 @@ const S = {
         margin-right: 1%;
     `,
     Subject: styled.div`
+        font-weight: 700;
         
     `,
     Message: styled.div`

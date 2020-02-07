@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
+import ThreadMessage from "./ThreadMessage";
 
 
 import { changeIsDisplayingAnalytics } from "../../actions";
@@ -14,6 +15,7 @@ const S = {
     height: 100%;
     box-sizing: border-box;
     overflow-y: auto;
+    padding: .5%;
   `,
 };
 
@@ -27,17 +29,14 @@ const Thread = props => {
 
   return (
     <S.Container>
-        <h1>Thread between you & {props.threadContactEmailAddress}</h1>
-        <button onClick = {() => toggleIsDisplayingAnalytics()}>Toggle Analytics ON/OFF</button>
+        {/* <h1>Thread between you & {props.threadContactEmailAddress}</h1>
+        <button onClick = {() => toggleIsDisplayingAnalytics()}>Toggle Analytics ON/OFF</button> */}
 
         {props.emails.filter((email) => {
           return email.fromEmailAddress === props.threadContactEmailAddress
         }).map((email) => {
           return (
-            <div>
-              <h1>{email.fromEmailAddress}</h1>
-              <div>{email.text}</div>
-            </div>
+            <ThreadMessage email = {email}/>
           )
         })}
         
