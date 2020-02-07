@@ -28,8 +28,20 @@ const Thread = props => {
 
   return (
     <S.Container>
-        <h1>Thread</h1>
+        <h1>Thread between you & {props.threadContactEmailAddress}</h1>
         <button onClick = {() => toggleIsDisplayingAnalytics()}>Toggle Analytics ON/OFF</button>
+
+        {props.emails.filter((email) => {
+          return email.fromEmailAddress === props.threadContactEmailAddress
+        }).map((email) => {
+          return (
+            <div>
+              <h1>{email.fromEmailAddress}</h1>
+              <div>{email.text}</div>
+            </div>
+          )
+        })}
+        
     </S.Container>
   );
 };
@@ -41,7 +53,8 @@ const mapStateToProps = ({ imap, user, inbox }) => ({
   areEmailsRetrieved: imap.areEmailsRetrieved,
   emails: imap.emails,
   isLoggedIn: user.isLoggedIn,
-  isDisplayingAnalytics: inbox.isDisplayingAnalytics
+  isDisplayingAnalytics: inbox.isDisplayingAnalytics,
+  threadContactEmailAddress: inbox.threadContactEmailAddress,
 });
 
 const mapDispatchToProps = dispatch =>

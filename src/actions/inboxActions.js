@@ -75,7 +75,6 @@ export const getEmails = (emailAddress, token) => dispatch => {
       token: imapAccessHash
     })
     .then(res => {
-      console.log("GET_EMAILS_RES: ", res);
       const emails = res.data.map(emailObj => {
         return {
           html: emailObj.html,
@@ -115,4 +114,14 @@ export const CHANGE_IS_DISPLAYING_ANALYTICS = "CHANGE_IS_DISPLAYING_ANALYTICS";
 export const changeIsDisplayingAnalytics = (bool) => dispatch => {
     // Set a switch that displays (true) or hides (false) the analytics bar
     dispatch({ type: CHANGE_IS_DISPLAYING_ANALYTICS, payload: bool });
+};
+
+
+// =============================================================================
+// C H A N G E   T H R E A D   C O N T A C T
+export const CHANGE_THREAD_CONTACT = "CHANGE_THREAD_CONTACT";
+
+export const changeThreadContact = (fromEmailAddress) => dispatch => {
+    // Set the contact whose conversation is displayed in Thread.js
+    dispatch({ type: CHANGE_THREAD_CONTACT, payload: {fromEmailAddress} });
 };

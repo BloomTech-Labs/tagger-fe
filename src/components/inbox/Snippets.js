@@ -31,7 +31,7 @@ const Snippets = props => {
         <button onClick = {() => toggleIsDisplayingThread()}>Toggle Thread ON/OFF</button>
         {props.emails.map((email) => {
           return (
-            <Snippet key = {email.message_id}email = {email}/> // emails in redux are currently numbers 1-10 in an array
+            <Snippet key = {email.message_id} email = {email}/> // emails in redux are currently numbers 1-10 in an array
           )
         })}
     </S.Container>

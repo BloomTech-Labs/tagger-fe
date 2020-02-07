@@ -20,7 +20,6 @@ export const imapReducer = (state = initialState, {type, payload}) => {
         areEmailsRetrieved: false
       };
     case GET_EMAILS_SUCCESS:
-      console.log("PAYLOAD: ", payload)
       return {
         ...state,
         emails: payload,

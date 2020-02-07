@@ -21,7 +21,6 @@ const S = {
 
 const Inbox = props => {
   useEffect(() => {
-    console.log("Is logged in?: ", props.isLoggedIn)
     props.changeIsLoggedIn(true)
 
     const url = props.history.location.hash;
@@ -30,13 +29,13 @@ const Inbox = props => {
     if (!props.isEmailAddressAndIdRetrieved) {
       // If user data not retrieved, retrieve email address and user_id from Auth token
       props.getUserEmailAndId(token).then(res => {
-        console.log("GETUSERDATA RES: ", res);
+        // console.log("GETUSERDATA RES: ", res);
       });
     } else if (!props.areEmailsRetrieved) {
       // Else if user data retrieved AND emails not retrieved, retrieve emails
       const user_email = props.emailAddress;
       props.getEmails(user_email, token).then(res => {
-        console.log("GETEMAILS RES: ", res);
+        // console.log("GETEMAILS RES: ", res);
       });
     }
 
