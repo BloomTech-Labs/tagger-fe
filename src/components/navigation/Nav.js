@@ -34,15 +34,20 @@ S.Bottom = styled.section`
     display: flex;
     .left {
         width: 40vw;
-        height: ${(props) => (props.height ? "300px" : "0px")};
-        background-color: black;
+        height: ${(props) => props.heightLeft};
+        background-color: #cfcfd2;
         z-index: 2;
+        box-shadow:0px 0px 2px 1px #4c4c4c;
+      }
+      
     }
     .right {
         width: 10vw;
-        height: ${(props) => props.height || "500px"};
-        background-color: blue;
+        height: ${(props) => props.heightRight};
+        background-color: #cfcfd2;
         z-index: 2;
+        box-shadow:0px 0px 2px 1px #4c4c4c;
+
     }
 `;
 S.Form = styled.form`
@@ -157,7 +162,7 @@ const Nav = (props) => {
             <S.Header>Tagger</S.Header>
             <S.MidSection>
                 <S.Top>
-                    <S.Form>
+                    <S.Form autoComplete="off">
                         <S.Search>
                             <S.Input
                                 type="text"
@@ -180,11 +185,12 @@ const Nav = (props) => {
                         </S.Button>
                     </S.Form>
                 </S.Top>
-                <S.Bottom>
-                    <div className="left" props={searchQuery.search.length > 0 ? "height" : null}>
-                        search options to be populated here
-                    </div>
-                    <div className="right" height={showSearchOptions ? "300px" : "0px"}>
+                <S.Bottom
+                    heightLeft={searchQuery.search.length > 0 ? "300px" : "0px"}
+                    heightRight={showSearchOptions ? "300px" : "0px"}
+                >
+                    <div className="left">search options to be populated here</div>
+                    <div className="right">
                         {showSearchOptions ? (
                             <form action="">
                                 <input
