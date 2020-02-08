@@ -9,6 +9,7 @@ import LandingPage from "./components/landing/LandingPage";
 import Inbox from "./components/inbox/Inbox";
 import Nav from "./components/navigation/Nav";
 import Sidebar from "./components/inbox/Sidebar";
+import Compose from "./components/compose/Compose";
 
 const S = {
   Container: styled.div`
@@ -37,6 +38,7 @@ function App(props) {
 
         <Route exact path="/" component={LandingPage}></Route>
         <Route path="/inbox" component={Inbox}></Route>
+        <Route path="/compose" component={Compose}></Route>
 
         
       </Switch>
