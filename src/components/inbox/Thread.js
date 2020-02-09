@@ -10,12 +10,12 @@ import { changeIsDisplayingAnalytics } from "../../actions";
 
 const S = {
   Container: styled.div`
-    border: solid red 5px;
     width: 75%; // 
     height: 100%;
     box-sizing: border-box;
     overflow-y: auto;
-    padding: .5%;
+    padding: 0% .5%;
+    background-color: #ebebeb;
   `,
 };
 

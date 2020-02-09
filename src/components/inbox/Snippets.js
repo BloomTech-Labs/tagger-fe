@@ -12,7 +12,6 @@ const S = {
   Container: styled.div`
     width: ${props => props.widthPercentage}%;
     height: calc(100vh-64px);
-    border: solid black 3px;
     overflow-y: auto;
     padding: .5%;
   `,

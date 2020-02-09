@@ -11,15 +11,14 @@ const S = {
     Container: styled.div`
         width: 100%;
         height: ${props => props.heightInPx}px;
-        border: solid red 1px;
         box-sizing: border-box;
         font-size: .8rem;
         text-align: center;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding: 0px 1%;
-        margin-top: .5%;
+        padding: 3px 1%;
+        border-bottom: solid #e0e0e0 1px;
 
     `,
     SnipHeader: styled.div`
@@ -33,8 +32,16 @@ const S = {
         h3 {
           margin: 0px;
         }
+
+        div {
+          width: calc(100% - 30px);
+          box-sizing: border-box;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
     `,
-    Avatar: styled.div`
+    Avatar: styled.img`
         width: 30px;
         height: 30px;
         background-color: black;
@@ -64,7 +71,7 @@ const Snippet = (props) => {
 
     return (
         <S.Container 
-            heightInPx = {props.isDisplayingThread ? (props.isDisplayingAnalytics ? 100 : 80) : 60}
+            heightInPx = {props.isDisplayingThread ? (props.isDisplayingAnalytics ? 100 : 80) : 75}
             onClick = {() => setThreadContact()}
         >
             {/* <h3>{props.email.fromName}</h3>
@@ -73,7 +80,10 @@ const Snippet = (props) => {
             <div>{props.email.fromEmailAddress}</div> */}
             <S.SnipHeader>
               <S.Avatar />
-              <h3>{props.email.fromName}</h3>
+              <div>
+                <h3>{props.email.fromName}</h3>
+                <h3>2 days ago</h3>
+              </div>
             </S.SnipHeader>
           <S.Subject>{props.email.subject}</S.Subject>
           <S.Message>{props.email.text}</S.Message>

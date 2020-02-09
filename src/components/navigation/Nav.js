@@ -4,7 +4,6 @@ import styled from "styled-components";
 const S = {};
 
 S.Container = styled.div`
-  border: solid red 1px;
   height: 64px;
   display: flex;
   flex-direction: row;
@@ -12,6 +11,7 @@ S.Container = styled.div`
   align-items: center;
   box-sizing: border-box;
   font-size: .9rem;
+  border-bottom: solid #e0e0e0 1px;
 
 `;
 
@@ -29,7 +29,7 @@ S.Form = styled.form`
 
 S.Search = styled.div`
   background: white;
-  position: relative;
+  // position: relative;
   width: 40vw;
   height: 100%;
   box-sizing: border-box;
@@ -52,11 +52,13 @@ S.Input = styled.input`
 S.Button = styled.button`
   height: 100%;
   min-width: 100px;
-  width: 30vw;
+  width: 5vw;
   border: solid lightgray 2px;
   border-radius: 3px;
   color: gray;
   background-color: white;
+
+
 
 `;
 
@@ -90,16 +92,14 @@ S.Signout = styled.div`
 S.Magnify = styled.button`
   margin: 2px;
   background: transparent;
-  border: none;
+  border: solid black 3px;
   cursor: pointer;
-  display: inline-block;
   font-size: 20px;
   position: absolute;
   top: 0;
   right: 0;
   padding: 0px 20px;
   z-index: 2;
-  height: 100%;
 
 `;
 
@@ -114,9 +114,9 @@ const Nav = props => {
             name="search"
             placeholder="Search for people, conversations, files..."
           />
-          <S.Magnify type="submit">
+          {/* <S.Magnify type="submit">
             <i className="fa fa-search"></i>
-          </S.Magnify>
+          </S.Magnify> */}
         </S.Search>
         <S.Button>
           <i className="fa fa-filter"></i> Filters
