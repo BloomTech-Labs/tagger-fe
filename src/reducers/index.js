@@ -6,12 +6,14 @@ import { imapReducer } from "./imapReducer";
 import { userReducer } from "./userReducer";
 import { inboxReducer } from "./inboxReducer";
 import { searchbarReducer } from "./searchbarReducer";
+import { composerReducer } from "./composerReducer";
 
 const rootReducer = combineReducers({
     imap: imapReducer,
     user: userReducer,
     inbox: inboxReducer,
-    searchbar: searchbarReducer
+    searchbar: searchbarReducer,
+    composer: composerReducer
 });
 
 let store;

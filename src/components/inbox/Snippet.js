@@ -5,21 +5,25 @@ import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 
 
-import { changeThreadContact, changeIsDisplayingThread } from "../../actions";
+import { 
+  changeThreadContact, 
+  changeIsDisplayingThread,
+  changeAnalyticsContact,
+  changeIsDisplayingAnalytics
+ } from "../../actions";
 
 const S = {
     Container: styled.div`
         width: 100%;
         height: ${props => props.heightInPx}px;
-        border: solid red 1px;
         box-sizing: border-box;
         font-size: .8rem;
         text-align: center;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding: 0px 1%;
-        margin-top: .5%;
+        padding: 3px 1%;
+        border-bottom: solid #e0e0e0 1px;
 
     `,
     SnipHeader: styled.div`
@@ -33,8 +37,16 @@ const S = {
         h3 {
           margin: 0px;
         }
+
+        div {
+          width: calc(100% - 30px);
+          box-sizing: border-box;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
     `,
-    Avatar: styled.div`
+    Avatar: styled.img`
         width: 30px;
         height: 30px;
         background-color: black;
@@ -62,9 +74,19 @@ const Snippet = (props) => {
         }
     }
 
+    const setAnalyticsContact = (email) => {
+      const contact = {
+          emailAddress: email.fromAddress,
+          name: email.fromName
+      }
+      // Sets contact to be displayed in analytics sidebar
+      props.changeAnalyticsContact(contact)
+      props.changeIsDisplayingAnalytics(true)
+  }
+
     return (
         <S.Container 
-            heightInPx = {props.isDisplayingThread ? (props.isDisplayingAnalytics ? 100 : 80) : 60}
+            heightInPx = {props.isDisplayingThread ? (props.isDisplayingAnalytics ? 100 : 80) : 75}
             onClick = {() => setThreadContact()}
         >
             {/* <h3>{props.email.fromName}</h3>
@@ -72,8 +94,11 @@ const Snippet = (props) => {
             <span>{props.email.text}</span>
             <div>{props.email.fromEmailAddress}</div> */}
             <S.SnipHeader>
-              <S.Avatar />
-              <h3>{props.email.fromName}</h3>
+              <S.Avatar onClick = {() => setAnalyticsContact(props.email)}/>
+              <div>
+                <h3 onClick = {() => setAnalyticsContact(props.email)}>{props.email.fromName}</h3>
+                <h3>2 days ago</h3>
+              </div>
             </S.SnipHeader>
           <S.Subject>{props.email.subject}</S.Subject>
           <S.Message>{props.email.text}</S.Message>
@@ -92,7 +117,9 @@ const mapStateToProps = ({ imap, user, inbox }) => ({
     bindActionCreators(
       {
         changeThreadContact,
-        changeIsDisplayingThread
+        changeIsDisplayingThread,
+        changeAnalyticsContact,
+        changeIsDisplayingAnalytics
       },
       dispatch
     );

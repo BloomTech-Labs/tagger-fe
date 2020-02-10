@@ -52,6 +52,11 @@ const initialState = {
     emails: [sampleEmail, sampleEmail1, sampleEmail2, sampleEmail3, sampleEmail4],
     errors: null
 };
+// const initialState = {
+//   areEmailsRetrieved: false,
+//   emails: [],
+//   errors: null
+// };
 
 export const imapReducer = (state = initialState, { type, payload }) => {
     switch (type) {

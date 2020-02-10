@@ -30,6 +30,7 @@ export const getUserEmailAndId = oAuthToken => dispatch => {
   // Retrieves user email address and user_id upon successful OAuth login redirect
   dispatch({ type: GET_EMAIL_USERID_START });
   const apiKey = process.env.REACT_APP_APIKEY;
+  console.log(apiKey);
   return axios
     .get(
       `https://people.googleapis.com/v1/people/me?personFields=emailAddresses&key=${apiKey}`,
@@ -51,7 +52,7 @@ export const getUserEmailAndId = oAuthToken => dispatch => {
     })
     .catch(err => {
       dispatch({ type: GET_EMAIL_USERID_FAILURE, payload: err });
-      return err
+      return false
     });
 };
 
@@ -124,4 +125,15 @@ export const CHANGE_THREAD_CONTACT = "CHANGE_THREAD_CONTACT";
 export const changeThreadContact = (fromEmailAddress) => dispatch => {
     // Set the contact whose conversation is displayed in Thread.js
     dispatch({ type: CHANGE_THREAD_CONTACT, payload: {fromEmailAddress} });
+};
+
+
+
+// =============================================================================
+// C H A N G E   A N A L Y T I C S   C O N T A C T
+export const CHANGE_ANALYTICS_CONTACT = "CHANGE_ANALYTICS_CONTACT";
+
+export const changeAnalyticsContact = (contact) => dispatch => {
+    // Set the contact whose analytics are being displayed
+    dispatch({ type: CHANGE_ANALYTICS_CONTACT, payload: {contact} });
 };

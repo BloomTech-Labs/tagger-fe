@@ -9,12 +9,12 @@ import LandingPage from "./components/landing/LandingPage";
 import Inbox from "./components/inbox/Inbox";
 import Nav from "./components/navigation/Nav";
 import Sidebar from "./components/inbox/Sidebar";
+import Compose from "./components/compose/Compose";
 
 const S = {
   Container: styled.div`
     // width: calc(100vw - (100vw - 100%));
     width: 100%;
-    border: solid red 1px;
     margin: 0px;
     height: calc(100vh - (100vh - 100%));
     font-size: 1.1rem;
@@ -37,6 +37,7 @@ function App(props) {
 
         <Route exact path="/" component={LandingPage}></Route>
         <Route path="/inbox" component={Inbox}></Route>
+        
 
         
       </Switch>

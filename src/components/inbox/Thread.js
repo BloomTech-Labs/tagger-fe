@@ -3,43 +3,53 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
+
 import ThreadMessage from "./ThreadMessage";
+
+
+import Reply from "./Reply";
 
 
 import { changeIsDisplayingAnalytics } from "../../actions";
 
 const S = {
   Container: styled.div`
-    border: solid red 5px;
     width: 75%; // 
     height: 100%;
     box-sizing: border-box;
     overflow-y: auto;
-    padding: .5%;
+
+    padding: 0% .5%;
+    background-color: #ebebeb;
   `,
+
 };
 
-
-
 const Thread = props => {
-
   const toggleIsDisplayingAnalytics = () => {
-    props.changeIsDisplayingAnalytics(!props.isDisplayingAnalytics)
-  }
+    props.changeIsDisplayingAnalytics(!props.isDisplayingAnalytics);
+  };
 
   return (
     <S.Container>
+
         {/* <h1>Thread between you & {props.threadContactEmailAddress}</h1>
         <button onClick = {() => toggleIsDisplayingAnalytics()}>Toggle Analytics ON/OFF</button> */}
 
-        {props.emails.filter((email) => {
-          return email.fromEmailAddress === props.threadContactEmailAddress
-        }).map((email) => {
+
+      {props.emails
+        .filter(email => {
+          return email.fromEmailAddress === props.threadContactEmailAddress;
+        })
+        .map(email => {
           return (
-            <ThreadMessage email = {email}/>
+
+            <ThreadMessage key = {Math.random()} email = {email}/>
           )
+
         })}
-        
+
+      <Reply threadContactEmailAddress={props.threadContactEmailAddress} />
     </S.Container>
   );
 };
@@ -52,13 +62,13 @@ const mapStateToProps = ({ imap, user, inbox }) => ({
   emails: imap.emails,
   isLoggedIn: user.isLoggedIn,
   isDisplayingAnalytics: inbox.isDisplayingAnalytics,
-  threadContactEmailAddress: inbox.threadContactEmailAddress,
+  threadContactEmailAddress: inbox.threadContactEmailAddress
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-     changeIsDisplayingAnalytics
+      changeIsDisplayingAnalytics
     },
     dispatch
   );
