@@ -14,7 +14,19 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Inbox from "./Inbox";
 
+import {changeIsComposing} from "../../actions/composerActions"
+import ComposeComponent from "../compose/Compose"
 const S = {
+  ModalContainer:styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  `,
+
+
   Container: styled.div`
     display: flex;
     flex-direction: column;
@@ -90,10 +102,20 @@ const S = {
 };
 
 const Sidebar = props => {
+  
+const toggleIsComposing = (e) => {
+  e.preventDefault()
+  props.changeIsComposing(!props.isComposing)
+}
+
   return (
+    
+   
     <S.Container>
+
+    {props.isComposing ? <S.ModalContainer><ComposeComponent /></S.ModalContainer>: null}
       <S.Button>
-        <S.Compose>+ Compose</S.Compose>
+        <S.Compose onClick={toggleIsComposing}>+ Compose</S.Compose>
       </S.Button>
       <S.FolderContainer>
         <S.Folder>
@@ -133,12 +155,17 @@ const Sidebar = props => {
         <S.Tags>Other</S.Tags>
       </S.TagContainer>
     </S.Container>
+   
   );
 };
 
-const mapStateToProps = ({ imap, user }) => ({});
+const mapStateToProps = ({ imap, user,composer }) => ({
+  isComposing: composer.isComposing
+});
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  changeIsComposing
+}, dispatch);
 
 export default compose(
   withRouter,
