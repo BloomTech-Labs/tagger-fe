@@ -14,131 +14,171 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Inbox from "./Inbox";
 
+import {changeIsComposing} from "../../actions/composerActions"
+import ComposeComponent from "../compose/Compose"
 const S = {
+  ModalContainer:styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  `,
+
+
   Container: styled.div`
+    flex-direction: row;
+    // height: calc(100vh-64px);
+    height: 100%;
+    width: 230px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    height: calc(100vh-64px);
-    height: 100vh;
-    width: 230px;
-    border: 1px solid #cccccc;
+    overflow-y: auto;
+    border-right: solid #e0e0e0 1px;
+
+    hr {
+      width: 90%;
+      margin: 15% auto;
+    }
+
+    ul {
+      padding: 0px;
+      list-style-type: none;
+      margin: 0px;
+      display: flex;
+      flex-direction: column;
+      margin-left: 15%;
+
+      li {
+        display: flex;
+        font-size: 1rem;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px;
+        color: #454545;
+        align-items: center;
+        margin-bottom: 3vh;
+        
+        div {
+          width: 30px;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      li:nth-last-child(1) {
+        margin: 0px;
+      }
+    }
+  };
+
   `,
   Button: styled.div`
     display: flex;
-    flex-direction: column;
-    width: 100px;
-    margin: 20px 20px 20px 60px;
-    border: 1px solid blue;
+    justify-content: center;
+    align-items: center;
+    width: 110px;
     height: 35px;
     color: white;
     background-color: #2f86ff;
     border-radius: 6px;
-    position: absolute;
-  `,
-  Compose: styled.p`
     font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
     line-height: 16px;
-  `,
-  FolderContainer: styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20%;
+    margin: 8% 0%;
+    margin-left: calc((100% - 110px) / 2)
   `,
 
-  Folder: styled.div`
-    margin-top: 10%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    font-size: 1rem;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 20px;
-    letter-spacing: 0.2px;
-    color: #454545;
-    width: 60px;
-  `,
-  Divider: styled.div`
-    position: absolute;
-    border: 1 px solid #cccccc;
-    width: 141px;
-    height: 1px;
+
+  FontAwesomeIcon:styled(props => <FontAwesomeIcon {...props} />)`
+    margin-right: 5px;
+    color: grey;
+    
   `,
 
-  TagContainer: styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 5%;
-    border-top: ;
-  `,
-  Tags: styled.p`
-    font-size: 0.9rem;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 18px;
-    letter-spacing: 0.2px;
-    color: #383838;
-    width: 41px;
-  `
-};
+}
+
+
+
+
 
 const Sidebar = props => {
+  
+const toggleIsComposing = (e) => {
+  e.preventDefault()
+  props.changeIsComposing(!props.isComposing)
+}
+
   return (
+    
+   
     <S.Container>
+
+    {props.isComposing ? <S.ModalContainer><ComposeComponent /></S.ModalContainer>: null}
       <S.Button>
-        <S.Compose>+ Compose</S.Compose>
+        + Compose
       </S.Button>
-      <S.FolderContainer>
-        <S.Folder>
-          <FontAwesomeIcon icon={faInbox} />
-          Inbox
-        </S.Folder>
-        <S.Folder>
-          <FontAwesomeIcon icon={faFile} />
-          Drafts
-        </S.Folder>
-        <S.Folder>
-          <FontAwesomeIcon icon={faPaperPlane} />
-          Sent
-        </S.Folder>
-        <S.Folder>
-          <FontAwesomeIcon icon={faTrash} />
-          Trash
-        </S.Folder>
-        <S.Folder>
-          <FontAwesomeIcon icon={faExclamationTriangle} />
-          Spam
-        </S.Folder>
-      </S.FolderContainer>
-      <S.Divider></S.Divider>
-      <S.TagContainer>
-        <S.Folder>
-          <FontAwesomeIcon icon={faTags} />
+
+      <ul>
+        <li>
+          <div><S.FontAwesomeIcon icon={faInbox} /></div>
+          <span>Inbox</span>
+        </li>
+        <li>
+          <div><S.FontAwesomeIcon icon={faFile} /></div>
+          <span>Drafts</span>
+        </li>
+        <li>
+          <div><S.FontAwesomeIcon icon={faPaperPlane} /></div>
+          <span>Sent</span>
+        </li>
+        <li>
+          <div><S.FontAwesomeIcon icon={faTrash} /></div>
+          <span>Trash</span>
+        </li>
+        <li>
+          <div><S.FontAwesomeIcon icon={faExclamationTriangle} /></div>
+          <span>Spam</span>
+        </li>
+        <li>
+          <div><S.FontAwesomeIcon icon={faTags} /></div>
           Tags
-        </S.Folder>
-        <S.Tags>Social</S.Tags>
-        <S.Tags>Finance</S.Tags>
-        <S.Tags>Entertainment</S.Tags>
-        <S.Tags>Productivity</S.Tags>
-        <S.Tags>Events</S.Tags>
-        <S.Tags>Shopping</S.Tags>
-        <S.Tags>Travel</S.Tags>
-        <S.Tags>Other</S.Tags>
-      </S.TagContainer>
+        </li>
+      </ul>
+
+
+      <hr />
+
+      <ul>
+        <li>Social</li>
+        <li>Finance</li>
+        <li>Entertainment</li>
+        <li>Productivity</li>
+        <li>Events</li>
+        <li>Shopping</li>
+        <li>Travel</li>
+        <li>Other</li>
+      </ul>
+
     </S.Container>
+   
   );
 };
 
-const mapStateToProps = ({ imap, user }) => ({});
+const mapStateToProps = ({ imap, user,composer }) => ({
+  isComposing: composer.isComposing
+});
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  changeIsComposing
+}, dispatch);
 
 export default compose(
   withRouter,

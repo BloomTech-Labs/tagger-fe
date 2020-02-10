@@ -1,13 +1,25 @@
 import {
     CHANGE_IS_DISPLAYING_THREAD,
     CHANGE_IS_DISPLAYING_ANALYTICS,
-    CHANGE_THREAD_CONTACT
+    CHANGE_THREAD_CONTACT,
+    CHANGE_ANALYTICS_CONTACT
   } from "../actions";
   
-  const initialState = {
-    isDisplayingThread: false,
-    isDisplayingAnalytics: false,
-    threadContactEmailAddress: "CLICK ON AN EMAIL"
+  // const initialState = {
+  //   isDisplayingThread: false,
+  //   isDisplayingAnalytics: false,
+  //   threadContactEmailAddress: "CLICK ON AN EMAIL",
+  //   analyticsContactEmailAddress: "",
+  // };
+  
+  const initialState = { // FOR ANALYTICS BAR DEV
+    isDisplayingThread: true,
+    isDisplayingAnalytics: true,
+    threadContactEmailAddress: "arnoldSchwarzeneger@gov.com",
+    analyticsContact: {
+      emailAddress: "arnoldSchwarzeneger@gov.com",
+      name: "George Washington"
+    },
   };
   
   export const inboxReducer = (state = initialState, {type, payload}) => {
@@ -36,6 +48,15 @@ import {
       return {
           ...state,
           threadContactEmailAddress: payload.fromEmailAddress
+        };
+
+  // ==============================================
+
+
+  case CHANGE_ANALYTICS_CONTACT:
+      return {
+          ...state,
+          analyticsContact: payload.contact
         };
 
   // ==============================================

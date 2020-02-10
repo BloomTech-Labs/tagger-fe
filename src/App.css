@@ -2,6 +2,8 @@
   text-align: center;
   box-sizing: border-box;
   font-size: 62.5%;
+  font-family: 'Roboto', sans-serif;
+
 }
 
 .App-logo {
@@ -37,9 +39,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-.practice{
-  display: flex;
-  flex-direction: column;
-  font-size: 1.;
 }
