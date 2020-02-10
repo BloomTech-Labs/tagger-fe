@@ -36,7 +36,7 @@ const Thread = props => {
           return email.fromEmailAddress === props.threadContactEmailAddress
         }).map((email) => {
           return (
-            <ThreadMessage email = {email}/>
+            <ThreadMessage key = {Math.random()} email = {email}/>
           )
         })}
         

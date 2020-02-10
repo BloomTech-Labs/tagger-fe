@@ -5,7 +5,10 @@ import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 
 
-// import {  } from "../../actions";
+import { 
+    changeIsDisplayingAnalytics,
+    changeAnalyticsContact,
+ } from "../../actions";
 
 const S = {
     Container: styled.div`
@@ -68,13 +71,25 @@ const S = {
 
 const ThreadMessage = (props) => {
 
+    const setAnalyticsContact = (email) => {
+        console.log("THEM THER EMAIL", email)
+        const contact = {
+            emailAddress: email.fromEmailAddress,
+            name: email.fromName
+        }
+        // Sets contact to be displayed in analytics sidebar
+        props.changeAnalyticsContact(contact)
+        props.changeIsDisplayingAnalytics(true)
+    }
+  
+
 
     return (
         <S.Container>
             <S.ContactHeader>
                 <S.ContactInfo>
-                    <S.Avatar />
-                    <h3>{props.email.fromName}</h3>
+                    <S.Avatar onClick = {() => setAnalyticsContact(props.email)}/>
+                    <h3 onClick = {() => setAnalyticsContact(props.email)}>{props.email.fromName}</h3>
                 </S.ContactInfo>
                 <S.MessageActions>
                     <button />
@@ -92,13 +107,13 @@ const ThreadMessage = (props) => {
 }
 
 const mapStateToProps = ({ imap, user, inbox }) => ({
-
 });
   
   const mapDispatchToProps = dispatch =>
     bindActionCreators(
       {
-
+        changeIsDisplayingAnalytics,
+        changeAnalyticsContact,
       },
       dispatch
     );

@@ -5,7 +5,12 @@ import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 
 
-import { changeThreadContact, changeIsDisplayingThread } from "../../actions";
+import { 
+  changeThreadContact, 
+  changeIsDisplayingThread,
+  changeAnalyticsContact,
+  changeIsDisplayingAnalytics
+ } from "../../actions";
 
 const S = {
     Container: styled.div`
@@ -69,6 +74,16 @@ const Snippet = (props) => {
         }
     }
 
+    const setAnalyticsContact = (email) => {
+      const contact = {
+          emailAddress: email.fromAddress,
+          name: email.fromName
+      }
+      // Sets contact to be displayed in analytics sidebar
+      props.changeAnalyticsContact(contact)
+      props.changeIsDisplayingAnalytics(true)
+  }
+
     return (
         <S.Container 
             heightInPx = {props.isDisplayingThread ? (props.isDisplayingAnalytics ? 100 : 80) : 75}
@@ -79,9 +94,9 @@ const Snippet = (props) => {
             <span>{props.email.text}</span>
             <div>{props.email.fromEmailAddress}</div> */}
             <S.SnipHeader>
-              <S.Avatar />
+              <S.Avatar onClick = {() => setAnalyticsContact(props.email)}/>
               <div>
-                <h3>{props.email.fromName}</h3>
+                <h3 onClick = {() => setAnalyticsContact(props.email)}>{props.email.fromName}</h3>
                 <h3>2 days ago</h3>
               </div>
             </S.SnipHeader>
@@ -102,7 +117,9 @@ const mapStateToProps = ({ imap, user, inbox }) => ({
     bindActionCreators(
       {
         changeThreadContact,
-        changeIsDisplayingThread
+        changeIsDisplayingThread,
+        changeAnalyticsContact,
+        changeIsDisplayingAnalytics
       },
       dispatch
     );
