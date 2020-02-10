@@ -9,10 +9,10 @@ import "../node_modules/font-awesome/css/font-awesome.css";
 import { store } from "./reducers";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
-  </Provider>,
-  document.getElementById("root")
+    <Provider store={store}>
+        <Router>
+            <App />
+        </Router>
+    </Provider>,
+    document.getElementById("root")
 );
