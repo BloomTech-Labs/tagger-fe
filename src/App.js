@@ -38,7 +38,7 @@ function App(props) {
 
         <Route exact path="/" component={LandingPage}></Route>
         <Route path="/inbox" component={Inbox}></Route>
-        <Route path="/compose" component={Compose}></Route>
+        
 
         
       </Switch>
