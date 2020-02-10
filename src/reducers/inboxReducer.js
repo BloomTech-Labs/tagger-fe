@@ -16,7 +16,10 @@ import {
     isDisplayingThread: true,
     isDisplayingAnalytics: true,
     threadContactEmailAddress: "arnoldSchwarzeneger@gov.com",
-    analyticsContact: {},
+    analyticsContact: {
+      emailAddress: "arnoldSchwarzeneger@gov.com",
+      name: "George Washington"
+    },
   };
   
   export const inboxReducer = (state = initialState, {type, payload}) => {
