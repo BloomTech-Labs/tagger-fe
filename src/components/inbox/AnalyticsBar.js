@@ -52,6 +52,7 @@ const S = {
 
       h6 {
         margin: 0px;
+        margin-bottom: 5px;
       }
 
       div {
