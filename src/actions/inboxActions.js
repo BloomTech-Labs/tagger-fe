@@ -126,3 +126,14 @@ export const changeThreadContact = (fromEmailAddress) => dispatch => {
     // Set the contact whose conversation is displayed in Thread.js
     dispatch({ type: CHANGE_THREAD_CONTACT, payload: {fromEmailAddress} });
 };
+
+
+
+// =============================================================================
+// C H A N G E   A N A L Y T I C S   C O N T A C T
+export const CHANGE_ANALYTICS_CONTACT = "CHANGE_ANALYTICS_CONTACT";
+
+export const changeAnalyticsContact = (contact) => dispatch => {
+    // Set the contact whose analytics are being displayed
+    dispatch({ type: CHANGE_ANALYTICS_CONTACT, payload: {contact} });
+};

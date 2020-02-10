@@ -9,76 +9,94 @@ S.Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: .9rem;
+  border-bottom: solid #e0e0e0 1px;
+
 `;
 
 S.Form = styled.form`
-  height: 64px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 50vw;
+  align-items: center;
+  height: 70%;
+  box-sizing: border-box;
+
+
 `;
 
 S.Search = styled.div`
   background: white;
-  position: relative;
+  // position: relative;
   width: 40vw;
+  height: 100%;
+  box-sizing: border-box;
 `;
 
 S.Input = styled.input`
-  font-size: 32px;
-  margin-top: 5px;
-  height: 48px;
+  height: 100%;
   background-color: lightgray;
   color: black;
   width: 40vw;
   display: block;
+  box-sizing: border-box;
+  padding: 0px 2%;
+
+  
+  
+
 `;
 
 S.Button = styled.button`
-  font-size: 22px;
-  margin: 13px 2vw;
-  height: 39px;
+  height: 100%;
   min-width: 100px;
   width: 5vw;
   border: solid lightgray 2px;
   border-radius: 3px;
   color: gray;
   background-color: white;
+
+
+
 `;
 
 S.Header = styled.h1`
-  font-size: 32px;
+  font-size: 1.8rem;
   color: #2f86ff;
   margin: 8px 2vw;
   font-weight: bolder;
+
 `;
 
 S.User = styled.div`
-  height: 64px;
+  height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+
 `;
 
 S.Avatar = styled.img`
   height: 60px;
   margin: 1px 2vw;
+
 `;
 
 S.Magnify = styled.button`
   margin: 2px;
   background: transparent;
-  border: none;
+  border: solid black 3px;
   cursor: pointer;
-  display: inline-block;
   font-size: 20px;
   position: absolute;
   top: 0;
   right: 0;
   padding: 0px 20px;
   z-index: 2;
-  height: 100%;
+
 `;
 
 const Nav = () => {
@@ -103,6 +121,7 @@ const Nav = () => {
             name="search"
             onChange={changeHandler}
             placeholder="Search for people, conversations, files..."
+
             value={search}
           ></S.Input>
           <S.Magnify type="submit" onClick={handleSubmit}>
@@ -110,7 +129,7 @@ const Nav = () => {
           </S.Magnify>
         </S.Search>
         <S.Button>
-          <i class="fa fa-filter"></i> Filters
+          <i className="fa fa-filter"></i> Filters
         </S.Button>
       </S.Form>
       <S.User>

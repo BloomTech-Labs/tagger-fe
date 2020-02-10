@@ -3,6 +3,7 @@ import {
   GET_EMAILS_SUCCESS,
   GET_EMAILS_FAILURE
 } from "../actions";
+
 const sampleEmail = {
   html: "<div>Bunch of random stuff</div> <div>Bunch of random stuff</div>",
   text: "This is a fake text body but it's better than Lorem Ipsum so if you like it please hire me as a writer for your novellas",
@@ -10,6 +11,7 @@ const sampleEmail = {
   fromName: "Arnold Scwarzinator",
   subject: "This is a subject!"
 }
+
 const initialState = {
   areEmailsRetrieved: false,
   emails: [
