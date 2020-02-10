@@ -3,6 +3,7 @@ import {
   SEND_EMAIL_SUCCESS,
   SEND_EMAIL_FAILURE,
   CHANGE_IS_COMPOSING,
+  CHANGE_IS_REPLYING,
 } from "../actions/composerActions";
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
     body: ""
   },
   isComposing: false,
+  isReplying: false,
   error: null
 };
 
@@ -47,6 +49,12 @@ export const composerReducer = (state = initialState, action) => {
         isComposing: false,
         error: action.payload
       };
+      // Reply to and send emails
+      case CHANGE_IS_REPLYING:
+        return {
+          ...state,
+          isReplying: action.payload
+        }
     default:
       return state;
   }

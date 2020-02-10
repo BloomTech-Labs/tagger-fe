@@ -6,7 +6,7 @@ import {
 const sampleEmail = {
   html: "<div>Bunch of random stuff</div> <div>Bunch of random stuff</div>",
   text: "This is a fake text body but it's better than Lorem Ipsum so if you like it please hire me as a writer for your novellas",
-  fromEmailAddress: "arnoldSchwarzeneger@gov.com",
+  fromEmailAddress: "lflores0214@live.com",
   fromName: "Arnold Scwarzinator",
   subject: "This is a subject!"
 }

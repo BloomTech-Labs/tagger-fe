@@ -176,15 +176,6 @@ const Compose = props => {
 
 const mapStateToProps = ({ composer }) => ({
   isComposing: composer.isComposing,
-  email: {
-    service: composer.email.service,
-    host: composer.email.host,
-    port: composer.email.port,
-    userEmail: composer.email.userEmail,
-    receiver: composer.email.receiver,
-    subject: composer.email.subject,
-    body: composer.email.body
-  }
 });
 const mapDispatchToProps = {
   sendEmail,
