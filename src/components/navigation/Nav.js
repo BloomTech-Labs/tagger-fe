@@ -3,130 +3,138 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { clearSearch } from "../../actions";
 import SearchBarResult from "./SearchBarResult";
-
-const S = {};
-
-S.Container = styled.div`
-    border: solid red 1px;
-    height: 64px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    box-sizing: border-box;
-    font-size: 0.9rem;
-`;
-S.MidSection = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 50vw;
-    height: 64px;
-`;
-S.Top = styled.section`
-    width: 100%;
-    height: 64px;
-    display: flex;
-    align-items: flex-end;
-`;
-S.Bottom = styled.section`
-    height: 0px;
-    width: 100%;
-    overflow: visible;
-    display: flex;
-    .left {
-        width: 40vw;
-        height: ${(props) => props.heightLeft};
-        background-color: #cfcfd2;
-        z-index: 2;
-        box-shadow:0px 0px 2px 1px #4c4c4c;
-      }
-      
-    }
-    .right {
-        width: 10vw;
-        height: ${(props) => props.heightRight};
-        background-color: #cfcfd2;
-        z-index: 2;
-        box-shadow:0px 0px 2px 1px #4c4c4c;
-
-    }
-`;
-S.Form = styled.form`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 50vw;
-    align-items: center;
-    height: 70%;
-    box-sizing: border-box;
-`;
-
-S.Search = styled.div`
-    background: white;
+import { fuzzyFunction } from "./_fuzzyFunction";
+import { saveSearch } from "../../actions";
+const S = {
+    Container: styled.div`
+        border: solid red 1px;
+        height: 64px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        font-size: 0.9rem;
+    `,
+    MidSection: styled.div`
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 50vw;
+        height: 64px;
+    `,
+    Top: styled.section`
+        width: 100%;
+        height: 64px;
+        display: flex;
+        align-items: flex-end;
+    `,
+    Bottom: styled.section`
+height: 0px;
+width: 100%;
+overflow: visible;
+display: flex;
+.left {
     width: 40vw;
-    height: 100%;
-    box-sizing: border-box;
-`;
-
-S.Input = styled.input`
-    height: 100%;
-    background-color: lightgray;
-    color: black;
-    width: 40vw;
-    display: block;
-    box-sizing: border-box;
-    padding: 0px 2%;
-`;
-
-S.Button = styled.button`
-    height: 100%;
-    min-width: 100px;
-    width: 10vw;
-    border: solid lightgray 2px;
-    border-radius: 3px;
-    color: gray;
-    background-color: white;
-`;
-
-S.Header = styled.h1`
-    font-size: 1.8rem;
-    color: #2f86ff;
-    margin: 8px 2vw;
-    font-weight: bolder;
-`;
-
-S.User = styled.div`
-    height: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-`;
-
-S.Avatar = styled.img`
-    height: 40px;
-    margin: 1px 2vw;
-`;
-
-S.Signout = styled.div`
-    font-size: 14px;
-    font-weight: bolder;
-`;
-
-S.Magnify = styled.button`
-    margin: 2px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 20px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0px 20px;
+    height: ${(props) => props.heightLeft};
+    background-color: #cfcfd2;
     z-index: 2;
-    height: 100%;
-`;
+    box-shadow:0px 0px 2px 1px #4c4c4c;
+  }
+  
+}
+.right {
+    width: 10vw;
+    height: ${(props) => props.heightRight};
+    background-color: #cfcfd2;
+    z-index: 2;
+    box-shadow:0px 0px 2px 1px #4c4c4c;
+
+}
+`,
+    SearchDropdown: styled.section`
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        width: 100%;
+        height: 100%;
+    `,
+    Form: styled.form`
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 50vw;
+        align-items: center;
+        height: 70%;
+        box-sizing: border-box;
+    `,
+
+    Search: styled.div`
+        background: white;
+        width: 40vw;
+        height: 100%;
+        box-sizing: border-box;
+    `,
+
+    Input: styled.input`
+        height: 100%;
+        background-color: lightgray;
+        color: black;
+        width: 40vw;
+        display: block;
+        box-sizing: border-box;
+        padding: 0px 2%;
+    `,
+
+    Button: styled.button`
+        height: 100%;
+        min-width: 100px;
+        width: 10vw;
+        border: solid lightgray 2px;
+        border-radius: 3px;
+        color: gray;
+        background-color: white;
+    `,
+
+    Header: styled.h1`
+        font-size: 1.8rem;
+        color: #2f86ff;
+        margin: 8px 2vw;
+        font-weight: bolder;
+    `,
+
+    User: styled.div`
+        height: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    `,
+
+    Avatar: styled.img`
+        height: 40px;
+        margin: 1px 2vw;
+    `,
+
+    Signout: styled.div`
+        font-size: 14px;
+        font-weight: bolder;
+    `,
+
+    Magnify: styled.button`
+        margin: 2px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0px 20px;
+        z-index: 2;
+        height: 100%;
+    `
+};
 
 const Nav = (props) => {
     const [searchQuery, setSearchQuery] = useState({
@@ -148,6 +156,12 @@ const Nav = (props) => {
             ...searchQuery,
             [name]: value
         });
+        const emails = props.emails;
+        if (searchQuery.search.length === 0) {
+            clearSearch();
+        } else {
+            props.saveSearch(fuzzyFunction(value, emails));
+        }
     };
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -171,7 +185,9 @@ const Nav = (props) => {
                                 name="search"
                                 placeholder="Search for people, conversations, files..."
                                 value={searchQuery.search}
-                                onChange={handleInput}
+                                onChange={(e) => {
+                                    handleInput(e);
+                                }}
                             ></S.Input>
                             <S.Magnify type="submit" onSubmit={handleSubmit}>
                                 <i class="fa fa-search"></i>
@@ -192,13 +208,19 @@ const Nav = (props) => {
                     heightRight={showSearchOptions ? "300px" : "0px"}
                 >
                     <div className="left">
-                        {props.results.map((eachEmail, i) => {
-                            <SearchBarResult
-                                key={i}
-                                onClick={props.clearSearch}
-                                email={eachEmail}
-                            ></SearchBarResult>;
-                        })}
+                        {props.results.length > 0 && searchQuery.search.length > 0 ? (
+                            <S.SearchDropdown>
+                                {props.results.map((eachEmail, i) => {
+                                    return (
+                                        <SearchBarResult
+                                            key={i}
+                                            onClick={props.clearSearch}
+                                            email={eachEmail}
+                                        />
+                                    );
+                                })}
+                            </S.SearchDropdown>
+                        ) : null}
                     </div>
                     <div className="right">
                         {showSearchOptions ? (
@@ -215,7 +237,7 @@ const Nav = (props) => {
                                     type="checkbox"
                                     name="fuzzySearch"
                                     id="fuzzySearch"
-                                    checked={searchQuery.fuzzySearch}
+                                    checked={searchQuery._fuzzySearch}
                                     onChange={handleInput}
                                 />
                                 <label htmlFor="fuzzySearch">Enable Fuzzy Search</label>
@@ -236,7 +258,8 @@ const Nav = (props) => {
 };
 function mapStateToProps(state) {
     return {
-        results: state.searchbar.searchResults
+        results: state.searchbar.searchResults,
+        emails: state.imap.emails
     };
 }
-export default connect(mapStateToProps, { clearSearch })(Nav);
+export default connect(mapStateToProps, { clearSearch, saveSearch })(Nav);
