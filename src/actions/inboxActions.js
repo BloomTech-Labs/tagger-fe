@@ -30,6 +30,7 @@ export const getUserEmailAndId = oAuthToken => dispatch => {
   // Retrieves user email address and user_id upon successful OAuth login redirect
   dispatch({ type: GET_EMAIL_USERID_START });
   const apiKey = process.env.REACT_APP_APIKEY;
+  console.log(apiKey);
   return axios
     .get(
       `https://people.googleapis.com/v1/people/me?personFields=emailAddresses&key=${apiKey}`,
@@ -51,7 +52,7 @@ export const getUserEmailAndId = oAuthToken => dispatch => {
     })
     .catch(err => {
       dispatch({ type: GET_EMAIL_USERID_FAILURE, payload: err });
-      return err
+      return false
     });
 };
 

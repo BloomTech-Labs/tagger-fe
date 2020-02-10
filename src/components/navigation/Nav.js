@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 
 const S = {};
@@ -79,14 +80,9 @@ S.User = styled.div`
 `;
 
 S.Avatar = styled.img`
-  height: 40px;
+  height: 60px;
   margin: 1px 2vw;
 
-`;
-
-S.Signout = styled.div`
-  font-size: 14px;
-  font-weight: bolder;
 `;
 
 S.Magnify = styled.button`
@@ -103,20 +99,34 @@ S.Magnify = styled.button`
 
 `;
 
-const Nav = props => {
+const Nav = () => {
+  const [search, setSearch] = useState("");
+
+  const changeHandler = e => {
+    e.persist();
+    setSearch(e.target.value);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+  };
+
   return (
     <S.Container>
       <S.Header>Tagger</S.Header>
-      <S.Form>
+      <S.Form onSubmit={handleSubmit}>
         <S.Search>
           <S.Input
             type="text"
             name="search"
+            onChange={changeHandler}
             placeholder="Search for people, conversations, files..."
-          />
-          {/* <S.Magnify type="submit">
-            <i className="fa fa-search"></i>
-          </S.Magnify> */}
+
+            value={search}
+          ></S.Input>
+          <S.Magnify type="submit" onClick={handleSubmit}>
+            <i class="fa fa-search"></i>
+          </S.Magnify>
         </S.Search>
         <S.Button>
           <i className="fa fa-filter"></i> Filters
@@ -132,4 +142,8 @@ const Nav = props => {
   );
 };
 
-export default Nav;
+const mapStateToProps = state => {
+  return {};
+};
+
+export default connect(mapStateToProps, {})(Nav);

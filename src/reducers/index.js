@@ -5,11 +5,13 @@ import thunk from "redux-thunk";
 import {imapReducer} from "./imapReducer";
 import {userReducer} from "./userReducer"
 import {inboxReducer} from "./inboxReducer"
+import {composerReducer} from "./composerReducer"
 
 const rootReducer = combineReducers({
   imap: imapReducer,
   user: userReducer,
   inbox: inboxReducer,
+  composer: composerReducer
 });
 
 let store;
