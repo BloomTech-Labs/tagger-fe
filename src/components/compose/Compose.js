@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
+
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
 
-import { sendEmail } from "../../actions/composerActions";
+import { sendEmail, changeIsComposing } from "../../actions/composerActions";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -17,6 +17,8 @@ const S = {
     border: 1px solid blue;
     width: 99.8vw;
     height: 99.5vh;
+    
+    
   `,
   Compose: styled.div`
     display: flex;
@@ -26,6 +28,7 @@ const S = {
     width: 60vw;
     height: 80vh;
     margin-top: 10vh;
+    background-color:white;
   `,
   Header: styled.div`
     display: flex;
@@ -97,7 +100,7 @@ const S = {
 };
 
 const Compose = props => {
-  const [emailInfo, setEmailInfo] = useState({
+  const [email, setEmail] = useState({
     service: "gmail",
     host: "smtp.gmail.com",
     port: "465",
@@ -109,8 +112,8 @@ const Compose = props => {
 
   const handleChange = e => {
     let value = e.target.value;
-    setEmailInfo({
-      ...emailInfo,
+    setEmail({
+      ...email,
       [e.target.name]: value
     });
   };
@@ -118,23 +121,19 @@ const Compose = props => {
   const handleSubmit = e => {
     e.preventDefault();
     // props.sendEmail(emailInfo);
-    console.log(emailInfo);
-    axios
-      .post(`http://localhost:8000/compose/`, emailInfo)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    console.log("PROPS", props);
+    props.sendEmail(email);
   };
 
+  const changeIsComposing = e =>{
+    props.changeIsComposing(!props.isComposing)
+  }
   return (
     <S.Container>
       <S.Compose>
         <S.Header>
           <S.HeaderText>Compose Message</S.HeaderText>
-          <S.HeaderCancel>x</S.HeaderCancel>
+          <S.HeaderCancel onClick={changeIsComposing}>x</S.HeaderCancel>
         </S.Header>
         <form onSubmit={handleSubmit}>
           <S.Input
@@ -142,7 +141,7 @@ const Compose = props => {
             type="text"
             name="receiver"
             id="receiver"
-            value={emailInfo.receiver}
+            value={email.receiver}
             onChange={handleChange}
           ></S.Input>
           <S.Input placeholder="Cc:"></S.Input>
@@ -152,7 +151,7 @@ const Compose = props => {
             type="text"
             name="subject"
             id="subject"
-            value={emailInfo.subject}
+            value={email.subject}
             onChange={handleChange}
           ></S.Input>
           <S.ComposeOptions></S.ComposeOptions>
@@ -160,12 +159,12 @@ const Compose = props => {
             type="text"
             name="body"
             id="body"
-            value={emailInfo.body}
+            value={email.body}
             onChange={handleChange}
           ></S.TextBox>
           <S.Footer>
             <S.Send type="submit">Send</S.Send>
-            <S.Trash>
+            <S.Trash onClick={changeIsComposing}>
               <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
             </S.Trash>
           </S.Footer>
@@ -175,4 +174,23 @@ const Compose = props => {
   );
 };
 
-export default connect(null, { sendEmail })(Compose);
+const mapStateToProps = ({ composer }) => ({
+  isComposing: composer.isComposing,
+  email: {
+    service: composer.email.service,
+    host: composer.email.host,
+    port: composer.email.port,
+    userEmail: composer.email.userEmail,
+    receiver: composer.email.receiver,
+    subject: composer.email.subject,
+    body: composer.email.body
+  }
+});
+const mapDispatchToProps = {
+  sendEmail,
+  changeIsComposing
+};
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(Compose);
