@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"
+import axios from "axios";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -118,16 +118,15 @@ const Compose = props => {
   const handleSubmit = e => {
     e.preventDefault();
     // props.sendEmail(emailInfo);
-    console.log(emailInfo)
+    console.log(emailInfo);
     axios
-    .post(`http://localhost:8000/compose/`, emailInfo)
-    .then(res => {
-      console.log(res);
-      
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .post(`http://localhost:8000/compose/`, emailInfo)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
@@ -146,8 +145,8 @@ const Compose = props => {
             value={emailInfo.receiver}
             onChange={handleChange}
           ></S.Input>
-          {/* <S.Input placeholder="Cc:"></S.Input>
-        <S.Input placeholder="Bcc:"></S.Input> */}
+          <S.Input placeholder="Cc:"></S.Input>
+          <S.Input placeholder="Bcc:"></S.Input>
           <S.Input
             placeholder="Subject:"
             type="text"
@@ -176,7 +175,4 @@ const Compose = props => {
   );
 };
 
-  
-
-
-export default connect(null,{sendEmail})(Compose);
+export default connect(null, { sendEmail })(Compose);
