@@ -26,12 +26,7 @@ const S = {
             height:50%;
         };
     };
-    .keywords{
-        height: 100%;
-        width: 10%;
-        display:flex;
-        flex-wrap: wrap;
-    };
+
     .date{
         height:100%;
         width: 10%;
@@ -43,15 +38,14 @@ const S = {
 };
 export default function SearchBarResult(props) {
     return (
-        <S.Result key={props.email.message_id}>
+        <S.Result key={props.email.message_id || props.key}>
             <i class="fas fa-envelope"></i>
             <section className="content">
                 <div className="subject">{props.email.subject}</div>
                 <div className="body">{props.email.text}</div>
             </section>
-            <span className="keywords">{props.keywordArray}</span>
             <span className="date">
-                <h4>{props.date}</h4>
+                <h4>{props.date ? props.date : Date.now()}</h4>
             </span>
         </S.Result>
     );

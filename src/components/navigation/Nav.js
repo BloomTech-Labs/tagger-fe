@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { clearSearch } from "../../actions";
+import SearchBarResult from "./SearchBarResult";
 
 const S = {};
 
@@ -129,7 +131,7 @@ S.Magnify = styled.button`
 const Nav = (props) => {
     const [searchQuery, setSearchQuery] = useState({
         search: "",
-        fuzzySearch: false,
+        fuzzySearch: true,
         smartSearch: false
     });
 
@@ -189,7 +191,15 @@ const Nav = (props) => {
                     heightLeft={searchQuery.search.length > 0 ? "300px" : "0px"}
                     heightRight={showSearchOptions ? "300px" : "0px"}
                 >
-                    <div className="left">search options to be populated here</div>
+                    <div className="left">
+                        {props.results.map((eachEmail, i) => {
+                            <SearchBarResult
+                                key={i}
+                                onClick={props.clearSearch}
+                                email={eachEmail}
+                            ></SearchBarResult>;
+                        })}
+                    </div>
                     <div className="right">
                         {showSearchOptions ? (
                             <form action="">
@@ -224,5 +234,9 @@ const Nav = (props) => {
         </S.Container>
     );
 };
-function mapStateToProps() {}
-export default connect(mapStateToProps, {})(Nav);
+function mapStateToProps(state) {
+    return {
+        results: state.searchbar.searchResults
+    };
+}
+export default connect(mapStateToProps, { clearSearch })(Nav);
