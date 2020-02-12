@@ -152,10 +152,21 @@ const Nav = (props) => {
         const target = e.target;
         const value = target.type === "checkbox" ? target.checked : target.value;
         const name = target.name;
-        setSearchQuery({
-            ...searchQuery,
-            [name]: value
-        });
+        const keyValue = e.nativeEvent.data;
+
+        if (keyValue === ":") {
+            const newValue = addSearchTag(value);
+            setSearchQuery({
+                ...searchQuery,
+                [name]: newValue
+            });
+        } else {
+            setSearchQuery({
+                ...searchQuery,
+                [name]: value
+            });
+        }
+
         const emails = props.emails;
         if (searchQuery.search.length === 0) {
             clearSearch();
@@ -167,7 +178,6 @@ const Nav = (props) => {
         e.preventDefault();
         setSearchQuery({ search: "" });
     };
-
     const toggleSearchOptions = (e) => {
         e.preventDefault();
         setShowSearchOptions(!showSearchOptions);
@@ -185,7 +195,7 @@ const Nav = (props) => {
                                 name="search"
                                 placeholder="Search for people, conversations, files..."
                                 value={searchQuery.search}
-                                onChange={(e) => {
+                                onChangeCapture={(e) => {
                                     handleInput(e);
                                 }}
                             ></S.Input>
@@ -261,5 +271,26 @@ function mapStateToProps(state) {
         results: state.searchbar.searchResults,
         emails: state.imap.emails
     };
+}
+function addSearchTag(string) {
+    const l = string.length;
+    let i = l - 1;
+    const flag = ":";
+    let flagIndexStart;
+    let flagIndexEnd;
+    let flagFound = false;
+    for (i; i >= 0; i--) {
+        if (string[i] === flag) {
+            flagIndexStart = i;
+            flagFound = true;
+        } else if (flagFound && string[i] === " ") {
+            flagIndexEnd = i + 1;
+            flagFound = false;
+        }
+    }
+    let strArray = string.split("");
+    strArray.splice(flagIndexStart, 1, ">");
+    strArray.splice(flagIndexEnd, 0, "<");
+    return strArray.join("");
 }
 export default connect(mapStateToProps, { clearSearch, saveSearch })(Nav);

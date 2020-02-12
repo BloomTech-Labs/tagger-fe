@@ -46,10 +46,36 @@ const sampleEmail4 = {
     message_id: 5,
     tags: ""
 };
+const sampleEmail5 = {
+    html: "<div>Bunch of random stuff</div> <div>Bunch of random stuff</div>",
+    text: "111111111111",
+    from: "VladTL@google.com",
+    Name: "Vlad TL",
+    subject: "Fabrication Questions",
+    message_id: 25,
+    tags: ""
+};
+const sampleEmail6 = {
+    html: "<div>Bunch of random stuff</div> <div>Bunch of random stuff</div>",
+    text: "22222222222",
+    from: "VladTL@google.com",
+    Name: "Vlad TL",
+    subject: "Fabrication Questions",
+    message_id: 51,
+    tags: ""
+};
 
 const initialState = {
     areEmailsRetrieved: false,
-    emails: [sampleEmail, sampleEmail1, sampleEmail2, sampleEmail3, sampleEmail4],
+    emails: [
+        sampleEmail,
+        sampleEmail1,
+        sampleEmail2,
+        sampleEmail3,
+        sampleEmail4,
+        sampleEmail5,
+        sampleEmail6
+    ],
     errors: null
 };
 // const initialState = {
