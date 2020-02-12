@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { clearSearch } from "../../actions";
 import SearchBarResult from "./SearchBarResult";
-import { fuzzyFunction } from "./utils";
+import { fuzzyFunction, addSearchTag } from "./utils";
 import { saveSearch } from "../../actions";
 import FilterButton from "./FilterButton";
 const S = {
@@ -151,37 +151,7 @@ const Nav = (props) => {
             filters: newFilters
         });
     };
-    function addSearchTag(str) {
-        let string = str;
-        let keyFilter = [];
-        if (string.includes("exact:") && !searchQuery.filters.includes("exact")) {
-            const regex = /exact:/gi;
-            string = string.replace(regex, "");
-            keyFilter.push("exact");
-        }
-        if (string.includes("to:") && !searchQuery.filters.includes("to")) {
-            const regex = /to:/gi;
-            string = string.replace(regex, "");
-            keyFilter.push("to");
-        }
-        if (string.includes("from:") && !searchQuery.filters.includes("from")) {
-            const regex = /from:/gi;
-            string = string.replace(regex, "");
-            keyFilter.push("from");
-        }
-        if (string.includes("subject:") && !searchQuery.filters.includes("subject")) {
-            const regex = /subject:/gi;
-            string = string.replace(regex, "");
-            keyFilter.push("subject");
-        }
-        if (string.includes("body:") && !searchQuery.filters.includes("body")) {
-            const regex = /body:/gi;
-            string = string.replace(regex, "");
-            keyFilter.push("body");
-        }
-        let results = { string: string, filter: keyFilter };
-        return results;
-    }
+
     const handleInput = (e) => {
         e.persist();
         e.preventDefault();
@@ -191,26 +161,18 @@ const Nav = (props) => {
         const keyValue = e.nativeEvent.data;
 
         if (keyValue === ":") {
-            const { string, filter } = addSearchTag(value);
-            if (!searchQuery.filters.includes(filter[0]) && filter.length > 0) {
-                setSearchQuery({
-                    ...searchQuery,
-                    [name]: string,
-                    filters: [...searchQuery.filters, filter]
-                });
-            } else {
-                setSearchQuery({
-                    ...searchQuery,
-                    [name]: string
-                });
-            }
+            const { string, filter } = addSearchTag(value, searchQuery);
+            setSearchQuery({
+                ...searchQuery,
+                [name]: string,
+                filters: [...searchQuery.filters, ...filter]
+            });
         } else {
             setSearchQuery({
                 ...searchQuery,
                 [name]: value
             });
         }
-
         const emails = props.emails;
         if (searchQuery.search.length === 0) {
             clearSearch();
