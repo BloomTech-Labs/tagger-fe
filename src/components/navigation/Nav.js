@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { clearSearch } from "../../actions";
 import SearchBarResult from "./SearchBarResult";
-import { fuzzyFunction } from "./_fuzzyFunction";
+import { fuzzyFunction } from "./utils";
 import { saveSearch } from "../../actions";
+import FilterButton from "./FilterButton";
 const S = {
     Container: styled.div`
         border: solid red 1px;
@@ -30,28 +31,26 @@ const S = {
         align-items: flex-end;
     `,
     Bottom: styled.section`
-height: 0px;
-width: 100%;
-overflow: visible;
-display: flex;
-.left {
-    width: 40vw;
-    height: ${(props) => props.heightLeft};
-    background-color: #cfcfd2;
-    z-index: 2;
-    box-shadow:0px 0px 2px 1px #4c4c4c;
-  }
-  
-}
-.right {
-    width: 10vw;
-    height: ${(props) => props.heightRight};
-    background-color: #cfcfd2;
-    z-index: 2;
-    box-shadow:0px 0px 2px 1px #4c4c4c;
+        height: 0px;
+        width: 100%;
+        overflow: visible;
+        display: flex;
+        .left {
+            width: 40vw;
+            height: ${(props) => props.heightLeft};
+            background-color: #cfcfd2;
+            z-index: 2;
+            box-shadow: 0px 0px 2px 1px #4c4c4c;
+        }
 
-}
-`,
+        .right {
+            width: 10vw;
+            height: ${(props) => props.heightRight};
+            background-color: #cfcfd2;
+            z-index: 2;
+            box-shadow: 0px 0px 2px 1px #4c4c4c;
+        }
+    `,
     SearchDropdown: styled.section`
         display: flex;
         flex-direction: column;
@@ -139,13 +138,50 @@ display: flex;
 const Nav = (props) => {
     const [searchQuery, setSearchQuery] = useState({
         search: "",
+        filters: [],
         fuzzySearch: true,
         smartSearch: false
     });
-
     const [showSearchOptions, setShowSearchOptions] = useState(false);
     const [smartSearchIsChecked, setSmartSearchIsChecked] = useState(false);
-
+    const removeFilter = (index) => {
+        const newFilters = searchQuery.filters.splice(index, 1);
+        setSearchQuery({
+            ...searchQuery,
+            filters: newFilters
+        });
+    };
+    function addSearchTag(str) {
+        let string = str;
+        let keyFilter = [];
+        if (string.includes("exact:") && !searchQuery.filters.includes("exact")) {
+            const regex = /exact:/gi;
+            string = string.replace(regex, "");
+            keyFilter.push("exact");
+        }
+        if (string.includes("to:") && !searchQuery.filters.includes("to")) {
+            const regex = /to:/gi;
+            string = string.replace(regex, "");
+            keyFilter.push("to");
+        }
+        if (string.includes("from:") && !searchQuery.filters.includes("from")) {
+            const regex = /from:/gi;
+            string = string.replace(regex, "");
+            keyFilter.push("from");
+        }
+        if (string.includes("subject:") && !searchQuery.filters.includes("subject")) {
+            const regex = /subject:/gi;
+            string = string.replace(regex, "");
+            keyFilter.push("subject");
+        }
+        if (string.includes("body:") && !searchQuery.filters.includes("body")) {
+            const regex = /body:/gi;
+            string = string.replace(regex, "");
+            keyFilter.push("body");
+        }
+        let results = { string: string, filter: keyFilter };
+        return results;
+    }
     const handleInput = (e) => {
         e.persist();
         e.preventDefault();
@@ -155,11 +191,19 @@ const Nav = (props) => {
         const keyValue = e.nativeEvent.data;
 
         if (keyValue === ":") {
-            const newValue = addSearchTag(value);
-            setSearchQuery({
-                ...searchQuery,
-                [name]: newValue
-            });
+            const { string, filter } = addSearchTag(value);
+            if (!searchQuery.filters.includes(filter[0]) && filter.length > 0) {
+                setSearchQuery({
+                    ...searchQuery,
+                    [name]: string,
+                    filters: [...searchQuery.filters, filter]
+                });
+            } else {
+                setSearchQuery({
+                    ...searchQuery,
+                    [name]: string
+                });
+            }
         } else {
             setSearchQuery({
                 ...searchQuery,
@@ -171,7 +215,7 @@ const Nav = (props) => {
         if (searchQuery.search.length === 0) {
             clearSearch();
         } else {
-            props.saveSearch(fuzzyFunction(value, emails));
+            props.saveSearch(fuzzyFunction(searchQuery.search, searchQuery.filters, emails));
         }
     };
     const handleSubmit = (e) => {
@@ -190,6 +234,16 @@ const Nav = (props) => {
                 <S.Top>
                     <S.Form autoComplete="off">
                         <S.Search>
+                            {searchQuery.filters.map((eachFilter, index) => {
+                                return (
+                                    <FilterButton
+                                        key={index}
+                                        text={eachFilter}
+                                        index={index}
+                                        remove={removeFilter}
+                                    />
+                                );
+                            })}
                             <S.Input
                                 type="text"
                                 name="search"
@@ -272,29 +326,5 @@ function mapStateToProps(state) {
         emails: state.imap.emails
     };
 }
-function addSearchTag(str) {
-    let string = str;
 
-    if (string.includes("exact:") && !string.includes("<exact>")) {
-        const regex = /exact:/gi;
-        string = string.replace(regex, "<exact>");
-    }
-    if (string.includes("to:") && !string.includes("<to>")) {
-        const regex = /to:/gi;
-        string = string.replace(regex, "<to>");
-    }
-    if (string.includes("from:") && !string.includes("<from>")) {
-        const regex = /from:/gi;
-        string = string.replace(regex, "<from>");
-    }
-    if (string.includes("subject:") && !string.includes("<subject>")) {
-        const regex = /subject:/gi;
-        string = string.replace(regex, "<subject>");
-    }
-    if (string.includes("body:") && !string.includes("<body>")) {
-        const regex = /body:/gi;
-        string = string.replace(regex, "<body>");
-    }
-    return string;
-}
 export default connect(mapStateToProps, { clearSearch, saveSearch })(Nav);
