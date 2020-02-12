@@ -40,9 +40,9 @@ const Inbox = props => {
     } else if (!props.areEmailsRetrieved) {
       // Else if user data retrieved AND emails not retrieved, retrieve emails
       const user_email = props.emailAddress;
-      // props.getEmails(user_email, token).then(res => {
-      //   // console.log("GETEMAILS RES: ", res);
-      // });
+      props.getEmails(user_email, token).then(res => {
+        // console.log("GETEMAILS RES: ", res);
+      });
     }
 
     console.log("EMAILS: ", props.emails);

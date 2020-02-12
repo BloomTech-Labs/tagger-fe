@@ -122,9 +122,10 @@ const toggleIsComposing = (e) => {
     <S.Container>
 
     {props.isComposing ? <S.ModalContainer><ComposeComponent /></S.ModalContainer>: null}
-      <S.Button>
+      <S.Button onClick={toggleIsComposing}>
         + Compose
       </S.Button>
+      
 
       <ul>
         <li>
