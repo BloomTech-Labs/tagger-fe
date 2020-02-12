@@ -272,25 +272,29 @@ function mapStateToProps(state) {
         emails: state.imap.emails
     };
 }
-function addSearchTag(string) {
-    const l = string.length;
-    let i = l - 1;
-    const flag = ":";
-    let flagIndexStart;
-    let flagIndexEnd;
-    let flagFound = false;
-    for (i; i >= 0; i--) {
-        if (string[i] === flag) {
-            flagIndexStart = i;
-            flagFound = true;
-        } else if (flagFound && string[i] === " ") {
-            flagIndexEnd = i + 1;
-            flagFound = false;
-        }
+function addSearchTag(str) {
+    let string = str;
+
+    if (string.includes("exact:") && !string.includes("<exact>")) {
+        const regex = /exact:/gi;
+        string = string.replace(regex, "<exact>");
     }
-    let strArray = string.split("");
-    strArray.splice(flagIndexStart, 1, ">");
-    strArray.splice(flagIndexEnd, 0, "<");
-    return strArray.join("");
+    if (string.includes("to:") && !string.includes("<to>")) {
+        const regex = /to:/gi;
+        string = string.replace(regex, "<to>");
+    }
+    if (string.includes("from:") && !string.includes("<from>")) {
+        const regex = /from:/gi;
+        string = string.replace(regex, "<from>");
+    }
+    if (string.includes("subject:") && !string.includes("<subject>")) {
+        const regex = /subject:/gi;
+        string = string.replace(regex, "<subject>");
+    }
+    if (string.includes("body:") && !string.includes("<body>")) {
+        const regex = /body:/gi;
+        string = string.replace(regex, "<body>");
+    }
+    return string;
 }
 export default connect(mapStateToProps, { clearSearch, saveSearch })(Nav);
