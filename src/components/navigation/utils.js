@@ -25,24 +25,28 @@ export const fuzzyFunction = (value, filterArray, emails) => {
 // refineSearchParams 1.) checks to see if the default keys array in the options (above) should be used
 // 2.) if exact is a key set the threshold for the search to be 0.0 which indicates no tolerance which enables exact searching
 function refineSearchParams(filterArray) {
-    const newKeys = filterArray;
+    const newKeys = [...filterArray];
     let useDefault = true;
 
     let refinedFuseOptions = {
         ...fuseOptions
     };
 
+    if (newKeys.includes("exact")) {
+        refinedFuseOptions = {
+            ...refinedFuseOptions,
+            threshold: 0.0
+        };
+        if (newKeys.length === 1) {
+            return refinedFuseOptions;
+        }
+    }
+
     if (newKeys.length > 0) {
         useDefault = false;
         refinedFuseOptions = {
             ...fuseOptions,
             keys: newKeys
-        };
-    }
-    if (newKeys.includes("exact")) {
-        refinedFuseOptions = {
-            ...refinedFuseOptions,
-            threshold: 0.0
         };
     }
 

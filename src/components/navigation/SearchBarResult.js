@@ -7,23 +7,35 @@ const S = {
     height: 50px;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
-    .fas fa-envelope{
+    i{
         height:40px;
         width:40px;
+        margin: 0 10px;
     };
     .content{
-        width:40%
+        min-width:70%;
+        max-width:70%;
         height:100%;
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
         .subject{
-            width:100%
+            display:flex;
+            justify-content: flex-start;
+            flex-wrap: no-wrap;
+            min-width:100%
+            max-width:100%;
             height:50%;
+            overflow:hidden;
         };
         .body{
-            width:100%;
+            display:flex;
+            justify-content: flex-start;
+            flex-wrap: no-wrap;
+            min-width:100%;
+            max-width:100%;
             height:50%;
+            overflow:hidden;
         };
     };
 
@@ -32,6 +44,7 @@ const S = {
         width: 10%;
         display: flex;
         align-items: center;
+        padding: 0 5px;
     }
 
     `
