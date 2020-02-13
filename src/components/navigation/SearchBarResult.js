@@ -37,9 +37,18 @@ const S = {
     `
 };
 export default function SearchBarResult(props) {
+    const [clearSearch, setSearchQuery, searchQuery] = props.functions;
+    function clearSearchAndLoadResult() {
+        clearSearch();
+        setSearchQuery({
+            ...searchQuery,
+            search: ""
+        });
+    }
+
     return (
-        <S.Result key={props.email.message_id || props.key}>
-            <i class="fas fa-envelope"></i>
+        <S.Result key={props.email.message_id || props.key} onClick={clearSearchAndLoadResult}>
+            <i class="fa fa-envelope"></i>
             <section className="content">
                 <div className="subject">{props.email.subject}</div>
                 <div className="body">{props.email.text}</div>

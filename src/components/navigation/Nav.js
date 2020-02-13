@@ -249,7 +249,11 @@ const Nav = (props) => {
                                     return (
                                         <SearchBarResult
                                             key={i}
-                                            onClick={props.clearSearch}
+                                            functions={[
+                                                props.clearSearch,
+                                                setSearchQuery,
+                                                searchQuery
+                                            ]}
                                             email={eachEmail}
                                         />
                                     );
