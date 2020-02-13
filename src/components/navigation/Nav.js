@@ -8,7 +8,6 @@ import { saveSearch } from "../../actions";
 import FilterButton from "./FilterButton";
 const S = {
     Container: styled.div`
-        border: solid red 1px;
         height: 64px;
         display: flex;
         flex-direction: row;
@@ -16,13 +15,23 @@ const S = {
         align-items: center;
         box-sizing: border-box;
         font-size: 0.9rem;
+        border-bottom: solid #e0e0e0 1px;
+    `,
+    Header: styled.h1`
+        font-size: 1.8rem;
+        color: #2f86ff;
+        margin: 8px 2vw;
+        font-weight: bolder;
     `,
     MidSection: styled.div`
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        width: 50vw;
+        width: 60vw;
         height: 64px;
+        div:focus-within {
+            border: 2px solid #2f86ff;
+        }
     `,
     Top: styled.section`
         width: 100%;
@@ -30,47 +39,22 @@ const S = {
         display: flex;
         align-items: flex-end;
     `,
-    Bottom: styled.section`
-        height: 0px;
-        width: 100%;
-        overflow: visible;
-        display: flex;
-        .left {
-            width: 40vw;
-            height: ${(props) => props.heightLeft};
-            background-color: #cfcfd2;
-            z-index: 2;
-            box-shadow: 0px 0px 2px 1px #4c4c4c;
-        }
 
-        .right {
-            width: 10vw;
-            height: ${(props) => props.heightRight};
-            background-color: #cfcfd2;
-            z-index: 2;
-            box-shadow: 0px 0px 2px 1px #4c4c4c;
-        }
-    `,
-    SearchDropdown: styled.section`
-        display: flex;
-        flex-direction: column;
-        overflow: auto;
-        width: 100%;
-        height: 100%;
-    `,
     Form: styled.form`
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        width: 50vw;
+        width: 60vw;
         align-items: center;
         height: 70%;
         box-sizing: border-box;
     `,
 
     Search: styled.div`
-        background: white;
-        width: 40vw;
+        display: flex;
+        align-items: center;
+        background: lightgray;
+        width: 50vw;
         height: 100%;
         box-sizing: border-box;
     `,
@@ -79,12 +63,26 @@ const S = {
         height: 100%;
         background-color: lightgray;
         color: black;
-        width: 40vw;
+        outline: none;
+        width: 50vw;
         display: block;
         box-sizing: border-box;
         padding: 0px 2%;
+        border: none;
     `,
-
+    Magnify: styled.button`
+        margin: 2px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0px 20px;
+        z-index: 2;
+        height: 100%;
+    `,
     Button: styled.button`
         height: 100%;
         min-width: 100px;
@@ -94,14 +92,34 @@ const S = {
         color: gray;
         background-color: white;
     `,
+    Bottom: styled.section`
+        height: 0px;
+        width: 100%;
+        overflow: visible;
+        display: flex;
+        .left {
+            width: 50vw;
+            height: ${(props) => props.heightLeft};
+            background-color: #cfcfd2;
+            z-index: 2;
+            box-shadow: ${(props) => props.boxshadowLeft};
+        }
 
-    Header: styled.h1`
-        font-size: 1.8rem;
-        color: #2f86ff;
-        margin: 8px 2vw;
-        font-weight: bolder;
+        .right {
+            width: 10vw;
+            height: ${(props) => props.heightRight};
+            background-color: #cfcfd2;
+            z-index: 2;
+            box-shadow: ${(props) => props.boxshadowRight};
+        }
     `,
-
+    SearchDropdown: styled.section`
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        width: 100%;
+        height: 100%;
+    `,
     User: styled.div`
         height: 70%;
         display: flex;
@@ -117,21 +135,6 @@ const S = {
     Signout: styled.div`
         font-size: 14px;
         font-weight: bolder;
-    `,
-
-    Magnify: styled.button`
-        margin: 2px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        display: inline-block;
-        font-size: 20px;
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 0px 20px;
-        z-index: 2;
-        height: 100%;
     `
 };
 
@@ -145,14 +148,16 @@ const Nav = (props) => {
     const [showSearchOptions, setShowSearchOptions] = useState(false);
     const [smartSearchIsChecked, setSmartSearchIsChecked] = useState(false);
     const removeFilter = (index) => {
-        const newFilters = searchQuery.filters.splice(index, 1);
+        const currentFilters = [...searchQuery.filters];
+        currentFilters.splice(index, 1);
         setSearchQuery({
             ...searchQuery,
-            filters: newFilters
+            filters: currentFilters
         });
     };
 
     const handleInput = (e) => {
+        console.log(e, "EVENT \n\n\n****************");
         e.persist();
         e.preventDefault();
         const target = e.target;
@@ -231,7 +236,11 @@ const Nav = (props) => {
                 </S.Top>
                 <S.Bottom
                     heightLeft={searchQuery.search.length > 0 ? "300px" : "0px"}
+                    boxshadowLeft={
+                        searchQuery.search.length > 0 ? "0px 0px 2px 1px #4c4c4c" : "none"
+                    }
                     heightRight={showSearchOptions ? "300px" : "0px"}
+                    boxshadowRight={showSearchOptions ? "0px 0px 2px 1px #4c4c4c" : "none"}
                 >
                     <div className="left">
                         {props.results.length > 0 && searchQuery.search.length > 0 ? (

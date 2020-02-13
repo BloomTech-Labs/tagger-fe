@@ -3,6 +3,7 @@ import Fuse from "fuse.js";
 import { connect } from "react-redux";
 
 var fuseOptions = {
+    //options generated at fusejs.io interactive testing tool
     shouldSort: true,
     findAllMatches: true,
     threshold: 0.6,
@@ -13,6 +14,7 @@ var fuseOptions = {
     keys: ["text", "from", "to", "uid", "subject", "tags"]
 };
 
+// fuzzyFunction is the core function call for use of fusejs dependency
 export const fuzzyFunction = (value, filterArray, emails) => {
     let options = refineSearchParams(filterArray);
     var fuse = new Fuse(emails, options);
@@ -20,6 +22,8 @@ export const fuzzyFunction = (value, filterArray, emails) => {
     return result;
 };
 
+// refineSearchParams 1.) checks to see if the default keys array in the options (above) should be used
+// 2.) if exact is a key set the threshold for the search to be 0.0 which indicates no tolerance which enables exact searching
 function refineSearchParams(filterArray) {
     const newKeys = filterArray;
     let useDefault = true;
@@ -45,6 +49,9 @@ function refineSearchParams(filterArray) {
     return useDefault ? fuseOptions : refinedFuseOptions;
 }
 
+// addSearchTag checks the inputfield value for key markers such as to:  and  exact: and:
+// 1.) removes them from the string if they have not been added to use state hook in nav ie: searchQuery.filters
+// 2.) returns a list of strings to add to the filters array in nav
 export function addSearchTag(str, searchQuery) {
     let string = str;
     let keyFilter = [];
