@@ -65,6 +65,22 @@ const S = {
     height: 8%;
     margin-top: 1.5%;
   `,
+  LabelContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    label{
+      width:100%;
+      display: flex;
+      span{
+      padding-top: 7px;
+       width: 65px;
+       margin-left: 5%;
+      }
+    }
+    `,
+
   TextBox: styled.textarea`
     width: 99.4%;
     height: 35vh;
@@ -136,8 +152,9 @@ const Compose = props => {
           <S.HeaderCancel onClick={changeIsComposing}>x</S.HeaderCancel>
         </S.Header>
         <form onSubmit={handleSubmit}>
+          <S.LabelContainer>
          <label>
-           To:
+          <span>To:</span>
           <S.Input
             type="text"
             name="receiver"
@@ -148,18 +165,18 @@ const Compose = props => {
           </label>
 
           <label>
-            Cc:
+            <span>Cc:</span>
             <S.Input
 
             ></S.Input>
           </label>
           <label>
-            Bcc:
-          <S.Input placeholder="Bcc:"></S.Input>
+            <span>Bcc:</span>
+          <S.Input ></S.Input>
           </label>
           <label>
+            <span>Subject:</span>
           <S.Input
-            placeholder="Subject:"
             type="text"
             name="subject"
             id="subject"
@@ -167,6 +184,7 @@ const Compose = props => {
             onChange={handleChange}
           ></S.Input>
           </label>
+          </S.LabelContainer>
           <S.ComposeOptions></S.ComposeOptions>
           <S.TextBox
             type="text"
