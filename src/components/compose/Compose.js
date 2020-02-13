@@ -24,7 +24,7 @@ const S = {
     display: flex;
     flex-direction: column;
     position: absolute;
-    border: 1px solid black;
+    box-shadow: 0 0 11px 4px #ada9a9;
     width: 60vw;
     height: 80vh;
     margin-top: 10vh;
@@ -33,7 +33,7 @@ const S = {
   Header: styled.div`
     display: flex;
     justify-content: space-between;
-    border: 1px solid black;
+    border: 1px;
     width: 99.8%;
     height: 12%;
   `,
@@ -132,20 +132,32 @@ const Compose = props => {
     <S.Container>
       <S.Compose>
         <S.Header>
-          <S.HeaderText>Compose Message</S.HeaderText>
+          <S.HeaderText>Compose</S.HeaderText>
           <S.HeaderCancel onClick={changeIsComposing}>x</S.HeaderCancel>
         </S.Header>
         <form onSubmit={handleSubmit}>
+         <label>
+           To:
           <S.Input
-            placeholder="To:"
             type="text"
             name="receiver"
             id="receiver"
             value={email.receiver}
             onChange={handleChange}
           ></S.Input>
-          <S.Input placeholder="Cc:"></S.Input>
+          </label>
+
+          <label>
+            Cc:
+            <S.Input
+
+            ></S.Input>
+          </label>
+          <label>
+            Bcc:
           <S.Input placeholder="Bcc:"></S.Input>
+          </label>
+          <label>
           <S.Input
             placeholder="Subject:"
             type="text"
@@ -154,6 +166,7 @@ const Compose = props => {
             value={email.subject}
             onChange={handleChange}
           ></S.Input>
+          </label>
           <S.ComposeOptions></S.ComposeOptions>
           <S.TextBox
             type="text"
