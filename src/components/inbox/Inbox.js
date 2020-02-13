@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import Emails from "./Emails";
 
 import { getUserEmailAndId, getEmails, changeIsLoggedIn } from "../../actions";
+import { getContactsInfo,  } from "../../actions/contactsActions";
 import Sidebar from "./Sidebar";
 
 const S = {
@@ -16,6 +17,7 @@ const S = {
 };
 
 const Inbox = props => {
+  // USERID AND EMAIL useEffect
   useEffect(() => {
     const url = props.history.location.hash;
     const token = extractTokenFromUrl(url);
@@ -27,14 +29,13 @@ const Inbox = props => {
     if (!props.isEmailAddressAndIdRetrieved) {
       // If user data not retrieved, retrieve email address and user_id from Auth token
       props.getUserEmailAndId(token).then(res => {
-        console.log("GETUSERDATA RES: ", res);
+        // console.log("GETUSERDATA RES: ", res);
         if (res) {
           props.changeIsLoggedIn(true);
         } else if (!res) {
           window.location.replace(
-            `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//mail.google.com/ profile https%3A//www.googleapis.com/auth/userinfo.email https%3A//www.googleapis.com/auth/user.emails.read&redirect_uri=${redirectUrl}&response_type=${response}&client_id=${client}`
+            `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//mail.google.com/ https://www.googleapis.com/auth/contacts profile https%3A//www.googleapis.com/auth/userinfo.email https%3A//www.googleapis.com/auth/user.emails.read&redirect_uri=${redirectUrl}&response_type=${response}&client_id=${client}`
           );
-          
         }
       });
     } else if (!props.areEmailsRetrieved) {
@@ -43,10 +44,28 @@ const Inbox = props => {
       // props.getEmails(user_email, token).then(res => {
       //   // console.log("GETEMAILS RES: ", res);
       // });
-    }
+    } 
 
-    console.log("EMAILS: ", props.emails);
+    // console.log("EMAILS: ", props.emails);
   }, [props.isEmailAddressAndIdRetrieved, props.areEmailsRetrieved]);
+
+  // CONTACTS useEffect
+  useEffect(() => {
+    const url = props.history.location.hash;
+    const token = extractTokenFromUrl(url);
+
+    if (!props.areContactsRetrieved) {
+      props
+        .getContactsInfo(token)
+        .then(res => {
+          console.log("Contacts from Props", res);
+          
+        })
+        .catch(error => {
+          console.log("Error", error);
+        });
+    }
+  }, [props.areContactsRetrieved]);
 
   function extractTokenFromUrl(urlString) {
     // Parses OAuth access token from page URL
@@ -67,13 +86,16 @@ const Inbox = props => {
   );
 };
 
-const mapStateToProps = ({ imap, user }) => ({
+const mapStateToProps = ({ imap, user, contacts }) => ({
   emailAddress: user.emailAddress,
   user_id: user.user_id,
+  userPhotoUrl: user.userPhotoUrl,
   isEmailAddressAndIdRetrieved: user.isEmailAddressAndIdRetrieved,
   areEmailsRetrieved: imap.areEmailsRetrieved,
   emails: imap.emails,
-  isLoggedIn: user.isLoggedIn
+  isLoggedIn: user.isLoggedIn,
+  areContactsRetrieved: contacts.areContactsRetrieved,
+  contacts: contacts.contacts
 });
 
 const mapDispatchToProps = dispatch =>
@@ -81,7 +103,8 @@ const mapDispatchToProps = dispatch =>
     {
       getUserEmailAndId,
       getEmails,
-      changeIsLoggedIn
+      changeIsLoggedIn,
+      getContactsInfo,
     },
     dispatch
   );

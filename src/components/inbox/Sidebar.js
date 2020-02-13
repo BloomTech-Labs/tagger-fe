@@ -13,19 +13,17 @@ import {
   faExclamationTriangle
 } from "@fortawesome/free-solid-svg-icons";
 import Inbox from "./Inbox";
-
-import {changeIsComposing} from "../../actions/composerActions"
-import ComposeComponent from "../compose/Compose"
+import { changeIsComposing } from "../../actions/composerActions";
+import ComposeComponent from "../compose/Compose";
 const S = {
-  ModalContainer:styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display:flex;
-  justify-content: center;
-  align-items:center;
+  ModalContainer: styled.div`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `,
-
 
   Container: styled.div`
     flex-direction: row;
@@ -93,66 +91,67 @@ const S = {
     font-size: 14px;
     line-height: 16px;
     margin: 8% 0%;
-    margin-left: calc((100% - 110px) / 2)
+    margin-left: calc((100% - 110px) / 2);
   `,
 
-
-  FontAwesomeIcon:styled(props => <FontAwesomeIcon {...props} />)`
+  FontAwesomeIcon: styled(props => <FontAwesomeIcon {...props} />)`
     margin-right: 5px;
     color: grey;
-    
-  `,
-
-}
-
-
-
-
+  `
+};
 
 const Sidebar = props => {
-  
-const toggleIsComposing = (e) => {
-  e.preventDefault()
-  props.changeIsComposing(!props.isComposing)
-}
+  const toggleIsComposing = e => {
+    e.preventDefault();
+    props.changeIsComposing(!props.isComposing);
+  };
 
   return (
-    
-   
     <S.Container>
-
-    {props.isComposing ? <S.ModalContainer><ComposeComponent /></S.ModalContainer>: null}
-      <S.Button>
-        + Compose
-      </S.Button>
-
+      {props.isComposing ? (
+        <S.ModalContainer>
+          <ComposeComponent />
+        </S.ModalContainer>
+      ) : null}
+      <S.Button onClick={toggleIsComposing}>+ Compose</S.Button>
       <ul>
         <li>
-          <div><S.FontAwesomeIcon icon={faInbox} /></div>
+          <div>
+            <S.FontAwesomeIcon icon={faInbox} />
+          </div>
           <span>Inbox</span>
         </li>
         <li>
-          <div><S.FontAwesomeIcon icon={faFile} /></div>
+          <div>
+            <S.FontAwesomeIcon icon={faFile} />
+          </div>
           <span>Drafts</span>
         </li>
         <li>
-          <div><S.FontAwesomeIcon icon={faPaperPlane} /></div>
+          <div>
+            <S.FontAwesomeIcon icon={faPaperPlane} />
+          </div>
           <span>Sent</span>
         </li>
         <li>
-          <div><S.FontAwesomeIcon icon={faTrash} /></div>
+          <div>
+            <S.FontAwesomeIcon icon={faTrash} />
+          </div>
           <span>Trash</span>
         </li>
         <li>
-          <div><S.FontAwesomeIcon icon={faExclamationTriangle} /></div>
+          <div>
+            <S.FontAwesomeIcon icon={faExclamationTriangle} />
+          </div>
           <span>Spam</span>
         </li>
         <li>
-          <div><S.FontAwesomeIcon icon={faTags} /></div>
+          <div>
+            <S.FontAwesomeIcon icon={faTags} />
+          </div>
           Tags
         </li>
       </ul>
-
 
       <hr />
 
@@ -166,19 +165,21 @@ const toggleIsComposing = (e) => {
         <li>Travel</li>
         <li>Other</li>
       </ul>
-
     </S.Container>
-   
   );
 };
 
-const mapStateToProps = ({ imap, user,composer }) => ({
+const mapStateToProps = ({ imap, user, composer }) => ({
   isComposing: composer.isComposing
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  changeIsComposing
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      changeIsComposing
+    },
+    dispatch
+  );
 
 export default compose(
   withRouter,

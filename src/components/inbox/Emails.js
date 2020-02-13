@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
@@ -10,7 +10,7 @@ import Thread from "./Thread";
 import AnalyticsBar from "./AnalyticsBar";
 
 
-import { getUserEmailAndId, getEmails, changeIsLoggedIn } from "../../actions";
+
 
 const S = {
   Container: styled.div`
