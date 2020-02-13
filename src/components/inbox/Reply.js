@@ -5,39 +5,14 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 import { sendEmail } from "../../actions/composerActions";
 
 const S = {
-  Container: styled.div`
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    margin-top: 5%;
-    width: 100%;
-    height: 35%;
-    border: 1px solid red;
-  `,
-  Header: styled.div`
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    height: 20%;
-    border: 1px solid black;
-  `,
-  SendButton: styled.button`
-    border: 1px solid red;
-    margin-top: 0.5%;
-    margin-right: 2%;
-    width: 5%;
-    height: 80%;
-  `,
-
-  Input: styled.textarea`
-    width: 100%;
-    height: 30vh;
+  Container: styled.form`
+   border: 1px solid black;
+   height: 100px; //get rid of height later
+   width: 100%;
   `
 };
 
@@ -68,22 +43,11 @@ const Reply = props => {
   };
 
   return (
-      <form onSubmit={handleSubmit}>
-    <S.Container>
-      <S.Header>
-        <S.SendButton type="submit">
-          <FontAwesomeIcon icon={faPaperPlane} />
-        </S.SendButton>
-      </S.Header>
-      <S.Input
-        type="text"
-        name="body"
-        id="body"
-        value={email.body}
-        onChange={handleChange}
-      ></S.Input>
+     
+    <S.Container onSubmit={handleSubmit}>
+      
     </S.Container>
-    </form>
+    
   );
 };
 const mapStateToProps = ({ imap, user, inbox }) => ({

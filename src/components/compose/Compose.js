@@ -26,9 +26,11 @@ const S = {
     position: absolute;
     box-shadow: 0 0 11px 4px #ada9a9;
     width: 60vw;
-    height: 80vh;
+    // height: 80vh;
     margin-top: 10vh;
     background-color:white;
+    align-items: center;
+   
   `,
   Header: styled.div`
     display: flex;
@@ -36,6 +38,7 @@ const S = {
     border: 1px;
     width: 99.8%;
     height: 12%;
+    border: 1px solid #dadada;
   `,
   HeaderText: styled.p`
     font-size: 1.5em;
@@ -47,25 +50,23 @@ const S = {
     color: #cccccc;
   `,
 
-  InputText: styled.p``,
-
   Input: styled.input`
     width: 70%;
     margin-left: 2%;
-    margin-top: 1%;
     border-radius: 2px;
   `,
-  InputSpan: styled.span`
-    background-color: #cccccc;
-    width: 5%;
-  `,
+  
   ComposeOptions: styled.div`
     border: 1px solid #cccccc;
     width: 99.8%;
     height: 8%;
     margin-top: 1.5%;
   `,
-  LabelContainer: styled.div`
+  Form: styled.form`
+    
+    width: 90%;
+  `,
+  LabelsContainer: styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -73,8 +74,9 @@ const S = {
     label{
       width:100%;
       display: flex;
-      span{
       padding-top: 7px;
+      padding-bottom: 5px;
+      span{
        width: 65px;
        margin-left: 5%;
       }
@@ -85,12 +87,14 @@ const S = {
     width: 99.4%;
     height: 35vh;
     border-color: #cccccc;
+    
   `,
   Footer: styled.footer`
     display: flex;
-    justify-content: space-between;
+    align-items: center;
     width: 99.8%;
-    height: 8vh;
+    height: 12vh;
+    justify-content: flex-end;
   `,
   Send: styled.button`
     margin-top: 0.8%;
@@ -100,18 +104,17 @@ const S = {
     height: 6vh;
     font-size: 1.5rem;
     background-color: #007bff;
+    color: white;
   `,
-  Trash: styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 4%;
-    height: 5vh;
-    margin-right: 2%;
-    margin-top: 1%;
-    background-color: #f8f9fa;
-    border-radius: 5px;
+  Trash: styled.button`
+  margin-top: 0.8%;
+  margin-left: 2%;
+  border-radius: 5px;
+  width: 8vw;
+  height: 6vh;
+  font-size: 1.5rem;
+  background-color: white;
+  color: #007bff;
   `
 };
 
@@ -151,8 +154,8 @@ const Compose = props => {
           <S.HeaderText>Compose</S.HeaderText>
           <S.HeaderCancel onClick={changeIsComposing}>x</S.HeaderCancel>
         </S.Header>
-        <form onSubmit={handleSubmit}>
-          <S.LabelContainer>
+        <S.Form onSubmit={handleSubmit}>
+          <S.LabelsContainer>
          <label>
           <span>To:</span>
           <S.Input
@@ -184,7 +187,7 @@ const Compose = props => {
             onChange={handleChange}
           ></S.Input>
           </label>
-          </S.LabelContainer>
+          </S.LabelsContainer>
           <S.ComposeOptions></S.ComposeOptions>
           <S.TextBox
             type="text"
@@ -194,12 +197,12 @@ const Compose = props => {
             onChange={handleChange}
           ></S.TextBox>
           <S.Footer>
-            <S.Send type="submit">Send</S.Send>
-            <S.Trash onClick={changeIsComposing}>
-              <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+          <S.Trash onClick={changeIsComposing}>
+              Cancel
             </S.Trash>
+            <S.Send type="submit">Send</S.Send>
           </S.Footer>
-        </form>
+        </S.Form>
       </S.Compose>
     </S.Container>
   );
