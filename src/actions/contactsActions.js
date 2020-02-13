@@ -26,52 +26,27 @@ export const GET_USER_CONTACTS_START = "GET_USER_CONTACTS_START";
 export const GET_USER_CONTACTS_SUCCESS = "GET_USER_CONTACTS_SUCCESS";
 export const GET_USER_CONTACTS_FAILURE = "GET_USER_CONTACTS_FAILURE";
 
-let contactsIds = [];
-let contacts = [];
-export const getContactsInfo = oAuthToken => dispatch => {
-  dispatch({ type: GET_USER_CONTACTS_START });
-  return axios
-    .get(`https://people.googleapis.com/v1/contactGroups/all?maxMembers=200`, {
+
+export const getContacts = oAuthToken => dispatch => {
+  dispatch({type: GET_USER_CONTACTS_START})
+  return axios.get(
+    `https://people.googleapis.com/v1/people/me/connections?pageSize=2000&personFields=emailAddresses,names,coverPhotos&sortOrder=LAST_MODIFIED_ASCENDING&key=${process.env.REACT_APP_APIKEY}`,
+    {
       headers: {
         Authorization: `Bearer ${oAuthToken}`,
         "Content-Type": "application/json"
       }
-    })
-    .then(res => {
-      // console.log("This is the res data from contacts get", res.data);
-      res.data.memberResourceNames.map(contactId => {
-        return axios
-          .get(
-            `https://people.googleapis.com/v1/${contactId}?personFields=emailAddresses,names,coverPhotos`,
-            {
-              headers: {
-                Authorization: `Bearer ${oAuthToken}`,
-                "Content-Type": "application/json"
-              }
-            }
-          )
-          .then(res => {
-            // console.log("RES", res);
-            if (res.data.emailAddresses && res.data.coverPhotos) {
-              contacts.push({
-                name: res.data.names[0].displayName,
-                email: res.data.emailAddresses[0].value,
-                photoUrl: res.data.coverPhotos[0].url
-              });
-            } else if (res.data.emailAddresses && !res.data.coverPhotos) {
-              contacts.push({
-                name: res.data.names[0].displayName,
-                email: res.data.emailAddresses[0].value
-              });
-            }
-          });
-      });
-      console.log("Contacts from actions", contacts);
-      dispatch({ type: GET_USER_CONTACTS_SUCCESS, payload: contacts });
-      return contacts;
-    })
-    .catch(error => {
-      console.log("this is the error from the contacts get", error);
-      dispatch({ type: GET_USER_CONTACTS_FAILURE, payload: error });
-    });
+    }
+  ).then(res => {
+    const contacts = res.data.connections.map(contact => ({
+      name: contact.names[0].displayName,
+      email: contact.emailAddresses[0].value,
+      coverPhotoUrl: contact.coverPhotos[0].url
+    }))
+    dispatch({type: GET_USER_CONTACTS_SUCCESS, payload: contacts})
+    console.log(contacts, "Contacts from getContacts\n\n\n")
+  })
+  .catch(err => {
+    console.error(err)
+  })
 };

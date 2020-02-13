@@ -4,13 +4,9 @@ import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 
-
 import Snippets from "./Snippets";
 import Thread from "./Thread";
 import AnalyticsBar from "./AnalyticsBar";
-
-
-
 
 const S = {
   Container: styled.div`
@@ -18,18 +14,17 @@ const S = {
     display: flex;
     height: calc(100-64px)
     box-sizing: border-box;
-  `,
+  `
 };
 
-
-
 const Emails = props => {
-
   return (
     <S.Container>
-        <Snippets />
-        {props.isDisplayingThread ? <Thread /> : null}
-        {props.isDisplayingAnalytics && props.isDisplayingThread ? <AnalyticsBar /> : null}
+      <Snippets />
+      {props.isDisplayingThread ? <Thread /> : null}
+      {props.isDisplayingAnalytics && props.isDisplayingThread ? (
+        <AnalyticsBar />
+      ) : null}
     </S.Container>
   );
 };
@@ -41,13 +36,7 @@ const mapStateToProps = ({ imap, user, inbox }) => ({
   isDisplayingAnalytics: inbox.isDisplayingAnalytics
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-     
-    },
-    dispatch
-  );
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 export default compose(
   withRouter,

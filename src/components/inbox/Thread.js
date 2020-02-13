@@ -6,23 +6,20 @@ import { connect } from "react-redux";
 
 import ThreadMessage from "./ThreadMessage";
 
-
 import Reply from "./Reply";
-
 
 import { changeIsDisplayingAnalytics } from "../../actions";
 
 const S = {
   Container: styled.div`
-    width: 75%; // 
+    width: 75%; //
     height: 100%;
     box-sizing: border-box;
     overflow-y: auto;
 
-    padding: 0% .5%;
+    padding: 0% 0.5%;
     background-color: #ebebeb;
-  `,
-
+  `
 };
 
 const Thread = props => {
@@ -32,21 +29,15 @@ const Thread = props => {
 
   return (
     <S.Container>
-
-        {/* <h1>Thread between you & {props.threadContactEmailAddress}</h1>
+      {/* <h1>Thread between you & {props.threadContactEmailAddress}</h1>
         <button onClick = {() => toggleIsDisplayingAnalytics()}>Toggle Analytics ON/OFF</button> */}
-
 
       {props.emails
         .filter(email => {
           return email.fromEmailAddress === props.threadContactEmailAddress;
         })
         .map(email => {
-          return (
-
-            <ThreadMessage key = {Math.random()} email = {email}/>
-          )
-
+          return <ThreadMessage key={Math.random()} email={email} />;
         })}
 
       <Reply threadContactEmailAddress={props.threadContactEmailAddress} />

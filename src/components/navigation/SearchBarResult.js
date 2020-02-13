@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const S = {
-    Result: styled.div`
+  Result: styled.div`
     width:100%;
     height: 50px;
     display: flex;
@@ -37,16 +37,16 @@ const S = {
     `
 };
 export default function SearchBarResult(props) {
-    return (
-        <S.Result key={props.email.message_id || props.key}>
-            <i class="fas fa-envelope"></i>
-            <section className="content">
-                <div className="subject">{props.email.subject}</div>
-                <div className="body">{props.email.text}</div>
-            </section>
-            <span className="date">
-                <h4>{props.date ? props.date : Date.now()}</h4>
-            </span>
-        </S.Result>
-    );
+  return (
+    <S.Result key={props.email.message_id || props.key}>
+      <i class="fas fa-envelope"></i>
+      <section className="content">
+        <div className="subject">{props.email.subject}</div>
+        <div className="body">{props.email.text}</div>
+      </section>
+      <span className="date">
+        <h4>{props.date ? props.date : Date.now()}</h4>
+      </span>
+    </S.Result>
+  );
 }

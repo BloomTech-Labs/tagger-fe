@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 import Emails from "./Emails";
 
 import { getUserEmailAndId, getEmails, changeIsLoggedIn } from "../../actions";
-import { getContactsInfo,  } from "../../actions/contactsActions";
+import { getContacts } from "../../actions/contactsActions";
 import Sidebar from "./Sidebar";
-
+console.log(getContacts)
 const S = {
   Container: styled.div`
     display: flex;
@@ -44,7 +44,7 @@ const Inbox = props => {
       // props.getEmails(user_email, token).then(res => {
       //   // console.log("GETEMAILS RES: ", res);
       // });
-    } 
+    }
 
     // console.log("EMAILS: ", props.emails);
   }, [props.isEmailAddressAndIdRetrieved, props.areEmailsRetrieved]);
@@ -53,17 +53,15 @@ const Inbox = props => {
   useEffect(() => {
     const url = props.history.location.hash;
     const token = extractTokenFromUrl(url);
-
-    if (!props.areContactsRetrieved) {
-      props
-        .getContactsInfo(token)
-        .then(res => {
-          console.log("Contacts from Props", res);
-          
-        })
-        .catch(error => {
-          console.log("Error", error);
-        });
+    if (!props.areContactsRetrieved){
+    props
+      .getContacts(token)
+      .then(res => {
+        
+      })
+      .catch(error => {
+        console.log("Error", error);
+      });
     }
   }, [props.areContactsRetrieved]);
 
@@ -104,7 +102,7 @@ const mapDispatchToProps = dispatch =>
       getUserEmailAndId,
       getEmails,
       changeIsLoggedIn,
-      getContactsInfo,
+      getContacts
     },
     dispatch
   );
