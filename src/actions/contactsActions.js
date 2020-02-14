@@ -31,7 +31,7 @@ export const getContacts = oAuthToken => dispatch => {
   dispatch({ type: GET_USER_CONTACTS_START });
   return axios
     .get(
-      `https://people.googleapis.com/v1/people/me/connections?pageSize=2000&personFields=emailAddresses,names,coverPhotos&sortOrder=LAST_MODIFIED_ASCENDING&key=${process.env.REACT_APP_APIKEY}`,
+      `https://people.googleapis.com/v1/people/me/connections?pageSize=2000&personFields=emailAddresses,names,photos&sortOrder=LAST_MODIFIED_ASCENDING&key=${process.env.REACT_APP_APIKEY}`,
       {
         headers: {
           Authorization: `Bearer ${oAuthToken}`,
@@ -44,7 +44,7 @@ export const getContacts = oAuthToken => dispatch => {
       const contacts = res.data.connections.map(contact => ({
         name:  contact.names[0].displayName,
         email: contact.emailAddresses[0].value,
-        coverPhotoUrl: contact.coverPhotos[0].url
+        coverPhotoUrl: contact.photos[0].url
       }));
       // console.log(contacts, "Contacts from getContacts\n\n\n");
       dispatch({ type: GET_USER_CONTACTS_SUCCESS, payload: contacts });
