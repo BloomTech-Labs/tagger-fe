@@ -33,7 +33,7 @@ export const getUserEmailAndId = oAuthToken => dispatch => {
   // console.log(apiKey);
   return axios
     .get(
-      `https://people.googleapis.com/v1/people/me?personFields=emailAddresses,coverPhotos&key=${apiKey}`,
+      `https://people.googleapis.com/v1/people/me?personFields=emailAddresses,photos&key=${apiKey}`,
       {
         headers: {
           Authorization: `Bearer ${oAuthToken}`,
@@ -44,7 +44,7 @@ export const getUserEmailAndId = oAuthToken => dispatch => {
     .then(res => {
       const emailAddress = res.data.emailAddresses[0].value;
       const user_id = res.data.emailAddresses[0].metadata.source.id;
-      const userPhotoUrl = res.data.coverPhotos[0].url;
+      const userPhotoUrl = res.data.photos[0].url;
       // console.log("Response from inbox actions", res.data);
       dispatch({
         type: GET_EMAIL_USERID_SUCCESS,
