@@ -217,20 +217,24 @@ const Nav = (props) => {
                                 name="search"
                                 placeholder="Search for people, conversations, files..."
                                 value={searchQuery.search}
+                                onChange={() => {
+                                    return 0;
+                                }}
+                                // todo ask team if ok to leave in code or see alternative way of adding key capture
                                 onChangeCapture={(e) => {
                                     handleInput(e);
                                 }}
                             ></S.Input>
                             <S.Magnify type="submit" onSubmit={handleSubmit}>
-                                <i class="fa fa-search"></i>
+                                <i className="fa fa-search"></i>
                             </S.Magnify>
                         </S.Search>
                         <S.Button onClick={toggleSearchOptions}>
                             Filters
                             {showSearchOptions ? (
-                                <i class="fa fa-times"></i>
+                                <i className="fa fa-times"></i>
                             ) : (
-                                <i class="fa fa-filter"></i>
+                                <i className="fa fa-filter"></i>
                             )}
                         </S.Button>
                     </S.Form>

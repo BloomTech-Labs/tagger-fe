@@ -64,7 +64,7 @@ export default function SearchBarResult(props) {
 
     return (
         <S.Result key={props.email.message_id || props.key} onClick={clearSearchAndLoadResult}>
-            <i class="fa fa-envelope"></i>
+            <i className="fa fa-envelope"></i>
             <section className="content">
                 <div className="subject">{props.email.subject}</div>
                 <div className="body">{props.email.text}</div>
