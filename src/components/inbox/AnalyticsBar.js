@@ -3,18 +3,15 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
-import blackCircle from "../../images/pngguru.com.png"
+import blackCircle from "../../images/pngguru.com.png";
 
-
-import { 
-  changeIsDisplayingAnalytics,
-} from "../../actions";
+import { changeIsDisplayingAnalytics } from "../../actions";
 
 const S = {
   Container: styled.div`
     width: 30%;
     height: 100%;
-    box-sizing: border-box; 
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,6 +26,7 @@ const S = {
   `,
   Avatar: styled.img`
     width: 60%;
+    border-radius: 50%;
   `,
   Graph: styled.ul`
     width: 90%;
@@ -48,15 +46,13 @@ const S = {
       align-items: flex-start;
       margin-bottom: 8%;
 
-
-
       h6 {
         margin: 0px;
         margin-bottom: 5px;
       }
 
       div {
-        background-color: #2F86FF;
+        background-color: #2f86ff;
         width: 100%;
         display: flex;
         align-items: center;
@@ -85,59 +81,52 @@ const S = {
   `
 };
 
-
-
 const AnalyticsBar = props => {
-
   const closeAnalytics = () => {
-    props.changeIsDisplayingAnalytics(false)
-  }
-
+    props.changeIsDisplayingAnalytics(false);
+  };
   return (
     <S.Container>
-        {/* <h1>Analytics</h1> */}
-        <button onClick = {() => closeAnalytics()}>X</button>
+      {/* <h1>Analytics</h1> */}
+      <button onClick={() => closeAnalytics()}>X</button>
 
-        <S.Avatar src = {blackCircle}/>
-        <h2>{props.analyticsContact.name}</h2>
-        <h5>{props.analyticsContact.emailAddress}</h5>
-        <hr />
-        <S.Graph>
+      <S.Avatar src={props.analyticsContact.coverPhoto ? props.analyticsContact.coverPhoto : blackCircle} />
+      <h2>{props.analyticsContact.name}</h2>
+      <h5>{props.analyticsContact.emailAddress}</h5>
+      <hr />
+      <S.Graph>
+        <li>
+          <h6>Total messages</h6>
+          <div>
+            <span>3</span>
+          </div>
+        </li>
 
-          <li>
-            <h6>Total messages</h6>
-            <div>
-              <span>3</span>
-            </div>
-          </li>
+        <li>
+          <h6>Sent messages</h6>
+          <div>
+            <span>3</span>
+          </div>
+        </li>
 
-          <li>
-            <h6>Sent messages</h6>
-            <div>
-              <span>3</span>
-            </div>
-          </li>
-
-          <li>
-            <h6>Received messages</h6>
-            <div>
-              <span>3</span>
-            </div>
-          </li>
-          
-        </S.Graph>
-        <S.LastInteraction>
-          <span>Last interaction:</span>
-          <span>2 hours ago</span>
-        </S.LastInteraction>
-
-        
+        <li>
+          <h6>Received messages</h6>
+          <div>
+            <span>3</span>
+          </div>
+        </li>
+      </S.Graph>
+      <S.LastInteraction>
+        <span>Last interaction:</span>
+        <span>2 hours ago</span>
+      </S.LastInteraction>
     </S.Container>
   );
 };
 
-const mapStateToProps = ({ imap, user, inbox }) => ({
+const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
   analyticsContact: inbox.analyticsContact,
+  contacts: contacts.contacts
 });
 
 const mapDispatchToProps = dispatch =>
@@ -152,3 +141,9 @@ export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
 )(AnalyticsBar);
+
+
+
+
+// https://lh3.googleusercontent.com/c5dqxl-2uHZ82ah9…qmtoLxCUJgEzLGtxsrJ6-v6R6rKU_-FYm881TTiMCJ_=s1600
+// https://lh3.googleusercontent.com/c5dqxl-2uHZ82ah9…qmtoLxCUJgEzLGtxsrJ6-v6R6rKU_-FYm881TTiMCJ_=s1600

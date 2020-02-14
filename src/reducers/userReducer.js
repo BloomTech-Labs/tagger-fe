@@ -8,6 +8,7 @@ import {
   const initialState = {
     emailAddress: "", // derived from OAuth token
     user_id: null, // derived from OAuth token
+    userPhotoUrl: "",
     isEmailAddressAndIdRetrieved: false,
     errors: null,
     isLoggedIn: false,
@@ -27,6 +28,7 @@ import {
         ...state,
         emailAddress: payload.emailAddress,
         user_id: payload.user_id,
+        userPhotoUrl: payload.userPhotoUrl,
         isEmailAddressAndIdRetrieved: true
       };
       case GET_EMAIL_USERID_FAILURE:

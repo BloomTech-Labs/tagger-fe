@@ -68,21 +68,21 @@ const Reply = props => {
   };
 
   return (
-      <form onSubmit={handleSubmit}>
-    <S.Container>
-      <S.Header>
-        <S.SendButton type="submit">
-          <FontAwesomeIcon icon={faPaperPlane} />
-        </S.SendButton>
-      </S.Header>
-      <S.Input
-        type="text"
-        name="body"
-        id="body"
-        value={email.body}
-        onChange={handleChange}
-      ></S.Input>
-    </S.Container>
+    <form onSubmit={handleSubmit}>
+      <S.Container>
+        <S.Header>
+          <S.SendButton type="submit">
+            <FontAwesomeIcon icon={faPaperPlane} />
+          </S.SendButton>
+        </S.Header>
+        <S.Input
+          type="text"
+          name="body"
+          id="body"
+          value={email.body}
+          onChange={handleChange}
+        ></S.Input>
+      </S.Container>
     </form>
   );
 };

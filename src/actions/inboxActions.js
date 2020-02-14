@@ -30,10 +30,10 @@ export const getUserEmailAndId = oAuthToken => dispatch => {
   // Retrieves user email address and user_id upon successful OAuth login redirect
   dispatch({ type: GET_EMAIL_USERID_START });
   const apiKey = process.env.REACT_APP_APIKEY;
-  console.log(apiKey);
+  // console.log(apiKey);
   return axios
     .get(
-      `https://people.googleapis.com/v1/people/me?personFields=emailAddresses&key=${apiKey}`,
+      `https://people.googleapis.com/v1/people/me?personFields=emailAddresses,photos&key=${apiKey}`,
       {
         headers: {
           Authorization: `Bearer ${oAuthToken}`,
@@ -44,15 +44,17 @@ export const getUserEmailAndId = oAuthToken => dispatch => {
     .then(res => {
       const emailAddress = res.data.emailAddresses[0].value;
       const user_id = res.data.emailAddresses[0].metadata.source.id;
+      const userPhotoUrl = res.data.photos[0].url;
+      // console.log("Response from inbox actions", res.data);
       dispatch({
         type: GET_EMAIL_USERID_SUCCESS,
-        payload: { emailAddress, user_id }
+        payload: { emailAddress, user_id, userPhotoUrl }
       });
-      return { emailAddress, user_id };
+      return { emailAddress, user_id, userPhotoUrl };
     })
     .catch(err => {
       dispatch({ type: GET_EMAIL_USERID_FAILURE, payload: err });
-      return false
+      return false;
     });
 };
 
@@ -101,39 +103,34 @@ export const getEmails = (emailAddress, token) => dispatch => {
 
 export const CHANGE_IS_DISPLAYING_THREAD = "CHANGE_IS_DISPLAYING_THREAD";
 
-export const changeIsDisplayingThread = (bool) => dispatch => {
-    // Set a switch that displays (true) or hides (false) the thread between the user and another email-address
-    dispatch({ type: CHANGE_IS_DISPLAYING_THREAD, payload: bool });
+export const changeIsDisplayingThread = bool => dispatch => {
+  // Set a switch that displays (true) or hides (false) the thread between the user and another email-address
+  dispatch({ type: CHANGE_IS_DISPLAYING_THREAD, payload: bool });
 };
-
-
 
 // =============================================================================
-// C H A N G E   I S   D I S P L A Y I N G   A N A L Y T I C S   B A R 
+// C H A N G E   I S   D I S P L A Y I N G   A N A L Y T I C S   B A R
 export const CHANGE_IS_DISPLAYING_ANALYTICS = "CHANGE_IS_DISPLAYING_ANALYTICS";
 
-export const changeIsDisplayingAnalytics = (bool) => dispatch => {
-    // Set a switch that displays (true) or hides (false) the analytics bar
-    dispatch({ type: CHANGE_IS_DISPLAYING_ANALYTICS, payload: bool });
+export const changeIsDisplayingAnalytics = bool => dispatch => {
+  // Set a switch that displays (true) or hides (false) the analytics bar
+  dispatch({ type: CHANGE_IS_DISPLAYING_ANALYTICS, payload: bool });
 };
-
 
 // =============================================================================
 // C H A N G E   T H R E A D   C O N T A C T
 export const CHANGE_THREAD_CONTACT = "CHANGE_THREAD_CONTACT";
 
-export const changeThreadContact = (fromEmailAddress) => dispatch => {
-    // Set the contact whose conversation is displayed in Thread.js
-    dispatch({ type: CHANGE_THREAD_CONTACT, payload: {fromEmailAddress} });
+export const changeThreadContact = contact => dispatch => {
+  // Set the contact whose conversation is displayed in Thread.js
+  dispatch({ type: CHANGE_THREAD_CONTACT, payload: { contact } });
 };
-
-
 
 // =============================================================================
 // C H A N G E   A N A L Y T I C S   C O N T A C T
 export const CHANGE_ANALYTICS_CONTACT = "CHANGE_ANALYTICS_CONTACT";
 
-export const changeAnalyticsContact = (contact) => dispatch => {
-    // Set the contact whose analytics are being displayed
-    dispatch({ type: CHANGE_ANALYTICS_CONTACT, payload: {contact} });
+export const changeAnalyticsContact = contact => dispatch => {
+  // Set the contact whose analytics are being displayed
+  dispatch({ type: CHANGE_ANALYTICS_CONTACT, payload: { contact } });
 };

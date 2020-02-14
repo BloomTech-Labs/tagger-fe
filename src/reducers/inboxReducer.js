@@ -18,7 +18,8 @@ import {
     threadContactEmailAddress: "arnoldSchwarzeneger@gov.com",
     analyticsContact: {
       emailAddress: "arnoldSchwarzeneger@gov.com",
-      name: "George Washington"
+      name: "George Washington",
+      coverPhoto: ""
     },
   };
   
