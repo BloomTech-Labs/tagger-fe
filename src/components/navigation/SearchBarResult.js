@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { faTags } from "@fortawesome/free-solid-svg-icons";
 
 const S = {
     Result: styled.div`
@@ -57,6 +58,8 @@ export default function SearchBarResult(props) {
             ...searchQuery,
             search: ""
         });
+
+        // FUNCTION HERE SET State being mapped over to load inside of the thread section
     }
 
     return (
