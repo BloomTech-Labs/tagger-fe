@@ -24,7 +24,7 @@ export default function FilterButton(props) {
         <S.Button>
             {props.text}
             <i
-                class="fa fa-times-circle"
+                className="fa fa-times-circle"
                 onClick={() => {
                     props.remove(props.index);
                 }}
