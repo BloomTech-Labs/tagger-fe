@@ -84,13 +84,12 @@ const AnalyticsBar = props => {
   const closeAnalytics = () => {
     props.changeIsDisplayingAnalytics(false);
   };
-
   return (
     <S.Container>
       {/* <h1>Analytics</h1> */}
       <button onClick={() => closeAnalytics()}>X</button>
 
-      <S.Avatar src={blackCircle} />
+      <S.Avatar src={props.analyticsContact.coverPhoto ? props.analyticsContact.coverPhoto : blackCircle} />
       <h2>{props.analyticsContact.name}</h2>
       <h5>{props.analyticsContact.emailAddress}</h5>
       <hr />
@@ -124,8 +123,9 @@ const AnalyticsBar = props => {
   );
 };
 
-const mapStateToProps = ({ imap, user, inbox }) => ({
-  analyticsContact: inbox.analyticsContact
+const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
+  analyticsContact: inbox.analyticsContact,
+  contacts: contacts.contacts
 });
 
 const mapDispatchToProps = dispatch =>
@@ -140,3 +140,9 @@ export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
 )(AnalyticsBar);
+
+
+
+
+// https://lh3.googleusercontent.com/c5dqxl-2uHZ82ah9…qmtoLxCUJgEzLGtxsrJ6-v6R6rKU_-FYm881TTiMCJ_=s1600
+// https://lh3.googleusercontent.com/c5dqxl-2uHZ82ah9…qmtoLxCUJgEzLGtxsrJ6-v6R6rKU_-FYm881TTiMCJ_=s1600

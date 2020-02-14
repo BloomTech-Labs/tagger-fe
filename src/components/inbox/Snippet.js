@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
@@ -64,20 +64,44 @@ const S = {
 const Snippet = props => {
   const setThreadContact = () => {
     // Sets contact in thread section to be the one from this snippet
-    props.changeThreadContact(props.email.fromEmailAddress);
-    if (!props.isDisplayingThread) {
-      props.changeIsDisplayingThread(true);
+    let i;
+    for (i = 0; i < props.contacts.length; i++) {
+      if (props.contacts[i].email === props.email.fromEmailAddress) {
+        props.changeThreadContact(props.contacts[i].email);
+        if (!props.isDisplayingThread) {
+          props.changeIsDisplayingThread(true);
+        }
+      } else {
+        props.changeThreadContact(props.email.fromEmailAddress);
+        if (!props.isDisplayingThread) {
+          props.changeIsDisplayingThread(true);
+        }
+      }
     }
   };
 
   const setAnalyticsContact = email => {
-    const contact = {
-      emailAddress: email.fromAddress,
-      name: email.fromName
-    };
-    // Sets contact to be displayed in analytics sidebar
-    props.changeAnalyticsContact(contact);
-    props.changeIsDisplayingAnalytics(true);
+    const filter = props.contacts.filter(c => c.email === email.fromEmailAddress)
+    if (filter.length > 0){
+      const contact = {
+        emailAddress: filter[0].email,
+        name: filter[0].name,
+        coverPhoto: filter[0].coverPhotoUrl
+      }
+      console.log("IF", filter)
+      props.changeAnalyticsContact(contact);
+      props.changeIsDisplayingAnalytics(true);
+    } else {
+      const contact = {
+        emailAddress: email.fromEmailAddress,
+        name: email.fromName
+      };
+      console.log("ELSE", contact)
+      // Sets contact to be displayed in analytics sidebar
+      props.changeAnalyticsContact(contact);
+      props.changeIsDisplayingAnalytics(true);
+    }
+    
   };
 
   return (
@@ -106,9 +130,10 @@ const Snippet = props => {
   );
 };
 
-const mapStateToProps = ({ imap, user, inbox }) => ({
+const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
   isDisplayingThread: inbox.isDisplayingThread,
-  isDisplayingAnalytics: inbox.isDisplayingAnalytics
+  isDisplayingAnalytics: inbox.isDisplayingAnalytics,
+  contacts: contacts.contacts
 });
 
 const mapDispatchToProps = dispatch =>

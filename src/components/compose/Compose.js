@@ -18,7 +18,6 @@ const S = {
     width: 99.8vw;
     height: 99.5vh;
     
-    
   `,
   Compose: styled.div`
     display: flex;
@@ -28,7 +27,8 @@ const S = {
     width: 60vw;
     height: 80vh;
     margin-top: 10vh;
-    background-color:white;
+    background-color: white;
+    filter: blur(0)
   `,
   Header: styled.div`
     display: flex;
@@ -125,9 +125,9 @@ const Compose = props => {
     props.sendEmail(email);
   };
 
-  const changeIsComposing = e =>{
-    props.changeIsComposing(!props.isComposing)
-  }
+  const changeIsComposing = e => {
+    props.changeIsComposing(!props.isComposing);
+  };
   return (
     <S.Container>
       <S.Compose>
@@ -175,7 +175,7 @@ const Compose = props => {
 };
 
 const mapStateToProps = ({ composer }) => ({
-  isComposing: composer.isComposing,
+  isComposing: composer.isComposing
 });
 const mapDispatchToProps = {
   sendEmail,

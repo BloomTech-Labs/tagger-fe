@@ -28,25 +28,34 @@ export const GET_USER_CONTACTS_FAILURE = "GET_USER_CONTACTS_FAILURE";
 
 
 export const getContacts = oAuthToken => dispatch => {
-  dispatch({type: GET_USER_CONTACTS_START})
-  return axios.get(
-    `https://people.googleapis.com/v1/people/me/connections?pageSize=2000&personFields=emailAddresses,names,coverPhotos&sortOrder=LAST_MODIFIED_ASCENDING&key=${process.env.REACT_APP_APIKEY}`,
-    {
-      headers: {
-        Authorization: `Bearer ${oAuthToken}`,
-        "Content-Type": "application/json"
+  dispatch({ type: GET_USER_CONTACTS_START });
+  return axios
+    .get(
+      `https://people.googleapis.com/v1/people/me/connections?pageSize=2000&personFields=emailAddresses,names,coverPhotos&sortOrder=LAST_MODIFIED_ASCENDING&key=${process.env.REACT_APP_APIKEY}`,
+      {
+        headers: {
+          Authorization: `Bearer ${oAuthToken}`,
+          "Content-Type": "application/json"
+        }
       }
-    }
-  ).then(res => {
-    const contacts = res.data.connections.map(contact => ({
-      name: contact.names[0].displayName,
-      email: contact.emailAddresses[0].value,
-      coverPhotoUrl: contact.coverPhotos[0].url
-    }))
-    dispatch({type: GET_USER_CONTACTS_SUCCESS, payload: contacts})
-    console.log(contacts, "Contacts from getContacts\n\n\n")
-  })
-  .catch(err => {
-    console.error(err)
-  })
+    )
+    .then(res => {
+      console.log(res.data.connections, "cover photos")
+      const contacts = res.data.connections.map(contact => ({
+        name:  contact.names[0].displayName,
+        email: contact.emailAddresses[0].value,
+        coverPhotoUrl: contact.coverPhotos[0].url
+      }));
+      // console.log(contacts, "Contacts from getContacts\n\n\n");
+      dispatch({ type: GET_USER_CONTACTS_SUCCESS, payload: contacts });
+    })
+    .catch(err => {
+      console.error(err);
+    });
 };
+// const contacts = res.data.connections.map(contact => (
+//   {
+//   name: contact.names[0].displayName,
+//   email: contact.emailAddresses[0].value,
+//   coverPhotoUrl: contact.coverPhotos[0].url
+// }));
