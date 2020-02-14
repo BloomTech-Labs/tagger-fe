@@ -8,7 +8,7 @@ import { compose, bindActionCreators } from "redux";
 import { sendEmail, changeIsComposing } from "../../actions/composerActions";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faTags } from "@fortawesome/free-solid-svg-icons";
 
 const S = {
   Container: styled.div`
@@ -17,8 +17,6 @@ const S = {
     border: 1px solid blue;
     width: 99.8vw;
     height: 99.5vh;
-    
-    
   `,
   Compose: styled.div`
     display: flex;
@@ -32,6 +30,7 @@ const S = {
     align-items: center;
    
   `,
+ 
   Header: styled.div`
     display: flex;
     justify-content: space-between;
@@ -219,3 +218,4 @@ export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
 )(Compose);
+
