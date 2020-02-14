@@ -26,6 +26,7 @@ const S = {
   `,
   Avatar: styled.img`
     width: 60%;
+    border-radius: 50%;
   `,
   Graph: styled.ul`
     width: 90%;
