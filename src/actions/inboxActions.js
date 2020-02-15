@@ -59,6 +59,19 @@ export const getUserEmailAndId = oAuthToken => dispatch => {
 };
 
 // =============================================================================
+// S T R E A M
+// export const STREAM_EMAILS_START = "STREAM_EMAILS_START";
+// export const STREAM_EMAILS_SUCCESS = "STREAM_EMAILS_SUCCESS";
+// export const STREAM_EMAILS_FAILURE = "STREAM_EMAILS_FAILURE";
+export const INCREMENT_STREAM_COUNTER = "INCREMENT_STREAM_COUNTER";
+
+
+
+export const incrementCounter = () => dispatch => {
+  dispatch({ type: INCREMENT_STREAM_COUNTER });
+};
+
+// =============================================================================
 // Get Email____________________________________________________________________
 
 export const GET_EMAILS_START = "GET_EMAILS_START";
@@ -70,14 +83,15 @@ export const getEmails = (emailAddress, token) => dispatch => {
   dispatch({ type: GET_EMAILS_START });
   const imapAccess = `user=${emailAddress}auth=Bearer ${token}`; // Between the following arrows >< is either a square or a space. IDK what it is but you need it
   const imapAccessHash = btoa(`user=${emailAddress}auth=Bearer ${token}`); // Between the following arrows >< is either a square or a space. IDK what it is but you need it
-
+  alert("Im working!");
   return axios
-    .post(`http://localhost:8000/emails`, {
+    .post(`http://localhost:8000/emails/stream`, {
       email: emailAddress,
       host: "imap.gmail.com", // << will need to be made dynamic upon integration of other email clients
       token: imapAccessHash
     })
     .then(res => {
+      console.log("RES from inbox action", res);
       const emails = res.data.map(emailObj => {
         return {
           html: emailObj.html,
@@ -91,10 +105,48 @@ export const getEmails = (emailAddress, token) => dispatch => {
         };
       });
       dispatch({ type: GET_EMAILS_SUCCESS, payload: emails });
+      dispatch({ type: EMAILS_UPDATE_SUCCESS });
       return emails;
     })
     .catch(err => {
       dispatch({ type: GET_EMAILS_FAILURE, payload: err });
+      return err;
+    });
+};
+
+// =============================================================================
+
+// =============================================================================
+// Check if all emails are gotten ______________________________________________
+
+export const EMAILS_UPDATE_START = "EMAILS_UPDATE_START";
+export const EMAILS_UPDATE_SUCCESS = "EMAILS_UPDATE_SUCCESS";
+export const EMAILS_UPDATE_FAILURE = "EMAILS_UPDATE_FAILURE";
+
+export const updateEmails = (emailAddress, token) => dispatch => {
+  // Retrieves user emails
+  dispatch({ type: EMAILS_UPDATE_START });
+  const imapAccess = `user=${emailAddress}auth=Bearer ${token}`; // Between the following arrows >< is either a square or a space. IDK what it is but you need it
+  const imapAccessHash = btoa(`user=${emailAddress}auth=Bearer ${token}`); // Between the following arrows >< is either a square or a space. IDK what it is but you need it
+ 
+  return axios
+    .post(`http://localhost:8000/emails`, {
+      email: emailAddress,
+      host: "imap.gmail.com", // << will need to be made dynamic upon integration of other email clients
+      token: imapAccessHash
+    })
+    .then(() => {
+      return axios
+        .post(`http://localhost:8000/emails/stream`, {
+          email: emailAddress
+        })
+        .then(res => {
+          dispatch({ type: GET_EMAILS_SUCCESS, payload: res.data });
+          return res.data;
+        });
+    })
+    .catch(err => {
+      dispatch({ type: EMAILS_UPDATE_FAILURE, payload: err });
       return err;
     });
 };

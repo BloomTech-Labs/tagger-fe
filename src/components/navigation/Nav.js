@@ -311,5 +311,4 @@ function mapStateToProps({ searchbar, imap, user }) {
         userPhoto: user.userPhotoUrl
     };
 }
-
 export default connect(mapStateToProps, { clearSearch, saveSearch })(Nav);
