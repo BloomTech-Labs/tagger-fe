@@ -81,7 +81,21 @@ const Snippet = props => {
   };
 
   const setAnalyticsContact = email => {
-    const filter = props.contacts.filter(c => c.email === email.fromEmailAddress)
+    console.log("EMAIL", email)
+    const filter = props.contacts.filter(c => {
+      console.log(c, "C")
+      if(c.emailAddresses.length > 1){
+        const emailMatch = c.emailAddresses.filter(eachAddress => eachAddress === email.fromEmailAddress)
+        console.log(emailMatch, "emailMatch")
+        return c.emailAddresses[0].value === emailMatch[0]
+      } else{
+        return c.emailAddresses[0] === email.fromEmailAddress
+      }
+    });
+    
+    console.log(filter, "FILTER")
+
+    // const filter = props.contacts.filter(c => c.emails === email.fromEmailAddress)
     if (filter.length > 0){
       const contact = {
         emailAddress: filter[0].email,
