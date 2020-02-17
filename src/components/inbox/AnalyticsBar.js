@@ -131,10 +131,10 @@ const AnalyticsBar = props => {
           </div>
         </li>
       </S.Graph> */}
-      <S.LastInteraction>
+      {/* <S.LastInteraction>
         <span>Last interaction:</span>
         <span>2 hours ago</span>
-      </S.LastInteraction>
+      </S.LastInteraction> */}
     </S.Container>
   );
 };
