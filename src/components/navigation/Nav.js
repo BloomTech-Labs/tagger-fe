@@ -318,7 +318,9 @@ const Nav = (props) => {
         });
     }
     function emailToDisplayInThread(emailObject) {
+        console.log(emailObject, "OBJECT {}\n\n\n\n\n\n\n\n\n\n");
         props.changeThreadContact(emailObject);
+        console.log(props.threadContactEmailAddress, "\n\n\n********* THREAD CONTACTeMAIL");
     }
 
     return (
