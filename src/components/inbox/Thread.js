@@ -19,12 +19,35 @@ const S = {
 
         padding: 0% 0.5%;
         background-color: #ebebeb;
+    `,
+
+    InitReplyBtn: styled.button`
+        position: absolute;
+        bottom: 10px;
+        right: calc(((100% - 230px) * 0.23) + 10px);
+        // right: 30%;
+        width: 8vw;
+        height: 60px;
+        z-index: 100;
+        background-color: black;
+
+        border-radius: 5px;
+        font-size: 1.5rem;
+        background-color: #007bff;
+        color: white;
     `
 };
 
 const Thread = (props) => {
     const toggleIsDisplayingAnalytics = () => {
         props.changeIsDisplayingAnalytics(!props.isDisplayingAnalytics);
+    };
+
+    const [isReplying, setIsReplying] = useState(false);
+
+    const toggleIsReplying = () => {
+        console.log(isReplying);
+        setIsReplying(!isReplying);
     };
 
     return (
@@ -34,13 +57,19 @@ const Thread = (props) => {
 
             {props.emails
                 .filter((email) => {
-                    return email.from === props.threadContactEmailAddress;
+                    return email.fromEmailAddress === props.threadContactEmailAddress;
                 })
                 .map((email) => {
                     return <ThreadMessage key={Math.random()} email={email} />;
                 })}
 
-            <Reply threadContactEmailAddress={props.threadContactEmailAddress} />
+            {isReplying ? null : <S.InitReplyBtn onClick={toggleIsReplying}>Reply</S.InitReplyBtn>}
+            {isReplying ? (
+                <Reply
+                    toggleIsReplying={toggleIsReplying}
+                    threadContactEmailAddress={props.threadContactEmailAddress}
+                />
+            ) : null}
         </S.Container>
     );
 };

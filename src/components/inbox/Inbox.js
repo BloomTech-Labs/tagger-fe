@@ -5,7 +5,13 @@ import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import Emails from "./Emails";
 
-import { getUserEmailAndId, getEmails, changeIsLoggedIn, updateEmails, incrementCounter} from "../../actions";
+import {
+    getUserEmailAndId,
+    getEmails,
+    changeIsLoggedIn,
+    updateEmails,
+    incrementCounter
+} from "../../actions";
 import { getContacts } from "../../actions/contactsActions";
 import Sidebar from "./Sidebar";
 const S = {
@@ -22,36 +28,39 @@ const Inbox = (props) => {
         const token = extractTokenFromUrl(url);
         const redirectUrl = "http://localhost:3000/inbox";
         const response = "token";
-        const client =
-          "765722368782-j3bqp7gm072b0vd1lv97kgh2mnp37b7j.apps.googleusercontent.com";
+        const client = "765722368782-j3bqp7gm072b0vd1lv97kgh2mnp37b7j.apps.googleusercontent.com";
         if (!props.isEmailAddressAndIdRetrieved) {
-          // If user data not retrieved, retrieve email address and user_id from Auth token
-          props.getUserEmailAndId(token).then(res => {
-            // console.log("GETUSERDATA RES: ", res);
-            if (res) {
-              props.changeIsLoggedIn(true);
-            } else if (!res) {
-              window.location.replace(
-                `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//mail.google.com/ profile https%3A//www.googleapis.com/auth/userinfo.email https%3A//www.googleapis.com/auth/user.emails.read&redirect_uri=${redirectUrl}&response_type=${response}&client_id=${client}`
-              );
-            }
-          });
+            // If user data not retrieved, retrieve email address and user_id from Auth token
+            props.getUserEmailAndId(token).then((res) => {
+                // console.log("GETUSERDATA RES: ", res);
+                if (res) {
+                    props.changeIsLoggedIn(true);
+                } else if (!res) {
+                    window.location.replace(
+                        `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//mail.google.com/ profile https%3A//www.googleapis.com/auth/userinfo.email https%3A//www.googleapis.com/auth/user.emails.read&redirect_uri=${redirectUrl}&response_type=${response}&client_id=${client}`
+                    );
+                }
+            });
         } else if (!props.areEmailsRetrieved) {
-          // Else if user data retrieved AND emails not retrieved, retrieve emails
-          const user_email = props.emailAddress;
-          // props.getEmails(user_email, token).then(res => {
-          //   console.log("GETEMAILS RES: ", res);
-            props.updateEmails(user_email, token).then(res => {
-              console.log("STREAMEMAILS RES: ", res)
-            }).catch(err => {
-              console.log(err)
-            })
-          // });
+            // Else if user data retrieved AND emails not retrieved, retrieve emails
+            const user_email = props.emailAddress;
+            // props.getEmails(user_email, token).then(res => {
+            //   console.log("GETEMAILS RES: ", res);
+            props
+                .updateEmails(user_email, token)
+                .then((res) => {
+                    console.log("STREAMEMAILS RES: ", res);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            // });
         }
         console.log("EMAILS: ", props.emails);
-        if (props.areEmailsUpdated === false){props.incrementCounter()}
-;      
-      },[props.isEmailAddressAndIdRetrieved, props.counter]);
+        if (props.areEmailsUpdated === false) {
+            props.incrementCounter();
+        }
+    }, [props.isEmailAddressAndIdRetrieved, props.counter]);
 
     // CONTACTS useEffect
     useEffect(() => {
