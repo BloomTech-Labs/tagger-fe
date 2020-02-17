@@ -10,6 +10,8 @@ const S = {
         display: flex;
         align-items: center;
         margin-bottom: 2%;
+        background-color: ${(props) => props.simulateFocusBackgroundColor};
+        border-left: ${(props) => props.simulateFocusBorder};
         :hover {
             background-color: #f0f8ffa6;
             border-left: 4px solid #0000ff99;
@@ -78,23 +80,24 @@ const S = {
     `
 };
 export default function SearchBarResult(props) {
-    const [clearSearch, setSearchQuery, searchQuery] = props.functions;
+    const [clearSearch, setSearchQuery, searchQuery, emailToDisplayInThread] = props.functions;
     function clearSearchAndLoadResult() {
+        emailToDisplayInThread(props.email);
         clearSearch();
         setSearchQuery({
             ...searchQuery,
             search: ""
+            //todo reset location and other values also
         });
-
         //todo FUNCTION HERE SET State being mapped over to load inside of the thread section
     }
     function showDate() {
-        let emailDateYear = moment(props.email.date).format("YYYY");
+        let emailDateYear = moment(Number(props.email.date)).format("YYYY");
         let currentYear = moment().format("YYYY");
         if (emailDateYear === currentYear) {
-            return moment(props.email.date).format("MMM do");
+            return moment(Number(props.email.date)).format("MMM Do");
         } else {
-            return moment(props.email.date).format("MMM do YYYY");
+            return moment(Number(props.email.date)).format("MMM Do YYYY");
         }
     }
     function showParticipants() {
@@ -105,7 +108,12 @@ export default function SearchBarResult(props) {
         }
     }
     return (
-        <S.Result key={props.email.message_id || props.key} onClick={clearSearchAndLoadResult}>
+        <S.Result
+            key={props.email.message_id || props.key}
+            onClick={clearSearchAndLoadResult}
+            simulateFocusBackgroundColor={props.email.simulateFocus ? "#f0f8ffa6" : "none"}
+            simulateFocusBorder={props.email.simulateFocus ? "4px solid #0000ff99" : "none"}
+        >
             <i className="fa fa-envelope"></i>
             <section className="content">
                 <div className="subject">{props.email.subject}</div>

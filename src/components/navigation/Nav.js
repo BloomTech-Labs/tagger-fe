@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { clearSearch } from "../../actions";
 import SearchBarResult from "./SearchBarResult";
 import { fuzzyFunction, addSearchTag } from "./utils";
-import { saveSearch } from "../../actions";
+import { saveSearch, changeThreadContact } from "../../actions";
 import FilterButton from "./FilterButton";
 const S = {
     Container: styled.div`
@@ -144,8 +144,25 @@ const Nav = (props) => {
         search: "",
         filters: [],
         fuzzySearch: true,
-        smartSearch: false
+        smartSearch: false,
+        results: [...props.results],
+        position: -1
     });
+    useEffect(() => {
+        let addSimulatedFocusProperty = props.results.map((eachObj) => {
+            return {
+                ...eachObj,
+                simulateFocus: false
+            };
+        });
+
+        setSearchQuery({
+            ...searchQuery,
+            results: addSimulatedFocusProperty,
+            position: -1
+        });
+    }, [props.results]);
+
     const [showSearchOptions, setShowSearchOptions] = useState(false);
     const [smartSearchIsChecked, setSmartSearchIsChecked] = useState(false);
     const removeFilter = (index) => {
@@ -155,6 +172,70 @@ const Nav = (props) => {
             ...searchQuery,
             filters: currentFilters
         });
+    };
+
+    const handleArrowSelect = (e) => {
+        console.log("ON KEYDOWN\n\n", e, "\n\n***************");
+
+        if (e.key === "ArrowDown") {
+            if (searchQuery.results.length - 1 === searchQuery.position) {
+                return null;
+            } else if (searchQuery.position === -1) {
+                let arrayCopy = [...searchQuery.results];
+                let next = searchQuery.position + 1;
+                arrayCopy[next] = {
+                    ...arrayCopy[next],
+                    simulateFocus: true
+                };
+                setSearchQuery({
+                    ...searchQuery,
+                    position: next,
+                    results: [...arrayCopy]
+                });
+            } else {
+                let arrayCopy = [...searchQuery.results];
+                let current = searchQuery.position;
+                let next = searchQuery.position + 1;
+                arrayCopy[current] = {
+                    ...arrayCopy[current],
+                    simulateFocus: false
+                };
+                arrayCopy[next] = {
+                    ...arrayCopy[next],
+                    simulateFocus: true
+                };
+
+                setSearchQuery({
+                    ...searchQuery,
+                    position: next,
+                    results: [...arrayCopy]
+                });
+            }
+        } else if (e.key === "ArrowUp") {
+            if (searchQuery.position === -1 || searchQuery.position === 0) {
+                return null;
+            } else {
+                let arrayCopy = [...searchQuery.results];
+                let current = searchQuery.position;
+                let previous = searchQuery.position - 1;
+
+                arrayCopy[current] = {
+                    ...arrayCopy[current],
+                    simulateFocus: false
+                };
+                arrayCopy[previous] = {
+                    ...arrayCopy[previous],
+                    simulateFocus: true
+                };
+                setSearchQuery({
+                    ...searchQuery,
+                    position: previous,
+                    results: [...arrayCopy]
+                });
+            }
+        } else if (e.key === "Enter") {
+            alert("enter");
+        }
     };
 
     const handleInput = (e) => {
@@ -179,6 +260,7 @@ const Nav = (props) => {
                 [name]: value
             });
         }
+
         const emails = props.emails;
         if (searchQuery.search.length === 0) {
             clearSearch();
@@ -188,12 +270,56 @@ const Nav = (props) => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        setSearchQuery({ search: "" });
+        let selectedEmail = searchQuery.results.filter(
+            (eachResult) => eachResult.simulateFocus === true
+        );
+        if (selectedEmail.length === 0) {
+            return null;
+        } else {
+            alert("selectedEmail", selectedEmail);
+            console.log(selectedEmail, "selected EMAIL \n\n\n$$$$$$$$$$$$$$!!!!!!!!!!!!!!@#!@#!@#");
+        }
     };
     const toggleSearchOptions = (e) => {
         e.preventDefault();
         setShowSearchOptions(!showSearchOptions);
     };
+    const [windowListening, setWindowListening] = useState(false);
+
+    useEffect(() => {
+        document.addEventListener("keydown", handleArrowSelect);
+        return () => {
+            document.removeEventListener("keydown", handleArrowSelect);
+        };
+    }, [searchQuery]);
+
+    function clearArrowHighlight() {
+        let arrayCopy = [...searchQuery.results];
+        let current = searchQuery.position;
+        let next = searchQuery.position + 1;
+        let previous = searchQuery.position - 1;
+        arrayCopy[current] = {
+            ...arrayCopy[current],
+            simulateFocus: false
+        };
+        arrayCopy[next] = {
+            ...arrayCopy[next],
+            simulateFocus: false
+        };
+        arrayCopy[previous] = {
+            ...arrayCopy[next],
+            simulateFocus: false
+        };
+
+        setSearchQuery({
+            ...searchQuery,
+            position: -1,
+            results: [...arrayCopy]
+        });
+    }
+    function emailToDisplayInThread(emailObject) {
+        props.changeThreadContact(emailObject);
+    }
 
     return (
         <S.Container>
@@ -217,13 +343,11 @@ const Nav = (props) => {
                                 name="search"
                                 placeholder="Search for people, conversations, files..."
                                 value={searchQuery.search}
+                                onChangeCapture={handleInput}
                                 onChange={() => {
                                     return 0;
                                 }}
                                 // todo ask team if ok to leave in code or see alternative way of adding key capture
-                                onChangeCapture={(e) => {
-                                    handleInput(e);
-                                }}
                             ></S.Input>
                             <S.Magnify type="submit" onSubmit={handleSubmit}>
                                 <i className="fa fa-search"></i>
@@ -249,15 +373,16 @@ const Nav = (props) => {
                 >
                     <div className="left">
                         {props.results.length > 0 && searchQuery.search.length > 0 ? (
-                            <S.SearchDropdown>
-                                {props.results.map((eachEmail, i) => {
+                            <S.SearchDropdown onMouseOver={clearArrowHighlight}>
+                                {searchQuery.results.map((eachEmail, i) => {
                                     return (
                                         <SearchBarResult
                                             key={i}
                                             functions={[
                                                 props.clearSearch,
                                                 setSearchQuery,
-                                                searchQuery
+                                                searchQuery,
+                                                emailToDisplayInThread
                                             ]}
                                             email={eachEmail}
                                         />
@@ -304,11 +429,12 @@ const Nav = (props) => {
         </S.Container>
     );
 };
-function mapStateToProps({ searchbar, imap, user }) {
+function mapStateToProps({ searchbar, imap, user, inbox }) {
     return {
         results: searchbar.searchResults,
         emails: imap.emails,
-        userPhoto: user.userPhotoUrl
+        userPhoto: user.userPhotoUrl,
+        threadContactEmailAddress: inbox.threadContactEmailAddress
     };
 }
-export default connect(mapStateToProps, { clearSearch, saveSearch })(Nav);
+export default connect(mapStateToProps, { clearSearch, saveSearch, changeThreadContact })(Nav);
