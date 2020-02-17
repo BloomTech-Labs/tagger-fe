@@ -81,41 +81,29 @@ const Snippet = props => {
   };
 
   const setAnalyticsContact = email => {
-    console.log("EMAIL", email)
-    const filter = props.contacts.filter(c => {
-      console.log(c, "C")
-      if(c.emailAddresses.length > 1){
-        const emailMatch = c.emailAddresses.filter(eachAddress => eachAddress === email.fromEmailAddress)
-        console.log(emailMatch, "emailMatch")
-        return c.emailAddresses[0].value === emailMatch[0]
-      } else{
-        return c.emailAddresses[0] === email.fromEmailAddress
-      }
-    });
     
-    console.log(filter, "FILTER")
 
-    // const filter = props.contacts.filter(c => c.emails === email.fromEmailAddress)
-    if (filter.length > 0){
+    const filter = props.contacts.filter(c => c.emailAddresses[0].value === email.from)
+    if (filter.length > 0) {
       const contact = {
-        emailAddress: filter[0].email,
-        name: filter[0].name,
-        coverPhoto: filter[0].coverPhotoUrl
-      }
-      console.log("IF", filter)
+        emailAddress: filter[0].emailAddresses,
+        name: filter[0].names[0].displayName,
+        coverPhoto: filter[0].photos[0].url
+      };
+      // console.log("IF", filter);
       props.changeAnalyticsContact(contact);
       props.changeIsDisplayingAnalytics(true);
     } else {
       const contact = {
-        emailAddress: email.fromEmailAddress,
-        name: email.fromName
+        emailAddress: [{value: email.from}],
+        name: email.name
       };
-      console.log("ELSE", contact)
+      // console.log("ELSE", contact);
       // Sets contact to be displayed in analytics sidebar
       props.changeAnalyticsContact(contact);
       props.changeIsDisplayingAnalytics(true);
     }
-    
+    // console.log("filter", filter)
   };
 
   return (
