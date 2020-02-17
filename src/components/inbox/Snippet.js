@@ -71,6 +71,7 @@ const S = {
 };
 
 const Snippet = props => {
+ 
   const setThreadContact = () => {
     // Sets contact in thread section to be the one from this snippet
     // let i;
@@ -106,7 +107,7 @@ const Snippet = props => {
     
     console.log("EMAIL", email)
     
-    const filter = props.contacts.filter(c => c.emailAddresses[0].value === email.from)
+    const filter = props.contacts.filter(c => c.emailAddresses[0].value.toLowerCase() === email.from.toLowerCase())
     console.log("FILTER", filter)
     if (filter.length > 0) {
       const contact = {
