@@ -25,7 +25,7 @@ const Snippets = props => {
     <S.Container widthPercentage={props.isDisplayingThread ? 25 : 100}>
       {/* <h1>Snippets</h1>
         <button onClick = {() => toggleIsDisplayingThread()}>Toggle Thread ON/OFF</button> */}
-      {props.emails.map(email => {
+      {props.emails.reverse().map(email => {
         return (
           <Snippet key={email.message_id} email={email} /> // emails in redux are currently numbers 1-10 in an array
         );

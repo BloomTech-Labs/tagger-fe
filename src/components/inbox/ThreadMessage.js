@@ -63,15 +63,42 @@ const S = {
 };
 
 const ThreadMessage = (props) => {
-    const setAnalyticsContact = (email) => {
-        console.log("THEM THER EMAIL", email);
-        const contact = {
-            emailAddress: email.from,
+    // const setAnalyticsContact = (email) => {
+    //     console.log("THEM THER EMAIL", email);
+    //     const contact = {
+    //         emailAddress: email.from,
+    //         name: email.name
+    //     };
+    //     // Sets contact to be displayed in analytics sidebar
+    //     props.changeAnalyticsContact(contact);
+    //     props.changeIsDisplayingAnalytics(true);
+    // };
+
+    const setAnalyticsContact = email => {
+    
+        console.log("EMAIL", email)
+        
+        const filter = props.contacts.filter(c => c.emailAddresses[0].value === email.from)
+        console.log("FILTER", filter)
+        if (filter.length > 0) {
+          const contact = {
+            emailAddress: filter[0].emailAddresses,
+            name: filter[0].names[0].displayName,
+            coverPhoto: filter[0].photos[0].url
+          };
+          // console.log("IF", filter);
+          props.changeAnalyticsContact(contact);
+          props.changeIsDisplayingAnalytics(true);
+        } else {
+          const contact = {
+            emailAddress: [{value: email.from}],
             name: email.name
-        };
-        // Sets contact to be displayed in analytics sidebar
-        props.changeAnalyticsContact(contact);
-        props.changeIsDisplayingAnalytics(true);
+          };
+          // Sets contact to be displayed in analytics sidebar
+          props.changeAnalyticsContact(contact);
+          props.changeIsDisplayingAnalytics(true);
+        }
+        // console.log("filter", filter)
     };
 
     return (
@@ -94,7 +121,9 @@ const ThreadMessage = (props) => {
     );
 };
 
-const mapStateToProps = ({ imap, user, inbox }) => ({});
+const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
+    contacts: contacts.contacts
+});
 
 const mapDispatchToProps = (dispatch) =>
     bindActionCreators(

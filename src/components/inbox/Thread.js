@@ -43,6 +43,8 @@ const Thread = (props) => {
         props.changeIsDisplayingAnalytics(!props.isDisplayingAnalytics);
     };
 
+    
+
     const [isReplying, setIsReplying] = useState(false);
 
     const toggleIsReplying = () => {
@@ -57,7 +59,8 @@ const Thread = (props) => {
 
             {props.emails
                 .filter((email) => {
-                    return email.fromEmailAddress === props.threadContactEmailAddress;
+                    return email.from === props.threadContactEmailAddress;
+                    // return email.fromEmailAddress === props.threadContactEmailAddress; // <<worked
                 })
                 .map((email) => {
                     return <ThreadMessage key={Math.random()} email={email} />;

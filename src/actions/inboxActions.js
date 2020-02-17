@@ -182,5 +182,5 @@ export const CHANGE_ANALYTICS_CONTACT = "CHANGE_ANALYTICS_CONTACT";
 
 export const changeAnalyticsContact = (contact) => (dispatch) => {
     // Set the contact whose analytics are being displayed
-    dispatch({ type: CHANGE_ANALYTICS_CONTACT, payload: { contact } });
+    dispatch({ type: CHANGE_ANALYTICS_CONTACT, payload: {contact} });
 };

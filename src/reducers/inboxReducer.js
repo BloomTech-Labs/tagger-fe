@@ -15,7 +15,7 @@ import {
 const initialState = {
     // FOR ANALYTICS BAR DEV
     isDisplayingThread: true,
-    isDisplayingAnalytics: true,
+    isDisplayingAnalytics: false,
     threadContactEmailAddress: "arnoldSchwarzeneger@gov.com",
     analyticsContact: {
         emailAddress: ["arnoldSchwarzeneger@gov.com"],
@@ -45,6 +45,7 @@ export const inboxReducer = (state = initialState, { type, payload }) => {
         // ==============================================
 
         case CHANGE_THREAD_CONTACT:
+            console.log("PAYLOAD: ", payload)
             return {
                 ...state,
                 threadContactEmailAddress: payload.from

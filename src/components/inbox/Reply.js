@@ -109,7 +109,8 @@ const Reply = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // props.sendEmail(emailInfo);
-        console.log("PROPS", props);
+        props.toggleIsReplying()
+        console.log("REPLYING", email);
         props.sendEmail(email);
     };
 
@@ -118,7 +119,7 @@ const Reply = (props) => {
             <S.Header>
                 <S.HeaderText>Replying To: {props.threadContactEmailAddress}</S.HeaderText>
             </S.Header>
-            <S.Form onSubmit={handleSubmit}>
+            <S.Form onSubmit={(e) => handleSubmit(e)}>
                 <S.LabelsContainer>
                     <label>
                         <span>CC:</span>
@@ -152,7 +153,7 @@ const Reply = (props) => {
             </S.Form>
             <S.Footer>
                 <S.Cancel onClick={props.toggleIsReplying}>Cancel</S.Cancel>
-                <S.Send onClick={props.toggleIsReplying} type="submit">
+                <S.Send onClick={handleSubmit} type="submit">
                     Send
                 </S.Send>
             </S.Footer>

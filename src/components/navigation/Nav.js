@@ -351,9 +351,6 @@ const Nav = (props) => {
                                 }}
                                 // todo ask team if ok to leave in code or see alternative way of adding key capture
                             ></S.Input>
-                            <S.Magnify type="submit" onSubmit={handleSubmit}>
-                                <i className="fa fa-search"></i>
-                            </S.Magnify>
                         </S.Search>
                         <S.Button onClick={toggleSearchOptions}>
                             Filters

@@ -4,12 +4,15 @@ import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 
+
 import {
   changeThreadContact,
   changeIsDisplayingThread,
   changeAnalyticsContact,
   changeIsDisplayingAnalytics
 } from "../../actions";
+
+const moment = require("moment");
 
 const S = {
   Container: styled.div`
@@ -56,34 +59,55 @@ const S = {
     font-weight: 700;
   `,
   Message: styled.div`
+    width: 100%;
     text-align: left;
     overflow: hidden;
+    overflow: hidden;
+    white-space: nowrap;
+    word-break: break-word;
+    text-align: left;
+    text-overflow: ellipsis;
   `
 };
 
 const Snippet = props => {
   const setThreadContact = () => {
     // Sets contact in thread section to be the one from this snippet
-    let i;
-    for (i = 0; i < props.contacts.length; i++) {
-      if (props.contacts[i].email === props.email.fromEmailAddress) {
-        props.changeThreadContact(props.contacts[i].email);
-        if (!props.isDisplayingThread) {
-          props.changeIsDisplayingThread(true);
-        }
-      } else {
-        props.changeThreadContact(props.email.fromEmailAddress);
-        if (!props.isDisplayingThread) {
-          props.changeIsDisplayingThread(true);
-        }
-      }
-    }
+    // let i;
+    // for (i = 0; i < props.contacts.length; i++) {
+    //   if (props.contacts[i].email === props.email.from) {
+    //     props.changeThreadContact(props.contacts[i].email);
+    //     if (!props.isDisplayingThread) {
+    //       props.changeIsDisplayingThread(true);
+    //     }
+    //   } else {
+    //     props.changeThreadContact(props.email.from);
+    //     if (!props.isDisplayingThread) {
+    //       props.changeIsDisplayingThread(true);
+    //     }
+    //   }
+    // }
+    const emailObj = props.email;
+    props.changeThreadContact(emailObj);
+
   };
+
+  function showDate() {
+      let emailDateYear = moment(Number(props.email.date)).format("YYYY");
+      let currentYear = moment().format("YYYY");
+      if (emailDateYear === currentYear) {
+          return moment(Number(props.email.date)).format("MMM Do");
+      } else {
+          return moment(Number(props.email.date)).format("MMM Do YYYY");
+      }
+  }
 
   const setAnalyticsContact = email => {
     
-
+    console.log("EMAIL", email)
+    
     const filter = props.contacts.filter(c => c.emailAddresses[0].value === email.from)
+    console.log("FILTER", filter)
     if (filter.length > 0) {
       const contact = {
         emailAddress: filter[0].emailAddresses,
@@ -98,7 +122,6 @@ const Snippet = props => {
         emailAddress: [{value: email.from}],
         name: email.name
       };
-      // console.log("ELSE", contact);
       // Sets contact to be displayed in analytics sidebar
       props.changeAnalyticsContact(contact);
       props.changeIsDisplayingAnalytics(true);
@@ -121,13 +144,15 @@ const Snippet = props => {
         <S.Avatar onClick={() => setAnalyticsContact(props.email)} />
         <div>
           <h3 onClick={() => setAnalyticsContact(props.email)}>
-            {props.email.fromName}
-          </h3>
-          <h3>2 days ago</h3>
+            {props.email.name 
+            ? props.email.name 
+            : props.email.from}
+            </h3>
+            <h3>{showDate(props.email.date)}</h3>
         </div>
       </S.SnipHeader>
       <S.Subject>{props.email.subject}</S.Subject>
-      <S.Message>{props.email.text}</S.Message>
+      <S.Message>{props.email.email_body_text}</S.Message>
     </S.Container>
   );
 };
