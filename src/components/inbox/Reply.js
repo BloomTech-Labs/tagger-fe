@@ -9,8 +9,15 @@ import { compose, bindActionCreators } from "redux";
 import { sendEmail } from "../../actions/composerActions";
 
 const S = {
-  Container: styled.form`
+  Container: styled.div`
+   display: flex;
+   flex-direction: column;
+   align-items: center;
    width: 100%;
+   background-color: white;
+   border-radius: 3px;
+   padding: 0% 3%;
+   box-sizing: border-box;
   `,
   Header: styled.div`
   display: flex;
@@ -26,12 +33,12 @@ HeaderText: styled.p`
 `,
 Input: styled.input`
     width: 70%;
-    margin-left: 2%;
+    // margin-left: 2%;
     border-radius: 2px;
   `,
   Form: styled.form`
     
-    width: 90%;
+    width: 100%;
   `,
   LabelsContainer: styled.div`
     display: flex;
@@ -50,7 +57,7 @@ Input: styled.input`
     }
     `,
     TextBox: styled.textarea`
-    width: 99.4%;
+    width: 100%;
     height: 35vh;
     border-color: #cccccc;
     
@@ -59,18 +66,27 @@ Input: styled.input`
     display: flex;
     align-items: center;
     width: 99.8%;
-    height: 12vh;
+    height: 80px;;
     justify-content: flex-end;
   `,
   Send: styled.button`
-    margin-top: 0.8%;
-    margin-left: 2%;
+    // margin-top: 0.8%;
+    // margin-left: 2%;
     border-radius: 5px;
     width: 8vw;
-    height: 6vh;
+    height: 60px;
     font-size: 1.5rem;
     background-color: #007bff;
     color: white;
+  `,
+
+  Cancel: styled.button`
+    border-radius: 5px;
+    width: 8vw;
+    height: 60px;
+    font-size: 1.5rem;
+    color: #007bff;
+    background-color: white;
   `
   
 
@@ -85,7 +101,7 @@ const Reply = props => {
     port: "465",
     userEmail: props.emailAddress,
     receiver: props.threadContactEmailAddress,
-    subject: `Reply to: ${props.threadContactEmailAddress}`,
+    subject: ``,
     body: ""
   });
 
@@ -109,28 +125,33 @@ const Reply = props => {
   return (  
     <S.Container>
      <S.Header>
-       <S.HeaderText>Replying To: </S.HeaderText>
+  <S.HeaderText>Replying To: {props.threadContactEmailAddress}</S.HeaderText>
        </S.Header>
        <S.Form onSubmit={handleSubmit}>
          <S.LabelsContainer>
            <label>
              <span>CC:</span>
-             <S.Input
-          ></S.Input>
+
+            <S.Input/>
+
            </label>
            <label>
             <span>Bcc:</span>
-          <S.Input ></S.Input>
+
+          <S.Input />
+
           </label>
           <label>
             <span>Subject:</span>
+
           <S.Input
             type="text"
             name="subject"
             id="subject"
             value={email.subject}
             onChange={handleChange}
-          ></S.Input>
+          />
+
           </label>
          </S.LabelsContainer>
          <S.TextBox
@@ -139,10 +160,12 @@ const Reply = props => {
             id="body"
             value={email.body}
             onChange={handleChange}
-          ></S.TextBox>
+          />
        </S.Form>
        <S.Footer>
-       <S.Send type="submit">Send</S.Send>
+
+        <S.Cancel onClick = {props.toggleIsReplying}>Cancel</S.Cancel>
+        <S.Send onClick = {props.toggleIsReplying}type="submit">Send</S.Send>
        </S.Footer>
     </S.Container>
     
