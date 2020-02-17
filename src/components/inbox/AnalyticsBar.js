@@ -99,15 +99,10 @@ const AnalyticsBar = props => {
         }
       />
       <h2>{props.analyticsContact.name}</h2>
-      {/* {props.analyticsContact.emailAddress ? (
-        props.analyticsContact.emailAddress.map(email => {
-          console.log("EMAIL", email);
-          return <h5>{email.value}</h5>;
-        })
-      ) : (
-        <h5>{props.analyticsContact.emailAddress}</h5>
-      )} */}
-      <h5>{props.analyticsContact.emailAddress[0].value}</h5>
+      {props.analyticsContact.emailAddress.map(email => {
+        return <h5>{email.value}</h5>;
+      })}
+      {/* <h5>{props.analyticsContact.emailAddress[0].value}</h5> */}
       <hr />
       {/* <S.Graph>
         <li>
