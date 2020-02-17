@@ -85,16 +85,26 @@ const AnalyticsBar = props => {
   const closeAnalytics = () => {
     props.changeIsDisplayingAnalytics(false);
   };
+  console.log("analytics contact", props.analyticsContact);
   return (
     <S.Container>
       {/* <h1>Analytics</h1> */}
       <button onClick={() => closeAnalytics()}>X</button>
 
-      <S.Avatar src={props.analyticsContact.coverPhoto ? props.analyticsContact.coverPhoto : blackCircle} />
+      <S.Avatar
+        src={
+          props.analyticsContact.coverPhoto
+            ? props.analyticsContact.coverPhoto
+            : blackCircle
+        }
+      />
       <h2>{props.analyticsContact.name}</h2>
-      <h5>{props.analyticsContact.emailAddress}</h5>
+      {props.analyticsContact.emailAddress.map(email => {
+        return <h5>{email.value}</h5>;
+      })}
+      {/* <h5>{props.analyticsContact.emailAddress[0].value}</h5> */}
       <hr />
-      <S.Graph>
+      {/* <S.Graph>
         <li>
           <h6>Total messages</h6>
           <div>
@@ -115,11 +125,11 @@ const AnalyticsBar = props => {
             <span>3</span>
           </div>
         </li>
-      </S.Graph>
-      <S.LastInteraction>
+      </S.Graph> */}
+      {/* <S.LastInteraction>
         <span>Last interaction:</span>
         <span>2 hours ago</span>
-      </S.LastInteraction>
+      </S.LastInteraction> */}
     </S.Container>
   );
 };
@@ -141,9 +151,6 @@ export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
 )(AnalyticsBar);
-
-
-
 
 // https://lh3.googleusercontent.com/c5dqxl-2uHZ82ah9…qmtoLxCUJgEzLGtxsrJ6-v6R6rKU_-FYm881TTiMCJ_=s1600
 // https://lh3.googleusercontent.com/c5dqxl-2uHZ82ah9…qmtoLxCUJgEzLGtxsrJ6-v6R6rKU_-FYm881TTiMCJ_=s1600

@@ -18,7 +18,7 @@ const initialState = {
     isDisplayingAnalytics: true,
     threadContactEmailAddress: "arnoldSchwarzeneger@gov.com",
     analyticsContact: {
-        emailAddress: "arnoldSchwarzeneger@gov.com",
+        emailAddress: ["arnoldSchwarzeneger@gov.com"],
         name: "George Washington",
         coverPhoto: ""
     }
