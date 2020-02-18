@@ -235,6 +235,7 @@ const Nav = (props) => {
             }
         } else if (e.key === "Enter") {
             alert("enter");
+            // todo target the currently selected email to get it to display in threads section
         }
     };
 
