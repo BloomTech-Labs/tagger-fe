@@ -14,7 +14,7 @@ import {
 
 const initialState = {
     // FOR ANALYTICS BAR DEV
-    isDisplayingThread: true,
+    isDisplayingThread: false,
     isDisplayingAnalytics: false,
     threadContactEmailAddress: "arnoldSchwarzeneger@gov.com",
     analyticsContact: {
