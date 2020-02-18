@@ -93,7 +93,13 @@ const Snippet = props => {
   };
 
   function showDate() {
-    let formatDate = new Date(Number(props.email.date))
+    let formatDate;
+    if (props.email.date.includes("T") || props.email.date.includes("-")){
+      formatDate = new Date(props.email.date)
+    } else{
+      formatDate = new Date(Number(props.email.date))
+    }
+
     console.log("formatDate", formatDate)
     let emailDateYear = moment(formatDate).format("YYYY");
     let currentYear = moment().format("YYYY");
@@ -102,7 +108,7 @@ const Snippet = props => {
     } else {
         return moment(formatDate).format("MMM Do YYYY");
     }
-}
+  }
 
   const setAnalyticsContact = email => {
     
