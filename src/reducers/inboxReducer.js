@@ -49,7 +49,7 @@ export const inboxReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 threadContactEmailAddress: payload.from,
-                isDisplayingThread: true;
+                isDisplayingThread: true
             };
 
         // ==============================================
