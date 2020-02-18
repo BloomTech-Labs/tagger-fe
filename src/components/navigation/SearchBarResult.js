@@ -92,12 +92,14 @@ export default function SearchBarResult(props) {
         //todo FUNCTION HERE SET State being mapped over to load inside of the thread section
     }
     function showDate() {
-        let emailDateYear = moment(Number(props.email.date)).format("YYYY");
+        let formatDate = new Date(Number(props.email.date))
+        console.log("formatDate", formatDate)
+        let emailDateYear = moment(formatDate).format("YYYY");
         let currentYear = moment().format("YYYY");
         if (emailDateYear === currentYear) {
-            return moment(Number(props.email.date)).format("MMM Do");
+            return moment(formatDate).format("MMM Do");
         } else {
-            return moment(Number(props.email.date)).format("MMM Do YYYY");
+            return moment(formatDate).format("MMM Do YYYY");
         }
     }
     function showParticipants() {

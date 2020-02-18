@@ -8,7 +8,7 @@ let cors = "https://cors-anywhere.herokuapp.com/"; // prefixing an endpoint URL 
 //+++++++++++++++++++++++++++++++++++++++++++
 //  F O R   D E V E L O P M E N T  O N L Y
 //*******************************************
-local = true; //<- uncomment for local development
+// local = true; //<- uncomment for local development
 // cors = "";    //<- uncomment for local development
 //+++++++++++++++++++++++++++++++++++++++++++
 
@@ -16,7 +16,7 @@ let url;
 if (local) {
   url = "http://localhost:8000/";
 } else {
-  url = "deployed backend root URL here";
+  url = "https://tagger-labs20.herokuapp.com/";
 }
 
 // =============================================================================

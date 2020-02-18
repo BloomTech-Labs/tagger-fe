@@ -19,7 +19,7 @@ const LandingPage = () => {
 
   // const redirectUrl = "http://localhost:3000/inbox";
   const redirectUrl = "https://tagger-lab.netlify.com/inbox";
-  const response = "token";
+  const response = "token"; 
   const client =
     "765722368782-j3bqp7gm072b0vd1lv97kgh2mnp37b7j.apps.googleusercontent.com";
 
