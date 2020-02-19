@@ -85,6 +85,15 @@ const AnalyticsBar = props => {
   const closeAnalytics = () => {
     props.changeIsDisplayingAnalytics(false);
   };
+  console.log("Emails", props.emails);
+
+  const totalEmails = props.emails.filter(
+    email =>
+      email.from.toLowerCase() ===
+      props.analyticsContact.emailAddress[0].value.toLowerCase()
+  );
+  console.log("Total Emails", totalEmails);
+
   console.log("analytics contact", props.analyticsContact);
   return (
     <S.Container>
@@ -104,8 +113,8 @@ const AnalyticsBar = props => {
       })}
       {/* <h5>{props.analyticsContact.emailAddress[0].value}</h5> */}
       <hr />
-      {/* <S.Graph>
-        <li>
+      <S.Graph>
+        {/* <li>
           <h6>Total messages</h6>
           <div>
             <span>3</span>
@@ -117,15 +126,15 @@ const AnalyticsBar = props => {
           <div>
             <span>3</span>
           </div>
-        </li>
+        </li> */}
 
         <li>
           <h6>Received messages</h6>
           <div>
-            <span>3</span>
+            <span>{totalEmails.length}</span>
           </div>
         </li>
-      </S.Graph> */}
+      </S.Graph>
       {/* <S.LastInteraction>
         <span>Last interaction:</span>
         <span>2 hours ago</span>
@@ -136,7 +145,8 @@ const AnalyticsBar = props => {
 
 const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
   analyticsContact: inbox.analyticsContact,
-  contacts: contacts.contacts
+  contacts: contacts.contacts,
+  emails: imap.emails
 });
 
 const mapDispatchToProps = dispatch =>
