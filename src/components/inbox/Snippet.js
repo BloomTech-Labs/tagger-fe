@@ -94,20 +94,28 @@ const Snippet = props => {
   };
 
   function showDate() {
-      let emailDateYear = moment(Number(props.email.date)).format("YYYY");
-      let currentYear = moment().format("YYYY");
-      if (emailDateYear === currentYear) {
-          return moment(Number(props.email.date)).format("MMM Do");
-      } else {
-          return moment(Number(props.email.date)).format("MMM Do YYYY");
-      }
+    let formatDate;
+    if (props.email.date.includes("T") || props.email.date.includes("-")){
+      formatDate = new Date(props.email.date)
+    } else{
+      formatDate = new Date(Number(props.email.date))
+    }
+
+    console.log("formatDate", formatDate)
+    let emailDateYear = moment(formatDate).format("YYYY");
+    let currentYear = moment().format("YYYY");
+    if (emailDateYear === currentYear) {
+        return moment(formatDate).format("MMM Do");
+    } else {
+        return moment(formatDate).format("MMM Do YYYY");
+    }
   }
 
   const setAnalyticsContact = email => {
     
     console.log("EMAIL", email)
     
-    
+
     const filter = props.contacts.filter(c => c.emailAddresses[0].value.toLowerCase() === email.from.toLowerCase())
     console.log("FILTER", filter)
     if (filter.length > 0) {

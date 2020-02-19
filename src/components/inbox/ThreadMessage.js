@@ -3,12 +3,18 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
+
 import parse from "html-react-parser";
 import {
   changeIsDisplayingAnalytics,
   changeAnalyticsContact
 } from "../../actions";
 const moment = require("moment");
+
+
+
+
+
 const S = {
   Container: styled.div`
     box-sizing: border-box;
@@ -65,36 +71,55 @@ const S = {
   `
 };
 
-const ThreadMessage = props => {
-  const setAnalyticsContact = email => {
-    const filter = props.contacts.filter(
-      c => c.emailAddresses[0].value === email.from
-    );
-    if (filter.length > 0) {
-      const contact = {
-        emailAddress: filter[0].emailAddresses,
-        name: filter[0].names[0].displayName,
-        coverPhoto: filter[0].photos[0].url
-      };
-      props.changeAnalyticsContact(contact);
-      props.changeIsDisplayingAnalytics(true);
-    } else {
-      const contact = {
-        emailAddress: [{ value: email.from }],
-        name: email.name
-      };
-      // Sets contact to be displayed in analytics sidebar
-      props.changeAnalyticsContact(contact);
-      props.changeIsDisplayingAnalytics(true);
-    }
-  };
-  function showDate() {
-    let formatDate;
-    if (props.email.date.includes("T") || props.email.date.includes("-")){
-      formatDate = new Date(props.email.date)
-    } else{
-      formatDate = new Date(Number(props.email.date))
-    }
+
+
+const ThreadMessage = (props) => {
+   
+    function showDate() {
+        let formatDate;
+        if (props.email.date.includes("T") || props.email.date.includes("-")){
+          formatDate = new Date(props.email.date)
+        } else{
+          formatDate = new Date(Number(props.email.date))
+        }
+    
+        console.log("formatDate", formatDate)
+        let emailDateYear = moment(formatDate).format("YYYY");
+        let currentYear = moment().format("YYYY");
+        if (emailDateYear === currentYear) {
+            return moment(formatDate).format("MMM Do");
+        } else {
+            return moment(formatDate).format("MMM Do YYYY");
+        }
+      }
+
+    const setAnalyticsContact = email => {
+    
+        console.log("EMAIL", email)
+        
+        const filter = props.contacts.filter(c => c.emailAddresses[0].value === email.from)
+        console.log("FILTER", filter)
+        if (filter.length > 0) {
+          const contact = {
+            emailAddress: filter[0].emailAddresses,
+            name: filter[0].names[0].displayName,
+            coverPhoto: filter[0].photos[0].url
+          };
+         
+          props.changeAnalyticsContact(contact);
+          props.changeIsDisplayingAnalytics(true);
+        } else {
+          const contact = {
+            emailAddress: [{value: email.from}],
+            name: email.name
+          };
+          // Sets contact to be displayed in analytics sidebar
+          props.changeAnalyticsContact(contact);
+          props.changeIsDisplayingAnalytics(true);
+        }
+     
+    };
+
 
     console.log("formatDate", formatDate)
     let emailDateYear = moment(formatDate).format("YYYY");
