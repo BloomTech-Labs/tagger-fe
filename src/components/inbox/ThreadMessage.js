@@ -14,7 +14,7 @@ const S = {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     margin-bottom: 0.5%;
     padding: 1%;
     font-size: 0.8rem;
@@ -61,7 +61,7 @@ const S = {
   `,
   Subject: styled.h2``,
   Message: styled.article`
-    text-align: left;
+    text-align: center;
   `
 };
 
