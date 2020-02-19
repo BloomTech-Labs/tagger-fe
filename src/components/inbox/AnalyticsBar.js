@@ -81,6 +81,7 @@ const S = {
   `
 };
 
+
 const AnalyticsBar = props => {
   const closeAnalytics = () => {
     props.changeIsDisplayingAnalytics(false);
