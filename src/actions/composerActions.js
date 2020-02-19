@@ -7,20 +7,20 @@ export const CHANGE_IS_COMPOSING = "CHANGE_IS_COMPOSING";
 export const CHANGE_IS_REPLYING = "CHANGE_IS_REPLYING";
 
 let local = false;
-// let cors = "https://cors-anywhere.herokuapp.com/"; // prefixing an endpoint URL with this negates CORS issues\\
+let cors = "https://cors-anywhere.herokuapp.com/"; // prefixing an endpoint URL with this negates CORS issues\\
 
 //+++++++++++++++++++++++++++++++++++++++++++
 //  F O R   D E V E L O P M E N T  O N L Y
 //*******************************************
-local = true; //<- uncomment for local development
-// cors = "";    //<- uncomment for local development
+// local = true; //<- uncomment for local development
+cors = "";    //<- uncomment for local development
 //+++++++++++++++++++++++++++++++++++++++++++
 
 let url;
 if (local) {
   url = "http://localhost:8000/";
 } else {
-  url = "deployed backend root URL here";
+  url = `${cors}https://tagger-labs20.herokuapp.com/`;
 }
 
 
