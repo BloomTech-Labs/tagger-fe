@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import parse from "html-react-parser";
+import IframeResizer from "iframe-resizer-react";
 import {
   changeIsDisplayingAnalytics,
   changeAnalyticsContact
@@ -11,6 +12,8 @@ import {
 const moment = require("moment");
 const S = {
   Container: styled.div`
+    width:100%;
+    min-height:800px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -20,6 +23,10 @@ const S = {
     font-size: 0.8rem;
     background-color: white;
     border-radius: 3px;
+    // iframe {
+    //   width:100%;
+    //   height:-webkit-fill-available;
+    // }
   `,
   ContactHeader: styled.div`
     display: flex;
@@ -61,11 +68,20 @@ const S = {
   `,
   Subject: styled.h2``,
   Message: styled.article`
-    text-align: center;
+    text-align: left;
   `
 };
-
 const ThreadMessage = props => {
+  var html = props.email.email_body;
+  html = html
+    .replace(/\s{2,}/g, "") // <-- Replace all consecutive spaces, 2+
+    .replace(/%/g, "%25") // <-- Escape %
+    .replace(/&/g, "%26") // <-- Escape &
+    .replace(/#/g, "%23") // <-- Escape #
+    .replace(/"/g, "%22") // <-- Escape "
+    .replace(/'/g, "%27"); // <-- Escape ' (to be 100% safe)
+  var dataURI = "data:text/html;charset=UTF-8," + html;
+
   const setAnalyticsContact = email => {
     const filter = props.contacts.filter(
       c => c.emailAddresses[0].value === email.from
@@ -90,19 +106,19 @@ const ThreadMessage = props => {
   };
   function showDate() {
     let formatDate;
-    if (props.email.date.includes("T") || props.email.date.includes("-")){
-      formatDate = new Date(props.email.date)
-    } else{
-      formatDate = new Date(Number(props.email.date))
+    if (props.email.date.includes("T") || props.email.date.includes("-")) {
+      formatDate = new Date(props.email.date);
+    } else {
+      formatDate = new Date(Number(props.email.date));
     }
 
-    console.log("formatDate", formatDate)
+    console.log("formatDate", formatDate);
     let emailDateYear = moment(formatDate).format("YYYY");
     let currentYear = moment().format("YYYY");
     if (emailDateYear === currentYear) {
-        return moment(formatDate).format("MMM Do");
+      return moment(formatDate).format("MMM Do");
     } else {
-        return moment(formatDate).format("MMM Do YYYY");
+      return moment(formatDate).format("MMM Do YYYY");
     }
   }
   return (
@@ -122,7 +138,14 @@ const ThreadMessage = props => {
       </S.ContactHeader>
 
       <S.Subject>{props.email.subject}</S.Subject>
-      <S.Message>{parse(props.email.email_body)}</S.Message>
+      {/* <IframeResizer
+        log
+        src={dataURI}
+        style={{ width: "1px", minWidth: "100%" }}
+      /> */}
+      {/* <iframe src={dataURI} width="100%" height="100%" ></iframe> */}
+      <iframe src={dataURI} width="100%" ></iframe>
+      
     </S.Container>
   );
 };
