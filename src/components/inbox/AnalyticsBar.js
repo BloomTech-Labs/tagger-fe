@@ -97,7 +97,7 @@ const AnalyticsBar = props => {
   console.log("analytics contact", props.analyticsContact);
   return (
     <S.Container>
-      {/* <h1>Analytics</h1> */}
+     
       <button onClick={() => closeAnalytics()}>X</button>
 
       <S.Avatar
@@ -111,7 +111,7 @@ const AnalyticsBar = props => {
       {props.analyticsContact.emailAddress.map(email => {
         return <h5>{email.value}</h5>;
       })}
-      {/* <h5>{props.analyticsContact.emailAddress[0].value}</h5> */}
+      
       <hr />
       <S.Graph>
         {/* <li>
@@ -162,5 +162,4 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps)
 )(AnalyticsBar);
 
-// https://lh3.googleusercontent.com/c5dqxl-2uHZ82ah9…qmtoLxCUJgEzLGtxsrJ6-v6R6rKU_-FYm881TTiMCJ_=s1600
-// https://lh3.googleusercontent.com/c5dqxl-2uHZ82ah9…qmtoLxCUJgEzLGtxsrJ6-v6R6rKU_-FYm881TTiMCJ_=s1600
+
