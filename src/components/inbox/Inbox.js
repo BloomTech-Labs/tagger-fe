@@ -27,7 +27,10 @@ const Inbox = (props) => {
         const url = props.history.location.hash;
         const token = extractTokenFromUrl(url);
         // const redirectUrl = "http://localhost:3000/inbox";
-        const redirectUrl = "https://tagger-lab.netlify.com/inbox";
+        // const redirectUrl = "https://tagger-lab.netlify.com/inbox";
+        const redirectUrl = process.env.REACT_APP_REDIRECTURI 
+            ? process.env.REACT_APP_REDIRECTURI 
+            : "http://localhost:3000/inbox";
         const response = "token";
         const client = "765722368782-j3bqp7gm072b0vd1lv97kgh2mnp37b7j.apps.googleusercontent.com";
         if (!props.isEmailAddressAndIdRetrieved) {
