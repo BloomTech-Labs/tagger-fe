@@ -81,14 +81,24 @@ const S = {
   `
 };
 
+
 const AnalyticsBar = props => {
   const closeAnalytics = () => {
     props.changeIsDisplayingAnalytics(false);
   };
+  console.log("Emails", props.emails);
+
+  const totalEmails = props.emails.filter(
+    email =>
+      email.from.toLowerCase() ===
+      props.analyticsContact.emailAddress[0].value.toLowerCase()
+  );
+  console.log("Total Emails", totalEmails);
+
   console.log("analytics contact", props.analyticsContact);
   return (
     <S.Container>
-      {/* <h1>Analytics</h1> */}
+     
       <button onClick={() => closeAnalytics()}>X</button>
 
       <S.Avatar
@@ -102,10 +112,10 @@ const AnalyticsBar = props => {
       {props.analyticsContact.emailAddress.map(email => {
         return <h5>{email.value}</h5>;
       })}
-      {/* <h5>{props.analyticsContact.emailAddress[0].value}</h5> */}
+      
       <hr />
-      {/* <S.Graph>
-        <li>
+      <S.Graph>
+        {/* <li>
           <h6>Total messages</h6>
           <div>
             <span>3</span>
@@ -117,15 +127,15 @@ const AnalyticsBar = props => {
           <div>
             <span>3</span>
           </div>
-        </li>
+        </li> */}
 
         <li>
           <h6>Received messages</h6>
           <div>
-            <span>3</span>
+            <span>{totalEmails.length}</span>
           </div>
         </li>
-      </S.Graph> */}
+      </S.Graph>
       {/* <S.LastInteraction>
         <span>Last interaction:</span>
         <span>2 hours ago</span>
@@ -136,7 +146,8 @@ const AnalyticsBar = props => {
 
 const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
   analyticsContact: inbox.analyticsContact,
-  contacts: contacts.contacts
+  contacts: contacts.contacts,
+  emails: imap.emails
 });
 
 const mapDispatchToProps = dispatch =>
@@ -152,5 +163,4 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps)
 )(AnalyticsBar);
 
-// https://lh3.googleusercontent.com/c5dqxl-2uHZ82ah9…qmtoLxCUJgEzLGtxsrJ6-v6R6rKU_-FYm881TTiMCJ_=s1600
-// https://lh3.googleusercontent.com/c5dqxl-2uHZ82ah9…qmtoLxCUJgEzLGtxsrJ6-v6R6rKU_-FYm881TTiMCJ_=s1600
+

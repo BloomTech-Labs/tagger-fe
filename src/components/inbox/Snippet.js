@@ -71,22 +71,9 @@ const S = {
 };
 
 const Snippet = props => {
+ 
   const setThreadContact = () => {
-    // Sets contact in thread section to be the one from this snippet
-    // let i;
-    // for (i = 0; i < props.contacts.length; i++) {
-    //   if (props.contacts[i].email === props.email.from) {
-    //     props.changeThreadContact(props.contacts[i].email);
-    //     if (!props.isDisplayingThread) {
-    //       props.changeIsDisplayingThread(true);
-    //     }
-    //   } else {
-    //     props.changeThreadContact(props.email.from);
-    //     if (!props.isDisplayingThread) {
-    //       props.changeIsDisplayingThread(true);
-    //     }
-    //   }
-    // }
+    
     const emailObj = props.email;
     props.changeThreadContact(emailObj);
 
@@ -113,6 +100,7 @@ const Snippet = props => {
   const setAnalyticsContact = email => {
     
     console.log("EMAIL", email)
+    
     
     const filter = props.contacts.filter(c => c.emailAddresses[0].value.toLowerCase() === email.from.toLowerCase())
     console.log("FILTER", filter)
@@ -144,10 +132,7 @@ const Snippet = props => {
       }
       onClick={() => setThreadContact()}
     >
-      {/* <h3>{props.email.fromName}</h3>
-            <span>{props.email.subject}</span>
-            <span>{props.email.text}</span>
-            <div>{props.email.fromEmailAddress}</div> */}
+     
       <S.SnipHeader>
         <S.Avatar onClick={() => setAnalyticsContact(props.email)} />
         <div>
