@@ -133,7 +133,12 @@ const ThreadMessage = (props) => {
             <S.Subject>{props.email.subject}</S.Subject>
             <S.Message>{props.email.email_body_text}</S.Message>
             {replyIsHidden ? null : (
-                <Reply responseType={responseType} setResponseType={setResponseType} />
+                <Reply
+                    responseType={responseType}
+                    setResponseType={setResponseType}
+                    email={props.email}
+                    setReplyIsHidden={setReplyIsHidden}
+                />
             )}
         </S.Container>
     );

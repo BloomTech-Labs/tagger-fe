@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
@@ -7,6 +7,7 @@ import { compose, bindActionCreators } from "redux";
 
 import { sendEmail } from "../../actions/composerActions";
 import MessageType from "./MessageType";
+import ContactButton from "./ContactButton";
 const S = {
     Container: styled.div`
         display: flex;
@@ -32,7 +33,7 @@ const S = {
     //     margin-left: 1.5%;
     // `,
     Input: styled.input`
-        width: 70%;
+        width: 98%;
         // margin-left: 2%;
         border-radius: 2px;
     `,
@@ -52,6 +53,12 @@ const S = {
             span {
                 width: 65px;
                 margin-left: 5%;
+            }
+            .ContactButton {
+                width: 100%;
+                height: fit-content;
+                display: flex;
+                flex-wrap: wrap;
             }
         }
     `,
@@ -111,7 +118,7 @@ const S = {
 };
 
 const Reply = (props) => {
-    const [email, setEmail] = useState({
+    const initialState = {
         service: "gmail",
         host: "smtp.gmail.com",
         port: "465",
@@ -119,8 +126,25 @@ const Reply = (props) => {
         receiver: props.threadContactEmailAddress,
         subject: ``,
         body: ""
-    });
+    };
+    const [email, setEmail] = useState(initialState);
+    const [addresses, setAddresses] = useState([]);
+    useEffect(() => {
+        if (props.responseType === "Reply") {
+            setAddresses([props.email.from]);
+        } else if (props.responseType === "Forward") {
+            setAddresses([]);
+        } else if (props.responseType === "Reply-All") {
+            let array = props.email.to.split(", ");
+            setAddresses(array);
+        }
+    }, [props.responseType]);
 
+    const removeAddress = (index) => {
+        const currentAddressList = [...addresses];
+        currentAddressList.splice(index, 1);
+        setAddresses([...currentAddressList]);
+    };
     const handleChange = (e) => {
         let value = e.target.value;
         setEmail({
@@ -128,13 +152,17 @@ const Reply = (props) => {
             [e.target.name]: value
         });
     };
-
+    const handleCancel = () => {
+        setEmail(initialState);
+        props.setReplyIsHidden(true);
+    };
     const handleSubmit = (e) => {
         e.preventDefault();
         // props.sendEmail(emailInfo);
         props.toggleIsReplying();
         console.log("REPLYING", email);
         props.sendEmail(email);
+        props.setReplyIsHidden(true);
     };
 
     return (
@@ -150,8 +178,19 @@ const Reply = (props) => {
                 <S.LabelsContainer>
                     <label>
                         <span>TO:</span>
-
-                        <S.Input />
+                        <div className="ContactButton">
+                            {addresses.map((address, index) => {
+                                return (
+                                    <ContactButton
+                                        key={`ContactButton${index}`}
+                                        text={address}
+                                        index={index}
+                                        remove={removeAddress}
+                                    />
+                                );
+                            })}
+                            <S.Input />
+                        </div>
                     </label>
                     <label>
                         <span>CC:</span>
@@ -184,7 +223,7 @@ const Reply = (props) => {
                 onChange={handleChange}
             />
             <S.Footer>
-                <S.Cancel onClick={props.toggleIsReplying}>Cancel</S.Cancel>
+                <S.Cancel onClick={handleCancel}>Cancel</S.Cancel>
                 <S.Send onClick={handleSubmit} type="submit">
                     Send
                 </S.Send>
