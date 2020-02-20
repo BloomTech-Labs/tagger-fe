@@ -57,13 +57,9 @@ const LandingPage = () => {
         <div className="landing-section landing-section1">
           <div className="landing-feature feature-1">
             <div>
-              <h3>Stay connected</h3>
+              <h3>Why Tagger?</h3>
               <p>
-                Whoever you're talking to -- clients, friends, or family -- stay
-                in touch and see your connections right in your dashboard.
-                You'll see stats that show you how frequently you email
-                eachother, the last date that you contacted them, and more,
-                right next to your messages.
+                Ever feel like you can't find anything in your inbox but remember who you spoke to about something? Or you want to generalize a search in your inbox because you don't remember who you talked to and didn't refer to the topic specifically.
               </p>
             </div>
             <img className="product-img" src={gif1}></img>
@@ -76,12 +72,9 @@ const LandingPage = () => {
           <div className="landing-feature feature-2">
             <img className="product-img" src={contacts}></img>
             <div>
-              <h3>Gmail, but better</h3>
+              <h3>I want something in my email and not sure how to access it!</h3>
               <p>
-                Our team's spent a lot of time with Gmail -- and even MORE time
-                getting frustrated with it. Tagger is powered by your Gmail
-                account and features a new & improved design, custom-made for
-                your modern life.
+              That's where Tagger comes in, with our smart search functionality, we were able to implement an easier, more flexible search parameter. Now we can search through email contacts, with 'to' and 'from' flags. 
               </p>
             </div>
           </div>
@@ -92,9 +85,8 @@ const LandingPage = () => {
               <h3>Work smarter, not harder</h3>
               <p>
                 Have you ever spent too long searching for an old email thread?
-                Us too! Tagger was built to auto-tag and sort your messages
-                using advanced Machine Learning tools, so you'll never lose
-                track of the conversations that matter to you.
+                Us too! Tagger was built to search and sort your messages
+                
               </p>
             </div>
             <img className="product-img" src={gif2}></img>
