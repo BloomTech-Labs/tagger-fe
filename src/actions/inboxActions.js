@@ -8,7 +8,7 @@ let cors = "https://cors-anywhere.herokuapp.com/"; // prefixing an endpoint URL 
 //+++++++++++++++++++++++++++++++++++++++++++
 //  F O R   D E V E L O P M E N T  O N L Y
 //*******************************************
-local = true; //<- uncomment for local development
+// local = true; //<- uncomment for local development
 // cors = "";    //<- uncomment for local development
 //+++++++++++++++++++++++++++++++++++++++++++
 
@@ -16,8 +16,10 @@ let url;
 if (local) {
     url = "http://localhost:8000/";
 } else {
-    url = "deployed backend root URL here";
+    url = `https://tagger-labs20.herokuapp.com/`;
 }
+
+console.log("URL", url)
 
 // =============================================================================
 // Get User Id__________________________________________________________________
@@ -81,9 +83,11 @@ export const getEmails = (emailAddress, token) => (dispatch) => {
     dispatch({ type: GET_EMAILS_START });
     const imapAccess = `user=${emailAddress}auth=Bearer ${token}`; // Between the following arrows >< is either a square or a space. IDK what it is but you need it
     const imapAccessHash = btoa(`user=${emailAddress}auth=Bearer ${token}`); // Between the following arrows >< is either a square or a space. IDK what it is but you need it
+    console.log("AUTH TOKEN: ", imapAccessHash)
+    
     alert("Im working!");
     return axios
-        .post(`http://localhost:8000/emails/stream`, {
+        .post(`${url}emails/stream`, {
             email: emailAddress,
             host: "imap.gmail.com", // << will need to be made dynamic upon integration of other email clients
             token: imapAccessHash
@@ -126,16 +130,17 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
     dispatch({ type: EMAILS_UPDATE_START });
     const imapAccess = `user=${emailAddress}auth=Bearer ${token}`; // Between the following arrows >< is either a square or a space. IDK what it is but you need it
     const imapAccessHash = btoa(`user=${emailAddress}auth=Bearer ${token}`); // Between the following arrows >< is either a square or a space. IDK what it is but you need it
+    console.log("AUTH TOKEN: ", imapAccessHash)
 
     return axios
-        .post(`http://localhost:8000/emails`, {
+        .post(`${url}emails`, {
             email: emailAddress,
             host: "imap.gmail.com", // << will need to be made dynamic upon integration of other email clients
             token: imapAccessHash
         })
         .then(() => {
             return axios
-                .post(`http://localhost:8000/emails/stream`, {
+                .post(`${url}emails/stream`, {
                     email: emailAddress
                 })
                 .then((res) => {

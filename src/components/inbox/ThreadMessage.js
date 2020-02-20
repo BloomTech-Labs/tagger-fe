@@ -5,6 +5,7 @@ import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import Reply from "./Reply";
 import { changeIsDisplayingAnalytics, changeAnalyticsContact } from "../../actions";
+const moment = require("moment");
 
 const S = {
     Container: styled.div`
