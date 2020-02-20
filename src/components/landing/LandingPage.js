@@ -84,9 +84,8 @@ const LandingPage = () => {
             <div>
               <h3>Work smarter, not harder</h3>
               <p>
-                Have you ever spent too long searching for an old email thread?
-                Us too! Tagger was built to search and sort your messages
-                
+                Have you ever spent too long searching for an old email?
+                Us too! Tagger discovered and developed an email client that methodically goes through your inbox and contacts with a relevant scope of search and returns what you're looking for. 
               </p>
             </div>
             <img className="product-img" src={gif2}></img>
