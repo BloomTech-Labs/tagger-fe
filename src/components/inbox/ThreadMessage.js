@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
@@ -9,11 +10,12 @@ import {
   changeIsDisplayingAnalytics,
   changeAnalyticsContact
 } from "../../actions";
+import FullHeightIFrame from "./FullHeightIFrame"
+
 const moment = require("moment");
 const S = {
   Container: styled.div`
-    width:100%;
-    min-height:800px;
+    width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -23,10 +25,6 @@ const S = {
     font-size: 0.8rem;
     background-color: white;
     border-radius: 3px;
-    // iframe {
-    //   width:100%;
-    //   height:-webkit-fill-available;
-    // }
   `,
   ContactHeader: styled.div`
     display: flex;
@@ -72,6 +70,7 @@ const S = {
   `
 };
 const ThreadMessage = props => {
+  
   var html = props.email.email_body;
   html = html
     .replace(/\s{2,}/g, "") // <-- Replace all consecutive spaces, 2+
@@ -81,7 +80,7 @@ const ThreadMessage = props => {
     .replace(/"/g, "%22") // <-- Escape "
     .replace(/'/g, "%27"); // <-- Escape ' (to be 100% safe)
   var dataURI = "data:text/html;charset=UTF-8," + html;
-
+  
   const setAnalyticsContact = email => {
     const filter = props.contacts.filter(
       c => c.emailAddresses[0].value === email.from
@@ -112,7 +111,7 @@ const ThreadMessage = props => {
       formatDate = new Date(Number(props.email.date));
     }
 
-    console.log("formatDate", formatDate);
+    
     let emailDateYear = moment(formatDate).format("YYYY");
     let currentYear = moment().format("YYYY");
     if (emailDateYear === currentYear) {
@@ -138,13 +137,9 @@ const ThreadMessage = props => {
       </S.ContactHeader>
 
       <S.Subject>{props.email.subject}</S.Subject>
-      {/* <IframeResizer
-        log
-        src={dataURI}
-        style={{ width: "1px", minWidth: "100%" }}
-      /> */}
-      {/* <iframe src={dataURI} width="100%" height="100%" ></iframe> */}
-      <iframe src={dataURI} width="100%" ></iframe>
+  
+  {props.email.email_body === "false" ? <S.Message>{props.email.email_body_text}</S.Message>: <FullHeightIFrame src={props.email.email_body}/>}
+
       
     </S.Container>
   );

@@ -87,7 +87,7 @@ const Snippet = props => {
       formatDate = new Date(Number(props.email.date))
     }
 
-    console.log("formatDate", formatDate)
+    
     let emailDateYear = moment(formatDate).format("YYYY");
     let currentYear = moment().format("YYYY");
     if (emailDateYear === currentYear) {
