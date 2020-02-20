@@ -15,12 +15,9 @@ let cors = "https://cors-anywhere.herokuapp.com/"; // prefixing an endpoint URL 
 cors = "";    //<- uncomment for local development
 //+++++++++++++++++++++++++++++++++++++++++++
 
-let url;
-if (local) {
-  url = "http://localhost:8000/";
-} else {
-  url = `https://tagger-labs20.herokuapp.com/`;
-}
+const url = process.env.REACT_APP_BACKENDURL
+  ? process.env.REACT_APP_BACKENDURL
+  : "http://localhost:8000/";
 
 export const GET_USER_CONTACTS_START = "GET_USER_CONTACTS_START";
 export const GET_USER_CONTACTS_SUCCESS = "GET_USER_CONTACTS_SUCCESS";
