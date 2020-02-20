@@ -23,12 +23,7 @@ export default function FilterButton(props) {
     return (
         <S.Button>
             {props.text}
-            <i
-                className="fa fa-times-circle"
-                onClick={() => {
-                    props.remove(props.index);
-                }}
-            />
+            <i className="fa fa-times-circle" onClick={props.onClick} />
         </S.Button>
     );
 }

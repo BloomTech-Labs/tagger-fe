@@ -93,13 +93,12 @@ export default function SearchBarResult(props) {
     }
     function showDate() {
         let formatDate;
-        if (props.email.date.includes("T") || props.email.date.includes("-")){
-          formatDate = new Date(props.email.date)
-        } else{
-          formatDate = new Date(Number(props.email.date))
+        if (props.email.date.includes("T") || props.email.date.includes("-")) {
+            formatDate = new Date(props.email.date);
+        } else {
+            formatDate = new Date(Number(props.email.date));
         }
-    
-        console.log("formatDate", formatDate)
+
         let emailDateYear = moment(formatDate).format("YYYY");
         let currentYear = moment().format("YYYY");
         if (emailDateYear === currentYear) {
@@ -107,7 +106,7 @@ export default function SearchBarResult(props) {
         } else {
             return moment(formatDate).format("MMM Do YYYY");
         }
-      }
+    }
     function showParticipants() {
         if (props.email.name === "") {
             return props.email.from;
