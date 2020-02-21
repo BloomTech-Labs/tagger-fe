@@ -11,72 +11,56 @@ import Reply from "./Reply";
 import { changeIsDisplayingAnalytics } from "../../actions";
 
 const S = {
-    Container: styled.div`
-        width: 75%; //
-        height: 100%;
-        box-sizing: border-box;
-        overflow-y: auto;
+  Container: styled.div`
+    width: 75%; //
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
 
-        padding: 0% 0.5%;
-        background-color: #ebebeb;
-    `
-
-    // InitReplyBtn: styled.button`
-    //     position: absolute;
-    //     bottom: 10px;
-    //     right: calc(((100% - 230px) * 0.23) + 10px);
-    //     // right: 30%;
-    //     width: 8vw;
-    //     height: 60px;
-    //     z-index: 100;
-    //     background-color: black;
-
-    //     border-radius: 5px;
-    //     font-size: 1.5rem;
-    //     background-color: #007bff;
-    //     color: white;
-    // `
+    padding: 0% 0.5%;
+    background-color: #ebebeb;
+  `
 };
 
-const Thread = (props) => {
-    const toggleIsDisplayingAnalytics = () => {
-        props.changeIsDisplayingAnalytics(!props.isDisplayingAnalytics);
-    };
+const Thread = props => {
+  const toggleIsDisplayingAnalytics = () => {
+    props.changeIsDisplayingAnalytics(!props.isDisplayingAnalytics);
+  };
 
-    return (
-        <S.Container>
-            {/* <h1>Thread between you & {props.threadContactEmailAddress}</h1>
-        <button onClick = {() => toggleIsDisplayingAnalytics()}>Toggle Analytics ON/OFF</button> */}
+  const showThread = props.emails.filter(
+    email => email.gmThreadID === props.thread.gmThreadID
+  );
 
-            {props.emails
-                .filter((email) => {
-                    return email.from === props.threadContactEmailAddress;
-                    // return email.fromEmailAddress === props.threadContactEmailAddress; // <<worked
-                })
-                .map((email) => {
-                    return <ThreadMessage key={Math.random()} email={email} />;
-                })}
-        </S.Container>
-    );
+  return (
+    <S.Container>
+      {showThread.map(email => {
+        return <ThreadMessage key={Math.random()} email={email} />;
+      })}
+    </S.Container>
+  );
 };
 
 const mapStateToProps = ({ imap, user, inbox }) => ({
-    emailAddress: user.emailAddress,
-    user_id: user.user_id,
-    isEmailAddressAndIdRetrieved: user.isEmailAddressAndIdRetrieved,
-    areEmailsRetrieved: imap.areEmailsRetrieved,
-    emails: imap.emails,
-    isLoggedIn: user.isLoggedIn,
-    isDisplayingAnalytics: inbox.isDisplayingAnalytics,
-    threadContactEmailAddress: inbox.threadContactEmailAddress
+  emailAddress: user.emailAddress,
+  user_id: user.user_id,
+  isEmailAddressAndIdRetrieved: user.isEmailAddressAndIdRetrieved,
+  areEmailsRetrieved: imap.areEmailsRetrieved,
+  emails: imap.emails,
+  isLoggedIn: user.isLoggedIn,
+  isDisplayingAnalytics: inbox.isDisplayingAnalytics,
+  threadContactEmailAddress: inbox.threadContactEmailAddress,
+  thread: inbox.thread
 });
 
-const mapDispatchToProps = (dispatch) =>
-    bindActionCreators(
-        {
-            changeIsDisplayingAnalytics
-        },
-        dispatch
-    );
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      changeIsDisplayingAnalytics
+    },
+    dispatch
+  );
 
-export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Thread);
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(Thread);

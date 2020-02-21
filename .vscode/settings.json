@@ -1,8 +1,12 @@
 {
     "cSpell.ignoreWords": [
         "displayname",
+        "fullheight",
         "getuserdata",
+        "height",
+        "iframe",
         "pngguru",
+        "setiframe",
         "userid",
         "userinfo"
     ]
