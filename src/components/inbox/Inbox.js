@@ -4,15 +4,15 @@ import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import Emails from "./Emails";
-
 import { getUserEmailAndId, getEmails, changeIsLoggedIn } from "../../actions";
 import Sidebar from "./Sidebar";
+import Swal from 'sweetalert2';
 
 const S = {
   Container: styled.div`
     display: flex;
     height: calc(100vh - 64px);
-  `
+  `,
 };
 
 const Inbox = props => {
@@ -59,11 +59,14 @@ const Inbox = props => {
     return token;
   }
 
+  Swal.fire('Please wait for your messages to load. If this is your first time signing in, this may take a few minutes.')
+  
   return (
     <S.Container>
       <Sidebar />
       <Emails />
     </S.Container>
+     
   );
 };
 
