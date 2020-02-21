@@ -4,70 +4,69 @@ import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 
-
 import {
-  changeThreadContact,
-  changeIsDisplayingThread,
-  changeAnalyticsContact,
-  changeIsDisplayingAnalytics
+    changeThreadContact,
+    changeIsDisplayingThread,
+    changeAnalyticsContact,
+    changeIsDisplayingAnalytics
 } from "../../actions";
 
 const moment = require("moment");
 
 const S = {
-  Container: styled.div`
-    width: 100%;
-    height: ${props => props.heightInPx}px;
-    box-sizing: border-box;
-    font-size: 0.8rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 3px 1%;
-    border-bottom: solid #e0e0e0 1px;
-  `,
-  SnipHeader: styled.div`
-    width: 100%;
-    // border: solid green 1px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    // background-color: yellow;
+    Container: styled.div`
+        width: 100%;
+        height: ${(props) => props.heightInPx}px;
+        box-sizing: border-box;
+        font-size: 0.8rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 3px 1%;
+        border-bottom: solid #e0e0e0 1px;
+    `,
+    SnipHeader: styled.div`
+        width: 100%;
+        // border: solid green 1px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        // background-color: yellow;
 
-    h3 {
-      margin: 0px;
-    }
+        h3 {
+            margin: 0px;
+        }
 
-    div {
-      width: calc(100% - 30px);
-      box-sizing: border-box;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-  `,
-  Avatar: styled.img`
-    width: 30px;
-    height: 30px;
-    background-color: black;
-    border-radius: 15px;
-    margin: 0px;
-    margin-right: 1%;
-  `,
-  Subject: styled.div`
-    font-weight: 700;
-  `,
-  Message: styled.div`
-    width: 100%;
-    text-align: left;
-    overflow: hidden;
-    overflow: hidden;
-    white-space: nowrap;
-    word-break: break-word;
-    text-align: left;
-    text-overflow: ellipsis;
-  `
+        div {
+            width: calc(100% - 30px);
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    `,
+    Avatar: styled.img`
+        width: 30px;
+        height: 30px;
+        background-color: black;
+        border-radius: 15px;
+        margin: 0px;
+        margin-right: 1%;
+    `,
+    Subject: styled.div`
+        font-weight: 700;
+    `,
+    Message: styled.div`
+        width: 100%;
+        text-align: left;
+        overflow: hidden;
+        overflow: hidden;
+        white-space: nowrap;
+        word-break: break-word;
+        text-align: left;
+        text-overflow: ellipsis;
+    `
 };
 
 const Snippet = props => {
@@ -105,7 +104,6 @@ const Snippet = props => {
   const setAnalyticsContact = email => {
     
     console.log("EMAIL", email)
-    
     
     const filter = props.contacts.filter(c => c.emailAddresses[0].value.toLowerCase() === email.from.toLowerCase())
     console.log("FILTER", filter)
@@ -156,23 +154,20 @@ const Snippet = props => {
 };
 
 const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
-  isDisplayingThread: inbox.isDisplayingThread,
-  isDisplayingAnalytics: inbox.isDisplayingAnalytics,
-  contacts: contacts.contacts
+    isDisplayingThread: inbox.isDisplayingThread,
+    isDisplayingAnalytics: inbox.isDisplayingAnalytics,
+    contacts: contacts.contacts
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      changeThreadContact,
-      changeIsDisplayingThread,
-      changeAnalyticsContact,
-      changeIsDisplayingAnalytics
-    },
-    dispatch
-  );
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators(
+        {
+            changeThreadContact,
+            changeIsDisplayingThread,
+            changeAnalyticsContact,
+            changeIsDisplayingAnalytics
+        },
+        dispatch
+    );
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
-)(Snippet);
+export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Snippet);

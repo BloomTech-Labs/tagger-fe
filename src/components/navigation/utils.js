@@ -11,7 +11,7 @@ var fuseOptions = {
     distance: 100,
     maxPatternLength: 32,
     minMatchCharLength: 1,
-    keys: ["text", "from", "to", "uid", "subject", "tags"]
+    keys: ["name", "from", "to", "email_body_text", "subject"]
 };
 
 // fuzzyFunction is the core function call for use of fusejs dependency
@@ -59,6 +59,35 @@ function refineSearchParams(filterArray) {
 export function addSearchTag(str, searchQuery) {
     let string = str;
     let keyFilter = [];
+    let optionalFilter = [];
+
+    if (string.includes(".com:") && !searchQuery.optionalFilter.includes(".com:")) {
+        const regex = /.com:/gi;
+        string = string.replace(regex, "");
+        optionalFilter.push(".com");
+    }
+    if (string.includes(".net:") && !searchQuery.optionalFilter.includes(".net:")) {
+        const regex = /.net:/gi;
+        string = string.replace(regex, "");
+        optionalFilter.push(".net");
+    }
+    if (string.includes(".org:") && !searchQuery.optionalFilter.includes(".org:")) {
+        const regex = /.org:/gi;
+        string = string.replace(regex, "");
+        optionalFilter.push(".org");
+    }
+    if (string.includes(".edu:") && !searchQuery.optionalFilter.includes(".edu:")) {
+        const regex = /.edu:/gi;
+        string = string.replace(regex, "");
+        optionalFilter.push(".edu");
+    }
+    if (string.includes(".gov:") && !searchQuery.optionalFilter.includes(".gov:")) {
+        const regex = /.gov:/gi;
+        string = string.replace(regex, "");
+        optionalFilter.push(".gov");
+    }
+    // ===========================================
+    // Below are fuzzy search filters
     if (string.includes("exact:") && !searchQuery.filters.includes("exact")) {
         const regex = /exact:/gi;
         string = string.replace(regex, "");
@@ -79,11 +108,20 @@ export function addSearchTag(str, searchQuery) {
         string = string.replace(regex, "");
         keyFilter.push("subject");
     }
-    if (string.includes("body:") && !searchQuery.filters.includes("body")) {
+    if (string.includes("name:") && !searchQuery.filters.includes("name")) {
+        const regex = /name:/gi;
+        string = string.replace(regex, "");
+        keyFilter.push("name");
+    }
+    if (string.includes("body:") && !searchQuery.filters.includes("email_body_text")) {
         const regex = /body:/gi;
         string = string.replace(regex, "");
-        keyFilter.push("body");
+        keyFilter.push("email_body_text");
     }
-    let results = { string: string, filter: keyFilter };
+    let results = {
+        string: string,
+        filter: keyFilter,
+        optional: optionalFilter
+    };
     return results;
 }

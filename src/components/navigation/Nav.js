@@ -143,6 +143,7 @@ const Nav = (props) => {
     const [searchQuery, setSearchQuery] = useState({
         search: "",
         filters: [],
+        optionalFilter: [],
         fuzzySearch: true,
         smartSearch: false,
         results: [...props.results],
@@ -165,14 +166,37 @@ const Nav = (props) => {
 
     const [showSearchOptions, setShowSearchOptions] = useState(false);
     const [smartSearchIsChecked, setSmartSearchIsChecked] = useState(false);
-    const removeFilter = (index) => {
-        const currentFilters = [...searchQuery.filters];
+
+    function removeFilter(index, whichFilter) {
+        const currentFilters = [...searchQuery[`${whichFilter}`]];
         currentFilters.splice(index, 1);
         setSearchQuery({
             ...searchQuery,
-            filters: currentFilters
+            [`${whichFilter}`]: currentFilters
         });
-    };
+        // =================== above reruns the display only
+    }
+    useEffect(() => {
+        //=============below should rerun search logic
+
+        const emails = props.emails;
+        if (searchQuery.optionalFilter.length > 0) {
+            console.log(searchQuery.optionalFilter, "else if search query");
+            let baseFuzzyResults = fuzzyFunction(searchQuery.search, searchQuery.filters, emails);
+            let applyOptionalFilters = baseFuzzyResults.filter((eachEmail) => {
+                for (let index = 0; index < searchQuery.optionalFilter.length; index++) {
+                    if (eachEmail.from.includes(searchQuery.optionalFilter[index])) {
+                        return eachEmail;
+                    } else if (eachEmail.to.includes(searchQuery.optionalFilter[index])) {
+                        return eachEmail;
+                    }
+                }
+            });
+            props.saveSearch(applyOptionalFilters);
+        } else {
+            props.saveSearch(fuzzyFunction(searchQuery.search, searchQuery.filters, emails));
+        }
+    }, [searchQuery.filters, searchQuery.optionalFilter]);
 
     const handleArrowSelect = (e) => {
         console.log("ON KEYDOWN\n\n", e, "\n\n***************");
@@ -248,11 +272,12 @@ const Nav = (props) => {
         const keyValue = e.nativeEvent.data;
 
         if (keyValue === ":") {
-            const { string, filter } = addSearchTag(value, searchQuery);
+            const { string, filter, optional } = addSearchTag(value, searchQuery);
             setSearchQuery({
                 ...searchQuery,
                 [name]: string,
-                filters: [...searchQuery.filters, ...filter]
+                filters: [...searchQuery.filters, ...filter],
+                optionalFilter: [...searchQuery.optionalFilter, ...optional]
             });
         } else {
             setSearchQuery({
@@ -264,6 +289,18 @@ const Nav = (props) => {
         const emails = props.emails;
         if (searchQuery.search.length === 0) {
             clearSearch();
+        } else if (searchQuery.optionalFilter.length > 0) {
+            let baseFuzzyResults = fuzzyFunction(searchQuery.search, searchQuery.filters, emails);
+            let applyOptionalFilters = baseFuzzyResults.filter((eachEmail) => {
+                for (let index = 0; index < searchQuery.optionalFilter.length; index++) {
+                    if (eachEmail.from.includes(searchQuery.optionalFilter[index])) {
+                        return eachEmail;
+                    } else if (eachEmail.from.includes(searchQuery.optionalFilter[index])) {
+                        return eachEmail;
+                    }
+                }
+            });
+            props.saveSearch(applyOptionalFilters);
         } else {
             props.saveSearch(fuzzyFunction(searchQuery.search, searchQuery.filters, emails));
         }
@@ -284,8 +321,6 @@ const Nav = (props) => {
         e.preventDefault();
         setShowSearchOptions(!showSearchOptions);
     };
-    const [windowListening, setWindowListening] = useState(false);
-
     useEffect(() => {
         document.addEventListener("keydown", handleArrowSelect);
         return () => {
@@ -336,10 +371,26 @@ const Nav = (props) => {
                                         key={index}
                                         text={eachFilter}
                                         index={index}
-                                        remove={removeFilter}
+                                        onClick={() => {
+                                            removeFilter(index, "filters");
+                                        }}
                                     />
                                 );
                             })}
+
+                            {searchQuery.optionalFilter.map((eachFilter, index) => {
+                                return (
+                                    <FilterButton
+                                        key={index}
+                                        text={eachFilter}
+                                        index={index}
+                                        onClick={() => {
+                                            removeFilter(index, "optionalFilter");
+                                        }}
+                                    />
+                                );
+                            })}
+
                             <S.Input
                                 type="text"
                                 name="search"
