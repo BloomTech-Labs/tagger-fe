@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import parse from "html-react-parser";
-import IframeResizer from "iframe-resizer-react";
+
 import {
   changeIsDisplayingAnalytics,
   changeAnalyticsContact
@@ -16,6 +16,7 @@ const moment = require("moment");
 const S = {
   Container: styled.div`
     width: 100%;
+
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -67,6 +68,7 @@ const S = {
   Subject: styled.h2``,
   Message: styled.article`
     text-align: left;
+
   `
 };
 const ThreadMessage = props => {
@@ -140,7 +142,7 @@ const ThreadMessage = props => {
   
   {props.email.email_body === "false" ? <S.Message>{props.email.email_body_text}</S.Message>: <FullHeightIFrame src={props.email.email_body}/>}
 
-      
+
     </S.Container>
   );
 };
