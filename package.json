@@ -12,6 +12,7 @@
     "axios": "^0.19.2",
     "font-awesome": "^4.7.0",
     "fuse.js": "^3.4.6",
+    "html-react-parser": "^0.10.1",
     "moment": "^2.24.0",
     "node-sass": "^4.13.1",
     "react": "^16.12.0",
@@ -29,7 +30,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "coverage": "CI=true yarn test --coverage || true"
   },
   "jest": {
     "setupFilesAfterEnv": [
@@ -37,6 +39,12 @@
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/vendor/**",
+      "!**/__tests__/**"
     ]
   },
   "eslintConfig": {

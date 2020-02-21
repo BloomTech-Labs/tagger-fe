@@ -3,7 +3,7 @@ import {
   GET_USER_CONTACTS_SUCCESS,
   GET_USER_CONTACTS_FAILURE,
   
-} from "../actions/contactsActions";
+} from "../actions";
 
 const initialState = {
   areContactsRetrieved: false,

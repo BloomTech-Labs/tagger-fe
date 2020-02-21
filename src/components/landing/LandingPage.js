@@ -17,10 +17,13 @@ const LandingPage = () => {
         backgroundSize: "cover"
     };
 
-    const redirectUrl = "http://localhost:3000/inbox";
-    // const redirectUrl = "https://tagger-lab.netlify.com/inbox";
-    const response = "token";
-    const client = "765722368782-j3bqp7gm072b0vd1lv97kgh2mnp37b7j.apps.googleusercontent.com";
+  const redirectUrl = process.env.REACT_APP_REDIRECTURI
+    ? process.env.REACT_APP_REDIRECTURI
+    : "http://localhost:3000/inbox";
+
+  const response = "token";
+  const client =
+    "765722368782-j3bqp7gm072b0vd1lv97kgh2mnp37b7j.apps.googleusercontent.com";
 
     return (
         <section className="landing-container">
