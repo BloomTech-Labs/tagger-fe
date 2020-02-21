@@ -4,7 +4,7 @@ import {
   SEND_EMAIL_FAILURE,
   CHANGE_IS_COMPOSING,
   CHANGE_IS_REPLYING,
-} from "../actions/composerActions";
+} from "../actions";
 
 const initialState = {
   email:{
