@@ -1,3 +1,4 @@
+
 import React from "react";
 import "./landing_page.scss";
 import img1 from "./images/computer_unsplash.jpg";
