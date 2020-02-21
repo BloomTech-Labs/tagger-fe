@@ -56,6 +56,14 @@ const S = {
     `,
     Subject: styled.div`
         font-weight: 700;
+        width: 100%;
+        text-align: left;
+        overflow: hidden;
+        overflow: hidden;
+        white-space: nowrap;
+        word-break: break-word;
+        text-align: left;
+        text-overflow: ellipsis;
     `,
     Message: styled.div`
         width: 100%;
