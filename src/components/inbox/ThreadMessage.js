@@ -4,19 +4,19 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
-import parse from "html-react-parser";
+import Reply from "./Reply";
 
 import {
   changeIsDisplayingAnalytics,
   changeAnalyticsContact
 } from "../../actions";
-import FullHeightIFrame from "./FullHeightIFrame"
+
+import FullHeightIFrame from "./FullHeightIFrame";
 
 const moment = require("moment");
 const S = {
   Container: styled.div`
     width: 100%;
-
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -41,7 +41,6 @@ const S = {
     box-sizing: border-box;
     display: flex;
     align-items: center;
-
     h3 {
       margin-left: 2%;
     }
@@ -54,7 +53,7 @@ const S = {
     align-items: center;
     justify-content: space-between;
 
-    button {
+    .button {
       height: 20px;
       width: 20px;
     }
@@ -68,21 +67,12 @@ const S = {
   Subject: styled.h2``,
   Message: styled.article`
     text-align: left;
-
   `
 };
 const ThreadMessage = props => {
-  
-  var html = props.email.email_body;
-  html = html
-    .replace(/\s{2,}/g, "") // <-- Replace all consecutive spaces, 2+
-    .replace(/%/g, "%25") // <-- Escape %
-    .replace(/&/g, "%26") // <-- Escape &
-    .replace(/#/g, "%23") // <-- Escape #
-    .replace(/"/g, "%22") // <-- Escape "
-    .replace(/'/g, "%27"); // <-- Escape ' (to be 100% safe)
-  var dataURI = "data:text/html;charset=UTF-8," + html;
-  
+  const [replyIsHidden, setReplyIsHidden] = useState(true);
+  const [responseType, setResponseType] = useState("Reply");
+
   const setAnalyticsContact = email => {
     const filter = props.contacts.filter(
       c => c.emailAddresses[0].value === email.from
@@ -105,6 +95,7 @@ const ThreadMessage = props => {
       props.changeIsDisplayingAnalytics(true);
     }
   };
+
   function showDate() {
     let formatDate;
     if (props.email.date.includes("T") || props.email.date.includes("-")) {
@@ -112,8 +103,6 @@ const ThreadMessage = props => {
     } else {
       formatDate = new Date(Number(props.email.date));
     }
-
-    
     let emailDateYear = moment(formatDate).format("YYYY");
     let currentYear = moment().format("YYYY");
     if (emailDateYear === currentYear) {
@@ -122,6 +111,7 @@ const ThreadMessage = props => {
       return moment(formatDate).format("MMM Do YYYY");
     }
   }
+
   return (
     <S.Container>
       <S.ContactHeader>
@@ -132,17 +122,50 @@ const ThreadMessage = props => {
           </h3>
         </S.ContactInfo>
         <S.MessageActions>
-          <button />
-          <button />
-          <button />
+          <i
+            title="Reply"
+            style={{ border: "solid 1px red" }}
+            className="fa fa-reply button"
+            onClick={() => {
+              setReplyIsHidden(false);
+              setResponseType("Reply");
+            }}
+          ></i>
+          <i
+            title="Reply-All"
+            style={{ border: "solid 1px red" }}
+            className="fa fa-reply-all button"
+            onClick={() => {
+              setReplyIsHidden(false);
+              setResponseType("Reply-All");
+            }}
+          ></i>
+          <i
+            title="Delete Email"
+            style={{ border: "solid 1px red" }}
+            className="fas fa-trash-alt button"
+            onClick={() => {
+              setReplyIsHidden(false);
+              // todo: need a delete email function that moves the email from emails array in imap to a deleted array so that it lives inside of "trash" before permanently deleting
+            }}
+          ></i>
         </S.MessageActions>
       </S.ContactHeader>
 
       <S.Subject>{props.email.subject}</S.Subject>
-  
-  {props.email.email_body === "false" ? <S.Message>{props.email.email_body_text}</S.Message>: <FullHeightIFrame src={props.email.email_body}/>}
-
-
+      {props.email.email_body === "false" ? (
+        <S.Message>{props.email.email_body_text}</S.Message>
+      ) : (
+        <FullHeightIFrame src={props.email.email_body} />
+      )}
+      {replyIsHidden ? null : (
+        <Reply
+          responseType={responseType}
+          setResponseType={setResponseType}
+          email={props.email}
+          setReplyIsHidden={setReplyIsHidden}
+        />
+      )}
     </S.Container>
   );
 };
