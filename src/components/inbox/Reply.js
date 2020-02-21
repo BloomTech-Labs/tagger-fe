@@ -123,12 +123,16 @@ const Reply = (props) => {
         host: "smtp.gmail.com",
         port: "465",
         userEmail: props.emailAddress,
-        receiver: props.threadContactEmailAddress,
-        subject: ``,
+        receiver: "",
+        CC: "",
+        BCC: "",
+        subject: "",
         body: ""
     };
     const [email, setEmail] = useState(initialState);
     const [addresses, setAddresses] = useState([]);
+    const [ccAddresses, setCcAddresses] = useState([]);
+    const [bccAdresses, setBccAdresses] = useState([]);
     useEffect(() => {
         if (props.responseType === "Reply") {
             setAddresses([props.email.from]);
@@ -138,6 +142,8 @@ const Reply = (props) => {
             let array = props.email.to.split(", ");
             setAddresses(array);
         }
+
+        // todo ADD CC and BCC updates here.   must also be split by (", ") before being pushed to respective arrays
     }, [props.responseType]);
 
     const removeAddress = (index) => {
@@ -145,24 +151,58 @@ const Reply = (props) => {
         currentAddressList.splice(index, 1);
         setAddresses([...currentAddressList]);
     };
+    function extractEmailAdresses(string, name) {
+        let obj = {
+            newString: "",
+            receiver: [],
+            CC: [],
+            BCC: []
+        };
+        const regex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi;
+        var match = string.match(regex);
+        match === null ? (obj[`${name}`] = []) : (obj[`${name}`] = match);
+        obj.newString = string.replace(regex, "");
+
+        console.log(obj);
+        return obj;
+    }
     const handleChange = (e) => {
         let value = e.target.value;
-        setEmail({
-            ...email,
-            [e.target.name]: value
-        });
+        let name = e.target.name;
+        const keyValue = e.nativeEvent.data;
+
+        if (keyValue === " " && e.target.name != "subject" && e.target.name != "body") {
+            const { newString, receiver, CC, BCC } = extractEmailAdresses(value, name);
+            setAddresses([...addresses, ...receiver]);
+            setCcAddresses([...ccAddresses, ...CC]);
+            setBccAdresses([...bccAdresses, ...BCC]);
+            setEmail({
+                ...email,
+                receiver: newString
+            });
+        } else {
+            setEmail({
+                ...email,
+                [e.target.name]: value
+            });
+        }
     };
     const handleCancel = () => {
         setEmail(initialState);
         props.setReplyIsHidden(true);
     };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // props.sendEmail(emailInfo);
-        props.toggleIsReplying();
-        console.log("REPLYING", email);
-        props.sendEmail(email);
+        let finalReply = {
+            ...email,
+            receiver: addresses.join(", "),
+            CC: ccAddresses.join(", "),
+            BCC: bccAdresses.join(", ")
+        };
         props.setReplyIsHidden(true);
+        props.sendEmail(finalReply);
+        setEmail(initialState);
     };
 
     return (
@@ -189,18 +229,33 @@ const Reply = (props) => {
                                     />
                                 );
                             })}
-                            <S.Input />
+                            <S.Input
+                                type="text"
+                                name="receiver"
+                                value={email.receiver}
+                                onChangeCapture={handleChange}
+                            />
                         </div>
                     </label>
                     <label>
                         <span>CC:</span>
 
-                        <S.Input />
+                        <S.Input
+                            type="text"
+                            name="CC"
+                            value={email.CC}
+                            onChangeCapture={handleChange}
+                        />
                     </label>
                     <label>
                         <span>Bcc:</span>
 
-                        <S.Input />
+                        <S.Input
+                            type="text"
+                            name="BCC"
+                            value={email.BCC}
+                            onChangeCapture={handleChange}
+                        />
                     </label>
                     <label>
                         <span>Subject:</span>
@@ -210,7 +265,7 @@ const Reply = (props) => {
                             name="subject"
                             id="subject"
                             value={email.subject}
-                            onChange={handleChange}
+                            onChangeCapture={handleChange}
                         />
                     </label>
                 </S.LabelsContainer>
@@ -220,7 +275,7 @@ const Reply = (props) => {
                 name="body"
                 id="body"
                 value={email.body}
-                onChange={handleChange}
+                onChangeCapture={handleChange}
             />
             <S.Footer>
                 <S.Cancel onClick={handleCancel}>Cancel</S.Cancel>
