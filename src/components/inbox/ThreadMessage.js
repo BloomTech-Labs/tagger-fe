@@ -75,14 +75,19 @@ const ThreadMessage = (props) => {
     //     props.changeIsDisplayingAnalytics(true);
     // };
     function showDate() {
+    
         let formatDate;
-        if (props.email.date.includes("T") || props.email.date.includes("-")){
+        if(typeof props.email.date === "string") {
+          if (props.email.date.includes("T") || props.email.date.includes("-")){
+            formatDate = new Date(props.email.date)
+          } else {
+            formatDate = new Date(Number(props.email.date))
+          }
+        } else {
           formatDate = new Date(props.email.date)
-        } else{
-          formatDate = new Date(Number(props.email.date))
         }
     
-        console.log("formatDate", formatDate)
+    
         let emailDateYear = moment(formatDate).format("YYYY");
         let currentYear = moment().format("YYYY");
         if (emailDateYear === currentYear) {

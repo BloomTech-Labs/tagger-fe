@@ -17,6 +17,7 @@ const initialState = {
     isDisplayingThread: false,
     isDisplayingAnalytics: false,
     threadContactEmailAddress: "arnoldSchwarzeneger@gov.com",
+    thread: null,
     analyticsContact: {
         emailAddress: ["arnoldSchwarzeneger@gov.com"],
         name: "George Washington",
@@ -49,6 +50,7 @@ export const inboxReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 threadContactEmailAddress: payload.from,
+                thread: payload,
                 isDisplayingThread: true
             };
 
