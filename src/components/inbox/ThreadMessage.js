@@ -153,7 +153,7 @@ const ThreadMessage = props => {
       </S.ContactHeader>
 
       <S.Subject>{props.email.subject}</S.Subject>
-      {props.email.email_body === "false" ? (
+      {props.email.email_body === "false" || props.email.email_body === "0" ? (
         <S.Message>{props.email.email_body_text}</S.Message>
       ) : (
         <FullHeightIFrame src={props.email.email_body} />
