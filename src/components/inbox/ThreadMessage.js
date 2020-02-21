@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import parse from "html-react-parser";
+
 import {
   changeIsDisplayingAnalytics,
   changeAnalyticsContact
 } from "../../actions";
+import FullHeightIFrame from "./FullHeightIFrame"
+
 const moment = require("moment");
 const S = {
   Container: styled.div`
+    width: 100%;
+
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -61,11 +67,22 @@ const S = {
   `,
   Subject: styled.h2``,
   Message: styled.article`
-    text-align: center;
+    text-align: left;
+
   `
 };
-
 const ThreadMessage = props => {
+  
+  var html = props.email.email_body;
+  html = html
+    .replace(/\s{2,}/g, "") // <-- Replace all consecutive spaces, 2+
+    .replace(/%/g, "%25") // <-- Escape %
+    .replace(/&/g, "%26") // <-- Escape &
+    .replace(/#/g, "%23") // <-- Escape #
+    .replace(/"/g, "%22") // <-- Escape "
+    .replace(/'/g, "%27"); // <-- Escape ' (to be 100% safe)
+  var dataURI = "data:text/html;charset=UTF-8," + html;
+  
   const setAnalyticsContact = email => {
     const filter = props.contacts.filter(
       c => c.emailAddresses[0].value === email.from
@@ -90,25 +107,21 @@ const ThreadMessage = props => {
   };
   function showDate() {
     let formatDate;
-      if(typeof props.email.date === "string") {
-        if (props.email.date.includes("T") || props.email.date.includes("-")){
-          formatDate = new Date(props.email.date)
-        } else {
-          formatDate = new Date(Number(props.email.date))
-        }
-      } else {
-        formatDate = new Date(props.email.date)
-      }
-    
-      let emailDateYear = moment(formatDate).format("YYYY");
-      let currentYear = moment().format("YYYY");
-      if (emailDateYear === currentYear) {
-          return moment(formatDate).format("MMM Do");
-      } else {
-          return moment(formatDate).format("MMM Do YYYY");
-      }
-  }
+    if (props.email.date.includes("T") || props.email.date.includes("-")) {
+      formatDate = new Date(props.email.date);
+    } else {
+      formatDate = new Date(Number(props.email.date));
+    }
 
+    
+    let emailDateYear = moment(formatDate).format("YYYY");
+    let currentYear = moment().format("YYYY");
+    if (emailDateYear === currentYear) {
+      return moment(formatDate).format("MMM Do");
+    } else {
+      return moment(formatDate).format("MMM Do YYYY");
+    }
+  }
   return (
     <S.Container>
       <S.ContactHeader>
@@ -126,7 +139,10 @@ const ThreadMessage = props => {
       </S.ContactHeader>
 
       <S.Subject>{props.email.subject}</S.Subject>
-      <S.Message>{parse(props.email.email_body)}</S.Message>
+  
+  {props.email.email_body === "false" ? <S.Message>{props.email.email_body_text}</S.Message>: <FullHeightIFrame src={props.email.email_body}/>}
+
+
     </S.Container>
   );
 };
