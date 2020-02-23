@@ -67,6 +67,18 @@ const S = {
   Subject: styled.h2``,
   Message: styled.article`
     text-align: left;
+  `,
+  Spinner: styled.div`
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #2f86ff; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
   `
 };
 const ThreadMessage = props => {
@@ -153,7 +165,7 @@ const ThreadMessage = props => {
       </S.ContactHeader>
 
       <S.Subject>{props.email.subject}</S.Subject>
-      <div
+      <S.Spinner 
         style={{
           display:
             props.isLoaded === false 
@@ -165,8 +177,8 @@ const ThreadMessage = props => {
               : "block"
         }}
       >
-        Loading...
-      </div>
+        
+      </S.Spinner>
       {props.email.email_body === "false" || props.email.email_body === "0" ? (
         <S.Message>{props.email.email_body_text}</S.Message>
       ) : (
