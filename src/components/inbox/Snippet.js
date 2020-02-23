@@ -156,6 +156,7 @@ const Snippet = props => {
       <S.Message>{props.email.email_body_text}</S.Message>
     </S.Container>
   );
+
 };
 
 const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
