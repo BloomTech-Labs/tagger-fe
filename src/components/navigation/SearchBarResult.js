@@ -130,15 +130,16 @@ export default function SearchBarResult(props) {
             return moment(formatDate).format("MMM Do YYYY");
         }
       }
-    function showParticipants() {
-        if (props.email.name === "") {
-            return props.email.from;
-        } else {
-            return `${props.email.name}:(${props.email.from})`;
-        }
-
-    }
+    
   }
+  function showParticipants() {
+    if (props.email.name === "") {
+        return props.email.from;
+    } else {
+        return `${props.email.name}:(${props.email.from})`;
+    }
+
+}
   return (
     <S.Result
       key={props.email.message_id || props.key}
