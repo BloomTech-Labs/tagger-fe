@@ -69,11 +69,12 @@ const S = {
     text-align: left;
   `,
   Spinner: styled.div`
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #2f86ff; /* Blue */
+  border: 2px solid #f3f3f3; /* Light grey */
+  border-top: 2px solid #2f86ff; /* Blue */
+  border-bottom: 2px solid #2f86ff; /* Blue */
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   animation: spin 2s linear infinite;
   @keyframes spin {
     0% { transform: rotate(0deg); }
