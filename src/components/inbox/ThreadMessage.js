@@ -58,7 +58,7 @@ const S = {
       width: 20px;
     }
   `,
-  Avatar: styled.div`
+  Avatar: styled.img`
     height: 30px;
     width: 30px;
     background-color: black;
@@ -116,7 +116,7 @@ const ThreadMessage = props => {
     <S.Container>
       <S.ContactHeader>
         <S.ContactInfo>
-          <S.Avatar onClick={() => setAnalyticsContact(props.email)} />
+          <S.Avatar  onClick={() => setAnalyticsContact(props.email)} />
           <h3 onClick={() => setAnalyticsContact(props.email)}>
             {props.email.name}
           </h3>
@@ -153,6 +153,20 @@ const ThreadMessage = props => {
       </S.ContactHeader>
 
       <S.Subject>{props.email.subject}</S.Subject>
+      <div
+        style={{
+          display:
+            props.isLoaded === false 
+              ? "block"
+              : props.email.email_body === "false" ||
+                props.email.email_body === "0" ||
+                props.isLoaded === true
+              ? "none"
+              : "block"
+        }}
+      >
+        Loading...
+      </div>
       {props.email.email_body === "false" || props.email.email_body === "0" ? (
         <S.Message>{props.email.email_body_text}</S.Message>
       ) : (
@@ -171,7 +185,8 @@ const ThreadMessage = props => {
 };
 
 const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
-  contacts: contacts.contacts
+  contacts: contacts.contacts,
+  isLoaded: inbox.isIframeLoaded
 });
 
 const mapDispatchToProps = dispatch =>
