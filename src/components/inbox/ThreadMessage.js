@@ -6,52 +6,50 @@ import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import Reply from "./Reply";
 
-import {
-  changeIsDisplayingAnalytics,
-  changeAnalyticsContact
-} from "../../actions";
+import { changeIsDisplayingAnalytics, changeAnalyticsContact } from "../../actions";
 
 import FullHeightIFrame from "./FullHeightIFrame";
 
 const moment = require("moment");
 const S = {
-  Container: styled.div`
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 0.5%;
-    padding: 1%;
-    font-size: 0.8rem;
-    background-color: white;
-    border-radius: 3px;
-  `,
-  ContactHeader: styled.div`
-    display: flex;
-    justify-content: space-between;
-    height: 40px;
-    box-sizing: border-box;
-    width: 100%;
-    align-items: center;
-  `,
-  ContactInfo: styled.div`
-    width: 40%;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    h3 {
-      margin-left: 2%;
-    }
-  `,
-  MessageActions: styled.div`
-    width: 10%;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    Container: styled.div`
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 0.5%;
+        padding: 1%;
+        font-size: 0.8rem;
+        background-color: white;
+        border-radius: 3px;
+    `,
+    ContactHeader: styled.div`
+        display: flex;
+        justify-content: space-between;
+        height: 40px;
+        box-sizing: border-box;
+        width: 100%;
+        align-items: center;
+    `,
+    ContactInfo: styled.div`
+        width: 40%;
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        h3 {
+            margin-left: 2%;
+        }
+    `,
+    MessageActions: styled.div`
+        width: 10%;
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
 
     .button {
       height: 20px;
@@ -80,49 +78,49 @@ const S = {
     100% { transform: rotate(360deg); }
   }
   `
+
 };
-const ThreadMessage = props => {
-  const [replyIsHidden, setReplyIsHidden] = useState(true);
-  const [responseType, setResponseType] = useState("Reply");
+const ThreadMessage = (props) => {
+    const [replyIsHidden, setReplyIsHidden] = useState(true);
+    const [responseType, setResponseType] = useState("Reply");
 
-  const setAnalyticsContact = email => {
-    const filter = props.contacts.filter(
-      c => c.emailAddresses[0].value === email.from
-    );
-    if (filter.length > 0) {
-      const contact = {
-        emailAddress: filter[0].emailAddresses,
-        name: filter[0].names[0].displayName,
-        coverPhoto: filter[0].photos[0].url
-      };
-      props.changeAnalyticsContact(contact);
-      props.changeIsDisplayingAnalytics(true);
-    } else {
-      const contact = {
-        emailAddress: [{ value: email.from }],
-        name: email.name
-      };
-      // Sets contact to be displayed in analytics sidebar
-      props.changeAnalyticsContact(contact);
-      props.changeIsDisplayingAnalytics(true);
-    }
-  };
+    const setAnalyticsContact = (email) => {
+        const filter = props.contacts.filter((c) => c.emailAddresses[0].value === email.from);
+        if (filter.length > 0) {
+            const contact = {
+                emailAddress: filter[0].emailAddresses,
+                name: filter[0].names[0].displayName,
+                coverPhoto: filter[0].photos[0].url
+            };
+            props.changeAnalyticsContact(contact);
+            props.changeIsDisplayingAnalytics(true);
+        } else {
+            const contact = {
+                emailAddress: [{ value: email.from }],
+                name: email.name
+            };
+            // Sets contact to be displayed in analytics sidebar
+            props.changeAnalyticsContact(contact);
+            props.changeIsDisplayingAnalytics(true);
+        }
+    };
 
-  function showDate() {
-    let formatDate;
-    if (props.email.date.includes("T") || props.email.date.includes("-")) {
-      formatDate = new Date(props.email.date);
-    } else {
-      formatDate = new Date(Number(props.email.date));
+    function showDate() {
+        let formatDate;
+        if (props.email.date.includes("T") || props.email.date.includes("-")) {
+            formatDate = new Date(props.email.date);
+        } else {
+            formatDate = new Date(Number(props.email.date));
+        }
+        let emailDateYear = moment(formatDate).format("YYYY");
+        let currentYear = moment().format("YYYY");
+        if (emailDateYear === currentYear) {
+            return moment(formatDate).format("MMM Do");
+        } else {
+            return moment(formatDate).format("MMM Do YYYY");
+        }
     }
-    let emailDateYear = moment(formatDate).format("YYYY");
-    let currentYear = moment().format("YYYY");
-    if (emailDateYear === currentYear) {
-      return moment(formatDate).format("MMM Do");
-    } else {
-      return moment(formatDate).format("MMM Do YYYY");
-    }
-  }
+
 
   return (
     <S.Container>
@@ -199,18 +197,16 @@ const ThreadMessage = props => {
 const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
   contacts: contacts.contacts,
   isLoaded: inbox.isIframeLoaded
+
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      changeIsDisplayingAnalytics,
-      changeAnalyticsContact
-    },
-    dispatch
-  );
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators(
+        {
+            changeIsDisplayingAnalytics,
+            changeAnalyticsContact
+        },
+        dispatch
+    );
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
-)(ThreadMessage);
+export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(ThreadMessage);
