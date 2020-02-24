@@ -1,5 +1,7 @@
 # Tagger - Smarter Email
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/f0e8023998589cc4d94f/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/tagger-fe/maintainability)
+
 You can find the project at [Tagger](https://taggerhq.com/).
 
 ## Project Overview
