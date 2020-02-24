@@ -108,22 +108,38 @@ export default function SearchBarResult(props) {
       formatDate = new Date(props.email.date);
     }
 
-    let emailDateYear = moment(formatDate).format("YYYY");
-    let currentYear = moment().format("YYYY");
-    if (emailDateYear === currentYear) {
-      return moment(formatDate).format("MMM Do");
-    } else {
-      return moment(formatDate).format("MMM Do YYYY");
-    }
-  }
+    function showDate() {
 
+        let formatDate;
+        if(typeof props.email.date === "string") {
+          if (props.email.date.includes("T") || props.email.date.includes("-")){
+            formatDate = new Date(props.email.date)
+          } else {
+            formatDate = new Date(Number(props.email.date))
+          }
+        } else {
+          formatDate = new Date(props.email.date)
+        }
+    
+    
+        let emailDateYear = moment(formatDate).format("YYYY");
+        let currentYear = moment().format("YYYY");
+        if (emailDateYear === currentYear) {
+            return moment(formatDate).format("MMM Do");
+        } else {
+            return moment(formatDate).format("MMM Do YYYY");
+        }
+      }
+    
+  }
   function showParticipants() {
     if (props.email.name === "") {
-      return props.email.from;
+        return props.email.from;
     } else {
-      return `${props.email.name}:(${props.email.from})`;
+        return `${props.email.name}:(${props.email.from})`;
     }
-  }
+
+}
   return (
     <S.Result
       key={props.email.message_id || props.key}
