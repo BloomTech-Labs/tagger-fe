@@ -18,7 +18,8 @@ const S = {
     Container: styled.div`
         display: flex;
         height: calc(100vh - 64px);
-    `
+    `,
+   
 };
 
 const Inbox = (props) => {
@@ -28,6 +29,7 @@ const Inbox = (props) => {
         const token = extractTokenFromUrl(url);
         // const redirectUrl = "http://localhost:3000/inbox";
         // const redirectUrl = "https://tagger-lab.netlify.com/inbox";
+       
         const redirectUrl = process.env.REACT_APP_REDIRECTURI 
             ? process.env.REACT_APP_REDIRECTURI 
             : "http://localhost:3000/inbox";
@@ -92,7 +94,8 @@ const Inbox = (props) => {
     }
 
     return (
-        <S.Container>
+          <S.Container> 
+      
             <Sidebar />
             <Emails />
         </S.Container>

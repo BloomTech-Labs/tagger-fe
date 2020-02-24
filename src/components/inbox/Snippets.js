@@ -13,7 +13,11 @@ const S = {
     height: calc(100vh-64px);
     overflow-y: auto;
     padding: 0.5%;
-  `
+  `,
+  Alert: styled.div`
+  background-color: #007bff;
+  `,
+  Message: styled.div``
 };
 
 const Snippets = props => {
@@ -23,6 +27,12 @@ const Snippets = props => {
 
   return (
     <S.Container widthPercentage={props.isDisplayingThread ? 25 : 100}>
+      {props.areEmailsRetrieved === true 
+            ? null 
+            : <S.Alert> 
+                <S.Message>Please wait for your messages to load. If this is your first time signing in, this may take a few minutes</S.Message>
+              </S.Alert>
+      }
       {/* <h1>Snippets</h1>
         <button onClick = {() => toggleIsDisplayingThread()}>Toggle Thread ON/OFF</button> */}
       {props.emails.map(email => {
