@@ -120,6 +120,7 @@ const Compose = (props) => {
         host: "smtp.gmail.com",
         port: "465",
         userEmail: "taggerlabs20@gmail.com",
+        token: props.token,
         receiver: "",
         subject: "",
         body: ""

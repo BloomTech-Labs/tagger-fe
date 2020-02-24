@@ -22,10 +22,13 @@ const S = {
 };
 
 const Inbox = (props) => {
+    const [token, setToken] = useState("")
+    console.log("TOKEN",token)
     // USERID AND EMAIL useEffect
     useEffect(() => {
         const url = props.history.location.hash;
         const token = extractTokenFromUrl(url);
+        setToken(token)
         // const redirectUrl = "http://localhost:3000/inbox";
         // const redirectUrl = "https://tagger-lab.netlify.com/inbox";
         const redirectUrl = process.env.REACT_APP_REDIRECTURI 
@@ -93,7 +96,7 @@ const Inbox = (props) => {
 
     return (
         <S.Container>
-            <Sidebar />
+            <Sidebar token={token}/>
             <Emails />
         </S.Container>
     );
