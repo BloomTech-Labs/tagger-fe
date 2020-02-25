@@ -143,9 +143,11 @@ export const updateEmails = (emailAddress, token) => dispatch => {
         .then(res => {
           const allEmail = res.data.map(email => {
             const labelArray = email.labels.split(",");
+            const toArray = email.to.toLowerCase().split(",")
             return {
               ...email,
-              labels: labelArray
+              labels: labelArray,
+              to: toArray
             };
           });
           dispatch({ type: GET_EMAILS_SUCCESS, payload: allEmail });
@@ -195,14 +197,14 @@ export const changeAnalyticsContact = contact => dispatch => {
 };
 
 // =============================================================================
-// C H A N G E  IS IFRAME LOADED
+// C H A N G E  I S  I F R A M E L O A D E D
 export const IFRAME_LOADED = "IFRAME_LOADED";
 export const changeIsLoaded = bool => dispatch => {
   dispatch({ type: IFRAME_LOADED, payload: bool });
 };
 
 // =============================================================================
-// C H A N G E  IS IFRAME LOADED
+// C H A N G E  S N I P P E T  F I L T E R
 export const SET_SNIPPET_FILTER = "SENT_SNIPPET_FILTER";
 export const setSnippetFilter = string => dispatch => {
   dispatch({ type: SET_SNIPPET_FILTER, payload: string });

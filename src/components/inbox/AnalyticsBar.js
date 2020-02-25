@@ -105,10 +105,10 @@ const AnalyticsBar = props => {
 
   const sent = props.emails.filter(email => email.labels.includes("\\Sent"));
   const inbox = props.emails.filter(email => email.labels.includes("\\Inbox"));
-  const totalSent = sent.filter(
-    email =>
-      email.to.toLowerCase() ===
+  const totalSent = sent.filter(email =>
+    email.to.includes(
       props.analyticsContact.emailAddress[0].value.toLowerCase()
+    )
   );
   const totalReceived = inbox.filter(
     email =>
