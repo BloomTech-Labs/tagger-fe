@@ -18,7 +18,6 @@ class FullheightIframe extends Component {
    const iframeLoaded = () => {
       this.props.changeIsLoaded(true)
     }
-    console.log(this.props)
     return (
       <iframe
         title="iframe"

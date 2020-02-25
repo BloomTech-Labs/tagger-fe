@@ -138,6 +138,7 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
             token: imapAccessHash,
             id_token: sessionStorage.getItem("id_token")
         })
+
         .then((Response) => {
             console.log(Response, "/emails response \n\n\n");
             return axios
@@ -147,13 +148,23 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
                 })
                 .then((res) => {
                     console.log(res, "res from /stream");
-                    dispatch({ type: GET_EMAILS_SUCCESS, payload: res.data });
-                    return res.data;
+                    const allEmail = res.data.map(email => {
+                    const labelArray = email.labels.split(",");
+                    const toArray = email.to.toLowerCase().split(",")
+                    return {
+                        ...email,
+                        labels: labelArray,
+                        to: toArray
+                      };
+                    });
+                    dispatch({ type: GET_EMAILS_SUCCESS, payload: allEmail });
+                    return allEmail;
                 });
         })
         .catch((err) => {
             dispatch({ type: EMAILS_UPDATE_FAILURE, payload: err });
             return err;
+
         });
 };
 // =============================================================================
@@ -194,8 +205,17 @@ export const changeAnalyticsContact = (contact) => (dispatch) => {
 };
 
 // =============================================================================
-// I F R A M E   L O A D E D
+
+// C H A N G E  I S  I F R A M E L O A D E D
+
 export const IFRAME_LOADED = "IFRAME_LOADED";
 export const changeIsLoaded = (bool) => (dispatch) => {
     dispatch({ type: IFRAME_LOADED, payload: bool });
+};
+
+// =============================================================================
+// C H A N G E  S N I P P E T  F I L T E R
+export const SET_SNIPPET_FILTER = "SENT_SNIPPET_FILTER";
+export const setSnippetFilter = string => dispatch => {
+  dispatch({ type: SET_SNIPPET_FILTER, payload: string });
 };

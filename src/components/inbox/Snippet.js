@@ -147,7 +147,14 @@ const Snippet = props => {
         <S.Avatar onClick={() => setAnalyticsContact(props.email)} />
         <div>
           <h3 onClick={() => setAnalyticsContact(props.email)}>
-            {props.email.name ? props.email.name : props.email.from}
+            {props.snippetsFilter === "\\Inbox"
+              ? props.email.name
+                ? props.email.name
+                : props.email.from
+              : props.snippetsFilter === "\\Sent" && props.email.to.length > 1
+              ? props.email.to[0] + " + " + parseInt(props.email.to.length - 1)
+              : props.email.to[0]}
+            {/* {props.email.name ? props.email.name : props.email.from} */}
           </h3>
           <h3>{showDate(props.email.date)}</h3>
         </div>
@@ -156,14 +163,14 @@ const Snippet = props => {
       <S.Message>{props.email.email_body_text}</S.Message>
     </S.Container>
   );
-
 };
 
 const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
   isDisplayingThread: inbox.isDisplayingThread,
   isDisplayingAnalytics: inbox.isDisplayingAnalytics,
   contacts: contacts.contacts,
-  isLoaded: inbox.isIframeLoaded
+  isLoaded: inbox.isIframeLoaded,
+  snippetsFilter: inbox.snippetsFilter
 });
 
 const mapDispatchToProps = dispatch =>

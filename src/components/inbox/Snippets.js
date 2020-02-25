@@ -23,13 +23,20 @@ const Snippets = props => {
 
   return (
     <S.Container widthPercentage={props.isDisplayingThread ? 25 : 100}>
-      {/* <h1>Snippets</h1>
-        <button onClick = {() => toggleIsDisplayingThread()}>Toggle Thread ON/OFF</button> */}
-      {props.emails.map(email => {
+      {/* {props.emails.map(email => {
         return (
           <Snippet key={email.message_id} email={email} /> // emails in redux are currently numbers 1-10 in an array
         );
-      })}
+      })} */}
+      {props.emails
+        .filter(email => {
+          return email.labels.includes(props.snippetsFilter);
+        })
+        .map(email => {
+          return (
+            <Snippet key={email.message_id} email={email} /> // emails in redux are currently numbers 1-10 in an array
+          );
+        })}
     </S.Container>
   );
 };
@@ -37,7 +44,8 @@ const Snippets = props => {
 const mapStateToProps = ({ imap, user, inbox }) => ({
   isDisplayingThread: inbox.isDisplayingThread,
   areEmailsRetrieved: imap.areEmailsRetrieved,
-  emails: imap.emails
+  emails: imap.emails,
+  snippetsFilter: inbox.snippetsFilter
 });
 
 const mapDispatchToProps = dispatch =>

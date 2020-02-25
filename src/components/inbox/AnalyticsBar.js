@@ -51,19 +51,9 @@ const S = {
         margin-bottom: 5px;
       }
 
-      div {
-        background-color: #2f86ff;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        border-radius: 0px 15px 15px 0px;
-        padding: 2px;
-
-        span {
-          color: white;
-          margin-left: 5px;
-        }
+      span {
+        color: white;
+        margin-left: 5px;
       }
     }
     li:nth-last-child(1) {
@@ -78,29 +68,62 @@ const S = {
     margin-top: 10%;
     span {
     }
+  `,
+  totalWidth: styled.div`
+    background-color: #2f86ff;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 0px 15px 15px 0px;
+    padding: 2px;
+  `,
+  receivedWidth: styled.div`
+    background-color: #2f86ff;
+    min-width: 20px;
+    width: ${props => props.rWidth};
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 0px 15px 15px 0px;
+    padding: 2px;
+  `,
+  sentWidth: styled.div`
+    background-color: #2f86ff;
+    // min-width: 20px;
+    width: ${props => props.sWidth};
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 0px 15px 15px 0px;
+    padding: 2px;
   `
 };
-
 
 const AnalyticsBar = props => {
   const closeAnalytics = () => {
     props.changeIsDisplayingAnalytics(false);
   };
-  console.log("Emails", props.emails);
 
-  const totalEmails = props.emails.filter(
+  const sent = props.emails.filter(email => email.labels.includes("\\Sent"));
+  const inbox = props.emails.filter(email => email.labels.includes("\\Inbox"));
+  const totalSent = sent.filter(email =>
+    email.to.includes(
+      props.analyticsContact.emailAddress[0].value.toLowerCase()
+    )
+  );
+  const totalReceived = inbox.filter(
     email =>
       email.from.toLowerCase() ===
       props.analyticsContact.emailAddress[0].value.toLowerCase()
   );
-  console.log("Total Emails", totalEmails);
-
-  console.log("analytics contact", props.analyticsContact);
+  const totalEmails = totalSent.length + totalReceived.length;
+  const receivedWidth = (totalReceived.length / totalEmails) * 100 + "%";
+  const sentWidth = (totalSent.length / totalEmails) * 100 + "%";
+  console.log(totalSent, "TOTALSENT")
   return (
     <S.Container>
-     
       <button onClick={() => closeAnalytics()}>X</button>
-
       <S.Avatar
         src={
           props.analyticsContact.coverPhoto
@@ -112,28 +135,25 @@ const AnalyticsBar = props => {
       {props.analyticsContact.emailAddress.map(email => {
         return <h5 key={Math.random()}>{email.value}</h5>;
       })}
-      
       <hr />
       <S.Graph>
-        {/* <li>
+        <li>
           <h6>Total messages</h6>
-          <div>
-            <span>3</span>
-          </div>
+          <S.totalWidth>
+            <span>{totalEmails}</span>
+          </S.totalWidth>
         </li>
-
         <li>
           <h6>Sent messages</h6>
-          <div>
-            <span>3</span>
-          </div>
-        </li> */}
-
+          <S.sentWidth sWidth={sentWidth}>
+            <span>{totalSent.length}</span>
+          </S.sentWidth>
+        </li>
         <li>
           <h6>Received messages</h6>
-          <div>
-            <span>{totalEmails.length}</span>
-          </div>
+          <S.receivedWidth rWidth={receivedWidth}>
+            <span>{totalReceived.length}</span>
+          </S.receivedWidth>
         </li>
       </S.Graph>
       {/* <S.LastInteraction>
@@ -162,5 +182,3 @@ export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
 )(AnalyticsBar);
-
-
