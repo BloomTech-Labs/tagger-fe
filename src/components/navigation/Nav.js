@@ -200,7 +200,6 @@ const Nav = (props) => {
 
     const handleArrowSelect = (e) => {
         console.log("ON KEYDOWN\n\n", e, "\n\n***************");
-
         if (e.key === "ArrowDown") {
             if (searchQuery.results.length - 1 === searchQuery.position) {
                 return null;
