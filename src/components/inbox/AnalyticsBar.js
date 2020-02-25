@@ -110,7 +110,7 @@ const AnalyticsBar = props => {
       />
       <h2>{props.analyticsContact.name}</h2>
       {props.analyticsContact.emailAddress.map(email => {
-        return <h5>{email.value}</h5>;
+        return <h5 key={Math.random()}>{email.value}</h5>;
       })}
       
       <hr />

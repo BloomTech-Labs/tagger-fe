@@ -12,14 +12,11 @@ let cors = "https://cors-anywhere.herokuapp.com/"; // prefixing an endpoint URL 
 // cors = "";    //<- uncomment for local development
 //+++++++++++++++++++++++++++++++++++++++++++
 
-let url;
-if (local) {
-    url = "http://localhost:8000/";
-} else {
-    url = `https://tagger-labs20.herokuapp.com/`;
-}
+const url = process.env.REACT_APP_BACKENDURL
+    ? process.env.REACT_APP_BACKENDURL
+    : "http://localhost:8000/";
 
-console.log("URL", url)
+console.log("URL", url);
 
 // =============================================================================
 // Get User Id__________________________________________________________________
@@ -83,14 +80,15 @@ export const getEmails = (emailAddress, token) => (dispatch) => {
     dispatch({ type: GET_EMAILS_START });
     const imapAccess = `user=${emailAddress}auth=Bearer ${token}`; // Between the following arrows >< is either a square or a space. IDK what it is but you need it
     const imapAccessHash = btoa(`user=${emailAddress}auth=Bearer ${token}`); // Between the following arrows >< is either a square or a space. IDK what it is but you need it
-    console.log("AUTH TOKEN: ", imapAccessHash)
-    
+    console.log("AUTH TOKEN: ", imapAccessHash);
+
     alert("Im working!");
     return axios
         .post(`${url}emails/stream`, {
             email: emailAddress,
             host: "imap.gmail.com", // << will need to be made dynamic upon integration of other email clients
-            token: imapAccessHash
+            token: imapAccessHash,
+            id_token: sessionStorage.getItem("id_token")
         })
         .then((res) => {
             console.log("RES from inbox action", res);
@@ -130,18 +128,20 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
     dispatch({ type: EMAILS_UPDATE_START });
     const imapAccess = `user=${emailAddress}auth=Bearer ${token}`; // Between the following arrows >< is either a square or a space. IDK what it is but you need it
     const imapAccessHash = btoa(`user=${emailAddress}auth=Bearer ${token}`); // Between the following arrows >< is either a square or a space. IDK what it is but you need it
-    console.log("AUTH TOKEN: ", imapAccessHash)
+    console.log("AUTH TOKEN: ", imapAccessHash);
 
     return axios
         .post(`${url}emails`, {
             email: emailAddress,
             host: "imap.gmail.com", // << will need to be made dynamic upon integration of other email clients
-            token: imapAccessHash
+            token: imapAccessHash,
+            id_token: sessionStorage.getItem("id_token")
         })
         .then(() => {
             return axios
                 .post(`${url}emails/stream`, {
-                    email: emailAddress
+                    email: emailAddress,
+                    id_token: sessionStorage.getItem("id_token")
                 })
                 .then((res) => {
                     dispatch({ type: GET_EMAILS_SUCCESS, payload: res.data });
@@ -187,5 +187,12 @@ export const CHANGE_ANALYTICS_CONTACT = "CHANGE_ANALYTICS_CONTACT";
 
 export const changeAnalyticsContact = (contact) => (dispatch) => {
     // Set the contact whose analytics are being displayed
-    dispatch({ type: CHANGE_ANALYTICS_CONTACT, payload: {contact} });
+    dispatch({ type: CHANGE_ANALYTICS_CONTACT, payload: { contact } });
+};
+
+// =============================================================================
+// I F R A M E   L O A D E D
+export const IFRAME_LOADED = "IFRAME_LOADED";
+export const changeIsLoaded = (bool) => (dispatch) => {
+    dispatch({ type: IFRAME_LOADED, payload: bool });
 };
