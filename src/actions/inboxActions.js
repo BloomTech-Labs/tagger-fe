@@ -12,14 +12,11 @@ let cors = "https://cors-anywhere.herokuapp.com/"; // prefixing an endpoint URL 
 // cors = "";    //<- uncomment for local development
 //+++++++++++++++++++++++++++++++++++++++++++
 
-let url;
-if (local) {
-    url = "http://localhost:8000/";
-} else {
-    url = `https://tagger-labs20.herokuapp.com/`;
-}
+const url = process.env.REACT_APP_BACKENDURL
+    ? process.env.REACT_APP_BACKENDURL
+    : "http://localhost:8000/";
 
-console.log("URL", url)
+console.log("URL", url);
 
 // =============================================================================
 // Get User Id__________________________________________________________________
@@ -83,14 +80,15 @@ export const getEmails = (emailAddress, token) => (dispatch) => {
     dispatch({ type: GET_EMAILS_START });
     const imapAccess = `user=${emailAddress}auth=Bearer ${token}`; // Between the following arrows >< is either a square or a space. IDK what it is but you need it
     const imapAccessHash = btoa(`user=${emailAddress}auth=Bearer ${token}`); // Between the following arrows >< is either a square or a space. IDK what it is but you need it
-    console.log("AUTH TOKEN: ", imapAccessHash)
-    
+    console.log("AUTH TOKEN: ", imapAccessHash);
+
     alert("Im working!");
     return axios
         .post(`${url}emails/stream`, {
             email: emailAddress,
             host: "imap.gmail.com", // << will need to be made dynamic upon integration of other email clients
-            token: imapAccessHash
+            token: imapAccessHash,
+            id_token: sessionStorage.getItem("id_token")
         })
         .then((res) => {
             console.log("RES from inbox action", res);
@@ -130,27 +128,43 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
     dispatch({ type: EMAILS_UPDATE_START });
     const imapAccess = `user=${emailAddress}auth=Bearer ${token}`; // Between the following arrows >< is either a square or a space. IDK what it is but you need it
     const imapAccessHash = btoa(`user=${emailAddress}auth=Bearer ${token}`); // Between the following arrows >< is either a square or a space. IDK what it is but you need it
-    console.log("AUTH TOKEN: ", imapAccessHash)
+    console.log("AUTH TOKEN: ", imapAccessHash);
+    console.log(emailAddress, "email address \n\n");
 
     return axios
         .post(`${url}emails`, {
             email: emailAddress,
             host: "imap.gmail.com", // << will need to be made dynamic upon integration of other email clients
-            token: imapAccessHash
+            token: imapAccessHash,
+            id_token: sessionStorage.getItem("id_token")
         })
-        .then(() => {
+
+        .then((Response) => {
+            console.log(Response, "/emails response \n\n\n");
             return axios
                 .post(`${url}emails/stream`, {
-                    email: emailAddress
+                    email: emailAddress,
+                    id_token: sessionStorage.getItem("id_token")
                 })
                 .then((res) => {
-                    dispatch({ type: GET_EMAILS_SUCCESS, payload: res.data });
-                    return res.data;
+                    console.log(res, "res from /stream");
+                    const allEmail = res.data.map(email => {
+                    const labelArray = email.labels.split(",");
+                    const toArray = email.to.toLowerCase().split(",")
+                    return {
+                        ...email,
+                        labels: labelArray,
+                        to: toArray
+                      };
+                    });
+                    dispatch({ type: GET_EMAILS_SUCCESS, payload: allEmail });
+                    return allEmail;
                 });
         })
         .catch((err) => {
             dispatch({ type: EMAILS_UPDATE_FAILURE, payload: err });
             return err;
+
         });
 };
 // =============================================================================
@@ -187,5 +201,21 @@ export const CHANGE_ANALYTICS_CONTACT = "CHANGE_ANALYTICS_CONTACT";
 
 export const changeAnalyticsContact = (contact) => (dispatch) => {
     // Set the contact whose analytics are being displayed
-    dispatch({ type: CHANGE_ANALYTICS_CONTACT, payload: {contact} });
+    dispatch({ type: CHANGE_ANALYTICS_CONTACT, payload: { contact } });
+};
+
+// =============================================================================
+
+// C H A N G E  I S  I F R A M E L O A D E D
+
+export const IFRAME_LOADED = "IFRAME_LOADED";
+export const changeIsLoaded = (bool) => (dispatch) => {
+    dispatch({ type: IFRAME_LOADED, payload: bool });
+};
+
+// =============================================================================
+// C H A N G E  S N I P P E T  F I L T E R
+export const SET_SNIPPET_FILTER = "SENT_SNIPPET_FILTER";
+export const setSnippetFilter = string => dispatch => {
+  dispatch({ type: SET_SNIPPET_FILTER, payload: string });
 };
