@@ -55,13 +55,7 @@ const Inbox = props => {
       //   console.log("GETEMAILS RES: ", res);
       props
         .updateEmails(user_email, token)
-        .then(res => {
-          const sent = res.filter(email => email.labels.includes("\\Sent"));
-          const inbox = res.filter(email => email.labels.includes("\\Inbox"));
-          console.log("STREAMEMAILS RES: ", res);
-          console.log("sent", sent);
-          console.log("inbox", inbox);
-        })
+        .then(res => {})
         .catch(err => {
           console.log(err);
         });
