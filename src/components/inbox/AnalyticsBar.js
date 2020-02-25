@@ -80,6 +80,7 @@ const S = {
   `,
   receivedWidth: styled.div`
     background-color: #2f86ff;
+    min-width: 20px;
     width: ${props => props.rWidth};
     display: flex;
     align-items: center;
@@ -89,6 +90,7 @@ const S = {
   `,
   sentWidth: styled.div`
     background-color: #2f86ff;
+    min-width: 20px;
     width: ${props => props.sWidth};
     display: flex;
     align-items: center;
@@ -118,6 +120,7 @@ const AnalyticsBar = props => {
   const totalEmails = totalSent.length + totalReceived.length;
   const receivedWidth = (totalReceived.length / totalEmails) * 100 + "%";
   const sentWidth = (totalSent.length / totalEmails) * 100 + "%";
+  console.log(totalSent, "TOTALSENT")
   return (
     <S.Container>
       <button onClick={() => closeAnalytics()}>X</button>

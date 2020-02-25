@@ -42,7 +42,7 @@ export const getContacts = oAuthToken => dispatch => {
         contacts = res.data.connections.filter(contact => {
           if (contact.emailAddresses && contact.emailAddresses.length > 1) {
             const emailArray = contact.emailAddresses.map(
-              eachEmailAddress => eachEmailAddress.value
+              eachEmailAddress => eachEmailAddress.value.toLowerCase()
             );
             return {
               name: contact.names[0].displayName,
@@ -55,7 +55,7 @@ export const getContacts = oAuthToken => dispatch => {
           ) {
             return {
               name: contact.names[0].displayName,
-              emails: contact.emailAddresses[0].value,
+              emails: contact.emailAddresses[0].value.toLowerCase(),
               coverPhotoUrl: contact.photos[0].url
             };
           }
