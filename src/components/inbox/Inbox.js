@@ -10,9 +10,10 @@ import {
     getEmails,
     changeIsLoggedIn,
     updateEmails,
-    incrementCounter
+    incrementCounter,
+    getContacts
 } from "../../actions";
-import { getContacts } from "../../actions/contactsActions";
+
 import Sidebar from "./Sidebar";
 const S = {
     Container: styled.div`
@@ -23,59 +24,11 @@ const S = {
 
 const Inbox = (props) => {
     const [token, setToken] = useState("");
-    console.log("TOKEN", token);
-    // USERID AND EMAIL useEffect
+
     useEffect(() => {
         const url = props.history.location.hash;
         const token = extractAccessTokenFromUrl(url);
-        const id_token = extractIdTokenFromUrl(url);
-        sessionStorage.setItem("id_token", id_token);
-
         setToken(token);
-        // const redirectUrl = "http://localhost:3000/inbox";
-        // const redirectUrl = "https://tagger-lab.netlify.com/inbox";
-        const redirectUrl = process.env.REACT_APP_REDIRECTURI
-            ? process.env.REACT_APP_REDIRECTURI
-            : "http://localhost:3000/inbox";
-        const response = "token";
-        const client = "765722368782-j3bqp7gm072b0vd1lv97kgh2mnp37b7j.apps.googleusercontent.com";
-        if (!props.isEmailAddressAndIdRetrieved) {
-            // If user data not retrieved, retrieve email address and user_id from Auth token
-            props.getUserEmailAndId(token).then((res) => {
-                // console.log("GETUSERDATA RES: ", res);
-                if (res) {
-                    props.changeIsLoggedIn(true);
-                } else if (!res) {
-                    window.location.replace(
-                        `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=https%3A//mail.google.com/ profile https%3A//www.googleapis.com/auth/userinfo.email https%3A//www.googleapis.com/auth/user.emails.read&redirect_uri=${redirectUrl}&response_type=${response}&client_id=${client}`
-                    );
-                }
-            });
-        } else if (!props.areEmailsRetrieved) {
-            // Else if user data retrieved AND emails not retrieved, retrieve emails
-            const user_email = props.emailAddress;
-            // props.getEmails(user_email, token).then(res => {
-            //   console.log("GETEMAILS RES: ", res);
-            props
-                .updateEmails(user_email, token)
-                .then((res) => {
-                    console.log("STREAMEMAILS RES: ", res);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-            // });
-        }
-        console.log("EMAILS: ", props.emails);
-        if (props.areEmailsUpdated === false) {
-            props.incrementCounter();
-        }
-    }, [props.isEmailAddressAndIdRetrieved, props.counter]);
-
-    // CONTACTS useEffect
-    useEffect(() => {
-        const url = props.history.location.hash;
-        const token = extractAccessTokenFromUrl(url);
         if (!props.areContactsRetrieved) {
             props
                 .getContacts(token)

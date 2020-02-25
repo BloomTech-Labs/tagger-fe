@@ -129,6 +129,7 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
     const imapAccess = `user=${emailAddress}auth=Bearer ${token}`; // Between the following arrows >< is either a square or a space. IDK what it is but you need it
     const imapAccessHash = btoa(`user=${emailAddress}auth=Bearer ${token}`); // Between the following arrows >< is either a square or a space. IDK what it is but you need it
     console.log("AUTH TOKEN: ", imapAccessHash);
+    console.log(emailAddress, "email address \n\n");
 
     return axios
         .post(`${url}emails`, {
@@ -137,13 +138,15 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
             token: imapAccessHash,
             id_token: sessionStorage.getItem("id_token")
         })
-        .then(() => {
+        .then((Response) => {
+            console.log(Response, "/emails response \n\n\n");
             return axios
                 .post(`${url}emails/stream`, {
                     email: emailAddress,
                     id_token: sessionStorage.getItem("id_token")
                 })
                 .then((res) => {
+                    console.log(res, "res from /stream");
                     dispatch({ type: GET_EMAILS_SUCCESS, payload: res.data });
                     return res.data;
                 });
