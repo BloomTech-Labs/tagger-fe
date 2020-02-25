@@ -2,6 +2,19 @@
 
 You can find the project at [Tagger](https://taggerhq.com/).
 
+# Contributors
+
+<h2>Team Lead</h2>
+<center>
+
+|[Vlad Mogilevskiy](https://github.com/vladmog)|
+|[img src=""]|
+|[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/vladmog)|
+|[<img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/vladmog/)
+</center>
+
+<br>
+
 ## Project Overview
 
 There is a TON of useful information inside email history that is almost entirely inaccessible. Finding contacts based on conversation topics is very inefficient in email inboxes and leads to a lot of wasted time trying to locate a contact, and sometimes to no avail.

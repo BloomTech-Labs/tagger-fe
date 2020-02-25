@@ -1,6 +1,14 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-// import { isLogin } from '../utils';
+import { bindActionCreators, compose } from "redux";
+import { connect } from "react-redux";
+import {
+    getUserEmailAndId,
+    getEmails,
+    changeIsLoggedIn,
+    updateEmails,
+    incrementCounter
+} from "../../actions";
 
 const PrivateRoute = ({component: Component, ...rest}) => {
     return (
@@ -16,7 +24,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
     );
 };
 
-export default PrivateRoute;
+
 
 // convert component to use redux
 // pull in isLoggedIn from user reducer
@@ -24,3 +32,4 @@ export default PrivateRoute;
 
 
 // in inbox.js write an if statement to check if it returns a valid token in the URL
+
