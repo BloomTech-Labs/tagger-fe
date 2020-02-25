@@ -141,8 +141,15 @@ export const updateEmails = (emailAddress, token) => dispatch => {
           email: emailAddress
         })
         .then(res => {
-          dispatch({ type: GET_EMAILS_SUCCESS, payload: res.data });
-          return res.data;
+          const allEmail = res.data.map(email => {
+            const labelArray = email.labels.split(",");
+            return {
+              ...email,
+              labels: labelArray
+            };
+          });
+          dispatch({ type: GET_EMAILS_SUCCESS, payload: allEmail });
+          return allEmail;
         });
     })
     .catch(err => {
@@ -188,8 +195,15 @@ export const changeAnalyticsContact = contact => dispatch => {
 };
 
 // =============================================================================
-// C H A N G E   A N A L Y T I C S   C O N T A C T
+// C H A N G E  IS IFRAME LOADED
 export const IFRAME_LOADED = "IFRAME_LOADED";
 export const changeIsLoaded = bool => dispatch => {
   dispatch({ type: IFRAME_LOADED, payload: bool });
+};
+
+// =============================================================================
+// C H A N G E  IS IFRAME LOADED
+export const SET_SNIPPET_FILTER = "SENT_SNIPPET_FILTER";
+export const setSnippetFilter = string => dispatch => {
+  dispatch({ type: SET_SNIPPET_FILTER, payload: string });
 };
