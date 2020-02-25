@@ -135,7 +135,7 @@ const ThreadMessage = props => {
         <S.ContactInfo>
           <S.Avatar onClick={() => setAnalyticsContact(props.email)} />
           <h3 onClick={() => setAnalyticsContact(props.email)}>
-            {props.email.name}
+            {props.email.name ? props.email.name : props.email.from}
           </h3>
         </S.ContactInfo>
         <S.MessageActions>

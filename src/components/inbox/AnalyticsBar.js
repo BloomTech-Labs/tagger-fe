@@ -90,7 +90,7 @@ const S = {
   `,
   sentWidth: styled.div`
     background-color: #2f86ff;
-    min-width: 20px;
+    // min-width: 20px;
     width: ${props => props.sWidth};
     display: flex;
     align-items: center;
