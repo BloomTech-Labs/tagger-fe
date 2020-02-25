@@ -189,3 +189,10 @@ export const changeAnalyticsContact = (contact) => (dispatch) => {
     // Set the contact whose analytics are being displayed
     dispatch({ type: CHANGE_ANALYTICS_CONTACT, payload: { contact } });
 };
+
+// =============================================================================
+// I F R A M E   L O A D E D
+export const IFRAME_LOADED = "IFRAME_LOADED";
+export const changeIsLoaded = (bool) => (dispatch) => {
+    dispatch({ type: IFRAME_LOADED, payload: bool });
+};

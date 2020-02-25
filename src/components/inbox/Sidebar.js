@@ -105,15 +105,15 @@ const Sidebar = (props) => {
         e.preventDefault();
         props.changeIsComposing(!props.isComposing);
     };
-
     return (
         <S.Container>
             {props.isComposing ? (
                 <S.ModalContainer>
-                    <ComposeComponent />
+                    <ComposeComponent token={props.token}/>
                 </S.ModalContainer>
             ) : null}
             <S.Button onClick={toggleIsComposing}>+ Compose</S.Button>
+            
             <ul>
                 <li>
                     <div>

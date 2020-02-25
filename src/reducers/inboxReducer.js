@@ -2,7 +2,8 @@ import {
     CHANGE_IS_DISPLAYING_THREAD,
     CHANGE_IS_DISPLAYING_ANALYTICS,
     CHANGE_THREAD_CONTACT,
-    CHANGE_ANALYTICS_CONTACT
+    CHANGE_ANALYTICS_CONTACT,
+    IFRAME_LOADED
 } from "../actions";
 
 // const initialState = {
@@ -14,6 +15,7 @@ import {
 
 const initialState = {
     // FOR ANALYTICS BAR DEV
+    isIframeLoaded: false,
     isDisplayingThread: false,
     isDisplayingAnalytics: false,
     threadContactEmailAddress: "arnoldSchwarzeneger@gov.com",
@@ -63,7 +65,12 @@ export const inboxReducer = (state = initialState, { type, payload }) => {
             };
 
         // ==============================================
-
+            case  IFRAME_LOADED:
+                console.log("IFRAME LOADED?", payload)
+                return{
+                    ...state,
+                    isIframeLoaded: payload
+                };
         default:
             return state;
     }
