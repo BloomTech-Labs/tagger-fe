@@ -23,7 +23,7 @@ const LandingPage = () => {
         ? process.env.REACT_APP_REDIRECTURI
         : "http://localhost:3000/inbox";
     const response = "token id_token";
-    const nonce = (12313459114561232 * Date.now()) / 10000;
+    const nonce = (12313459114561232 * Date.now()) / 10000000;
 
     const client = "765722368782-j3bqp7gm072b0vd1lv97kgh2mnp37b7j.apps.googleusercontent.com";
 
