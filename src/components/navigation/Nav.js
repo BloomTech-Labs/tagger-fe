@@ -28,14 +28,14 @@ const S = {
         flex-direction: row;
         flex-wrap: wrap;
         width: 60vw;
-        height: 64px;
+        height: 55px;
         div:focus-within {
             border: 2px solid #2f86ff;
         }
     `,
     Top: styled.section`
         width: 100%;
-        height: 64px;
+        height: 50px;
         display: flex;
         align-items: flex-end;
     `,
