@@ -85,6 +85,7 @@ const S = {
         :hover {
             color: #007bff;
             background-color: #e6e7e8;
+            text-shadow: 0px 1px #0000004f;
         }
         :active {
             background: #b8bac1;
@@ -106,6 +107,7 @@ const S = {
         :hover {
             color: white;
             background-color: #007bff;
+            text-shadow: 0px 2px black;
         }
         :active {
             background: #b8bac1;
