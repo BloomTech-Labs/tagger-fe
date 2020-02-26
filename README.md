@@ -58,17 +58,20 @@ Logged into our email client, our users are able to read and respond to their em
 This email client has a more functional, data-science based approach to implementing our search. It allows our user to find what they're looking for in their inbox and from an outside perspective it differeniates from other email clients because typically what is used is an exact word match search functionality and this client is flexible, sending queries to our data science end without the need for an exact match.
 
 ###### Tech Stack
+![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
+![Typescript](https://img.shields.io/npm/types/typescript.svg?style=flat)
+![Netlify](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)
 
-- [x] React
+- [x] React (https://www.npmjs.com/package/react)
 
-- [x] Redux
+- [x] Redux (https://www.npmjs.com/package/redux)
 
-- [x] React Router
+- [x] React Router (https://www.npmjs.com/package/react-router)
 
 - [x] Enzyme
 
-- [x] Fuse.js
+- [x] Fuse.js (https://www.npmjs.com/package/fuse.js)
 
-- [x] Axios
+- [x] Axios (https://www.npmjs.com/package/axios)
 
-- [x] Styled Components
+- [x] Styled Components (https://www.styled-components.com/)
