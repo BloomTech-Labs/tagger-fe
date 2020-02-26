@@ -47,13 +47,9 @@ const S = {
       margin-bottom: 8%;
 
       h6 {
+        font-size: 1rem;
         margin: 0px;
         margin-bottom: 5px;
-      }
-
-      span {
-        color: white;
-        margin-left: 5px;
       }
     }
     li:nth-last-child(1) {
@@ -69,34 +65,41 @@ const S = {
     span {
     }
   `,
-  totalWidth: styled.div`
+  TotalWidth: styled.div`
     background-color: #2f86ff;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    border-radius: 0px 15px 15px 0px;
-    padding: 2px;
-  `,
-  receivedWidth: styled.div`
-    background-color: #2f86ff;
     min-width: 20px;
-    width: ${props => props.rWidth};
     display: flex;
     align-items: center;
     justify-content: flex-start;
     border-radius: 0px 15px 15px 0px;
     padding: 2px;
   `,
-  sentWidth: styled.div`
+  ReceivedWidth: styled.div`
     background-color: #2f86ff;
-    // min-width: 20px;
-    width: ${props => props.sWidth};
+    width: ${props => props.rWidth};
+    min-width: 25px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     border-radius: 0px 15px 15px 0px;
     padding: 2px;
+  `,
+  SentWidth: styled.div`
+    background-color: #2f86ff;
+    width: ${props => props.sWidth};
+    min-width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 0px 15px 15px 0px;
+    padding: 2px;
+  `,
+  Num: styled.span`
+    color: white;
+    margin-left: 5px;
+    font-weight: 900;
+    font-size: 1.2rem;
   `
 };
 
@@ -120,7 +123,7 @@ const AnalyticsBar = props => {
   const totalEmails = totalSent.length + totalReceived.length;
   const receivedWidth = (totalReceived.length / totalEmails) * 100 + "%";
   const sentWidth = (totalSent.length / totalEmails) * 100 + "%";
-  console.log(totalSent, "TOTALSENT")
+  console.log(totalSent, "TOTALSENT");
   return (
     <S.Container>
       <button onClick={() => closeAnalytics()}>X</button>
@@ -139,21 +142,21 @@ const AnalyticsBar = props => {
       <S.Graph>
         <li>
           <h6>Total messages</h6>
-          <S.totalWidth>
-            <span>{totalEmails}</span>
-          </S.totalWidth>
+          <S.TotalWidth>
+            <S.Num>{totalEmails}</S.Num>
+          </S.TotalWidth>
         </li>
         <li>
           <h6>Sent messages</h6>
-          <S.sentWidth sWidth={sentWidth}>
-            <span>{totalSent.length}</span>
-          </S.sentWidth>
+          <S.SentWidth sWidth={sentWidth}>
+            <S.Num>{totalSent.length}</S.Num>
+          </S.SentWidth>
         </li>
         <li>
           <h6>Received messages</h6>
-          <S.receivedWidth rWidth={receivedWidth}>
-            <span>{totalReceived.length}</span>
-          </S.receivedWidth>
+          <S.ReceivedWidth rWidth={receivedWidth}>
+            <S.Num>{totalReceived.length}</S.Num>
+          </S.ReceivedWidth>
         </li>
       </S.Graph>
       {/* <S.LastInteraction>
