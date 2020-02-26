@@ -53,7 +53,11 @@ Here's where you can find our project:
 
 Our potential stakeholder had this idea of an email client that would make checking your email less of a hassle and essential more streamlined. Introducing, [Tagger](https://tagger-lab.netlify.com/)! A new email client that takes the process of searching for emails effortless with a smart search functionality that expands a greater scope so our client can find what they want faster.
 
-##### Tech Stack
+Logged into our email client, our users are able to read and respond to their emails, they can test out our search function that gives them back better results thanks to the implementation of data science on our project. We wanted our users to be able to spend less time through their email and developed a less exact but precise search functionality.
+
+This email client has a more functional, data-science based approach to implementing our search component. It allows our user to find what they're looking for in their inbox and from an outside perspective it differeniates from other email clients because typically what is used is an exact word match search functionality and this client is flexible, sending queries to our data science end without the need for an exact match.
+
+###### Tech Stack
 
 - [x] React
 
