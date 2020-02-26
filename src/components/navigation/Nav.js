@@ -356,9 +356,7 @@ const Nav = (props) => {
     }
 
     return (
-        <S.Container
-        // onClick={() => {setshowMenu(!false)}}
-        >
+        <S.Container>
             <S.Header>Tagger</S.Header>
             <S.MidSection>
                 <S.Top>
@@ -476,7 +474,7 @@ const Nav = (props) => {
                     }
                     alt="Avatar"
                 />
-                <Menu showMenu={showMenu} />
+                <Menu showMenu={showMenu} setshowMenu={setshowMenu} />
             </S.User>
         </S.Container>
     );
