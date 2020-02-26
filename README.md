@@ -62,16 +62,16 @@ This email client has a more functional, data-science based approach to implemen
 ![Typescript](https://img.shields.io/npm/types/typescript.svg?style=flat)
 ![Netlify](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)
 
-- [x] React (https://www.npmjs.com/package/react)
+###### - [x] React (https://www.npmjs.com/package/react)
 
-- [x] Redux (https://www.npmjs.com/package/redux)
+###### - [x] Redux (https://www.npmjs.com/package/redux)
 
-- [x] React Router (https://www.npmjs.com/package/react-router)
+###### - [x] React Router (https://www.npmjs.com/package/react-router)
 
-- [x] Enzyme
+###### - [x] Enzyme (https://www.npmjs.com/package/enzyme)
 
-- [x] Fuse.js (https://www.npmjs.com/package/fuse.js)
+###### - [x] Fuse.js (https://www.npmjs.com/package/fuse.js)
 
-- [x] Axios (https://www.npmjs.com/package/axios)
+###### - [x] Axios (https://www.npmjs.com/package/axios)
 
-- [x] Styled Components (https://www.styled-components.com/)
+###### - [x] Styled Components (https://www.styled-components.com/)
