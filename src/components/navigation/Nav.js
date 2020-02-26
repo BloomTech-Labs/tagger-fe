@@ -285,7 +285,7 @@ const Nav = (props) => {
 
         const emails = props.emails;
         if (searchQuery.search.length === 0) {
-            clearSearch();
+            props.clearSearch();
         } else if (searchQuery.optionalFilter.length > 0) {
             let baseFuzzyResults = fuzzyFunction(searchQuery.search, searchQuery.filters, emails);
             let applyOptionalFilters = baseFuzzyResults.filter((eachEmail) => {
@@ -350,9 +350,21 @@ const Nav = (props) => {
         });
     }
     function emailToDisplayInThread(emailObject) {
-        console.log(emailObject, "OBJECT {}\n\n\n\n\n\n\n\n\n\n");
         props.changeThreadContact(emailObject);
-        console.log(props.threadContactEmailAddress, "\n\n\n********* THREAD CONTACTeMAIL");
+    }
+
+    function resetSearchOnBlur() {
+        setTimeout(() => {
+            props.clearSearch();
+            setSearchQuery({
+                ...searchQuery,
+                search: "",
+                filters: [],
+                optionalFilter: [],
+                results: [],
+                position: -1
+            });
+        }, 200);
     }
 
     return (
@@ -397,6 +409,7 @@ const Nav = (props) => {
                                 onChange={() => {
                                     return 0;
                                 }}
+                                onBlur={resetSearchOnBlur}
                                 // todo ask team if ok to leave in code or see alternative way of adding key capture
                             ></S.Input>
                         </S.Search>

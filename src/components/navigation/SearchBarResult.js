@@ -17,10 +17,8 @@ const S = {
             border-left: 4px solid #0000ff99;
         }
         :active {
-            background-color: red;
-        }
-        :focus {
-            background-color: red;
+            background-color: #50becaad;
+            text-shadow: 1px 0px 0px #000000a1;
         }
         i {
             height: 40px;
