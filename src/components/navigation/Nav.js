@@ -6,6 +6,7 @@ import SearchBarResult from "./SearchBarResult";
 import { fuzzyFunction, addSearchTag } from "./utils";
 import { saveSearch, changeThreadContact } from "../../actions";
 import FilterButton from "./FilterButton";
+import Menu from "./Menu";
 const S = {
     Container: styled.div`
         height: 64px;
@@ -131,11 +132,6 @@ const S = {
         height: 40px;
         margin: 1px 2vw;
         border-radius: 50%;
-    `,
-
-    Signout: styled.div`
-        font-size: 14px;
-        font-weight: bolder;
     `
 };
 
@@ -149,6 +145,7 @@ const Nav = (props) => {
         results: [...props.results],
         position: -1
     });
+    const [showMenu, setshowMenu] = useState(false);
     useEffect(() => {
         let addSimulatedFocusProperty = props.results.map((eachObj) => {
             return {
@@ -359,7 +356,9 @@ const Nav = (props) => {
     }
 
     return (
-        <S.Container>
+        <S.Container
+        // onClick={() => {setshowMenu(!false)}}
+        >
             <S.Header>Tagger</S.Header>
             <S.MidSection>
                 <S.Top>
@@ -467,6 +466,9 @@ const Nav = (props) => {
             </S.MidSection>
             <S.User>
                 <S.Avatar
+                    onClick={() => {
+                        setshowMenu(!showMenu);
+                    }}
                     src={
                         props.userPhoto
                             ? props.userPhoto
@@ -474,7 +476,7 @@ const Nav = (props) => {
                     }
                     alt="Avatar"
                 />
-                <S.Signout>Sign out</S.Signout>
+                <Menu showMenu={showMenu} />
             </S.User>
         </S.Container>
     );
