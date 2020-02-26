@@ -3,7 +3,7 @@ You can find the project at [Tagger](https://tagger-lab.netlify.com/).
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/f0e8023998589cc4d94f/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/tagger-fe/maintainability)
 
-# Contributors
+## Contributors
 
 <h2>Team Lead</h2>
 <center>
@@ -40,19 +40,20 @@ You can find the project at [Tagger](https://tagger-lab.netlify.com/).
 |[<img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/apathyhill/) |[<img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/jeanfraga/)|
 
 </center>
-## Project Overview
 
-Introducing, [Tagger](https://tagger-lab.netlify.com/)!
+### Project Overview
+
+Here's where you can find our project:
 
 [Trello Board](https://trello.com/b/fxTQlX74/labs-20-tagger-smarter-email)
 
 [Product Canvas](https://www.notion.so/Tagger-Smarter-Email-01673a2ed9e54cb8834b959ad39f7de2)
 
-## Features:
+#### Project Description
 
+Our potential stakeholder had this idea of an email client that would make checking your email less of a hassle and essential more streamlined. Introducing, [Tagger](https://tagger-lab.netlify.com/)! A new email client that takes the process of searching for emails effortless with a smart search functionality that expands a greater scope so our client can find what they want faster.
 
-
-### Tech Stack
+##### Tech Stack
 
 - [x] React
 
