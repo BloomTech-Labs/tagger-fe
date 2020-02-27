@@ -12,7 +12,8 @@ import {
     changeIsLoggedIn,
     updateEmails,
     incrementCounter,
-    getContacts
+    getContacts,
+    trainModel
 
 } from "../../actions";
 
@@ -40,7 +41,11 @@ const Inbox = (props) => {
                     console.log("Error", error);
                 });
         }
-    }, [props.areContactsRetrieved]);
+
+        if (props.areEmailsRetrieved && !props.isModelTrained){
+          props.trainModel(props.emailAddress)
+        }
+    }, [props.areContactsRetrieved, props.areEmailsRetrieved]);
 
     function extractAccessTokenFromUrl(urlString) {
         // Parses OAuth access token from page URL
@@ -92,7 +97,8 @@ const mapDispatchToProps = dispatch =>
       changeIsLoggedIn,
       getContacts,
       updateEmails,
-      incrementCounter
+      incrementCounter,
+      trainModel
     },
     dispatch
   );
