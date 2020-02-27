@@ -9,7 +9,7 @@ const S = {
         height: 50px;
         display: flex;
         align-items: center;
-        margin-bottom: 2%;
+        margin-bottom: 5px;
         background-color: ${(props) => props.simulateFocusBackgroundColor};
         border-left: ${(props) => props.simulateFocusBorder};
         :hover {
@@ -93,7 +93,6 @@ export default function SearchBarResult(props) {
             search: ""
             //todo reset location and other values also
         });
-        //todo FUNCTION HERE SET State being mapped over to load inside of the thread section
     }
 
     function showDate() {

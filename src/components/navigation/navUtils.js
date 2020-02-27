@@ -125,3 +125,97 @@ export function addSearchTag(str, searchQuery) {
     };
     return results;
 }
+
+export function clearArrowHighlight(searchQuery, setSearchQuery) {
+    let arrayCopy = [...searchQuery.results];
+    let current = searchQuery.position;
+    let next = searchQuery.position + 1;
+    let previous = searchQuery.position - 1;
+    arrayCopy[current] = {
+        ...arrayCopy[current],
+        simulateFocus: false
+    };
+    arrayCopy[next] = {
+        ...arrayCopy[next],
+        simulateFocus: false
+    };
+    arrayCopy[previous] = {
+        ...arrayCopy[next],
+        simulateFocus: false
+    };
+
+    setSearchQuery({
+        ...searchQuery,
+        position: -1,
+        results: [...arrayCopy]
+    });
+}
+
+export function arrowDown(searchQuery, setSearchQuery, dropDownDiv) {
+    if (searchQuery.results.length - 1 === searchQuery.position) {
+        return null;
+    } else if (searchQuery.position === -1) {
+        let arrayCopy = [...searchQuery.results];
+        let next = searchQuery.position + 1;
+        arrayCopy[next] = {
+            ...arrayCopy[next],
+            simulateFocus: true
+        };
+        setSearchQuery({
+            ...searchQuery,
+            position: next,
+            results: [...arrayCopy]
+        });
+    } else {
+        let arrayCopy = [...searchQuery.results];
+        let current = searchQuery.position;
+        let next = searchQuery.position + 1;
+
+        if ((searchQuery.position + 1) % 6 === 0 && searchQuery.position > 0) {
+            dropDownDiv.scrollTop += 330;
+        }
+
+        arrayCopy[current] = {
+            ...arrayCopy[current],
+            simulateFocus: false
+        };
+        arrayCopy[next] = {
+            ...arrayCopy[next],
+            simulateFocus: true
+        };
+
+        setSearchQuery({
+            ...searchQuery,
+            position: next,
+            results: [...arrayCopy]
+        });
+    }
+}
+
+export function arrowUp(searchQuery, setSearchQuery, dropDownDiv) {
+    if (searchQuery.position === -1 || searchQuery.position === 0) {
+        return null;
+    } else {
+        let arrayCopy = [...searchQuery.results];
+        let current = searchQuery.position;
+        let previous = searchQuery.position - 1;
+
+        if (searchQuery.position % 6 === 0 && searchQuery.position > 0) {
+            dropDownDiv.scrollTop -= 330;
+        }
+
+        arrayCopy[current] = {
+            ...arrayCopy[current],
+            simulateFocus: false
+        };
+        arrayCopy[previous] = {
+            ...arrayCopy[previous],
+            simulateFocus: true
+        };
+        setSearchQuery({
+            ...searchQuery,
+            position: previous,
+            results: [...arrayCopy]
+        });
+    }
+}

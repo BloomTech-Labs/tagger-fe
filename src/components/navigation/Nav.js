@@ -3,10 +3,18 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { clearSearch } from "../../actions";
 import SearchBarResult from "./SearchBarResult";
-import { fuzzyFunction, addSearchTag } from "./utils";
+import {
+    fuzzyFunction,
+    addSearchTag,
+    clearArrowHighlight,
+    // resetSearchOnBlur,
+    arrowDown,
+    arrowUp
+} from "./navUtils";
 import { saveSearch, changeThreadContact } from "../../actions";
 import FilterButton from "./FilterButton";
 import Menu from "./Menu";
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 const S = {
     Container: styled.div`
         height: 64px;
@@ -117,7 +125,7 @@ const S = {
     SearchDropdown: styled.section`
         display: flex;
         flex-direction: column;
-        overflow: auto;
+        overflow-y: scroll;
         width: 100%;
         height: 100%;
     `,
@@ -143,7 +151,10 @@ const Nav = (props) => {
         fuzzySearch: true,
         smartSearch: false,
         results: [...props.results],
-        position: -1
+        position: -1,
+        upwardScrollMarker: 0,
+        downwardScrollMarker: 0,
+        scrollDirection: "down"
     });
     const [showMenu, setshowMenu] = useState(false);
     useEffect(() => {
@@ -153,7 +164,6 @@ const Nav = (props) => {
                 simulateFocus: false
             };
         });
-
         setSearchQuery({
             ...searchQuery,
             results: addSimulatedFocusProperty,
@@ -178,7 +188,6 @@ const Nav = (props) => {
 
         const emails = props.emails;
         if (searchQuery.optionalFilter.length > 0) {
-            console.log(searchQuery.optionalFilter, "else if search query");
             let baseFuzzyResults = fuzzyFunction(searchQuery.search, searchQuery.filters, emails);
             let applyOptionalFilters = baseFuzzyResults.filter((eachEmail) => {
                 for (let index = 0; index < searchQuery.optionalFilter.length; index++) {
@@ -195,64 +204,14 @@ const Nav = (props) => {
         }
     }, [searchQuery.filters, searchQuery.optionalFilter]);
 
+    let dropDownDiv = document.querySelector("#dropDown");
+
     const handleArrowSelect = (e) => {
         console.log("ON KEYDOWN\n\n", e, "\n\n***************");
         if (e.key === "ArrowDown") {
-            if (searchQuery.results.length - 1 === searchQuery.position) {
-                return null;
-            } else if (searchQuery.position === -1) {
-                let arrayCopy = [...searchQuery.results];
-                let next = searchQuery.position + 1;
-                arrayCopy[next] = {
-                    ...arrayCopy[next],
-                    simulateFocus: true
-                };
-                setSearchQuery({
-                    ...searchQuery,
-                    position: next,
-                    results: [...arrayCopy]
-                });
-            } else {
-                let arrayCopy = [...searchQuery.results];
-                let current = searchQuery.position;
-                let next = searchQuery.position + 1;
-                arrayCopy[current] = {
-                    ...arrayCopy[current],
-                    simulateFocus: false
-                };
-                arrayCopy[next] = {
-                    ...arrayCopy[next],
-                    simulateFocus: true
-                };
-
-                setSearchQuery({
-                    ...searchQuery,
-                    position: next,
-                    results: [...arrayCopy]
-                });
-            }
+            arrowDown(searchQuery, setSearchQuery, dropDownDiv);
         } else if (e.key === "ArrowUp") {
-            if (searchQuery.position === -1 || searchQuery.position === 0) {
-                return null;
-            } else {
-                let arrayCopy = [...searchQuery.results];
-                let current = searchQuery.position;
-                let previous = searchQuery.position - 1;
-
-                arrayCopy[current] = {
-                    ...arrayCopy[current],
-                    simulateFocus: false
-                };
-                arrayCopy[previous] = {
-                    ...arrayCopy[previous],
-                    simulateFocus: true
-                };
-                setSearchQuery({
-                    ...searchQuery,
-                    position: previous,
-                    results: [...arrayCopy]
-                });
-            }
+            arrowUp(searchQuery, setSearchQuery, dropDownDiv);
         } else if (e.key === "Enter") {
             alert("enter");
             // todo target the currently selected email to get it to display in threads section
@@ -325,37 +284,12 @@ const Nav = (props) => {
         };
     }, [searchQuery]);
 
-    function clearArrowHighlight() {
-        let arrayCopy = [...searchQuery.results];
-        let current = searchQuery.position;
-        let next = searchQuery.position + 1;
-        let previous = searchQuery.position - 1;
-        arrayCopy[current] = {
-            ...arrayCopy[current],
-            simulateFocus: false
-        };
-        arrayCopy[next] = {
-            ...arrayCopy[next],
-            simulateFocus: false
-        };
-        arrayCopy[previous] = {
-            ...arrayCopy[next],
-            simulateFocus: false
-        };
-
-        setSearchQuery({
-            ...searchQuery,
-            position: -1,
-            results: [...arrayCopy]
-        });
-    }
     function emailToDisplayInThread(emailObject) {
         props.changeThreadContact(emailObject);
     }
-
-    function resetSearchOnBlur() {
+    function resetSearchOnBlur(clearSearch, searchQuery, setSearchQuery) {
         setTimeout(() => {
-            props.clearSearch();
+            clearSearch();
             setSearchQuery({
                 ...searchQuery,
                 search: "",
@@ -366,7 +300,6 @@ const Nav = (props) => {
             });
         }, 200);
     }
-
     return (
         <S.Container>
             <S.Header>Tagger</S.Header>
@@ -409,7 +342,13 @@ const Nav = (props) => {
                                 onChange={() => {
                                     return 0;
                                 }}
-                                onBlur={resetSearchOnBlur}
+                                // onBlur={() => {
+                                //     resetSearchOnBlur(
+                                //         props.clearSearch,
+                                //         searchQuery,
+                                //         setSearchQuery
+                                //     );
+                                // }}
                                 // todo ask team if ok to leave in code or see alternative way of adding key capture
                             ></S.Input>
                         </S.Search>
@@ -424,7 +363,7 @@ const Nav = (props) => {
                     </S.Form>
                 </S.Top>
                 <S.Bottom
-                    heightLeft={searchQuery.search.length > 0 ? "300px" : "0px"}
+                    heightLeft={searchQuery.search.length > 0 ? "330px" : "0px"}
                     boxshadowLeft={
                         searchQuery.search.length > 0 ? "0px 0px 2px 1px #4c4c4c" : "none"
                     }
@@ -433,7 +372,12 @@ const Nav = (props) => {
                 >
                     <div className="left">
                         {props.results.length > 0 && searchQuery.search.length > 0 ? (
-                            <S.SearchDropdown onMouseOver={clearArrowHighlight}>
+                            <S.SearchDropdown
+                                id="dropDown"
+                                onMouseOver={() => {
+                                    clearArrowHighlight(searchQuery, setSearchQuery);
+                                }}
+                            >
                                 {searchQuery.results.map((eachEmail, i) => {
                                     return (
                                         <SearchBarResult
