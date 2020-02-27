@@ -1,22 +1,19 @@
 import React, { useState } from "react";
 import "../landing_page.scss";
 import img1 from "../images/computer_unsplash.jpg";
-import shane from "./img/shane.png";
-import richelle from "./img/richelle.png";
-import matthew from "./img/matthew.png";
-import michael from "./img/michael.png";
-import teddy from "./img/teddy.png";
-import quinton from "./img/quinton.png";
-import edwin from "./img/edwin.png";
-import marcus from "./img/marcus.png";
-import jay from "./img/jay.png";
-import samuel from "./img/samuel.png";
-import john from "./img/john.png";
+import Andrew from "./img/Andrew.jpg";
+import Jean from "./img/Jean.jpg";
+import Luis from "./img/Luis.jpg";
+import Mimi from "./img/Mimi.png";
+import Nate from "./img/Nate.png";
+import Raymond from "./img/Raymond.jpg";
+import Rosie from "./img/Rosie.jpg";
+import Vlad from "./img/Vlad.jpg";
+
 
 const AboutUs = () => {
   const [count, setCount] = useState(1);
   const titles = [
-    "UX Designer",
     "Web Developer",
     "Data Scientist",
     "Team Leader"
@@ -30,31 +27,25 @@ const AboutUs = () => {
   };
 
   const imgs = {
+    
+    
     1: [
-      { pic: richelle, role: titles[0], name: "Richelle Ross" },
-      { pic: matthew, role: titles[0], name: "Matthew Potter" }
+      { pic: Andrew, role: titles[1], name: "Andrew Wilson" },
+      { pic: Luis, role: titles[1], name: "Luis Flores" }
     ],
-    // 2: { },
+  
     2: [
-      { pic: michael, role: titles[1], name: "Michael Chrupcala" },
-      { pic: teddy, role: titles[1], name: "Teddy Ngo" }
+      { pic: Mimi, role: titles[1], name: "Mimi Hoang" },
+      { pic: Raymond, role: titles[1], name: "Raymond Trinh" },
+      { pic: Nate, role: titles[1], name: "Nate Mosco" }
     ],
-    // 4: ,
+    
     3: [
-      { pic: quinton, role: titles[1], name: "Quinton McNamee" },
-      { pic: edwin, role: titles[1], name: "Edwin Parker" },
-      { pic: marcus, role: titles[1], name: "Marcus Jones" }
+      { pic: Jean, role: titles[2], name: "Jean Pierre Fraga" },
+      { pic: Rosie, role: titles[2], name: "Rosie Lasota" },
     ],
-    // 6: ,
-    // 7: ,
-    4: [
-      { pic: jay, role: titles[2], name: "Jay Jacobsohn" },
-      { pic: samuel, role: titles[2], name: "Samuel Hepner" },
-      { pic: john, role: titles[2], name: "John Morrison" }
-    ],
-    // 9: ,
-    // 10: ,
-    5: [{ pic: shane, role: titles[3], name: "Shane Gooch" }]
+    
+    4: [{ pic: Vlad, role: titles[3], name: "Vladislav Mogilevskiy" }]
   };
   const handleCount = action => {
     console.log("handleCount() in landing_page/about_us/AboutUs.jsx");
