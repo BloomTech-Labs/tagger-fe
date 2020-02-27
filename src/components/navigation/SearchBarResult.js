@@ -125,6 +125,7 @@ export default function SearchBarResult(props) {
     }
     return (
         <S.Result
+            className="searchResult"
             key={props.email.message_id || props.key}
             onClick={clearSearchAndLoadResult}
             simulateFocusBackgroundColor={props.email.simulateFocus ? "#f0f8ffa6" : "none"}

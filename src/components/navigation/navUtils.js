@@ -219,3 +219,29 @@ export function arrowUp(searchQuery, setSearchQuery, dropDownDiv) {
         });
     }
 }
+
+export function senseMenu(event, setshowMenu) {
+    if (event.toElement.className.includes("menu")) {
+        return null;
+    } else if (event.target.className.includes("menu")) {
+        return null;
+    } else if (event.target.offsetParent.className.includes("menu")) {
+        return null;
+    } else {
+        setshowMenu(false);
+    }
+}
+export function senseSearchBar(event, searchQuery, setSearchQuery) {
+    if (event.toElement.parentNode.className.includes("searchBar")) {
+        return null;
+    } else {
+        setSearchQuery({
+            ...searchQuery,
+            search: "",
+            filters: [],
+            optionalFilter: [],
+            results: [],
+            position: -1
+        });
+    }
+}

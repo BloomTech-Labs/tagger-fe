@@ -7,14 +7,14 @@ import {
     fuzzyFunction,
     addSearchTag,
     clearArrowHighlight,
-    // resetSearchOnBlur,
     arrowDown,
-    arrowUp
+    arrowUp,
+    senseMenu,
+    senseSearchBar
 } from "./navUtils";
 import { saveSearch, changeThreadContact } from "../../actions";
 import FilterButton from "./FilterButton";
 import Menu from "./Menu";
-import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 const S = {
     Container: styled.div`
         height: 64px;
@@ -37,14 +37,14 @@ const S = {
         flex-direction: row;
         flex-wrap: wrap;
         width: 60vw;
-        height: 55px;
+        height: 35px;
         div:focus-within {
             border: 2px solid #2f86ff;
         }
     `,
     Top: styled.section`
         width: 100%;
-        height: 50px;
+        height: 100%;
         display: flex;
         align-items: flex-end;
     `,
@@ -55,7 +55,7 @@ const S = {
         justify-content: space-between;
         width: 60vw;
         align-items: center;
-        height: 70%;
+        height: 100%;
         box-sizing: border-box;
     `,
 
@@ -151,10 +151,7 @@ const Nav = (props) => {
         fuzzySearch: true,
         smartSearch: false,
         results: [...props.results],
-        position: -1,
-        upwardScrollMarker: 0,
-        downwardScrollMarker: 0,
-        scrollDirection: "down"
+        position: -1
     });
     const [showMenu, setshowMenu] = useState(false);
     useEffect(() => {
@@ -207,7 +204,7 @@ const Nav = (props) => {
     let dropDownDiv = document.querySelector("#dropDown");
 
     const handleArrowSelect = (e) => {
-        console.log("ON KEYDOWN\n\n", e, "\n\n***************");
+        // console.log("ON KEYDOWN\n\n", e, "\n\n***************");
         if (e.key === "ArrowDown") {
             arrowDown(searchQuery, setSearchQuery, dropDownDiv);
         } else if (e.key === "ArrowUp") {
@@ -277,28 +274,22 @@ const Nav = (props) => {
         e.preventDefault();
         setShowSearchOptions(!showSearchOptions);
     };
+    const closeMenu = (event) => senseMenu(event, setshowMenu);
+    const closeSearch = (event) => senseSearchBar(event, searchQuery, setSearchQuery);
+
     useEffect(() => {
         document.addEventListener("keydown", handleArrowSelect);
+        document.addEventListener("mouseup", closeMenu);
+        document.addEventListener("mouseup", closeSearch);
         return () => {
             document.removeEventListener("keydown", handleArrowSelect);
+            document.removeEventListener("mouseup", closeMenu);
+            document.removeEventListener("mouseup", closeSearch);
         };
     }, [searchQuery]);
 
     function emailToDisplayInThread(emailObject) {
         props.changeThreadContact(emailObject);
-    }
-    function resetSearchOnBlur(clearSearch, searchQuery, setSearchQuery) {
-        setTimeout(() => {
-            clearSearch();
-            setSearchQuery({
-                ...searchQuery,
-                search: "",
-                filters: [],
-                optionalFilter: [],
-                results: [],
-                position: -1
-            });
-        }, 200);
     }
     return (
         <S.Container>
@@ -306,7 +297,7 @@ const Nav = (props) => {
             <S.MidSection>
                 <S.Top>
                     <S.Form autoComplete="off">
-                        <S.Search>
+                        <S.Search className="searchBar">
                             {searchQuery.filters.map((eachFilter, index) => {
                                 return (
                                     <FilterButton
@@ -373,6 +364,7 @@ const Nav = (props) => {
                     <div className="left">
                         {props.results.length > 0 && searchQuery.search.length > 0 ? (
                             <S.SearchDropdown
+                                className="searchDropDown"
                                 id="dropDown"
                                 onMouseOver={() => {
                                     clearArrowHighlight(searchQuery, setSearchQuery);
