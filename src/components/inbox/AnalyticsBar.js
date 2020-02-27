@@ -28,6 +28,9 @@ const S = {
     width: 60%;
     border-radius: 50%;
   `,
+  Para: styled.p`
+    line-height: 1px;
+  `,
   Graph: styled.ul`
     width: 90%;
     box-sizing: border-box;
@@ -109,21 +112,25 @@ const AnalyticsBar = props => {
   };
 
   const sent = props.emails.filter(email => email.labels.includes("\\Sent"));
+
   const inbox = props.emails.filter(email => email.labels.includes("\\Inbox"));
+
   const totalSent = sent.filter(email =>
     email.to.includes(
       props.analyticsContact.emailAddress[0].value.toLowerCase()
     )
   );
+
   const totalReceived = inbox.filter(
     email =>
       email.from.toLowerCase() ===
       props.analyticsContact.emailAddress[0].value.toLowerCase()
   );
+
   const totalEmails = totalSent.length + totalReceived.length;
   const receivedWidth = (totalReceived.length / totalEmails) * 100 + "%";
   const sentWidth = (totalSent.length / totalEmails) * 100 + "%";
-  console.log(totalSent, "TOTALSENT");
+
   return (
     <S.Container>
       <button onClick={() => closeAnalytics()}>X</button>
@@ -136,7 +143,7 @@ const AnalyticsBar = props => {
       />
       <h2>{props.analyticsContact.name}</h2>
       {props.analyticsContact.emailAddress.map(email => {
-        return <h5 key={Math.random()}>{email.value}</h5>;
+        return <S.Para key={Math.random()}>{email.value}</S.Para>;
       })}
       <hr />
       <S.Graph>
