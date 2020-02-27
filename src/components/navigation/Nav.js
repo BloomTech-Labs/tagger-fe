@@ -101,6 +101,18 @@ const S = {
         border-radius: 3px;
         color: gray;
         background-color: white;
+
+        :hover {
+            cursor: pointer;
+        }
+        :active {
+            background: #9893613b;
+            -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+            -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+            box-shadow: inset 0px 0px 5px #c1c1c1;
+            outline: none;
+            cursor: pointer;
+        }
     `,
     Bottom: styled.section`
         height: 0px;
@@ -141,6 +153,9 @@ const S = {
         height: 40px;
         margin: 1px 2vw;
         border-radius: 50%;
+        :hover {
+            cursor: pointer;
+        }
     `
 };
 
@@ -326,13 +341,6 @@ const Nav = (props) => {
                                 onChange={() => {
                                     return 0;
                                 }}
-                                // onBlur={() => {
-                                //     resetSearchOnBlur(
-                                //         props.clearSearch,
-                                //         searchQuery,
-                                //         setSearchQuery
-                                //     );
-                                // }}
                                 // todo ask team if ok to leave in code or see alternative way of adding key capture
                             ></S.Input>
                         </S.Search>
