@@ -9,7 +9,7 @@ const S = {
         height: 50px;
         display: flex;
         align-items: center;
-        margin-bottom: 2%;
+        margin-bottom: 5px;
         background-color: ${(props) => props.simulateFocusBackgroundColor};
         border-left: ${(props) => props.simulateFocusBorder};
         :hover {
@@ -17,10 +17,8 @@ const S = {
             border-left: 4px solid #0000ff99;
         }
         :active {
-            background-color: red;
-        }
-        :focus {
-            background-color: red;
+            background-color: #50becaad;
+            text-shadow: 1px 0px 0px #000000a1;
         }
         i {
             height: 40px;
@@ -95,7 +93,6 @@ export default function SearchBarResult(props) {
             search: ""
             //todo reset location and other values also
         });
-        //todo FUNCTION HERE SET State being mapped over to load inside of the thread section
     }
 
     function showDate() {
@@ -128,6 +125,7 @@ export default function SearchBarResult(props) {
     }
     return (
         <S.Result
+            className="searchResult"
             key={props.email.message_id || props.key}
             onClick={clearSearchAndLoadResult}
             simulateFocusBackgroundColor={props.email.simulateFocus ? "#f0f8ffa6" : "none"}

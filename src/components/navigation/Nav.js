@@ -3,7 +3,15 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { clearSearch } from "../../actions";
 import SearchBarResult from "./SearchBarResult";
-import { fuzzyFunction, addSearchTag } from "./utils";
+import {
+    fuzzyFunction,
+    addSearchTag,
+    clearArrowHighlight,
+    arrowDown,
+    arrowUp,
+    senseMenu,
+    senseSearchBar
+} from "./navUtils";
 import { saveSearch, changeThreadContact } from "../../actions";
 import FilterButton from "./FilterButton";
 import Menu from "./Menu";
@@ -29,14 +37,14 @@ const S = {
         flex-direction: row;
         flex-wrap: wrap;
         width: 60vw;
-        height: 64px;
+        height: 35px;
         div:focus-within {
             border: 2px solid #2f86ff;
         }
     `,
     Top: styled.section`
         width: 100%;
-        height: 64px;
+        height: 100%;
         display: flex;
         align-items: flex-end;
     `,
@@ -47,7 +55,7 @@ const S = {
         justify-content: space-between;
         width: 60vw;
         align-items: center;
-        height: 70%;
+        height: 100%;
         box-sizing: border-box;
     `,
 
@@ -117,7 +125,7 @@ const S = {
     SearchDropdown: styled.section`
         display: flex;
         flex-direction: column;
-        overflow: auto;
+        overflow-y: scroll;
         width: 100%;
         height: 100%;
     `,
@@ -153,7 +161,6 @@ const Nav = (props) => {
                 simulateFocus: false
             };
         });
-
         setSearchQuery({
             ...searchQuery,
             results: addSimulatedFocusProperty,
@@ -178,7 +185,6 @@ const Nav = (props) => {
 
         const emails = props.emails;
         if (searchQuery.optionalFilter.length > 0) {
-            console.log(searchQuery.optionalFilter, "else if search query");
             let baseFuzzyResults = fuzzyFunction(searchQuery.search, searchQuery.filters, emails);
             let applyOptionalFilters = baseFuzzyResults.filter((eachEmail) => {
                 for (let index = 0; index < searchQuery.optionalFilter.length; index++) {
@@ -195,64 +201,14 @@ const Nav = (props) => {
         }
     }, [searchQuery.filters, searchQuery.optionalFilter]);
 
+    let dropDownDiv = document.querySelector("#dropDown");
+
     const handleArrowSelect = (e) => {
-        console.log("ON KEYDOWN\n\n", e, "\n\n***************");
+        // console.log("ON KEYDOWN\n\n", e, "\n\n***************");
         if (e.key === "ArrowDown") {
-            if (searchQuery.results.length - 1 === searchQuery.position) {
-                return null;
-            } else if (searchQuery.position === -1) {
-                let arrayCopy = [...searchQuery.results];
-                let next = searchQuery.position + 1;
-                arrayCopy[next] = {
-                    ...arrayCopy[next],
-                    simulateFocus: true
-                };
-                setSearchQuery({
-                    ...searchQuery,
-                    position: next,
-                    results: [...arrayCopy]
-                });
-            } else {
-                let arrayCopy = [...searchQuery.results];
-                let current = searchQuery.position;
-                let next = searchQuery.position + 1;
-                arrayCopy[current] = {
-                    ...arrayCopy[current],
-                    simulateFocus: false
-                };
-                arrayCopy[next] = {
-                    ...arrayCopy[next],
-                    simulateFocus: true
-                };
-
-                setSearchQuery({
-                    ...searchQuery,
-                    position: next,
-                    results: [...arrayCopy]
-                });
-            }
+            arrowDown(searchQuery, setSearchQuery, dropDownDiv);
         } else if (e.key === "ArrowUp") {
-            if (searchQuery.position === -1 || searchQuery.position === 0) {
-                return null;
-            } else {
-                let arrayCopy = [...searchQuery.results];
-                let current = searchQuery.position;
-                let previous = searchQuery.position - 1;
-
-                arrayCopy[current] = {
-                    ...arrayCopy[current],
-                    simulateFocus: false
-                };
-                arrayCopy[previous] = {
-                    ...arrayCopy[previous],
-                    simulateFocus: true
-                };
-                setSearchQuery({
-                    ...searchQuery,
-                    position: previous,
-                    results: [...arrayCopy]
-                });
-            }
+            arrowUp(searchQuery, setSearchQuery, dropDownDiv);
         } else if (e.key === "Enter") {
             alert("enter");
             // todo target the currently selected email to get it to display in threads section
@@ -285,7 +241,7 @@ const Nav = (props) => {
 
         const emails = props.emails;
         if (searchQuery.search.length === 0) {
-            clearSearch();
+            props.clearSearch();
         } else if (searchQuery.optionalFilter.length > 0) {
             let baseFuzzyResults = fuzzyFunction(searchQuery.search, searchQuery.filters, emails);
             let applyOptionalFilters = baseFuzzyResults.filter((eachEmail) => {
@@ -318,50 +274,30 @@ const Nav = (props) => {
         e.preventDefault();
         setShowSearchOptions(!showSearchOptions);
     };
+    const closeMenu = (event) => senseMenu(event, setshowMenu);
+    const closeSearch = (event) => senseSearchBar(event, searchQuery, setSearchQuery);
+
     useEffect(() => {
         document.addEventListener("keydown", handleArrowSelect);
+        document.addEventListener("mouseup", closeMenu);
+        document.addEventListener("mouseup", closeSearch);
         return () => {
             document.removeEventListener("keydown", handleArrowSelect);
+            document.removeEventListener("mouseup", closeMenu);
+            document.removeEventListener("mouseup", closeSearch);
         };
     }, [searchQuery]);
 
-    function clearArrowHighlight() {
-        let arrayCopy = [...searchQuery.results];
-        let current = searchQuery.position;
-        let next = searchQuery.position + 1;
-        let previous = searchQuery.position - 1;
-        arrayCopy[current] = {
-            ...arrayCopy[current],
-            simulateFocus: false
-        };
-        arrayCopy[next] = {
-            ...arrayCopy[next],
-            simulateFocus: false
-        };
-        arrayCopy[previous] = {
-            ...arrayCopy[next],
-            simulateFocus: false
-        };
-
-        setSearchQuery({
-            ...searchQuery,
-            position: -1,
-            results: [...arrayCopy]
-        });
-    }
     function emailToDisplayInThread(emailObject) {
-        console.log(emailObject, "OBJECT {}\n\n\n\n\n\n\n\n\n\n");
         props.changeThreadContact(emailObject);
-        console.log(props.threadContactEmailAddress, "\n\n\n********* THREAD CONTACTeMAIL");
     }
-
     return (
         <S.Container>
             <S.Header>Tagger</S.Header>
             <S.MidSection>
                 <S.Top>
                     <S.Form autoComplete="off">
-                        <S.Search>
+                        <S.Search className="searchBar">
                             {searchQuery.filters.map((eachFilter, index) => {
                                 return (
                                     <FilterButton
@@ -397,6 +333,13 @@ const Nav = (props) => {
                                 onChange={() => {
                                     return 0;
                                 }}
+                                // onBlur={() => {
+                                //     resetSearchOnBlur(
+                                //         props.clearSearch,
+                                //         searchQuery,
+                                //         setSearchQuery
+                                //     );
+                                // }}
                                 // todo ask team if ok to leave in code or see alternative way of adding key capture
                             ></S.Input>
                         </S.Search>
@@ -411,7 +354,7 @@ const Nav = (props) => {
                     </S.Form>
                 </S.Top>
                 <S.Bottom
-                    heightLeft={searchQuery.search.length > 0 ? "300px" : "0px"}
+                    heightLeft={searchQuery.search.length > 0 ? "330px" : "0px"}
                     boxshadowLeft={
                         searchQuery.search.length > 0 ? "0px 0px 2px 1px #4c4c4c" : "none"
                     }
@@ -420,7 +363,13 @@ const Nav = (props) => {
                 >
                     <div className="left">
                         {props.results.length > 0 && searchQuery.search.length > 0 ? (
-                            <S.SearchDropdown onMouseOver={clearArrowHighlight}>
+                            <S.SearchDropdown
+                                className="searchDropDown"
+                                id="dropDown"
+                                onMouseOver={() => {
+                                    clearArrowHighlight(searchQuery, setSearchQuery);
+                                }}
+                            >
                                 {searchQuery.results.map((eachEmail, i) => {
                                     return (
                                         <SearchBarResult
