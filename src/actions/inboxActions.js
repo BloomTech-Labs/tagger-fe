@@ -147,15 +147,15 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
                     id_token: sessionStorage.getItem("id_token")
                 })
                 .then((res) => {
-                    console.log(res, "res from /stream");
+                    console.log("res from /stream", res);
                     const allEmail = res.data.map(email => {
-                    const labelArray = email.labels.split(",");
-                    const toArray = email.to.toLowerCase().split(",")
-                    return {
-                        ...email,
-                        labels: labelArray,
-                        to: toArray
-                      };
+                        const labelArray = email.labels.split(",");
+                        const toArray = email.to.toLowerCase().split(",")
+                        return {
+                            ...email,
+                            labels: labelArray,
+                            to: toArray
+                        };
                     });
                     dispatch({ type: GET_EMAILS_SUCCESS, payload: allEmail });
                     return allEmail;
