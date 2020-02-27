@@ -44,7 +44,7 @@ const Inbox = (props) => {
         }
 
         if (props.areEmailsRetrieved && !props.isModelTrained){
-          props.trainModel(props.emailAddress).then(() => {props.smartSearch()})
+          props.trainModel(props.emailAddress).then(() => {props.smartSearch(props.emailAddress)})
         }
     }, [props.areContactsRetrieved, props.areEmailsRetrieved]);
 

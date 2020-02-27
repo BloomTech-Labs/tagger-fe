@@ -261,7 +261,7 @@ export const SMART_SEARCH_FAILURE = "SMART_SEARCH_FAILURE";
 export const smartSearch = (userEmailAddress, uid, from, msg, subject, ) => (dispatch) => {
     console.log("Smart search action triggered")
     dispatch({ type: SMART_SEARCH_START });
-    console.log("Train model post body: ", {
+    console.log("Smart search post body: ", {
         email: userEmailAddress,
         id_token: sessionStorage.getItem("id_token")
     })
@@ -269,10 +269,10 @@ export const smartSearch = (userEmailAddress, uid, from, msg, subject, ) => (dis
         .post(
             `${url}emails/predict`, {
                 email: userEmailAddress,
-                uid: "",
-                from: "", 
+                // uid: "",
+                // from: "", 
                 msg: "google", 
-                subject: "",
+                // subject: "",
                 id_token: sessionStorage.getItem("id_token")
             }
         )
