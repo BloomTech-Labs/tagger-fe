@@ -10,7 +10,7 @@ import {
   changeIsDisplayingAnalytics,
   changeAnalyticsContact
 } from "../../actions";
-
+import {setAnalyticsContact} from "./helpers/AnalyticsHelper"
 import FullHeightIFrame from "./FullHeightIFrame";
 
 const moment = require("moment");
@@ -42,7 +42,15 @@ const S = {
     display: flex;
     align-items: center;
     h3 {
-      margin-left: 2%;
+      margin-left: 0;
+
+      span {
+        overflow: hidden;
+        white-space: nowrap;
+        word-break: break-word;
+        text-align: left;
+        text-overflow: ellipsis;
+      }
     }
   `,
   MessageActions: styled.div`
@@ -90,29 +98,6 @@ const ThreadMessage = props => {
   const [replyIsHidden, setReplyIsHidden] = useState(true);
   const [responseType, setResponseType] = useState("Reply");
 
-  const setAnalyticsContact = email => {
-    const filter = props.contacts.filter(
-      c => c.emailAddresses[0].value === email.from
-    );
-    if (filter.length > 0) {
-      const contact = {
-        emailAddress: filter[0].emailAddresses,
-        name: filter[0].names[0].displayName,
-        coverPhoto: filter[0].photos[0].url
-      };
-      props.changeAnalyticsContact(contact);
-      props.changeIsDisplayingAnalytics(true);
-    } else {
-      const contact = {
-        emailAddress: [{ value: email.from }],
-        name: email.name
-      };
-      // Sets contact to be displayed in analytics sidebar
-      props.changeAnalyticsContact(contact);
-      props.changeIsDisplayingAnalytics(true);
-    }
-  };
-
   function showDate() {
     let formatDate;
     if (props.email.date.includes("T") || props.email.date.includes("-")) {
@@ -133,15 +118,32 @@ const ThreadMessage = props => {
     <S.Container>
       <S.ContactHeader>
         <S.ContactInfo>
-          <S.Avatar onClick={() => setAnalyticsContact(props.email)} />
-          <h3 onClick={() => setAnalyticsContact(props.email)}>
-            {props.email.name ? props.email.name : props.email.from}
-          </h3>
+          <S.Avatar onClick={() => setAnalyticsContact(props, props.email)} />{" "}
+          {props.snippetsFilter === "\\Sent" ? (
+            props.email.to.map((contact, i) => {
+              var arrayLength = props.email.to.length;
+              return (
+                <span
+                  key={Math.random()}
+                  onClick={() => setAnalyticsContact(props, contact)}
+                >
+                  {i !== arrayLength - 1 ? contact + ", " : contact}
+                </span>
+              );
+            })
+          ) : props.email.name ? (
+            <h3 onClick={() => setAnalyticsContact(props, props.email)}>
+              {props.email.name}
+            </h3>
+          ) : (
+            <h3 onClick={() => setAnalyticsContact(props, props.email)}>
+              {props.email.from}
+            </h3>
+          )}
         </S.ContactInfo>
         <S.MessageActions>
           <i
             title="Reply"
-            style={{ border: "solid 1px red" }}
             className="fa fa-reply button"
             onClick={() => {
               setReplyIsHidden(false);
@@ -150,7 +152,6 @@ const ThreadMessage = props => {
           ></i>
           <i
             title="Reply-All"
-            style={{ border: "solid 1px red" }}
             className="fa fa-reply-all button"
             onClick={() => {
               setReplyIsHidden(false);
@@ -159,7 +160,6 @@ const ThreadMessage = props => {
           ></i>
           <i
             title="Delete Email"
-            style={{ border: "solid 1px red" }}
             className="fas fa-trash-alt button"
             onClick={() => {
               setReplyIsHidden(false);
@@ -201,7 +201,8 @@ const ThreadMessage = props => {
 
 const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
   contacts: contacts.contacts,
-  isLoaded: inbox.isIframeLoaded
+  isLoaded: inbox.isIframeLoaded,
+  snippetsFilter: inbox.snippetsFilter
 });
 
 const mapDispatchToProps = dispatch =>
