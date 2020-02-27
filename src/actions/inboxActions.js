@@ -251,3 +251,41 @@ export const trainModel = (userEmailAddress) => (dispatch) => {
             return false;
         });
 };
+
+
+export const SMART_SEARCH_START = "SMART_SEARCH_START";
+export const SMART_SEARCH_SUCCESS = "SMART_SEARCH_SUCCESS";
+export const SMART_SEARCH_FAILURE = "SMART_SEARCH_FAILURE";
+
+
+export const smartSearch = (userEmailAddress, uid, from, msg, subject, ) => (dispatch) => {
+    console.log("Smart search action triggered")
+    dispatch({ type: SMART_SEARCH_START });
+    console.log("Train model post body: ", {
+        email: userEmailAddress,
+        id_token: sessionStorage.getItem("id_token")
+    })
+    return axios
+        .post(
+            `${url}emails/predict`, {
+                email: userEmailAddress,
+                uid: "",
+                from: "", 
+                msg: "google", 
+                subject: "",
+                id_token: sessionStorage.getItem("id_token")
+            }
+        )
+        .then((res) => {
+            console.log("Smart search res", res)
+            dispatch({
+                type: SMART_SEARCH_SUCCESS,
+            });
+            return true;
+        })
+        .catch((err) => {
+            console.log("Smart search err", err)
+            dispatch({ type: SMART_SEARCH_FAILURE});
+            return false;
+        });
+};

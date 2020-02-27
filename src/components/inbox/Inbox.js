@@ -13,7 +13,8 @@ import {
     updateEmails,
     incrementCounter,
     getContacts,
-    trainModel
+    trainModel,
+    smartSearch
 
 } from "../../actions";
 
@@ -43,7 +44,7 @@ const Inbox = (props) => {
         }
 
         if (props.areEmailsRetrieved && !props.isModelTrained){
-          props.trainModel(props.emailAddress)
+          props.trainModel(props.emailAddress).then(() => {props.smartSearch()})
         }
     }, [props.areContactsRetrieved, props.areEmailsRetrieved]);
 
@@ -98,7 +99,8 @@ const mapDispatchToProps = dispatch =>
       getContacts,
       updateEmails,
       incrementCounter,
-      trainModel
+      trainModel,
+      smartSearch
     },
     dispatch
   );
