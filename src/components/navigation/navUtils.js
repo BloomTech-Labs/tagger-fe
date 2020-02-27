@@ -232,9 +232,30 @@ export function senseMenu(event, setshowMenu) {
     }
 }
 export function senseSearchBar(event, searchQuery, setSearchQuery) {
-    if (event.toElement.parentNode.className.includes("searchBar")) {
+    if (
+        event.toElement.parentNode.className.includes("searchBar") ||
+        event.toElement.className.includes("left") ||
+        event.toElement.parentNode.parentNode.className.includes("searchResult")
+    ) {
         return null;
     } else {
+        // console.log(event);
+        setSearchQuery({
+            ...searchQuery,
+            search: "",
+            filters: [],
+            optionalFilter: [],
+            results: [],
+            position: -1
+        });
+    }
+}
+
+export function selectHighlightedEmail(searchQuery, setSearchQuery, emailToDisplayInThread) {
+    if (searchQuery.position === -1) {
+        return null;
+    } else if (searchQuery.position >= 0) {
+        emailToDisplayInThread(searchQuery.results[searchQuery.position]);
         setSearchQuery({
             ...searchQuery,
             search: "",

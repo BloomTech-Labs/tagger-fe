@@ -48,25 +48,6 @@ const S = {
 };
 
 export default function Menu(props) {
-    // useEffect(() => {
-    //     document.addEventListener("mouseup", senseMenu);
-    //     return () => {
-    //         document.removeEventListener("mouseup", senseMenu);
-    //     };
-    // }, []);
-    // function senseMenu(event) {
-    //     console.log(event);
-    //     if (event.toElement.className.includes("menu")) {
-    //         return null;
-    //     } else if (event.target.className.includes("menu")) {
-    //         return null;
-    //     } else if (event.target.offsetParent.className.includes("menu")) {
-    //         return null;
-    //     } else {
-    //         closeMenu();
-    //     }
-    // }
-
     function logout() {
         const redirectUrl = process.env.REACT_APP_REDIRECTURI
             ? process.env.REACT_APP_REDIRECTURI
