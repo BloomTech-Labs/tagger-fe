@@ -26,6 +26,10 @@ export const fuzzyFunction = (value, filterArray, emails) => {
 // 2.) if exact is a key set the threshold for the search to be 0.0 which indicates no tolerance which enables exact searching
 function refineSearchParams(filterArray) {
     const newKeys = [...filterArray];
+    if (newKeys.includes("body")) {
+        let bodyIndex = newKeys.indexOf("body");
+        newKeys.splice(bodyIndex, 1, "email_body_text");
+    }
     let useDefault = true;
 
     let refinedFuseOptions = {
@@ -116,7 +120,7 @@ export function addSearchTag(str, searchQuery) {
     if (string.includes("body:") && !searchQuery.filters.includes("email_body_text")) {
         const regex = /body:/gi;
         string = string.replace(regex, "");
-        keyFilter.push("email_body_text");
+        keyFilter.push("body");
     }
     let results = {
         string: string,

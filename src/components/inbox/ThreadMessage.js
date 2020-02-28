@@ -6,54 +6,68 @@ import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import Reply from "./Reply";
 
-import {
-  changeIsDisplayingAnalytics,
-  changeAnalyticsContact
-} from "../../actions";
-import {setAnalyticsContact} from "./helpers/AnalyticsHelper"
+import { changeIsDisplayingAnalytics, changeAnalyticsContact } from "../../actions";
+import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
 import FullHeightIFrame from "./FullHeightIFrame";
 
 const moment = require("moment");
 const S = {
-  Container: styled.div`
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 0.5%;
-    padding: 1%;
-    font-size: 0.8rem;
-    background-color: white;
-    border-radius: 3px;
-  `,
-  ContactHeader: styled.div`
-    display: flex;
-    justify-content: space-between;
-    height: 40px;
-    box-sizing: border-box;
-    width: 100%;
-    align-items: center;
-  `,
-  ContactInfo: styled.div`
-    width: 40%;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    h3 {
-      margin-left: 0;
+    Container: styled.div`
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 0.5%;
+        padding: 1%;
+        font-size: 0.8rem;
+        background-color: white;
+        border-radius: 3px;
+    `,
+    ContactHeader: styled.div`
+        display: flex;
+        justify-content: space-between;
+        height: 40px;
+        box-sizing: border-box;
+        width: 100%;
+        align-items: center;
+    `,
+    ContactInfo: styled.div`
+        width: 40%;
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        h3 {
+            margin-left: 0;
+            border-bottom: 1px solid #00000000;
 
-      span {
-        overflow: hidden;
-        white-space: nowrap;
-        word-break: break-word;
-        text-align: left;
-        text-overflow: ellipsis;
-      }
-    }
-  `,
-  MessageActions: styled.div`
+            :hover {
+                color: #2196f3;
+                font-weight: 900;
+                border-bottom: 1px solid #00000033;
+                text-shadow: 0px 1px #2196f387;
+                cursor: pointer;
+            }
+            :active {
+                background: #9893613b;
+                -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+                -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+                box-shadow: inset 0px 0px 5px #c1c1c1;
+                outline: none;
+                cursor: pointer;
+            }
+
+            span {
+                overflow: hidden;
+                white-space: nowrap;
+                word-break: break-word;
+                text-align: left;
+                text-overflow: ellipsis;
+            }
+        }
+    `,
+    MessageActions: styled.div`
     width: 10%;
     height: 100%;
     box-sizing: border-box;
@@ -129,75 +143,75 @@ const ThreadMessage = (props) => {
     const [replyIsHidden, setReplyIsHidden] = useState(true);
     const [responseType, setResponseType] = useState("Reply");
 
-  function showDate() {
-    let formatDate;
-    if (props.email.date.includes("T") || props.email.date.includes("-")) {
-      formatDate = new Date(props.email.date);
-    } else {
-      formatDate = new Date(Number(props.email.date));
+    function showDate() {
+        let formatDate;
+        if (props.email.date.includes("T") || props.email.date.includes("-")) {
+            formatDate = new Date(props.email.date);
+        } else {
+            formatDate = new Date(Number(props.email.date));
+        }
+        let emailDateYear = moment(formatDate).format("YYYY");
+        let currentYear = moment().format("YYYY");
+        if (emailDateYear === currentYear) {
+            return moment(formatDate).format("MMM Do");
+        } else {
+            return moment(formatDate).format("MMM Do YYYY");
+        }
     }
-    let emailDateYear = moment(formatDate).format("YYYY");
-    let currentYear = moment().format("YYYY");
-    if (emailDateYear === currentYear) {
-      return moment(formatDate).format("MMM Do");
-    } else {
-      return moment(formatDate).format("MMM Do YYYY");
-    }
-
-  return (
-    <S.Container>
-      <S.ContactHeader>
-        <S.ContactInfo>
-          <S.Avatar onClick={() => setAnalyticsContact(props, props.email)} />{" "}
-          {props.snippetsFilter === "\\Sent" ? (
-            props.email.to.map((contact, i) => {
-              var arrayLength = props.email.to.length;
-              return (
-                <span
-                  key={Math.random()}
-                  onClick={() => setAnalyticsContact(props, contact)}
-                >
-                  {i !== arrayLength - 1 ? contact + ", " : contact}
-                </span>
-              );
-            })
-          ) : props.email.name ? (
-            <h3 onClick={() => setAnalyticsContact(props, props.email)}>
-              {props.email.name}
-            </h3>
-          ) : (
-            <h3 onClick={() => setAnalyticsContact(props, props.email)}>
-              {props.email.from}
-            </h3>
-          )}
-        </S.ContactInfo>
-        <S.MessageActions>
-          <i
-            title="Reply"
-            className="fa fa-reply button"
-            onClick={() => {
-              setReplyIsHidden(false);
-              setResponseType("Reply");
-            }}
-          ></i>
-          <i
-            title="Reply-All"
-            className="fa fa-reply-all button"
-            onClick={() => {
-              setReplyIsHidden(false);
-              setResponseType("Reply-All");
-            }}
-          ></i>
-          <i
-            title="Delete Email"
-            className="fas fa-trash-alt button"
-            onClick={() => {
-              setReplyIsHidden(false);
-              // todo: need a delete email function that moves the email from emails array in imap to a deleted array so that it lives inside of "trash" before permanently deleting
-            }}
-          ></i>
-        </S.MessageActions>
-      </S.ContactHeader>
+    return (
+        <S.Container>
+            <S.ContactHeader>
+                <S.ContactInfo>
+                    <S.Avatar onClick={() => setAnalyticsContact(props, props.email)} />{" "}
+                    {props.snippetsFilter === "\\Sent" ? (
+                        props.email.to.map((contact, i) => {
+                            var arrayLength = props.email.to.length;
+                            return (
+                                <span
+                                    key={Math.random()}
+                                    onClick={() => setAnalyticsContact(props, contact)}
+                                >
+                                    {i !== arrayLength - 1 ? contact + ", " : contact}
+                                </span>
+                            );
+                        })
+                    ) : props.email.name ? (
+                        <h3 onClick={() => setAnalyticsContact(props, props.email)}>
+                            {props.email.name}
+                        </h3>
+                    ) : (
+                        <h3 onClick={() => setAnalyticsContact(props, props.email)}>
+                            {props.email.from}
+                        </h3>
+                    )}
+                </S.ContactInfo>
+                <S.MessageActions>
+                    <i
+                        title="Reply"
+                        className="fa fa-reply button"
+                        onClick={() => {
+                            setReplyIsHidden(false);
+                            setResponseType("Reply");
+                        }}
+                    ></i>
+                    <i
+                        title="Reply-All"
+                        className="fa fa-reply-all button"
+                        onClick={() => {
+                            setReplyIsHidden(false);
+                            setResponseType("Reply-All");
+                        }}
+                    ></i>
+                    <i
+                        title="Delete Email"
+                        className="fas fa-trash-alt button"
+                        onClick={() => {
+                            setReplyIsHidden(false);
+                            // todo: need a delete email function that moves the email from emails array in imap to a deleted array so that it lives inside of "trash" before permanently deleting
+                        }}
+                    ></i>
+                </S.MessageActions>
+            </S.ContactHeader>
 
             <S.Subject>{props.email.subject}</S.Subject>
             <S.Spinner
@@ -230,9 +244,9 @@ const ThreadMessage = (props) => {
 };
 
 const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
-  contacts: contacts.contacts,
-  isLoaded: inbox.isIframeLoaded,
-  snippetsFilter: inbox.snippetsFilter
+    contacts: contacts.contacts,
+    isLoaded: inbox.isIframeLoaded,
+    snippetsFilter: inbox.snippetsFilter
 });
 
 const mapDispatchToProps = (dispatch) =>
