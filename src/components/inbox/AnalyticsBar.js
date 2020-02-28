@@ -120,11 +120,13 @@ const AnalyticsBar = props => {
       props.analyticsContact.emailAddress[0].value.toLowerCase()
     )
   );
-
-  const totalReceived = inbox.filter(
-    email =>
-      email.from.toLowerCase() ===
-      props.analyticsContact.emailAddress[0].value.toLowerCase()
+  console.log(props.analyticsContact);
+  const totalReceived = inbox.filter(email =>
+    // email.from.toLowerCase() ===
+    // props.analyticsContact.emailAddress[0].value.toLowerCase()
+    props.analyticsContact.emailAddress.some(
+      e => e.value === email.from.toLowerCase() || e.value === email.from
+    )
   );
 
   const totalEmails = totalSent.length + totalReceived.length;
@@ -138,7 +140,7 @@ const AnalyticsBar = props => {
         src={
           props.analyticsContact.coverPhoto
             ? props.analyticsContact.coverPhoto
-            : blackCircle
+            : "https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"
         }
       />
       <h2>{props.analyticsContact.name}</h2>

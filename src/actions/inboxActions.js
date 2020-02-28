@@ -129,7 +129,7 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
         })
 
         .then((Response) => {
-            console.log(Response, "/emails response \n\n\n");
+           
             return axios
                 .post(`${url}emails/stream`, {
                     email: emailAddress,
@@ -139,7 +139,7 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
                     console.log("res from /stream", res);
                     const allEmail = res.data.map(email => {
                         const labelArray = email.labels.split(",");
-                        const toArray = email.to.toLowerCase().split(",")
+                        const toArray = email.to ? email.to.toLowerCase().split(",") : null
                         return {
                             ...email,
                             labels: labelArray,

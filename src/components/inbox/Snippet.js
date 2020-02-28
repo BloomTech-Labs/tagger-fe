@@ -119,8 +119,9 @@ const Snippet = props => {
     >
       <S.SnipHeader>
         <S.Avatar
+        src="https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"
           onClick={() =>
-            props.snippetsFilter === "\\Sent"
+            props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft"
               ? setAnalyticsContact(props, props.email.to[0])
               : props.snippetsFilter === "\\Inbox"
               ? setAnalyticsContact(props, props.email)
@@ -130,7 +131,7 @@ const Snippet = props => {
         <div>
           <h3
             onClick={() =>
-              props.snippetsFilter === "\\Sent"
+              props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft"
               ? setAnalyticsContact(props, props.email.to[0])
               : props.snippetsFilter === "\\Inbox"
               ? setAnalyticsContact(props, props.email)

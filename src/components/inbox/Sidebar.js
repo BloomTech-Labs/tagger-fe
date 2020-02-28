@@ -133,7 +133,7 @@ const Sidebar = props => {
           <div>
             <S.FontAwesomeIcon icon={faFile} />
           </div>
-          <span>Drafts</span>
+          <span onClick={() => props.setSnippetFilter("\\Draft")}  >Drafts</span>
         </li>
         <li>
           <div>

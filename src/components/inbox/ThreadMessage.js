@@ -10,7 +10,7 @@ import {
   changeIsDisplayingAnalytics,
   changeAnalyticsContact
 } from "../../actions";
-import {setAnalyticsContact} from "./helpers/AnalyticsHelper"
+import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
 import FullHeightIFrame from "./FullHeightIFrame";
 
 const moment = require("moment");
@@ -118,8 +118,12 @@ const ThreadMessage = props => {
     <S.Container>
       <S.ContactHeader>
         <S.ContactInfo>
-          <S.Avatar onClick={() => setAnalyticsContact(props, props.email)} />{" "}
-          {props.snippetsFilter === "\\Sent" ? (
+          <S.Avatar
+            src={"https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"}
+            onClick={() => setAnalyticsContact(props, props.email)}
+          />{" "}
+          {props.snippetsFilter === "\\Sent" ||
+          props.snippetsFilter === "\\Draft" ? (
             props.email.to.map((contact, i) => {
               var arrayLength = props.email.to.length;
               return (
@@ -202,7 +206,8 @@ const ThreadMessage = props => {
 const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
   contacts: contacts.contacts,
   isLoaded: inbox.isIframeLoaded,
-  snippetsFilter: inbox.snippetsFilter
+  snippetsFilter: inbox.snippetsFilter,
+  analyticsContact: inbox.analyticsContact
 });
 
 const mapDispatchToProps = dispatch =>
