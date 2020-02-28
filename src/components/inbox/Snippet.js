@@ -10,7 +10,7 @@ import {
   changeAnalyticsContact,
   changeIsDisplayingAnalytics
 } from "../../actions";
-
+import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
 const moment = require("moment");
 
 const S = {
@@ -36,6 +36,11 @@ const S = {
 
     h3 {
       margin: 0px;
+      overflow: hidden;
+      white-space: nowrap;
+      word-break: break-word;
+      text-align: left;
+      text-overflow: ellipsis;
     }
 
     div {
@@ -59,7 +64,6 @@ const S = {
     width: 100%;
     text-align: left;
     overflow: hidden;
-    overflow: hidden;
     white-space: nowrap;
     word-break: break-word;
     text-align: left;
@@ -68,7 +72,6 @@ const S = {
   Message: styled.div`
     width: 100%;
     text-align: left;
-    overflow: hidden;
     overflow: hidden;
     white-space: nowrap;
     word-break: break-word;
@@ -83,7 +86,6 @@ const Snippet = props => {
     emailObj.email_body === "false" || emailObj.email_body === "0"
       ? props.changeIsLoaded(true)
       : props.changeIsLoaded(false);
-    console.log(emailObj, "WHAT IS THIS ONE THEN?");
     props.changeThreadContact(emailObj);
   };
 
@@ -108,34 +110,6 @@ const Snippet = props => {
     }
   }
 
-  const setAnalyticsContact = email => {
-    console.log("EMAIL", email);
-
-    const filter = props.contacts.filter(
-      c => c.emailAddresses[0].value.toLowerCase() === email.from.toLowerCase()
-    );
-    console.log("FILTER", filter);
-    if (filter.length > 0) {
-      const contact = {
-        emailAddress: filter[0].emailAddresses,
-        name: filter[0].names[0].displayName,
-        coverPhoto: filter[0].photos[0].url
-      };
-      // console.log("IF", filter);
-      props.changeAnalyticsContact(contact);
-      props.changeIsDisplayingAnalytics(true);
-    } else {
-      const contact = {
-        emailAddress: [{ value: email.from }],
-        name: email.name
-      };
-      // Sets contact to be displayed in analytics sidebar
-      props.changeAnalyticsContact(contact);
-      props.changeIsDisplayingAnalytics(true);
-    }
-    // console.log("filter", filter)
-  };
-
   return (
     <S.Container
       heightInPx={
@@ -144,9 +118,25 @@ const Snippet = props => {
       onClick={() => setThreadContact()}
     >
       <S.SnipHeader>
-        <S.Avatar onClick={() => setAnalyticsContact(props.email)} />
+        <S.Avatar
+          onClick={() =>
+            props.snippetsFilter === "\\Sent"
+              ? setAnalyticsContact(props, props.email.to[0])
+              : props.snippetsFilter === "\\Inbox"
+              ? setAnalyticsContact(props, props.email)
+              : null
+          }
+        />
         <div>
-          <h3 onClick={() => setAnalyticsContact(props.email)}>
+          <h3
+            onClick={() =>
+              props.snippetsFilter === "\\Sent"
+              ? setAnalyticsContact(props, props.email.to[0])
+              : props.snippetsFilter === "\\Inbox"
+              ? setAnalyticsContact(props, props.email)
+              : null
+            }
+          >
             {props.snippetsFilter === "\\Inbox"
               ? props.email.name
                 ? props.email.name
@@ -154,7 +144,6 @@ const Snippet = props => {
               : props.snippetsFilter === "\\Sent" && props.email.to.length > 1
               ? props.email.to[0] + " + " + parseInt(props.email.to.length - 1)
               : props.email.to[0]}
-            {/* {props.email.name ? props.email.name : props.email.from} */}
           </h3>
           <h3>{showDate(props.email.date)}</h3>
         </div>

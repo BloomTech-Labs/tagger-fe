@@ -8,10 +8,11 @@ You can find the project at [Tagger](https://tagger-lab.netlify.com/).
 <h2>Team Lead</h2>
 <center>
 
-|[Vlad Mogilevskiy](https://github.com/vladmog)|
-|[<img src="https://github.com/Lambda-School-Labs/tagger-fe/blob/master/src/images/Vlad.jpg" width = "15"/>]|
+|[Vlad Mogilevskiy](https://github.com/vladmog) | 
+|:---:|
+|[<img src="https://github.com/Lambda-School-Labs/tagger-fe/blob/master/src/images/Vlad.jpg" width = "200" />](https://github.com/vladmog)|
 |[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/vladmog)|
-|[<img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/vladmog/)
+|[<img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/vladmog/) 
 </center>
 
 <br>
@@ -34,8 +35,6 @@ You can find the project at [Tagger](https://tagger-lab.netlify.com/).
 
 </center>
 ## Project Overview
-
-
 
 Introducing, [Tagger](https://tagger-lab.netlify.com/)!
 
@@ -62,3 +61,4 @@ Introducing, [Tagger](https://tagger-lab.netlify.com/)!
 - [x] Axios
 
 - [x] Styled Components
+

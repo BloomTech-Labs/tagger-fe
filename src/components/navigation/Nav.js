@@ -10,9 +10,10 @@ import {
     arrowDown,
     arrowUp,
     senseMenu,
-    senseSearchBar
+    senseSearchBar,
+    selectHighlightedEmail
 } from "./navUtils";
-import { saveSearch, changeThreadContact } from "../../actions";
+import { saveSearch, changeThreadContact, changeIsLoaded } from "../../actions";
 import FilterButton from "./FilterButton";
 import Menu from "./Menu";
 const S = {
@@ -63,7 +64,7 @@ const S = {
         display: flex;
         align-items: center;
         background: lightgray;
-        width: 50vw;
+        width: 100%;
         height: 100%;
         box-sizing: border-box;
     `,
@@ -107,7 +108,7 @@ const S = {
         overflow: visible;
         display: flex;
         .left {
-            width: 50vw;
+            width: 100%;
             height: ${(props) => props.heightLeft};
             background-color: #cfcfd2;
             z-index: 2;
@@ -209,9 +210,6 @@ const Nav = (props) => {
             arrowDown(searchQuery, setSearchQuery, dropDownDiv);
         } else if (e.key === "ArrowUp") {
             arrowUp(searchQuery, setSearchQuery, dropDownDiv);
-        } else if (e.key === "Enter") {
-            alert("enter");
-            // todo target the currently selected email to get it to display in threads section
         }
     };
 
@@ -260,15 +258,7 @@ const Nav = (props) => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        let selectedEmail = searchQuery.results.filter(
-            (eachResult) => eachResult.simulateFocus === true
-        );
-        if (selectedEmail.length === 0) {
-            return null;
-        } else {
-            alert("selectedEmail", selectedEmail);
-            console.log(selectedEmail, "selected EMAIL \n\n\n$$$$$$$$$$$$$$!!!!!!!!!!!!!!@#!@#!@#");
-        }
+        selectHighlightedEmail(searchQuery, setSearchQuery, emailToDisplayInThread);
     };
     const toggleSearchOptions = (e) => {
         e.preventDefault();
@@ -288,15 +278,18 @@ const Nav = (props) => {
         };
     }, [searchQuery]);
 
-    function emailToDisplayInThread(emailObject) {
-        props.changeThreadContact(emailObject);
+    function emailToDisplayInThread(emailObj) {
+        emailObj.email_body === "false" || emailObj.email_body === "0"
+            ? props.changeIsLoaded(true)
+            : props.changeIsLoaded(false);
+        props.changeThreadContact(emailObj);
     }
     return (
         <S.Container>
             <S.Header>Tagger</S.Header>
             <S.MidSection>
                 <S.Top>
-                    <S.Form autoComplete="off">
+                    <S.Form autoComplete="off" onSubmit={handleSubmit}>
                         <S.Search className="searchBar">
                             {searchQuery.filters.map((eachFilter, index) => {
                                 return (
@@ -343,15 +336,15 @@ const Nav = (props) => {
                                 // todo ask team if ok to leave in code or see alternative way of adding key capture
                             ></S.Input>
                         </S.Search>
-                        <S.Button onClick={toggleSearchOptions}>
-                            Filters
-                            {showSearchOptions ? (
-                                <i className="fa fa-times"></i>
-                            ) : (
-                                <i className="fa fa-filter"></i>
-                            )}
-                        </S.Button>
                     </S.Form>
+                    <S.Button onClick={toggleSearchOptions}>
+                        Filters
+                        {showSearchOptions ? (
+                            <i className="fa fa-times"></i>
+                        ) : (
+                            <i className="fa fa-filter"></i>
+                        )}
+                    </S.Button>
                 </S.Top>
                 <S.Bottom
                     heightLeft={searchQuery.search.length > 0 ? "330px" : "0px"}
@@ -397,7 +390,7 @@ const Nav = (props) => {
                                     checked={searchQuery.smartSearch}
                                     onChange={handleInput}
                                 />
-                                <label htmlFor="smartSearch">Enable Smart Search</label>
+                                <label htmlFor="smartSearch">Smart Search</label>
                                 <input
                                     type="checkbox"
                                     name="fuzzySearch"
@@ -405,7 +398,7 @@ const Nav = (props) => {
                                     checked={searchQuery._fuzzySearch}
                                     onChange={handleInput}
                                 />
-                                <label htmlFor="fuzzySearch">Enable Fuzzy Search</label>
+                                <label htmlFor="fuzzySearch">Fuzzy Search</label>
                             </form>
                         ) : null}
                     </div>
@@ -436,4 +429,9 @@ function mapStateToProps({ searchbar, imap, user, inbox }) {
         threadContactEmailAddress: inbox.threadContactEmailAddress
     };
 }
-export default connect(mapStateToProps, { clearSearch, saveSearch, changeThreadContact })(Nav);
+export default connect(mapStateToProps, {
+    clearSearch,
+    saveSearch,
+    changeThreadContact,
+    changeIsLoaded
+})(Nav);
