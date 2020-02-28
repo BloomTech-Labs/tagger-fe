@@ -1,16 +1,5 @@
 import axios from "axios";
 
-// The following block of code allows for easy switching between localhost and deployed endpoints throughout all API calls
-
-let local = false;
-let cors = "https://cors-anywhere.herokuapp.com/"; // prefixing an endpoint URL with this negates CORS issues\\
-
-//+++++++++++++++++++++++++++++++++++++++++++
-//  F O R   D E V E L O P M E N T  O N L Y
-//*******************************************
-// local = true; //<- uncomment for local development
-// cors = "";    //<- uncomment for local development
-//+++++++++++++++++++++++++++++++++++++++++++
 
 const url = process.env.REACT_APP_BACKENDURL
     ? process.env.REACT_APP_BACKENDURL
@@ -147,15 +136,15 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
                     id_token: sessionStorage.getItem("id_token")
                 })
                 .then((res) => {
-                    console.log(res, "res from /stream");
+                    console.log("res from /stream", res);
                     const allEmail = res.data.map(email => {
-                    const labelArray = email.labels.split(",");
-                    const toArray = email.to.toLowerCase().split(",")
-                    return {
-                        ...email,
-                        labels: labelArray,
-                        to: toArray
-                      };
+                        const labelArray = email.labels.split(",");
+                        const toArray = email.to.toLowerCase().split(",")
+                        return {
+                            ...email,
+                            labels: labelArray,
+                            to: toArray
+                        };
                     });
                     dispatch({ type: GET_EMAILS_SUCCESS, payload: allEmail });
                     return allEmail;
@@ -218,4 +207,85 @@ export const changeIsLoaded = (bool) => (dispatch) => {
 export const SET_SNIPPET_FILTER = "SENT_SNIPPET_FILTER";
 export const setSnippetFilter = string => dispatch => {
   dispatch({ type: SET_SNIPPET_FILTER, payload: string });
+};
+
+
+
+
+
+
+
+
+// =======================================================================
+
+//   S M A R T   S E A R C H   E N D P O I N T S 
+
+export const TRAIN_MODEL_START = "TRAIN_MODEL_START";
+export const TRAIN_MODEL_SUCCESS = "TRAIN_MODEL_SUCCESS";
+export const TRAIN_MODEL_FAILURE = "TRAIN_MODEL_FAILURE";
+
+export const trainModel = (userEmailAddress) => (dispatch) => {
+    console.log("trainModel action triggered")
+    dispatch({ type: TRAIN_MODEL_START });
+    console.log("Train model post body: ", {
+        email: userEmailAddress,
+        id_token: sessionStorage.getItem("id_token")
+    })
+    return axios
+        .post(
+            `${url}emails/train`, {
+                email: userEmailAddress,
+                id_token: sessionStorage.getItem("id_token")
+            }
+        )
+        .then((res) => {
+            console.log("Train model res", res)
+            dispatch({
+                type: TRAIN_MODEL_SUCCESS,
+            });
+            return {};
+        })
+        .catch((err) => {
+            console.log("Train model err", err)
+            dispatch({ type: TRAIN_MODEL_FAILURE});
+            return false;
+        });
+};
+
+
+export const SMART_SEARCH_START = "SMART_SEARCH_START";
+export const SMART_SEARCH_SUCCESS = "SMART_SEARCH_SUCCESS";
+export const SMART_SEARCH_FAILURE = "SMART_SEARCH_FAILURE";
+
+
+export const smartSearch = (userEmailAddress, uid, from, msg, subject, ) => (dispatch) => {
+    console.log("Smart search action triggered")
+    dispatch({ type: SMART_SEARCH_START });
+    console.log("Smart search post body: ", {
+        email: userEmailAddress,
+        id_token: sessionStorage.getItem("id_token")
+    })
+    return axios
+        .post(
+            `${url}emails/predict`, {
+                email: userEmailAddress,
+                // uid: "",
+                // from: "", 
+                msg: "google", 
+                // subject: "",
+                id_token: sessionStorage.getItem("id_token")
+            }
+        )
+        .then((res) => {
+            console.log("Smart search res", res)
+            dispatch({
+                type: SMART_SEARCH_SUCCESS,
+            });
+            return true;
+        })
+        .catch((err) => {
+            console.log("Smart search err", err)
+            dispatch({ type: SMART_SEARCH_FAILURE});
+            return false;
+        });
 };
