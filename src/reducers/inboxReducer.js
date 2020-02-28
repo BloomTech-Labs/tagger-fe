@@ -4,7 +4,10 @@ import {
   CHANGE_THREAD_CONTACT,
   CHANGE_ANALYTICS_CONTACT,
   IFRAME_LOADED,
-  SET_SNIPPET_FILTER
+  SET_SNIPPET_FILTER,
+  TRAIN_MODEL_START,
+  TRAIN_MODEL_SUCCESS,
+  TRAIN_MODEL_FAILURE,
 } from "../actions";
 
 // const initialState = {
@@ -26,7 +29,9 @@ const initialState = {
     name: "George Washington",
     coverPhoto: ""
   },
-  snippetsFilter: "\\Inbox"
+  snippetsFilter: "\\Inbox",
+  isModelTrained: false,
+  isTrainingModel: false
 };
 
 export const inboxReducer = (state = initialState, { type, payload }) => {
@@ -78,6 +83,24 @@ export const inboxReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         snippetsFilter: payload
+      };
+    // ==============================================
+    case TRAIN_MODEL_START:
+      return {
+        ...state,
+        isTrainingModel: true
+      };
+    case TRAIN_MODEL_SUCCESS:
+      return {
+        ...state,
+        isModelTrained: true,
+        isTrainingModel: false
+      };
+    case TRAIN_MODEL_FAILURE:
+      return {
+        ...state,
+        snippetsFilter: payload,
+        isTrainingModel: false
       };
     default:
       return state;
