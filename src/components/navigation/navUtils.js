@@ -239,11 +239,12 @@ export function senseSearchBar(event, searchQuery, setSearchQuery) {
     if (
         event.toElement.parentNode.className.includes("searchBar") ||
         event.toElement.className.includes("left") ||
-        event.toElement.parentNode.parentNode.className.includes("searchResult")
+        event.toElement.parentNode.parentNode.className.includes("searchResult") ||
+        event.target.className.includes("searchBar")
     ) {
         return null;
     } else {
-        // console.log(event);
+        // console.log(event, "\n\n mousedown for sense searchbar \n\n");
         setSearchQuery({
             ...searchQuery,
             search: "",
@@ -271,8 +272,8 @@ export function selectHighlightedEmail(searchQuery, setSearchQuery, emailToDispl
     }
 }
 
-export function applyOptionalFilters(args) {
-    const [fuzzyFunction, searchQuery, emails, saveSearch] = args;
+export function applyOptionalFilters(array) {
+    const [fuzzyFunction, searchQuery, emails, saveSearch] = array;
 
     let baseFuzzyResults = fuzzyFunction(searchQuery.search, searchQuery.filters, emails);
     let addOptionalFilters = baseFuzzyResults.filter((eachEmail) => {

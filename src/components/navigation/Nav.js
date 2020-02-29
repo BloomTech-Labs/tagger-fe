@@ -224,7 +224,7 @@ const Nav = (props) => {
 
         const emails = props.emails;
         if (searchQuery.optionalFilter.length > 0) {
-            applyOptionalFilters(fuzzyFunction, searchQuery, emails, props.saveSearch);
+            applyOptionalFilters([fuzzyFunction, searchQuery, emails, props.saveSearch]);
         } else {
             props.saveSearch(fuzzyFunction(searchQuery.search, searchQuery.filters, emails));
         }
@@ -265,7 +265,7 @@ const Nav = (props) => {
     };
 
     const handleInput = (e) => {
-        console.log(e, "EVENT \n\n\n****************");
+        // console.log(e, "EVENT \n\n\n****************");
         e.persist();
         e.preventDefault();
         e.stopPropagation();
@@ -293,7 +293,7 @@ const Nav = (props) => {
         if (searchQuery.search.length === 0) {
             props.clearSearch();
         } else if (searchQuery.optionalFilter.length > 0) {
-            applyOptionalFilters(fuzzyFunction, searchQuery, emails, props.saveSearch);
+            applyOptionalFilters([fuzzyFunction, searchQuery, emails, props.saveSearch]);
         } else {
             props.saveSearch(fuzzyFunction(searchQuery.search, searchQuery.filters, emails));
         }
