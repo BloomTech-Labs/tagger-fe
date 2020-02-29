@@ -14,7 +14,9 @@ import {
     selectHighlightedEmail
 } from "./navUtils";
 import { saveSearch, changeThreadContact, changeIsLoaded } from "../../actions";
-import FilterButton from "./FilterButton";
+// import FilterButton from "./FilterButton";
+import FuzzySearchDisplay from "./FuzzySearchDisplay";
+import FilterOptions from "./FilterOptions";
 import Menu from "./Menu";
 const S = {
     Container: styled.div`
@@ -164,12 +166,35 @@ const Nav = (props) => {
         search: "",
         filters: [],
         optionalFilter: [],
-        fuzzySearch: true,
-        smartSearch: false,
         results: [...props.results],
         position: -1
     });
-    const [showMenu, setshowMenu] = useState(false);
+    const [options, setOptions] = useState({
+        fuzzySearch: true,
+        smartSearch: false,
+        exact: false,
+        to: false,
+        body: false,
+        name: false,
+        from: false,
+        subject: false,
+
+        ".com": false,
+        ".gov": false,
+        ".net": false,
+        ".edu": false,
+        ".org": false
+    });
+    const [smartOptions, setSmartOptions] = useState({
+        fuzzySearch: false,
+        smartSearch: true,
+        msg: false,
+        from: false,
+        subject: false
+    });
+    const [showSearchOptions, setShowSearchOptions] = useState(false); // when you click button next to searchbar
+    const [useSmartOptions, setUseSmartOptions] = useState(false);
+    const [showMenu, setshowMenu] = useState(false); // when you click avatar
     useEffect(() => {
         let addSimulatedFocusProperty = props.results.map((eachObj) => {
             return {
@@ -183,9 +208,6 @@ const Nav = (props) => {
             position: -1
         });
     }, [props.results]);
-
-    const [showSearchOptions, setShowSearchOptions] = useState(false);
-    const [smartSearchIsChecked, setSmartSearchIsChecked] = useState(false);
 
     function removeFilter(index, whichFilter) {
         const currentFilters = [...searchQuery[`${whichFilter}`]];
@@ -228,10 +250,34 @@ const Nav = (props) => {
         }
     };
 
+    const handleCheckbox = (e) => {
+        e.persist();
+        e.preventDefault();
+        e.stopPropagation();
+        // console.log(e, "handleCheckbox");
+        const name = e.target.id;
+        const keyList = useSmartOptions ? smartOptions : options;
+        const value = keyList[name];
+        if (name === "fuzzySearch" || name === "smartSearch") {
+            setUseSmartOptions(!useSmartOptions);
+        } else if (useSmartOptions) {
+            setSmartOptions({
+                ...smartOptions,
+                [`${name}`]: !value
+            });
+        } else {
+            setOptions({
+                ...options,
+                [`${name}`]: !value
+            });
+        }
+    };
+
     const handleInput = (e) => {
         console.log(e, "EVENT \n\n\n****************");
         e.persist();
         e.preventDefault();
+        e.stopPropagation();
         const target = e.target;
         const value = target.type === "checkbox" ? target.checked : target.value;
         const name = target.name;
@@ -277,6 +323,7 @@ const Nav = (props) => {
     };
     const toggleSearchOptions = (e) => {
         e.preventDefault();
+        e.stopPropagation();
         setShowSearchOptions(!showSearchOptions);
     };
     const closeMenu = (event) => senseMenu(event, setshowMenu);
@@ -304,47 +351,12 @@ const Nav = (props) => {
             <S.Header>Tagger</S.Header>
             <S.MidSection>
                 <S.Top>
-                    <S.Form autoComplete="off" onSubmit={handleSubmit}>
-                        <S.Search className="searchBar">
-                            {searchQuery.filters.map((eachFilter, index) => {
-                                return (
-                                    <FilterButton
-                                        key={index}
-                                        text={eachFilter}
-                                        index={index}
-                                        onClick={() => {
-                                            removeFilter(index, "filters");
-                                        }}
-                                    />
-                                );
-                            })}
+                    {useSmartOptions ? null : (
+                        <FuzzySearchDisplay
+                            functions={[removeFilter, handleInput, searchQuery, S, handleSubmit]}
+                        />
+                    )}
 
-                            {searchQuery.optionalFilter.map((eachFilter, index) => {
-                                return (
-                                    <FilterButton
-                                        key={index}
-                                        text={eachFilter}
-                                        index={index}
-                                        onClick={() => {
-                                            removeFilter(index, "optionalFilter");
-                                        }}
-                                    />
-                                );
-                            })}
-
-                            <S.Input
-                                type="text"
-                                name="search"
-                                placeholder="Search for people, conversations, files..."
-                                value={searchQuery.search}
-                                onChangeCapture={handleInput}
-                                onChange={() => {
-                                    return 0;
-                                }}
-                                // todo ask team if ok to leave in code or see alternative way of adding key capture
-                            ></S.Input>
-                        </S.Search>
-                    </S.Form>
                     <S.Button onClick={toggleSearchOptions}>
                         Filters
                         {showSearchOptions ? (
@@ -390,24 +402,9 @@ const Nav = (props) => {
                     </div>
                     <div className="right">
                         {showSearchOptions ? (
-                            <form action="">
-                                <input
-                                    type="checkbox"
-                                    name="smartSearch"
-                                    id="smartSearch"
-                                    checked={searchQuery.smartSearch}
-                                    onChange={handleInput}
-                                />
-                                <label htmlFor="smartSearch">Smart Search</label>
-                                <input
-                                    type="checkbox"
-                                    name="fuzzySearch"
-                                    id="fuzzySearch"
-                                    checked={searchQuery._fuzzySearch}
-                                    onChange={handleInput}
-                                />
-                                <label htmlFor="fuzzySearch">Fuzzy Search</label>
-                            </form>
+                            <FilterOptions
+                                options={[options, handleCheckbox, useSmartOptions, smartOptions]}
+                            />
                         ) : null}
                     </div>
                 </S.Bottom>
