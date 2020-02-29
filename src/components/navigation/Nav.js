@@ -15,7 +15,6 @@ import {
     applyOptionalFilters
 } from "./navUtils";
 import { saveSearch, changeThreadContact, changeIsLoaded } from "../../actions";
-// import FilterButton from "./FilterButton";
 import FuzzySearchDisplay from "./FuzzySearchDisplay";
 import FilterOptions from "./FilterOptions";
 import Menu from "./Menu";
@@ -168,7 +167,7 @@ const Nav = (props) => {
         filters: [],
         optionalFilter: [],
         results: [...props.results],
-        position: -1
+        position: -1 //used to highlight the current search result on up and down arrow key press
     });
     const [options, setOptions] = useState({
         fuzzySearch: true,
@@ -179,7 +178,6 @@ const Nav = (props) => {
         name: false,
         from: false,
         subject: false,
-
         ".com": false,
         ".gov": false,
         ".net": false,
@@ -221,7 +219,6 @@ const Nav = (props) => {
     }
     useEffect(() => {
         //=============below should rerun search logic
-
         const emails = props.emails;
         if (searchQuery.optionalFilter.length > 0) {
             applyOptionalFilters([fuzzyFunction, searchQuery, emails, props.saveSearch]);
@@ -230,7 +227,7 @@ const Nav = (props) => {
         }
     }, [searchQuery.filters, searchQuery.optionalFilter]);
 
-    let dropDownDiv = document.querySelector("#dropDown");
+    const dropDownDiv = document.querySelector("#dropDown");
 
     const handleArrowSelect = (e) => {
         // console.log("ON KEYDOWN\n\n", e, "\n\n***************");

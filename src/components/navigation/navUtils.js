@@ -225,7 +225,7 @@ export function arrowUp(searchQuery, setSearchQuery, dropDownDiv) {
 }
 
 export function senseMenu(event, setshowMenu) {
-    if (event.toElement.className.includes("menu")) {
+    if (event.target.className.includes("menu")) {
         return null;
     } else if (event.target.className.includes("menu")) {
         return null;
@@ -236,15 +236,16 @@ export function senseMenu(event, setshowMenu) {
     }
 }
 export function senseSearchBar(event, searchQuery, setSearchQuery) {
+    // console.log(event, "\n\n mousedown for sense searchbar \n\n");
     if (
-        event.toElement.parentNode.className.includes("searchBar") ||
-        event.toElement.className.includes("left") ||
-        event.toElement.parentNode.parentNode.className.includes("searchResult") ||
-        event.target.className.includes("searchBar")
+        event.target.className.includes("searchBar") ||
+        event.target.parentNode.className.includes("searchBar") ||
+        event.target.className.includes("left") ||
+        event.target.parentNode.className.includes("searchResult") ||
+        event.target.parentNode.parentNode.className.includes("searchResult")
     ) {
         return null;
     } else {
-        // console.log(event, "\n\n mousedown for sense searchbar \n\n");
         setSearchQuery({
             ...searchQuery,
             search: "",
