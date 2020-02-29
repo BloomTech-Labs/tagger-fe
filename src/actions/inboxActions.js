@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { StrictMode } from "react";
 
 const url = process.env.REACT_APP_BACKENDURL
     ? process.env.REACT_APP_BACKENDURL
@@ -137,9 +137,10 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
                 })
                 .then((res) => {
                     console.log("res from /stream", res);
-                    const allEmail = res.data.map(email => {
+                    const allEmail = res.data.map((email) => {
                         const labelArray = email.labels.split(",");
-                        const toArray = email.to ? email.to.toLowerCase().split(",") : null
+                        // const toArray = email.to.toLowerCase().split(",");
+                        const toArray = email.to ? email.to.toLowerCase().split(",") : null;
                         return {
                             ...email,
                             labels: labelArray,
@@ -153,7 +154,6 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
         .catch((err) => {
             dispatch({ type: EMAILS_UPDATE_FAILURE, payload: err });
             return err;
-
         });
 };
 // =============================================================================
@@ -205,87 +205,69 @@ export const changeIsLoaded = (bool) => (dispatch) => {
 // =============================================================================
 // C H A N G E  S N I P P E T  F I L T E R
 export const SET_SNIPPET_FILTER = "SENT_SNIPPET_FILTER";
-export const setSnippetFilter = string => dispatch => {
-  dispatch({ type: SET_SNIPPET_FILTER, payload: string });
+export const setSnippetFilter = (string) => (dispatch) => {
+    dispatch({ type: SET_SNIPPET_FILTER, payload: string });
 };
-
-
-
-
-
-
-
 
 // =======================================================================
 
-//   S M A R T   S E A R C H   E N D P O I N T S 
+//   S M A R T   S E A R C H   E N D P O I N T S
 
 export const TRAIN_MODEL_START = "TRAIN_MODEL_START";
 export const TRAIN_MODEL_SUCCESS = "TRAIN_MODEL_SUCCESS";
 export const TRAIN_MODEL_FAILURE = "TRAIN_MODEL_FAILURE";
 
 export const trainModel = (userEmailAddress) => (dispatch) => {
-    console.log("trainModel action triggered")
+    console.log("trainModel action triggered");
     dispatch({ type: TRAIN_MODEL_START });
-    console.log("Train model post body: ", {
-        email: userEmailAddress,
-        id_token: sessionStorage.getItem("id_token")
-    })
     return axios
-        .post(
-            `${url}emails/train`, {
-                email: userEmailAddress,
-                id_token: sessionStorage.getItem("id_token")
-            }
-        )
+        .post(`${url}emails/train`, {
+            email: userEmailAddress,
+            id_token: sessionStorage.getItem("id_token"),
+            host: "smtp.gmail.com"
+        })
         .then((res) => {
-            console.log("Train model res", res)
+            console.log("/n/n/n/n/nTrain model res/n/n/n/n/n", res);
             dispatch({
-                type: TRAIN_MODEL_SUCCESS,
+                type: TRAIN_MODEL_SUCCESS
             });
-            return {};
         })
         .catch((err) => {
-            console.log("Train model err", err)
-            dispatch({ type: TRAIN_MODEL_FAILURE});
+            console.log("Train model err", err);
+            dispatch({ type: TRAIN_MODEL_FAILURE });
             return false;
         });
 };
-
 
 export const SMART_SEARCH_START = "SMART_SEARCH_START";
 export const SMART_SEARCH_SUCCESS = "SMART_SEARCH_SUCCESS";
 export const SMART_SEARCH_FAILURE = "SMART_SEARCH_FAILURE";
 
-
-export const smartSearch = (userEmailAddress, uid, from, msg, subject, ) => (dispatch) => {
-    console.log("Smart search action triggered")
+export const smartSearch = (userEmailAddress, searchParams) => (dispatch) => {
+    console.log("Smart search action triggered");
     dispatch({ type: SMART_SEARCH_START });
-    console.log("Smart search post body: ", {
-        email: userEmailAddress,
-        id_token: sessionStorage.getItem("id_token")
-    })
+
+    const { uid, from, msg, subject } = searchParams;
+
     return axios
-        .post(
-            `${url}emails/predict`, {
-                email: userEmailAddress,
-                // uid: "",
-                // from: "", 
-                msg: "google", 
-                // subject: "",
-                id_token: sessionStorage.getItem("id_token")
-            }
-        )
+        .post(`${url}emails/predict`, {
+            email: userEmailAddress,
+            uid: uid,
+            from: from,
+            subject: subject,
+            msg: msg,
+            id_token: sessionStorage.getItem("id_token")
+        })
         .then((res) => {
-            console.log("Smart search res", res)
+            console.log("Smart search res", res);
             dispatch({
-                type: SMART_SEARCH_SUCCESS,
+                type: SMART_SEARCH_SUCCESS
             });
             return true;
         })
         .catch((err) => {
-            console.log("Smart search err", err)
-            dispatch({ type: SMART_SEARCH_FAILURE});
+            console.log("Smart search err", err);
+            dispatch({ type: SMART_SEARCH_FAILURE });
             return false;
         });
 };

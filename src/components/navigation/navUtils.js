@@ -26,6 +26,10 @@ export const fuzzyFunction = (value, filterArray, emails) => {
 // 2.) if exact is a key set the threshold for the search to be 0.0 which indicates no tolerance which enables exact searching
 function refineSearchParams(filterArray) {
     const newKeys = [...filterArray];
+    if (newKeys.includes("body")) {
+        let bodyIndex = newKeys.indexOf("body");
+        newKeys.splice(bodyIndex, 1, "email_body_text");
+    }
     let useDefault = true;
 
     let refinedFuseOptions = {
@@ -116,7 +120,7 @@ export function addSearchTag(str, searchQuery) {
     if (string.includes("body:") && !searchQuery.filters.includes("email_body_text")) {
         const regex = /body:/gi;
         string = string.replace(regex, "");
-        keyFilter.push("email_body_text");
+        keyFilter.push("body");
     }
     let results = {
         string: string,
@@ -221,7 +225,7 @@ export function arrowUp(searchQuery, setSearchQuery, dropDownDiv) {
 }
 
 export function senseMenu(event, setshowMenu) {
-    if (event.toElement.className.includes("menu")) {
+    if (event.target.className.includes("menu")) {
         return null;
     } else if (event.target.className.includes("menu")) {
         return null;
@@ -232,14 +236,16 @@ export function senseMenu(event, setshowMenu) {
     }
 }
 export function senseSearchBar(event, searchQuery, setSearchQuery) {
+    // console.log(event, "\n\n mousedown for sense searchbar \n\n");
     if (
-        event.toElement.parentNode.className.includes("searchBar") ||
-        event.toElement.className.includes("left") ||
-        event.toElement.parentNode.parentNode.className.includes("searchResult")
+        event.target.className.includes("searchBar") ||
+        event.target.parentNode.className.includes("searchBar") ||
+        event.target.className.includes("left") ||
+        event.target.parentNode.className.includes("searchResult") ||
+        event.target.parentNode.parentNode.className.includes("searchResult")
     ) {
         return null;
     } else {
-        // console.log(event);
         setSearchQuery({
             ...searchQuery,
             search: "",
@@ -265,4 +271,20 @@ export function selectHighlightedEmail(searchQuery, setSearchQuery, emailToDispl
             position: -1
         });
     }
+}
+
+export function applyOptionalFilters(array) {
+    const [fuzzyFunction, searchQuery, emails, saveSearch] = array;
+
+    let baseFuzzyResults = fuzzyFunction(searchQuery.search, searchQuery.filters, emails);
+    let addOptionalFilters = baseFuzzyResults.filter((eachEmail) => {
+        for (let index = 0; index < searchQuery.optionalFilter.length; index++) {
+            if (eachEmail.from.includes(searchQuery.optionalFilter[index])) {
+                return eachEmail;
+            } else if (eachEmail.to.includes(searchQuery.optionalFilter[index])) {
+                return eachEmail;
+            }
+        }
+    });
+    saveSearch(addOptionalFilters);
 }
