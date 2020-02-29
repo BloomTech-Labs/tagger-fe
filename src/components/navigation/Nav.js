@@ -11,7 +11,8 @@ import {
     arrowUp,
     senseMenu,
     senseSearchBar,
-    selectHighlightedEmail
+    selectHighlightedEmail,
+    applyOptionalFilters
 } from "./navUtils";
 import { saveSearch, changeThreadContact, changeIsLoaded } from "../../actions";
 // import FilterButton from "./FilterButton";
@@ -223,17 +224,7 @@ const Nav = (props) => {
 
         const emails = props.emails;
         if (searchQuery.optionalFilter.length > 0) {
-            let baseFuzzyResults = fuzzyFunction(searchQuery.search, searchQuery.filters, emails);
-            let applyOptionalFilters = baseFuzzyResults.filter((eachEmail) => {
-                for (let index = 0; index < searchQuery.optionalFilter.length; index++) {
-                    if (eachEmail.from.includes(searchQuery.optionalFilter[index])) {
-                        return eachEmail;
-                    } else if (eachEmail.to.includes(searchQuery.optionalFilter[index])) {
-                        return eachEmail;
-                    }
-                }
-            });
-            props.saveSearch(applyOptionalFilters);
+            applyOptionalFilters(fuzzyFunction, searchQuery, emails, props.saveSearch);
         } else {
             props.saveSearch(fuzzyFunction(searchQuery.search, searchQuery.filters, emails));
         }
@@ -302,17 +293,7 @@ const Nav = (props) => {
         if (searchQuery.search.length === 0) {
             props.clearSearch();
         } else if (searchQuery.optionalFilter.length > 0) {
-            let baseFuzzyResults = fuzzyFunction(searchQuery.search, searchQuery.filters, emails);
-            let applyOptionalFilters = baseFuzzyResults.filter((eachEmail) => {
-                for (let index = 0; index < searchQuery.optionalFilter.length; index++) {
-                    if (eachEmail.from.includes(searchQuery.optionalFilter[index])) {
-                        return eachEmail;
-                    } else if (eachEmail.from.includes(searchQuery.optionalFilter[index])) {
-                        return eachEmail;
-                    }
-                }
-            });
-            props.saveSearch(applyOptionalFilters);
+            applyOptionalFilters(fuzzyFunction, searchQuery, emails, props.saveSearch);
         } else {
             props.saveSearch(fuzzyFunction(searchQuery.search, searchQuery.filters, emails));
         }

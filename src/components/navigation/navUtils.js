@@ -270,3 +270,19 @@ export function selectHighlightedEmail(searchQuery, setSearchQuery, emailToDispl
         });
     }
 }
+
+export function applyOptionalFilters(args) {
+    const [fuzzyFunction, searchQuery, emails, saveSearch] = args;
+
+    let baseFuzzyResults = fuzzyFunction(searchQuery.search, searchQuery.filters, emails);
+    let addOptionalFilters = baseFuzzyResults.filter((eachEmail) => {
+        for (let index = 0; index < searchQuery.optionalFilter.length; index++) {
+            if (eachEmail.from.includes(searchQuery.optionalFilter[index])) {
+                return eachEmail;
+            } else if (eachEmail.to.includes(searchQuery.optionalFilter[index])) {
+                return eachEmail;
+            }
+        }
+    });
+    saveSearch(addOptionalFilters);
+}
