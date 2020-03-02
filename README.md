@@ -59,7 +59,7 @@ This email client has a more functional, data-science based approach to implemen
 
 ##### Tech Stack
 ![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
-![JavaScript](https://img.shields.io/npm/types/typescript.svg?style=flat)
+![JavaScript](https://img.shields.io/npm/types/javascript.svg?style=flat)
 ![Netlify](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)
 ![Code Style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)
 ![Node.js](https://img.shields.io/badge/node.js-green)
