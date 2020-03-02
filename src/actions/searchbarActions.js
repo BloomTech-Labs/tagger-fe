@@ -10,6 +10,7 @@ console.log("URL", url);
 
 export const SET_SEARCH_RESULT = "SET_SEARCH_RESULT";
 export const CLEAR_SEARCH_RESULT = "CLEAR_SEARCH_RESULT";
+export const CLEAR_SMART_SEARCH = "CLEAR_SMART_SEARCH"
 
 export const saveSearch = (results) => (dispatch) => {
     dispatch({
@@ -23,5 +24,10 @@ export const clearSearch = () => (dispatch) => {
         type: CLEAR_SEARCH_RESULT
     });
 };
+export const clearSmartSearch = () => dispatch => {
+    dispatch({
+        type: CLEAR_SMART_SEARCH
+    })
+}
 
 

@@ -29,9 +29,9 @@ export default function FilterOptions(props) {
         return (
             <div key={index} id={option} onClick={handleCheckbox}>
                 {keyList[option] ? (
-                    <i id={option} onClick={handleCheckbox} class="far fa-check-square"></i>
+                    <i id={option} onClick={handleCheckbox} className="far fa-check-square"></i>
                 ) : (
-                    <i id={option} onClick={handleCheckbox} class="far fa-square"></i>
+                    <i id={option} onClick={handleCheckbox} className="far fa-square"></i>
                 )}
                 <li name={option} id={option} value={keyList[option]} onClick={handleCheckbox}>
                     {option}

@@ -10,7 +10,8 @@ import {
     TRAIN_MODEL_FAILURE,
     SMART_SEARCH_START,
     SMART_SEARCH_SUCCESS,
-    SMART_SEARCH_FAILURE
+    SMART_SEARCH_FAILURE,
+    CLEAR_SMART_SEARCH
 } from "../actions";
 
 // const initialState = {
@@ -60,7 +61,6 @@ export const inboxReducer = (state = initialState, { type, payload }) => {
         // ==============================================
 
         case CHANGE_THREAD_CONTACT:
-            console.log("PAYLOAD: ", payload);
             return {
                 ...state,
                 threadContactEmailAddress: payload.from,
@@ -124,6 +124,12 @@ export const inboxReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 smartSearchError: payload
             };
+            case CLEAR_SMART_SEARCH:
+                return {
+                    ...state,
+                    smartSearchResults:[],
+                    smartSearchError: null
+                }
 
         default:
             return state;

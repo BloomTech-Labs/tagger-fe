@@ -14,7 +14,7 @@ import {
     selectHighlightedEmail,
     applyOptionalFilters
 } from "./navUtils";
-import { saveSearch, changeThreadContact, changeIsLoaded } from "../../actions";
+import { saveSearch, changeThreadContact, changeIsLoaded, clearSmartSearch } from "../../actions";
 import FuzzySearchBar from "./FuzzySearchBar";
 import SmartSearchBar from "./SmartSearchBar";
 import FilterOptions from "./FilterOptions";
@@ -449,6 +449,8 @@ const Nav = (props) => {
                                               <SearchBarResult
                                                   key={i}
                                                   functions={[
+                                                      setShowSearchOptions,
+                                                      props.clearSmartSearch,
                                                       props.clearSearch,
                                                       setSearchQuery,
                                                       searchQuery,
@@ -463,6 +465,8 @@ const Nav = (props) => {
                                               <SearchBarResult
                                                   key={i}
                                                   functions={[
+                                                    setShowSearchOptions,
+                                                    props.clearSmartSearch,
                                                       props.clearSearch,
                                                       setSearchQuery,
                                                       searchQuery,
@@ -512,5 +516,6 @@ export default connect(mapStateToProps, {
     saveSearch,
     changeThreadContact,
     changeIsLoaded,
-    smartSearch
+    smartSearch,
+    clearSmartSearch
 })(Nav);
