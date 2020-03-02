@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { compose, bindActionCreators } from "redux";
-
+import { compose } from "redux";
 import { sendEmail, changeIsComposing } from "../../actions/composerActions";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faTags } from "@fortawesome/free-solid-svg-icons";
-
+// styling for the Compose module 
 const S = {
     Container: styled.div`
         display: flex;
@@ -115,7 +111,7 @@ const S = {
 };
 
 const Compose = (props) => {
-    
+    // this is the state for the email object that gets sent off using nodemailer on the backend
     const [email, setEmail] = useState({
         service: "gmail",
         host: "smtp.gmail.com",
@@ -129,7 +125,7 @@ const Compose = (props) => {
         bcc: ""
 
     });
-
+// handles the input change for the input fields
     const handleChange = (e) => {
         let value = e.target.value;
         setEmail({
@@ -137,7 +133,7 @@ const Compose = (props) => {
             [e.target.name]: value
         });
     };
-
+// invokes the sendEmail function brought in from ComposerActions.js 
     const handleSubmit = (e) => {
         e.preventDefault();
         // props.sendEmail(emailInfo);
@@ -145,7 +141,7 @@ const Compose = (props) => {
         console.log(email, "Email")
         props.sendEmail(email, props.token);
     };
-
+// toggles the isComposing state to not show the composing component
     const changeIsComposing = (e) => {
         props.changeIsComposing(!props.isComposing);
     };

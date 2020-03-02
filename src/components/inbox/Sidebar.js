@@ -137,6 +137,7 @@ const Sidebar = (props) => {
     console.log("SNIPPETFILTER", props.snippetsFilter);
     return (
         <S.Container>
+          {/* clicking the "+ compose" button toggles the compose module to display */}
             {props.isComposing ? (
                 <S.ModalContainer>
                     <ComposeComponent token={props.token} />
@@ -145,12 +146,14 @@ const Sidebar = (props) => {
             <S.Button onClick={toggleIsComposing}>+ Compose</S.Button>
 
       <ul>
+        {/* this onClick sets the snippets to filter email by received */}
         <li onClick={()=> props.setSnippetFilter("\\Inbox")}>
           <div>
             <S.FontAwesomeIcon icon={faInbox} />
           </div>
           <span>Inbox</span>
         </li>
+        {/* this onClick sets the snippets to filter email by sent */}
         <li onClick={()=> props.setSnippetFilter("\\Sent")} >
           <div>
             <S.FontAwesomeIcon icon={faPaperPlane} />
@@ -161,6 +164,7 @@ const Sidebar = (props) => {
           <div>
             <S.FontAwesomeIcon icon={faFile} />
           </div>
+          {/* this onClick sets the snippets to filter email by drafts */}
           <span onClick={() => props.setSnippetFilter("\\Draft")}  >Drafts</span>
         </li>
         <li>
@@ -169,6 +173,7 @@ const Sidebar = (props) => {
           </div>
           <span>Trash</span>
         </li>
+        {/* this onClick sets the snippets to filter email by spam */}
         <li onClick={()=> props.setSnippetFilter("\\Spam")} >
           <div>
             <S.FontAwesomeIcon icon={faExclamationTriangle} />
@@ -184,7 +189,7 @@ const Sidebar = (props) => {
       </ul>
 
             <hr />
-
+              {/* these are just for show  */}
             <ul>
                 <li>Social</li>
                 <li>Finance</li>

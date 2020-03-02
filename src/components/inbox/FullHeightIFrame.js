@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
 import { changeIsLoaded } from "../../actions/inboxActions"
 
+// this is the Iframe that loads for every email that has html in the threadMessage component 
 class FullheightIframe extends Component {
   constructor() {
     super();
@@ -12,8 +13,6 @@ class FullheightIframe extends Component {
       iFrameHeight: "0px",
     };
   }
-  
-
   render() {
    const iframeLoaded = () => {
       this.props.changeIsLoaded(true)
@@ -31,7 +30,7 @@ class FullheightIframe extends Component {
           const obj = ReactDOM.findDOMNode(this);
           this.setState({
             iFrameHeight:
-              obj.contentWindow.document.body.scrollHeight + 10 + "px", 
+              obj.contentWindow.document.body.scrollHeight + 20 + "px", 
           });
           iframeLoaded()
         }}

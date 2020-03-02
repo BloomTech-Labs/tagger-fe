@@ -21,7 +21,7 @@ const Emails = props => {
   return (
     <S.Container>
       <Snippets />
-      {props.isDisplayingThread ? <Thread /> : null}
+      {props.isDisplayingThread ? <Thread token={props.token}/> : null}
       {props.isDisplayingAnalytics && props.isDisplayingThread ? (
         <AnalyticsBar />
       ) : null}

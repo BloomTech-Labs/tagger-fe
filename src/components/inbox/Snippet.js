@@ -12,7 +12,7 @@ import {
 } from "../../actions";
 import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
 const moment = require("moment");
-
+// styling for the Snippet Component
 const S = {
     Container: styled.div`
         width: 100%;
@@ -104,6 +104,8 @@ const S = {
 };
 
 const Snippet = (props) => {
+    // this function sets the Thread Contact and sets the changeIsLoaded to true if the email body has no HTML so the spinner doesn't load
+    // If the email does have HTML it sets changeIsLoaded to false so the spinner goes away after clicking on a new snippet
     const setThreadContact = () => {
         const emailObj = props.email;
         emailObj.email_body === "false" || emailObj.email_body === "0"
@@ -112,6 +114,7 @@ const Snippet = (props) => {
         props.changeThreadContact(emailObj);
     };
 
+    // This function converts the unix date string to a readable date
     function showDate() {
         let formatDate;
         if (typeof props.email.date === "string") {
@@ -141,6 +144,7 @@ const Snippet = (props) => {
       onClick={() => setThreadContact()}
     >
       <S.SnipHeader>
+          {/* the onClick in here sets the analyticsContact to either who sent the email or who it was sent to depending on the snippetsFilter */}
         <S.Avatar
         src="https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"
           onClick={() =>
@@ -152,6 +156,7 @@ const Snippet = (props) => {
           }
         />
         <div>
+            {/* This ternary checks whether to display who its from or who it was sent to depending on what snippetsFilter is set to */}
           <h3
             onClick={() =>
               props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft"
@@ -161,6 +166,7 @@ const Snippet = (props) => {
               : null
             }
           >
+              {/* This ternary is a check for when the "to" array from the email object has multiple people it will display the first one and add a "+n" to the end so the user know how many people it was sent to. It also checks the snippetsFilter to to check whether to display who the email was sent to or who it is from*/}
             {props.snippetsFilter === "\\Inbox"
               ? props.email.name
                 ? props.email.name

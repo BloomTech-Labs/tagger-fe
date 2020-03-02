@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { compose, bindActionCreators } from "redux";
-
+import { compose } from "redux";
 import { sendEmail } from "../../actions/composerActions";
 import MessageType from "./MessageType";
 import ContactButton from "./ContactButton";
+
+// Styling for the reply component
 const S = {
     Container: styled.div`
         display: flex;
@@ -20,18 +20,6 @@ const S = {
         box-sizing: border-box;
         box-shadow: 0 0 9px 1px #00000059;
     `,
-    // Header: styled.div`
-    //     display: flex;
-    //     justify-content: space-between;
-    //     border: 1px;
-    //     width: 99.8%;
-    //     height: 12%;
-    //     border: 1px solid #dadada;
-    // `,
-    // HeaderText: styled.p`
-    //     font-size: 1.5em;
-    //     margin-left: 1.5%;
-    // `,
     Input: styled.input`
         width: 98%;
         // margin-left: 2%;
@@ -120,21 +108,25 @@ const S = {
 };
 
 const Reply = (props) => {
+    // initial state for the email object that gets sent using nodemailer on the backend
     const initialState = {
         service: "gmail",
         host: "smtp.gmail.com",
         port: "465",
         userEmail: props.emailAddress,
+        token: props.token,
         receiver: "",
         CC: "",
         BCC: "",
         subject: "",
         body: ""
     };
+
     const [email, setEmail] = useState(initialState);
     const [addresses, setAddresses] = useState([]);
     const [ccAddresses, setCcAddresses] = useState([]);
     const [bccAdresses, setBccAdresses] = useState([]);
+    // useEffect to change who you reply to depending on whether you hit reply, reply all, or forward
     useEffect(() => {
         if (props.responseType === "Reply") {
             setAddresses([props.email.from]);
@@ -209,9 +201,6 @@ const Reply = (props) => {
 
     return (
         <S.Container>
-            {/* <S.Header>
-                <S.HeaderText>Replying To: {props.threadContactEmailAddress}</S.HeaderText>
-            </S.Header> */}
             <S.Form onSubmit={(e) => handleSubmit(e)}>
                 <MessageType
                     responseType={props.responseType}

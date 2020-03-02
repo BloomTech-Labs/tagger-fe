@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import Emails from "./Emails";
-
 import {
     getUserEmailAndId,
     getEmails,
@@ -14,8 +13,8 @@ import {
     getContacts,
     trainModel
 } from "../../actions";
-
 import Sidebar from "./Sidebar";
+
 const S = {
     Container: styled.div`
         display: flex;
@@ -66,7 +65,7 @@ const Inbox = (props) => {
     return (
         <S.Container>
             <Sidebar token={token} />
-            <Emails />
+            <Emails token={token}/>
         </S.Container>
     );
 };

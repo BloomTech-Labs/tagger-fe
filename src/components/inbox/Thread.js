@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
-
 import ThreadMessage from "./ThreadMessage";
-
-import Reply from "./Reply";
-
 import { changeIsDisplayingAnalytics } from "../../actions";
 
 const S = {
@@ -23,9 +19,9 @@ const S = {
 };
 
 const Thread = props => {
-  const toggleIsDisplayingAnalytics = () => {
-    props.changeIsDisplayingAnalytics(!props.isDisplayingAnalytics);
-  };
+  // const toggleIsDisplayingAnalytics = () => {
+  //   props.changeIsDisplayingAnalytics(!props.isDisplayingAnalytics);
+  // };
 
   const showThread = props.emails.filter(
     email => email.gmThreadID === props.thread.gmThreadID
@@ -34,7 +30,7 @@ const Thread = props => {
   return (
     <S.Container>
       {showThread.map(email => {
-        return <ThreadMessage key={Math.random()} email={email} />;
+        return <ThreadMessage key={Math.random()} email={email} token={props.token} />;
       })}
     </S.Container>
   );
