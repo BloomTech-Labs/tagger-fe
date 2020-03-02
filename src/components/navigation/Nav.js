@@ -91,7 +91,7 @@ const S = {
         background-color: lightgray;
         color: black;
         outline: none;
-        width: 50vw;
+        width:51.3vw;
         display: block;
         box-sizing: border-box;
         padding: 0px 2%;
@@ -393,6 +393,7 @@ const Nav = (props) => {
             : props.changeIsLoaded(false);
         props.changeThreadContact(emailObj);
     }
+    
     return (
         <S.Container>
             <S.Header>Tagger</S.Header>

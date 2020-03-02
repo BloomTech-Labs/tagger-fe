@@ -10,7 +10,10 @@ const Q = {
         align-items: center;
         height: 100%;
         box-sizing: border-box;
-    `
+        z-index:1
+    `,
+    Button: styled.button`
+    display: none`,
     // Input: styled.input`
     //     height: 35px;
     //     border: 1px solid red;
@@ -46,6 +49,12 @@ export default function SmartSearchBar(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         props.sendSearch(props.userEmail, smartState);
+        setSmartState({
+            msg:"",
+            subject:"",
+            from:""
+        })
+        console.log("smartypants",smartState)
     };
     return (
         <Q.Form onSubmit={handleSubmit}>
@@ -78,6 +87,7 @@ export default function SmartSearchBar(props) {
                     placeholder="Subject"
                 ></S.SmartInput>
             ) : null}
+            <Q.Button type="submit" />
         </Q.Form>
     );
 }
