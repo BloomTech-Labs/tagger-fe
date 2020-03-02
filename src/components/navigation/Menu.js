@@ -61,7 +61,7 @@ export default function Menu(props) {
         <S.Menu className="menu" transform={props.showMenu ? "translateX(-200px)" : ""}>
             <ul>
                 <li onClick={logout}>
-                    <i class="fas fa-sign-out-alt"></i> Logout
+                    <i className="fas fa-sign-out-alt"></i> Logout
                 </li>
             </ul>
         </S.Menu>

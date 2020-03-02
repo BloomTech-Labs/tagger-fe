@@ -6,26 +6,22 @@ import { connect } from "react-redux";
 import Emails from "./Emails";
 
 import {
-
     getUserEmailAndId,
     getEmails,
     changeIsLoggedIn,
     updateEmails,
     incrementCounter,
     getContacts,
-    trainModel,
-    smartSearch
-
+    trainModel
 } from "../../actions";
 
 import Sidebar from "./Sidebar";
 const S = {
-  Container: styled.div`
-    display: flex;
-    height: calc(100vh - 64px);
-  `
+    Container: styled.div`
+        display: flex;
+        height: calc(100vh - 64px);
+    `
 };
-
 
 const Inbox = (props) => {
     const [token, setToken] = useState("");
@@ -43,8 +39,8 @@ const Inbox = (props) => {
                 });
         }
 
-        if (props.areEmailsRetrieved && !props.isModelTrained){
-          props.trainModel(props.emailAddress).then(() => {props.smartSearch(props.emailAddress)})
+        if (props.areEmailsRetrieved && !props.isModelTrained) {
+            props.trainModel(props.emailAddress);
         }
     }, [props.areContactsRetrieved, props.areEmailsRetrieved]);
 
@@ -76,36 +72,31 @@ const Inbox = (props) => {
 };
 
 const mapStateToProps = ({ imap, user, contacts, inbox }) => ({
-  emailAddress: user.emailAddress,
-  user_id: user.user_id,
-  userPhotoUrl: user.userPhotoUrl,
-  isEmailAddressAndIdRetrieved: user.isEmailAddressAndIdRetrieved,
-  areEmailsRetrieved: imap.areEmailsRetrieved,
-  counter: imap.streamCounter,
-  emails: imap.emails,
-  isLoggedIn: user.isLoggedIn,
-  areContactsRetrieved: contacts.areContactsRetrieved,
-  contacts: contacts.contacts,
-  sentEmails: inbox.sentEmails
- 
+    emailAddress: user.emailAddress,
+    user_id: user.user_id,
+    userPhotoUrl: user.userPhotoUrl,
+    isEmailAddressAndIdRetrieved: user.isEmailAddressAndIdRetrieved,
+    areEmailsRetrieved: imap.areEmailsRetrieved,
+    counter: imap.streamCounter,
+    emails: imap.emails,
+    isLoggedIn: user.isLoggedIn,
+    areContactsRetrieved: contacts.areContactsRetrieved,
+    contacts: contacts.contacts,
+    sentEmails: inbox.sentEmails
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      getUserEmailAndId,
-      getEmails,
-      changeIsLoggedIn,
-      getContacts,
-      updateEmails,
-      incrementCounter,
-      trainModel,
-      smartSearch
-    },
-    dispatch
-  );
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators(
+        {
+            getUserEmailAndId,
+            getEmails,
+            changeIsLoggedIn,
+            getContacts,
+            updateEmails,
+            incrementCounter,
+            trainModel
+        },
+        dispatch
+    );
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
-)(Inbox);
+export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Inbox);

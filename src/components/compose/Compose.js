@@ -121,10 +121,13 @@ const Compose = (props) => {
         host: "smtp.gmail.com",
         port: "465",
         userEmail: "taggerlabs20@gmail.com",
-        token: props.token,
+        token:props.token,
         receiver: "",
         subject: "",
-        body: ""
+        body: "",
+        cc: "",
+        bcc: ""
+
     });
 
     const handleChange = (e) => {
@@ -139,7 +142,8 @@ const Compose = (props) => {
         e.preventDefault();
         // props.sendEmail(emailInfo);
         console.log("PROPS", props);
-        props.sendEmail(email);
+        console.log(email, "Email")
+        props.sendEmail(email, props.token);
     };
 
     const changeIsComposing = (e) => {
@@ -157,7 +161,7 @@ const Compose = (props) => {
                         <label>
                             <span>To:</span>
                             <S.Input
-                                type="text"
+                                type="email"
                                 name="receiver"
                                 id="receiver"
                                 value={email.receiver}
@@ -167,11 +171,23 @@ const Compose = (props) => {
 
                         <label>
                             <span>Cc:</span>
-                            <S.Input></S.Input>
+                            <S.Input
+                            type="email"
+                            name="cc"
+                            id="cc"
+                            value={email.cc}
+                            onChange={handleChange}
+                            ></S.Input>
                         </label>
                         <label>
                             <span>Bcc:</span>
-                            <S.Input></S.Input>
+                            <S.Input
+                             type="email"
+                             name="bcc"
+                             id="bcc"
+                             value={email.bcc}
+                             onChange={handleChange}
+                            ></S.Input>
                         </label>
                         <label>
                             <span>Subject:</span>

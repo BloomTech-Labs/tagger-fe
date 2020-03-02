@@ -10,7 +10,7 @@ import {
   changeIsDisplayingAnalytics,
   changeAnalyticsContact
 } from "../../actions";
-import {setAnalyticsContact} from "./helpers/AnalyticsHelper"
+import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
 import FullHeightIFrame from "./FullHeightIFrame";
 
 const moment = require("moment");
@@ -43,6 +43,23 @@ const S = {
     align-items: center;
     h3 {
       margin-left: 0;
+      border-bottom: 1px solid #00000000;
+
+      :hover {
+        color: #2196f3;
+        font-weight: 900;
+        border-bottom: 1px solid #00000033;
+        text-shadow: 0px 1px #2196f387;
+        cursor: pointer;
+      }
+      :active {
+        background: #9893613b;
+        -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+        -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+        box-shadow: inset 0px 0px 5px #c1c1c1;
+        outline: none;
+        cursor: pointer;
+      }
 
       span {
         overflow: hidden;
@@ -61,6 +78,31 @@ const S = {
     align-items: center;
     justify-content: space-between;
 
+            :hover {
+                color: #2196f3;
+                font-weight: 900;
+                border-bottom: 1px solid #00000033;
+                text-shadow: 0px 1px #2196f387;
+                cursor: pointer;
+            }
+            :active {
+                background: #9893613b;
+                -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+                -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+                box-shadow: inset 0px 0px 5px #c1c1c1;
+                outline: none;
+                cursor: pointer;
+            }
+        }
+    `,
+  MessageActions: styled.div`
+    width: 10%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     .button {
       height: 20px;
       width: 20px;
@@ -71,6 +113,12 @@ const S = {
     width: 30px;
     background-color: black;
     border-radius: 15px;
+    :hover {
+      cursor: pointer;
+    }
+    :active {
+      cursor: pointer;
+    }
   `,
   Subject: styled.h2``,
   Message: styled.article`
@@ -118,8 +166,12 @@ const ThreadMessage = props => {
     <S.Container>
       <S.ContactHeader>
         <S.ContactInfo>
-          <S.Avatar onClick={() => setAnalyticsContact(props, props.email)} />{" "}
-          {props.snippetsFilter === "\\Sent" ? (
+          <S.Avatar
+            src={"https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"}
+            onClick={() => setAnalyticsContact(props, props.email)}
+          />{" "}
+          {(props.snippetsFilter === "\\Sent" && props.email.to) ||
+          (props.snippetsFilter === "\\Draft" && props.email.to) ? (
             props.email.to.map((contact, i) => {
               var arrayLength = props.email.to.length;
               return (
@@ -202,7 +254,8 @@ const ThreadMessage = props => {
 const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
   contacts: contacts.contacts,
   isLoaded: inbox.isIframeLoaded,
-  snippetsFilter: inbox.snippetsFilter
+  snippetsFilter: inbox.snippetsFilter,
+  analyticsContact: inbox.analyticsContact
 });
 
 const mapDispatchToProps = dispatch =>

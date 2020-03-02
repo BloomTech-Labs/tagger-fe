@@ -22,7 +22,7 @@ export const setAnalyticsContact = (props, email) => {
         props.changeIsDisplayingAnalytics(true);
       }
       // ===============================================================
-    } else if (props.snippetsFilter === "\\Sent") {
+    } else if (props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft") {
       //array of email addresses
       const filter = props.contacts.filter(c => {
         return c.emailAddresses.some(e => e.value === email.toLowerCase())     
