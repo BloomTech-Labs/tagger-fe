@@ -85,12 +85,13 @@ const S = {
 export default function SearchBarResult(props) {
     const [clearSearch, setSearchQuery, searchQuery, emailToDisplayInThread] = props.functions;
     function clearSearchAndLoadResult() {
+        //todo add clear smart search results
+
         emailToDisplayInThread(props.email);
         clearSearch();
         setSearchQuery({
             ...searchQuery,
             search: ""
-            //todo reset location and other values also
         });
     }
 

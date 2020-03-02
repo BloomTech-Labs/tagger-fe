@@ -129,7 +129,6 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
         })
 
         .then((Response) => {
-           
             return axios
                 .post(`${url}emails/stream`, {
                     email: emailAddress,
@@ -252,7 +251,7 @@ export const smartSearch = (userEmailAddress, searchParams) => (dispatch) => {
     return axios
         .post(`${url}emails/predict`, {
             email: userEmailAddress,
-            uid: uid,
+            uid: uid || "",
             from: from,
             subject: subject,
             msg: msg,
@@ -261,13 +260,14 @@ export const smartSearch = (userEmailAddress, searchParams) => (dispatch) => {
         .then((res) => {
             console.log("Smart search res", res);
             dispatch({
-                type: SMART_SEARCH_SUCCESS
+                type: SMART_SEARCH_SUCCESS,
+                payload: res.data
             });
             return true;
         })
         .catch((err) => {
             console.log("Smart search err", err);
-            dispatch({ type: SMART_SEARCH_FAILURE });
+            dispatch({ type: SMART_SEARCH_FAILURE, payload: err });
             return false;
         });
 };
