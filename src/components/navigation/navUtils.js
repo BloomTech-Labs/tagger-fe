@@ -60,7 +60,7 @@ function refineSearchParams(filterArray) {
 // addSearchTag checks the inputfield value for key markers such as to:  and  exact: and:
 // 1.) removes them from the string if they have not been added to use state hook in nav ie: searchQuery.filters
 // 2.) returns a list of strings to add to the filters array in nav
-export function addSearchTag(str, searchQuery) {
+export function addSearchTag(str, searchQuery, options, setOpt) {
     let string = str;
     let keyFilter = [];
     let optionalFilter = [];
@@ -69,26 +69,31 @@ export function addSearchTag(str, searchQuery) {
         const regex = /.com:/gi;
         string = string.replace(regex, "");
         optionalFilter.push(".com");
+        setOpt({ ...options, [".com"]: true });
     }
     if (string.includes(".net:") && !searchQuery.optionalFilter.includes(".net:")) {
         const regex = /.net:/gi;
         string = string.replace(regex, "");
         optionalFilter.push(".net");
+        setOpt({ ...options, [".net"]: true });
     }
     if (string.includes(".org:") && !searchQuery.optionalFilter.includes(".org:")) {
         const regex = /.org:/gi;
         string = string.replace(regex, "");
         optionalFilter.push(".org");
+        setOpt({ ...options, [".org"]: true });
     }
     if (string.includes(".edu:") && !searchQuery.optionalFilter.includes(".edu:")) {
         const regex = /.edu:/gi;
         string = string.replace(regex, "");
         optionalFilter.push(".edu");
+        setOpt({ ...options, [".edu"]: true });
     }
     if (string.includes(".gov:") && !searchQuery.optionalFilter.includes(".gov:")) {
         const regex = /.gov:/gi;
         string = string.replace(regex, "");
         optionalFilter.push(".gov");
+        setOpt({ ...options, [".gov"]: true });
     }
     // ===========================================
     // Below are fuzzy search filters
@@ -96,31 +101,37 @@ export function addSearchTag(str, searchQuery) {
         const regex = /exact:/gi;
         string = string.replace(regex, "");
         keyFilter.push("exact");
+        setOpt({ ...options, ["exact"]: true });
     }
     if (string.includes("to:") && !searchQuery.filters.includes("to")) {
         const regex = /to:/gi;
         string = string.replace(regex, "");
         keyFilter.push("to");
+        setOpt({ ...options, ["to"]: true });
     }
     if (string.includes("from:") && !searchQuery.filters.includes("from")) {
         const regex = /from:/gi;
         string = string.replace(regex, "");
         keyFilter.push("from");
+        setOpt({ ...options, ["from"]: true });
     }
     if (string.includes("subject:") && !searchQuery.filters.includes("subject")) {
         const regex = /subject:/gi;
         string = string.replace(regex, "");
         keyFilter.push("subject");
+        setOpt({ ...options, ["subject"]: true });
     }
     if (string.includes("name:") && !searchQuery.filters.includes("name")) {
         const regex = /name:/gi;
         string = string.replace(regex, "");
         keyFilter.push("name");
+        setOpt({ ...options, ["name"]: true });
     }
     if (string.includes("body:") && !searchQuery.filters.includes("email_body_text")) {
         const regex = /body:/gi;
         string = string.replace(regex, "");
         keyFilter.push("body");
+        setOpt({ ...options, ["body"]: true });
     }
     let results = {
         string: string,
@@ -236,8 +247,10 @@ export function senseMenu(event, setshowMenu) {
     }
 }
 export function senseSearchBar(event, searchQuery, setSearchQuery) {
-    // console.log(event, "\n\n mousedown for sense searchbar \n\n");
+    console.log(event, "\n\n mousedown for sense searchbar \n\n");
     if (
+        event.target.className.includes("filter") ||
+        event.target.parentNode.parentNode.parentNode.className.includes("filter") ||
         event.target.className.includes("searchBar") ||
         event.target.parentNode.className.includes("searchBar") ||
         event.target.className.includes("left") ||
@@ -281,7 +294,7 @@ export function applyOptionalFilters(array) {
         for (let index = 0; index < searchQuery.optionalFilter.length; index++) {
             if (eachEmail.from.includes(searchQuery.optionalFilter[index])) {
                 return eachEmail;
-            } else if (eachEmail.to.includes(searchQuery.optionalFilter[index])) {
+            } else if (eachEmail.to && eachEmail.to.includes(searchQuery.optionalFilter[index])) {
                 return eachEmail;
             }
         }

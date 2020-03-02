@@ -210,10 +210,15 @@ const Nav = (props) => {
 
     function removeFilter(index, whichFilter) {
         const currentFilters = [...searchQuery[`${whichFilter}`]];
+        const filterName = searchQuery[`${whichFilter}`][index];
         currentFilters.splice(index, 1);
         setSearchQuery({
             ...searchQuery,
             [`${whichFilter}`]: currentFilters
+        });
+        setOptions({
+            ...options,
+            [filterName]: false
         });
         // =================== above reruns the display only
     }
@@ -249,30 +254,80 @@ const Nav = (props) => {
         if (name === "fuzzySearch" || name === "smartSearch") {
             setUseSmartOptions(!useSmartOptions);
         } else if (useSmartOptions) {
+            // if this thing is being checked true add that value to the string inside of the searchQuery.search
+            // if this thing is being checked false, run the clear filters function
             setSmartOptions({
                 ...smartOptions,
                 [`${name}`]: !value
             });
         } else {
+            // THIS SECTION APPLIES TO FUZZY SEARCH OPTIONS
+            if (
+                options[name] === true &&
+                (name === "exact" ||
+                    name === "to" ||
+                    name === "body" ||
+                    name === "name" ||
+                    name === "from" ||
+                    name === "subject")
+            ) {
+                let index = searchQuery.filters.indexOf(name);
+                removeFilter(index, "filters");
+            } else if (
+                options[name] === true &&
+                (name === ".com" ||
+                    name === ".gov" ||
+                    name === ".net" ||
+                    name === ".edu" ||
+                    name === ".org")
+            ) {
+                let index = searchQuery.optionalFilter.indexOf(name);
+                removeFilter(index, "optionalFilter");
+            } else if (options[name] === false) {
+                setSearchQuery({
+                    ...searchQuery,
+                    search: searchQuery.search + name + ":"
+                });
+            }
             setOptions({
                 ...options,
                 [`${name}`]: !value
             });
         }
     };
-
+    useEffect(() => {
+        if (searchQuery.search.includes(":")) {
+            const { string, filter, optional } = addSearchTag(
+                searchQuery.search,
+                searchQuery,
+                options,
+                setOptions
+            );
+            setSearchQuery({
+                ...searchQuery,
+                search: string,
+                filters: [...searchQuery.filters, ...filter],
+                optionalFilter: [...searchQuery.optionalFilter, ...optional]
+            });
+        }
+    }, [searchQuery.search]);
     const handleInput = (e) => {
         // console.log(e, "EVENT \n\n\n****************");
         e.persist();
         e.preventDefault();
         e.stopPropagation();
         const target = e.target;
-        const value = target.type === "checkbox" ? target.checked : target.value;
+        const value = target.value;
         const name = target.name;
         const keyValue = e.nativeEvent.data;
 
         if (keyValue === ":") {
-            const { string, filter, optional } = addSearchTag(value, searchQuery);
+            const { string, filter, optional } = addSearchTag(
+                value,
+                searchQuery,
+                options,
+                setOptions
+            );
             setSearchQuery({
                 ...searchQuery,
                 [name]: string,
@@ -335,12 +390,12 @@ const Nav = (props) => {
                         />
                     )}
 
-                    <S.Button onClick={toggleSearchOptions}>
+                    <S.Button onClick={toggleSearchOptions} className="filter">
                         Filters
                         {showSearchOptions ? (
-                            <i className="fa fa-times"></i>
+                            <i className="fa fa-times filter"></i>
                         ) : (
-                            <i className="fa fa-filter"></i>
+                            <i className="fa fa-filter filter"></i>
                         )}
                     </S.Button>
                 </S.Top>
@@ -378,7 +433,7 @@ const Nav = (props) => {
                             </S.SearchDropdown>
                         ) : null}
                     </div>
-                    <div className="right">
+                    <div className="right filter">
                         {showSearchOptions ? (
                             <FilterOptions
                                 options={[options, handleCheckbox, useSmartOptions, smartOptions]}
