@@ -135,7 +135,13 @@ const Snippet = (props) => {
             return moment(formatDate).format("MMM Do YYYY");
         }
     }
-
+function setContact() {
+    if (props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft"){
+        setAnalyticsContact(props, props.email.to[0])
+    } else if (props.snippetsFilter === "\\Inbox") {
+        setAnalyticsContact(props, props.email)
+    }
+}
   return (
     <S.Container
       heightInPx={
@@ -147,24 +153,12 @@ const Snippet = (props) => {
           {/* the onClick in here sets the analyticsContact to either who sent the email or who it was sent to depending on the snippetsFilter */}
         <S.Avatar
         src="https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"
-          onClick={() =>
-            props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft"
-              ? setAnalyticsContact(props, props.email.to[0])
-              : props.snippetsFilter === "\\Inbox"
-              ? setAnalyticsContact(props, props.email)
-              : null
-          }
+          onClick={() => setContact()}
         />
         <div>
             {/* This ternary checks whether to display who its from or who it was sent to depending on what snippetsFilter is set to */}
           <h3
-            onClick={() =>
-              props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft"
-              ? setAnalyticsContact(props, props.email.to[0])
-              : props.snippetsFilter === "\\Inbox"
-              ? setAnalyticsContact(props, props.email)
-              : null
-            }
+            onClick={() =>setContact()}
           >
               {/* This ternary is a check for when the "to" array from the email object has multiple people it will display the first one and add a "+n" to the end so the user know how many people it was sent to. It also checks the snippetsFilter to to check whether to display who the email was sent to or who it is from*/}
             {props.snippetsFilter === "\\Inbox"

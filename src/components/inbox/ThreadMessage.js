@@ -10,7 +10,6 @@ import {
 } from "../../actions";
 import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
 import FullHeightIFrame from "./FullHeightIFrame";
-
 // This is the styling for the threadMessage Component
 const S = {
   Container: styled.div`
@@ -140,10 +139,17 @@ const S = {
     }
   `
 };
+
 const ThreadMessage = props => {
   const [replyIsHidden, setReplyIsHidden] = useState(true);
   const [responseType, setResponseType] = useState("Reply");
-
+  function setContact() {
+    if (props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft" ) {
+      setAnalyticsContact(props, props.email.to[0])
+    } else {
+      setAnalyticsContact(props, props.email)
+    }
+  }
   return (
     <S.Container>
       <S.ContactHeader>
@@ -151,7 +157,7 @@ const ThreadMessage = props => {
           {/* The onClick for avatar sets the analytics contact  */}
           <S.Avatar
             src={"https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"}
-            onClick={() => props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft" ? setAnalyticsContact(props, props.email.to[0]) : setAnalyticsContact(props, props.email)}
+            onClick={() => setContact() }
           />{" "}
           {/* this ternary checks if the snippetsFilter is set to "\Sent" or "\Draft" and if it is, it maps over the to array from the email object to display every email address the email was sent to. If the snippetsFilter is not set to "\Sent" or "\Draft" it displays the name of whoever sent the email if they have one, otherwise it displays the email of whoever sent it to */}
           {(props.snippetsFilter === "\\Sent" && props.email.to) ||
