@@ -133,49 +133,47 @@ const Snippet = (props) => {
         }
     }
 
-  return (
-    <S.Container
-      heightInPx={
-        props.isDisplayingThread ? (props.isDisplayingAnalytics ? 100 : 80) : 75
-      }
-      onClick={() => setThreadContact()}
-    >
-      <S.SnipHeader>
-        <S.Avatar
-        src="https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"
-          onClick={() =>
-            props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft"
-              ? setAnalyticsContact(props, props.email.to[0])
-              : props.snippetsFilter === "\\Inbox"
-              ? setAnalyticsContact(props, props.email)
-              : null
-          }
-        />
-        <div>
-          <h3
-            onClick={() =>
-              props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft"
-              ? setAnalyticsContact(props, props.email.to[0])
-              : props.snippetsFilter === "\\Inbox"
-              ? setAnalyticsContact(props, props.email)
-              : null
-            }
-          >
-            {props.snippetsFilter === "\\Inbox"
-              ? props.email.name
-                ? props.email.name
-                : props.email.from
-              : props.snippetsFilter === "\\Sent" && props.email.to.length > 1
-              ? props.email.to[0] + " + " + parseInt(props.email.to.length - 1)
-              : props.email.to[0]}
-          </h3>
-          <h3>{showDate(props.email.date)}</h3>
-        </div>
-      </S.SnipHeader>
-      <S.Subject>{props.email.subject}</S.Subject>
-      <S.Message>{props.email.email_body_text}</S.Message>
-    </S.Container>
-  );
+    return (
+        <S.Container
+            heightInPx={props.isDisplayingThread ? (props.isDisplayingAnalytics ? 100 : 80) : 75}
+            onClick={() => setThreadContact()}
+        >
+            <S.SnipHeader>
+                <S.Avatar
+                    src="https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"
+                    onClick={() =>
+                        props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft"
+                            ? setAnalyticsContact(props, props.email.to[0])
+                            : props.snippetsFilter === "\\Inbox"
+                            ? setAnalyticsContact(props, props.email)
+                            : null
+                    }
+                />
+                <div>
+                    <h3
+                        onClick={() =>
+                            props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft"
+                                ? setAnalyticsContact(props, props.email.to[0])
+                                : props.snippetsFilter === "\\Inbox"
+                                ? setAnalyticsContact(props, props.email)
+                                : null
+                        }
+                    >
+                        {props.snippetsFilter === "\\Inbox"
+                            ? props.email.name
+                                ? props.email.name
+                                : props.email.from
+                            : props.snippetsFilter === "\\Sent" && props.email.to.length > 1
+                            ? props.email.to[0] + " + " + parseInt(props.email.to.length - 1)
+                            : props.email.to[0]}
+                    </h3>
+                    <h3>{showDate(props.email.date)}</h3>
+                </div>
+            </S.SnipHeader>
+            <S.Subject>{props.email.subject}</S.Subject>
+            <S.Message>{props.email.email_body_text}</S.Message>
+        </S.Container>
+    );
 };
 
 const mapStateToProps = ({ imap, user, inbox, contacts }) => ({

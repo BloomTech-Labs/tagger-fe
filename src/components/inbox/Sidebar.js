@@ -13,8 +13,8 @@ import {
     faExclamationTriangle
 } from "@fortawesome/free-solid-svg-icons";
 import Inbox from "./Inbox";
-import { changeIsComposing } from "../../actions/composerActions";
-import { setSnippetFilter } from "../../actions/inboxActions";
+
+import { setSnippetFilter, clearSmartSearch, changeIsComposing } from "../../actions";
 import ComposeComponent from "../compose/Compose";
 const S = {
     ModalContainer: styled.div`
@@ -135,6 +135,12 @@ const Sidebar = (props) => {
         props.changeIsComposing(!props.isComposing);
     };
     console.log("SNIPPETFILTER", props.snippetsFilter);
+
+    const setFilter = (filterName) => {
+        props.clearSmartSearch();
+        props.setSnippetFilter(filterName);
+    };
+
     return (
         <S.Container>
             {props.isComposing ? (
@@ -144,32 +150,32 @@ const Sidebar = (props) => {
             ) : null}
             <S.Button onClick={toggleIsComposing}>+ Compose</S.Button>
 
-      <ul>
-        <li onClick={()=> props.setSnippetFilter("\\Inbox")}>
-          <div>
-            <S.FontAwesomeIcon icon={faInbox} />
-          </div>
-          <span>Inbox</span>
-        </li>
-        <li onClick={()=> props.setSnippetFilter("\\Sent")} >
-          <div>
-            <S.FontAwesomeIcon icon={faPaperPlane} />
-          </div>
-          <span>Sent</span>
-        </li>
-        <li>
-          <div>
-            <S.FontAwesomeIcon icon={faFile} />
-          </div>
-          <span onClick={() => props.setSnippetFilter("\\Draft")}  >Drafts</span>
-        </li>
-        {/* <li>
+            <ul>
+                <li onClick={() => setFilter("\\Inbox")}>
+                    <div>
+                        <S.FontAwesomeIcon icon={faInbox} />
+                    </div>
+                    <span>Inbox</span>
+                </li>
+                <li onClick={() => setFilter("\\Sent")}>
+                    <div>
+                        <S.FontAwesomeIcon icon={faPaperPlane} />
+                    </div>
+                    <span>Sent</span>
+                </li>
+                <li>
+                    <div>
+                        <S.FontAwesomeIcon icon={faFile} />
+                    </div>
+                    <span onClick={() => setFilter("\\Draft")}>Drafts</span>
+                </li>
+                {/* <li>
           <div>
             <S.FontAwesomeIcon icon={faTrash} />
           </div>
           <span>Trash</span>
         </li>
-        <li onClick={()=> props.setSnippetFilter("\\Spam")} >
+        <li onClick={()=> setFilter("\\Spam")} >
           <div>
             <S.FontAwesomeIcon icon={faExclamationTriangle} />
           </div>
@@ -181,7 +187,7 @@ const Sidebar = (props) => {
           </div>
           Tags
         </li> */}
-      </ul>
+            </ul>
 
             {/* <hr />
 
@@ -208,7 +214,8 @@ const mapDispatchToProps = (dispatch) =>
     bindActionCreators(
         {
             changeIsComposing,
-            setSnippetFilter
+            setSnippetFilter,
+            clearSmartSearch
         },
         dispatch
     );
