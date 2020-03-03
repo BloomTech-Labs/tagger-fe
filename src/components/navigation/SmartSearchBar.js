@@ -6,7 +6,7 @@ const Q = {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        width: 60vw;
+        width: 80%;
         align-items: center;
         height: 100%;
         box-sizing: border-box;
@@ -57,7 +57,7 @@ export default function SmartSearchBar(props) {
         console.log("smartypants",smartState)
     };
     return (
-        <Q.Form onSubmit={handleSubmit}>
+        <Q.Form autoComplete = "off" onSubmit={handleSubmit}>
             {props.smartOptions.msg === true ? (
                 <S.SmartInput
                     type="text"
