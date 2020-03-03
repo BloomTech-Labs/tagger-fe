@@ -44,7 +44,7 @@ Here's where you can find our project:
 
 [Product Canvas](https://www.notion.so/Tagger-Smarter-Email-01673a2ed9e54cb8834b959ad39f7de2)
 
-#### Project Description
+### Project Description
 
 Introducing, [Tagger](https://tagger-lab.netlify.com/)! A new email client that takes the process of searching for emails effortless with a smart search functionality that expands a greater scope so our client can find what they want faster. With our client, we are more streamlined because we have better parameters for our search and isn't an exact word match like most email clients.
 
@@ -52,7 +52,7 @@ Logged into our email client, our users are able to read and respond to their em
 
 This email client has a more functional, data-science based approach to implementing our search. It allows our user to find what they're looking for in their inbox and from an outside perspective it differeniates from other email clients because typically what is used is an exact word match search functionality and this client is flexible, sending queries to our data science end without the need for an exact match.
 
-##### Tech Stack
+#### Tech Stack
 
 ![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
 ![JavaScript](https://img.shields.io/badge/Language-JavaScript-blue)
@@ -60,6 +60,12 @@ This email client has a more functional, data-science based approach to implemen
 ![Code Style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)
 ![Node.js](https://img.shields.io/badge/node.js-green)
 ![React.js](https://img.shields.io/badge/React-red)
+
+##### COMPONENT STRUCTURE:
+
+To facilitate hand off to future developers of this project, a flow chart was created. This flow chart depicts data flow and UI flow between the components. Please contact Nate Mosco if you want the pdf and editing base file.
+
+[<img src="https://imgur.com/kxWmMdI.jpg">](https://imgur.com/kxWmMdI.jpg)
 
 ##### - [x] React (https://www.npmjs.com/package/react)
 
