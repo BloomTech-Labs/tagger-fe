@@ -47,7 +47,7 @@ const S = {
         div:focus-within {
             border: 2px solid #2f86ff;
         }
-        border: solid blue 3px;
+        // border: solid blue 3px;
         box-sizing: border-box;
 
         
@@ -58,7 +58,7 @@ const S = {
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
-        border: solid red 3px;
+        // border: solid red 3px;
         box-sizing: border-box;
 
 
@@ -156,7 +156,7 @@ const S = {
         box-sizing: border-box;
         .left {
             width: 80%;
-            border: solid grey 3px;
+            // border: solid grey 3px;
             height: ${(props) => props.heightLeft};
             background-color: #cfcfd2;
             z-index: 2;
@@ -174,7 +174,7 @@ const S = {
             box-sizing: border-box;
 
         }
-        border: solid green 3px;
+        // border: solid green 3px;
         box-sizing: border-box;
 
 
@@ -186,7 +186,7 @@ const S = {
         overflow-y: scroll;
         width: 100%;
         height: 100%;
-        border: solid purple 3px;
+        // border: solid purple 3px;
         box-sizing: border-box;
 
     `,
@@ -205,6 +205,11 @@ const S = {
         :hover {
             cursor: pointer;
         }
+    `,
+    SmartSearchToggle: styled.button`
+        height: 65%;
+        width: 10%;
+        background-color: black;
     `
 };
 
@@ -217,8 +222,8 @@ const Nav = (props) => {
         position: -1 //used to highlight the current search result on up and down arrow key press
     });
     const [options, setOptions] = useState({
-        fuzzySearch: true,
-        smartSearch: false,
+        // fuzzySearch: true,
+        // smartSearch: false,
         exact: false,
         to: false,
         body: false,
@@ -232,8 +237,8 @@ const Nav = (props) => {
         ".org": false
     });
     const [smartOptions, setSmartOptions] = useState({
-        fuzzySearch: false,
-        smartSearch: true,
+        // fuzzySearch: false,
+        // smartSearch: true,
         msg: true,
         from: false,
         subject: false
@@ -522,6 +527,13 @@ const Nav = (props) => {
                     </div>
                 </S.Bottom>
             </S.MidSection>
+            <S.SmartSearchToggle 
+                onClick = {() => {
+                    setUseSmartOptions(!useSmartOptions)
+
+                }}
+            />
+
             <S.User>
                 <S.Avatar
                     onClick={() => {
