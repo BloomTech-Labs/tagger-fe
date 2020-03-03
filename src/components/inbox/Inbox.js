@@ -67,7 +67,7 @@ const Inbox = (props) => {
     return (
         <S.Container>
             <Sidebar onClick = {() => {console.log("IS IT WORKING?")}} token={token} />
-            <Emails onClick = {() => {props.setIsDisplayingDropdown(false)}} />
+            <Emails onClick = {() => {props.setIsDisplayingDropdown(false)}} token = {token} />
         </S.Container>
     );
 };

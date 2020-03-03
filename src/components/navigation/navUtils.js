@@ -251,7 +251,6 @@ export function senseMenu(event, setshowMenu) {
 }
 export function senseSearchBar(props, event, searchQuery, setSearchQuery) {
     console.log(event, "\n\n mousedown for sense searchbar \n\n");
-    props.setIsDisplayingDropdown(false)
     if (
         event.target.className.includes("filter") ||
         event.target.parentNode.parentNode.parentNode.className.includes("filter") ||
@@ -263,6 +262,7 @@ export function senseSearchBar(props, event, searchQuery, setSearchQuery) {
     ) {
         return null;
     } else {
+        props.setIsDisplayingDropdown(false)
         setSearchQuery({
             ...searchQuery,
             // search: "",

@@ -228,6 +228,7 @@ const ThreadMessage = (props) => {
                     setResponseType={setResponseType}
                     email={props.email}
                     setReplyIsHidden={setReplyIsHidden}
+                    token = {props.token}
                 />
             )}
         </S.Container>

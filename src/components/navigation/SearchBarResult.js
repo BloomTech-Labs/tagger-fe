@@ -90,6 +90,7 @@ export default function SearchBarResult(props) {
         setShowSearchOptions(false)
         // clearSmartSearch();
         emailToDisplayInThread(props.email);
+
         // clearSearch();
         // setSearchQuery({
         //     ...searchQuery,

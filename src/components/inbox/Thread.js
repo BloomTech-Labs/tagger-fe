@@ -32,7 +32,7 @@ const Thread = (props) => {
     return (
         <S.Container>
             {showThread.map((email) => {
-                return <ThreadMessage key={Math.random()} email={email} />;
+                return <ThreadMessage token = {props.token}key={Math.random()} email={email} />;
             })}
         </S.Container>
     );

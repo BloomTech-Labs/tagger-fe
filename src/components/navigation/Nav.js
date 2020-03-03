@@ -496,7 +496,7 @@ const Nav = (props) => {
                                                 setSearchQuery,
                                                 searchQuery,
                                                 emailToDisplayInThread,
-                                                props.setIsDisplayingDropdown
+                                                props.setIsDisplayingDropdown,
                                             ]}
                                             email={eachEmail}
                                         />
