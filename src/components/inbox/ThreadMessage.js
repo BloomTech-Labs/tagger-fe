@@ -144,30 +144,16 @@ const ThreadMessage = props => {
   const [replyIsHidden, setReplyIsHidden] = useState(true);
   const [responseType, setResponseType] = useState("Reply");
 
-  function showDate() {
-    let formatDate;
-    if (props.email.date.includes("T") || props.email.date.includes("-")) {
-      formatDate = new Date(props.email.date);
-    } else {
-      formatDate = new Date(Number(props.email.date));
-    }
-    let emailDateYear = moment(formatDate).format("YYYY");
-    let currentYear = moment().format("YYYY");
-    if (emailDateYear === currentYear) {
-      return moment(formatDate).format("MMM Do");
-    } else {
-      return moment(formatDate).format("MMM Do YYYY");
-    }
-  }
-
   return (
     <S.Container>
       <S.ContactHeader>
         <S.ContactInfo>
+          {/* The onClick for avatar sets the analytics contact  */}
           <S.Avatar
             src={"https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"}
             onClick={() => setAnalyticsContact(props, props.email)}
           />{" "}
+          {/* this ternary checks if the snippetsFilter is set to "\Sent" or "\Draft" and if it is, it maps over the to array from the email object to display every email address the email was sent to. If the snippetsFilter is not set to "\Sent" or "\Draft" it displays the name of whoever sent the email if they have one, otherwise it displays the email of whoever sent it to */}
           {(props.snippetsFilter === "\\Sent" && props.email.to) ||
           (props.snippetsFilter === "\\Draft" && props.email.to) ? (
             props.email.to.map((contact, i) => {
@@ -177,6 +163,7 @@ const ThreadMessage = props => {
                   key={Math.random()}
                   onClick={() => setAnalyticsContact(props, contact)}
                 >
+                  {/* the JavaScript below this adds a comma after all email addresses except for the last one */}
                   {i !== arrayLength - 1 ? contact + ", " : contact}
                 </span>
               );
@@ -190,7 +177,6 @@ const ThreadMessage = props => {
               {props.email.from}
             </h3>
           )}
-          <h3>{showDate()}</h3>
         </S.ContactInfo>
         <S.MessageActions>
           <i
@@ -221,6 +207,7 @@ const ThreadMessage = props => {
       </S.ContactHeader>
 
       <S.Subject>{props.email.subject}</S.Subject>
+      { /* the spinner displays if isLoaded is false  */}
       <S.Spinner
         style={{
           display:
@@ -233,11 +220,13 @@ const ThreadMessage = props => {
               : "block"
         }}
       ></S.Spinner>
+      {/* the ternary below checks to see if the email object has html if it doesn't then it displays the the plain text instead of the HTML */}
       {props.email.email_body === "false" || props.email.email_body === "0" ? (
         <S.Message>{props.email.email_body_text}</S.Message>
       ) : (
         <FullHeightIFrame src={props.email.email_body} />
       )}
+      {/* the ternary below checks to see if replyIsHidden is true, if it is the Reply component is hidden, if it's false the reply component is shown */}
       {replyIsHidden ? null : (
         <Reply
           responseType={responseType}
