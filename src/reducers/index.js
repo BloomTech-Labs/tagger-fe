@@ -7,7 +7,8 @@ import { userReducer } from "./userReducer";
 import { inboxReducer } from "./inboxReducer";
 import { searchbarReducer } from "./searchbarReducer";
 import { composerReducer } from "./composerReducer";
-import { contactsReducer } from "./contactsReducer"
+import { contactsReducer } from "./contactsReducer";
+import { smartSearch } from "../actions";
 const rootReducer = combineReducers({
     imap: imapReducer,
     user: userReducer,
