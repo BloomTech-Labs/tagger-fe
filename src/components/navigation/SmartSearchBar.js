@@ -4,16 +4,17 @@ import styled from "styled-components";
 const Q = {
     Form: styled.form`
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: space-between;
         width: 80%;
         align-items: center;
         height: 100%;
         box-sizing: border-box;
-        z-index:1
+        z-index: 1;
     `,
     Button: styled.button`
-    display: none`,
+        display: none;
+    `
     // Input: styled.input`
     //     height: 35px;
     //     border: 1px solid red;
@@ -50,14 +51,14 @@ export default function SmartSearchBar(props) {
         e.preventDefault();
         props.sendSearch(props.userEmail, smartState);
         setSmartState({
-            msg:"",
-            subject:"",
-            from:""
-        })
-        console.log("smartypants",smartState)
+            msg: "",
+            subject: "",
+            from: ""
+        });
+        console.log("smartypants", smartState);
     };
     return (
-        <Q.Form autoComplete = "off" onSubmit={handleSubmit}>
+        <Q.Form autoComplete="off" onSubmit={handleSubmit}>
             {props.smartOptions.msg === true ? (
                 <S.SmartInput
                     type="text"

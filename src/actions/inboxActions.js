@@ -259,9 +259,19 @@ export const smartSearch = (userEmailAddress, searchParams) => (dispatch) => {
         })
         .then((res) => {
             console.log("Smart search res", res);
+            const smartEmails = res.data.map((email) => {
+                const labelArray = email.labels.split(",");
+                // const toArray = email.to.toLowerCase().split(",");
+                const toArray = email.to ? email.to.toLowerCase().split(",") : null;
+                return {
+                    ...email,
+                    labels: labelArray,
+                    to: toArray
+                };
+            });
             dispatch({
                 type: SMART_SEARCH_SUCCESS,
-                payload: res.data
+                payload: smartEmails
             });
             return true;
         })
