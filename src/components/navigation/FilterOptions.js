@@ -5,15 +5,19 @@ const S = {
     UL: styled.ul`
         width: 100%;
         border: solid brown 3px;
-        height: 92%;
+        height: 100%;
         display: flex;
         flex-direction: column;
         padding-left: 5px;
         justify-content: space-between;
+        box-sizing: border-box;
+        margin: 0px;
+
         div {
             width: 100%;
             display: flex;
             justify-content: flex-start;
+            box-sizing: border-box;
             li {
                 padding-left: 5px;
                 list-style: none;

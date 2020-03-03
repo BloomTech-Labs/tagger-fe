@@ -5,6 +5,7 @@ const moment = require("moment");
 const S = {
     Result: styled.div`
         width: 99%;
+        box-sizing: border-box;
         height: 50px;
         display: flex;
         align-items: center;
