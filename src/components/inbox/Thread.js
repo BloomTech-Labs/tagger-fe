@@ -19,16 +19,14 @@ const S = {
 };
 
 const Thread = props => {
-  // const toggleIsDisplayingAnalytics = () => {
-  //   props.changeIsDisplayingAnalytics(!props.isDisplayingAnalytics);
-  // };
-
+// this creates an array of emails with matching gmThreadId's returned from google 
   const showThread = props.emails.filter(
     email => email.gmThreadID === props.thread.gmThreadID
   );
 
   return (
     <S.Container>
+      {/* this maps over the showThread array to display all emails in a thread */}
       {showThread.map(email => {
         return <ThreadMessage key={Math.random()} email={email} token={props.token} />;
       })}
