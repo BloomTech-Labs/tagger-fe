@@ -167,7 +167,7 @@ const Sidebar = (props) => {
           {/* this onClick sets the snippets to filter email by drafts */}
           <span onClick={() => props.setSnippetFilter("\\Draft")}  >Drafts</span>
         </li>
-        <li>
+        {/* <li>
           <div>
             <S.FontAwesomeIcon icon={faTrash} />
           </div>
@@ -180,16 +180,16 @@ const Sidebar = (props) => {
           </div>
           <span>Spam</span>
         </li>
-        <li>
+        {/* <li>
           <div>
             <S.FontAwesomeIcon icon={faTags} />
           </div>
           Tags
-        </li>
+        </li>  */}
       </ul>
 
-            <hr />
-              {/* these are just for show  */}
+            {/* <hr />
+
             <ul>
                 <li>Social</li>
                 <li>Finance</li>
@@ -199,7 +199,7 @@ const Sidebar = (props) => {
                 <li>Shopping</li>
                 <li>Travel</li>
                 <li>Other</li>
-            </ul>
+            </ul>  */}
         </S.Container>
     );
 };
