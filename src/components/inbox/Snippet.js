@@ -142,6 +142,18 @@ function setContact() {
         setAnalyticsContact(props, props.email)
     }
 }
+/* showContact() is a check for when the "to" array from the email object has multiple people it will display the first one and add a "+n" to the end so the user know how many people it was sent to. It also checks the snippetsFilter to to check whether to display who the email was sent to or who it is from*/
+function showContact() {
+    if (props.snippetsFilter === "\\Sent" ||props.snippetsFilter === "\\Draft" ){
+        if (props.email.to.length > 1){
+            return  props.email.to[0] + " + " + parseInt(props.email.to.length - 1)
+        } else {return  props.email.to[0]}
+    } else if(props.email.name){
+        return props.email.name
+    } else {
+        return props.email.from
+    }
+}
   return (
     <S.Container
       heightInPx={
@@ -156,18 +168,9 @@ function setContact() {
           onClick={() => setContact()}
         />
         <div>
-            {/* This ternary checks whether to display who its from or who it was sent to depending on what snippetsFilter is set to */}
-          <h3
-            onClick={() =>setContact()}
-          >
-              {/* This ternary is a check for when the "to" array from the email object has multiple people it will display the first one and add a "+n" to the end so the user know how many people it was sent to. It also checks the snippetsFilter to to check whether to display who the email was sent to or who it is from*/}
-            {props.snippetsFilter === "\\Inbox"
-              ? props.email.name
-                ? props.email.name
-                : props.email.from
-              : props.snippetsFilter === "\\Sent" && props.email.to.length > 1
-              ? props.email.to[0] + " + " + parseInt(props.email.to.length - 1)
-              : props.email.to[0]}
+        {/* This ternary checks whether to display who its from or who it was sent to depending on what snippetsFilter is set to */}
+          <h3 onClick={() =>setContact()} >
+           {showContact()}
           </h3>
           <h3>{showDate(props.email.date)}</h3>
         </div>

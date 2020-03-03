@@ -35,7 +35,7 @@ export const GET_USER_BOXES_FAILURE = "GET_USER_BOXES_FAILURE";
 export const getBoxes = (email, token) => dispatch => {
   dispatch({ type: GET_USER_BOXES_START });
   return axios
-    .post(`http://localhost:8000/emails/boxes`, {
+    .post(`${url}emails/boxes`, {
       email: email,
       host: "imap.gmail.com",
       token: sessionStorage.getItem("auth_token"),
