@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Emails from "./Emails";
 import {
   getUserEmailAndId,
-  getEmails,
+  // getEmails,
   changeIsLoggedIn,
   updateEmails,
   incrementCounter,
@@ -81,7 +81,7 @@ const Inbox = props => {
   );
 };
 
-const mapStateToProps = ({ imap, user, contacts, inbox }) => ({
+const mapStateToProps = ({ imap, user, contacts, inbox,searchbar }) => ({
   emailAddress: user.emailAddress,
   user_id: user.user_id,
   userPhotoUrl: user.userPhotoUrl,
@@ -94,14 +94,15 @@ const mapStateToProps = ({ imap, user, contacts, inbox }) => ({
   contacts: contacts.contacts,
   sentEmails: inbox.sentEmails,
   boxes: user.boxes,
-  areBoxesRetrieved: user.areBoxesRetrieved
+  areBoxesRetrieved: user.areBoxesRetrieved,
+  isModelTrained: searchbar.isModelTrained
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getUserEmailAndId,
-      getEmails,
+      // getEmails,
       changeIsLoggedIn,
       getContacts,
       updateEmails,

@@ -233,7 +233,6 @@ const Reply = (props) => {
                     </label>
                     <label>
                         <span>Bcc:</span>
-
                         <S.Input
                             type="text"
                             name="BCC"
@@ -243,7 +242,6 @@ const Reply = (props) => {
                     </label>
                     <label>
                         <span>Subject:</span>
-
                         <S.Input
                             type="text"
                             name="subject"

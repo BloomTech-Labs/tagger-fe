@@ -7,7 +7,8 @@ const url = process.env.REACT_APP_BACKENDURL
 
 console.log("URL", url);
 
-
+// =============================================================================
+// S E A R C H  B A R  A C T I O N S  
 export const SET_SEARCH_RESULT = "SET_SEARCH_RESULT";
 export const CLEAR_SEARCH_RESULT = "CLEAR_SEARCH_RESULT";
 export const CLEAR_SMART_SEARCH = "CLEAR_SMART_SEARCH"
@@ -29,5 +30,66 @@ export const clearSmartSearch = () => dispatch => {
         type: CLEAR_SMART_SEARCH
     })
 }
+// =============================================================================
+// S M A R T  S E A R C H  B A R  T R A I N I N G  A C T I O N S  
+export const TRAIN_MODEL_START = "TRAIN_MODEL_START";
+export const TRAIN_MODEL_SUCCESS = "TRAIN_MODEL_SUCCESS";
+export const TRAIN_MODEL_FAILURE = "TRAIN_MODEL_FAILURE";
 
+export const trainModel = (userEmailAddress) => (dispatch) => {
+    console.log("trainModel action triggered");
+    dispatch({ type: TRAIN_MODEL_START });
+    return axios
+        .post(`${url}emails/train`, {
+            email: userEmailAddress,
+            id_token: sessionStorage.getItem("id_token"),
+            host: "smtp.gmail.com"
+        })
+        .then((res) => {
+            console.log("/n/n/n/n/nTrain model res/n/n/n/n/n", res);
+            dispatch({
+                type: TRAIN_MODEL_SUCCESS
+            });
+        })
+        .catch((err) => {
+            console.log("Train model err", err);
+            dispatch({ type: TRAIN_MODEL_FAILURE });
+            return false;
+        });
+};
+// =============================================================================
+// S M A R T  S E A R C H  Q U E R Y  A C T I O N S  
+export const SMART_SEARCH_START = "SMART_SEARCH_START";
+export const SMART_SEARCH_SUCCESS = "SMART_SEARCH_SUCCESS";
+export const SMART_SEARCH_FAILURE = "SMART_SEARCH_FAILURE";
+
+export const smartSearch = (userEmailAddress, searchParams) => (dispatch) => {
+    console.log("Smart search action triggered");
+    dispatch({ type: SMART_SEARCH_START });
+
+    const { uid, from, msg, subject } = searchParams;
+
+    return axios
+        .post(`${url}emails/predict`, {
+            email: userEmailAddress,
+            uid: uid || "",
+            from: from,
+            subject: subject,
+            msg: msg,
+            id_token: sessionStorage.getItem("id_token")
+        })
+        .then((res) => {
+            console.log("Smart search res", res);
+            dispatch({
+                type: SMART_SEARCH_SUCCESS,
+                payload: res.data
+            });
+            return true;
+        })
+        .catch((err) => {
+            console.log("Smart search err", err);
+            dispatch({ type: SMART_SEARCH_FAILURE, payload: err });
+            return false;
+        });
+};
 
