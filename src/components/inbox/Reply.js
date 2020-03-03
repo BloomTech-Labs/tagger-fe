@@ -121,7 +121,6 @@ const Reply = (props) => {
         subject: "",
         body: ""
     };
-
     const [email, setEmail] = useState(initialState);
     const [addresses, setAddresses] = useState([]);
     const [ccAddresses, setCcAddresses] = useState([]);
@@ -133,13 +132,11 @@ const Reply = (props) => {
         } else if (props.responseType === "Forward") {
             setAddresses([]);
         } else if (props.responseType === "Reply-All") {
-            let array = props.email.to.split(", ");
+            let array = props.email.to.map(e => e);
             setAddresses(array);
         }
-
         // todo ADD CC and BCC updates here.   must also be split by (", ") before being pushed to respective arrays
     }, [props.responseType]);
-
     const removeAddress = (index) => {
         const currentAddressList = [...addresses];
         currentAddressList.splice(index, 1);
@@ -156,16 +153,14 @@ const Reply = (props) => {
         var match = string.match(regex);
         match === null ? (obj[`${name}`] = []) : (obj[`${name}`] = match);
         obj.newString = string.replace(regex, "");
-
-        console.log(obj);
+        // console.log(obj);
         return obj;
     }
     const handleChange = (e) => {
         let value = e.target.value;
         let name = e.target.name;
         const keyValue = e.nativeEvent.data;
-
-        if (keyValue === " " && e.target.name != "subject" && e.target.name != "body") {
+        if (keyValue === " " && e.target.name !== "subject" && e.target.name !== "body") {
             const { newString, receiver, CC, BCC } = extractEmailAdresses(value, name);
             setAddresses([...addresses, ...receiver]);
             setCcAddresses([...ccAddresses, ...CC]);
@@ -185,7 +180,6 @@ const Reply = (props) => {
         setEmail(initialState);
         props.setReplyIsHidden(true);
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         let finalReply = {
@@ -198,7 +192,6 @@ const Reply = (props) => {
         props.sendEmail(finalReply);
         setEmail(initialState);
     };
-
     return (
         <S.Container>
             <S.Form onSubmit={(e) => handleSubmit(e)}>

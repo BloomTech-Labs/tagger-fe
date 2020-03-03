@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
+import React, { useState} from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import Reply from "./Reply";
-
 import {
   changeIsDisplayingAnalytics,
   changeAnalyticsContact
 } from "../../actions";
 import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
 import FullHeightIFrame from "./FullHeightIFrame";
-
 const moment = require("moment");
+// This is the styling for the threadMessage Component
 const S = {
   Container: styled.div`
     width: 100%;
@@ -192,6 +190,7 @@ const ThreadMessage = props => {
               {props.email.from}
             </h3>
           )}
+          <h3>{showDate()}</h3>
         </S.ContactInfo>
         <S.MessageActions>
           <i

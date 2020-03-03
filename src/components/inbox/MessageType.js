@@ -11,7 +11,7 @@ const S = {
 export default function MessageType(props) {
     function selectResponseType(e) {
         props.setResponseType(e.target.value);
-        alert(props.responseType);
+        // alert(props.responseType);
     }
     return (
         <S.Form title="Type of Response">
