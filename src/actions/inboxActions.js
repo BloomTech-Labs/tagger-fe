@@ -1,16 +1,5 @@
 import axios from "axios";
-
-// The following block of code allows for easy switching between localhost and deployed endpoints throughout all API calls
-
-let local = false;
-let cors = "https://cors-anywhere.herokuapp.com/"; // prefixing an endpoint URL with this negates CORS issues\\
-
-//+++++++++++++++++++++++++++++++++++++++++++
-//  F O R   D E V E L O P M E N T  O N L Y
-//*******************************************
-// local = true; //<- uncomment for local development
-// cors = "";    //<- uncomment for local development
-//+++++++++++++++++++++++++++++++++++++++++++
+import { StrictMode } from "react";
 
 const url = process.env.REACT_APP_BACKENDURL
     ? process.env.REACT_APP_BACKENDURL
@@ -140,22 +129,22 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
         })
 
         .then((Response) => {
-            console.log(Response, "/emails response \n\n\n");
             return axios
                 .post(`${url}emails/stream`, {
                     email: emailAddress,
                     id_token: sessionStorage.getItem("id_token")
                 })
                 .then((res) => {
-                    console.log(res, "res from /stream");
-                    const allEmail = res.data.map(email => {
-                    const labelArray = email.labels.split(",");
-                    const toArray = email.to.toLowerCase().split(",")
-                    return {
-                        ...email,
-                        labels: labelArray,
-                        to: toArray
-                      };
+                    console.log("res from /stream", res);
+                    const allEmail = res.data.map((email) => {
+                        const labelArray = email.labels.split(",");
+                        // const toArray = email.to.toLowerCase().split(",");
+                        const toArray = email.to ? email.to.toLowerCase().split(",") : null;
+                        return {
+                            ...email,
+                            labels: labelArray,
+                            to: toArray
+                        };
                     });
                     dispatch({ type: GET_EMAILS_SUCCESS, payload: allEmail });
                     return allEmail;
@@ -164,7 +153,6 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
         .catch((err) => {
             dispatch({ type: EMAILS_UPDATE_FAILURE, payload: err });
             return err;
-
         });
 };
 // =============================================================================
@@ -216,6 +204,80 @@ export const changeIsLoaded = (bool) => (dispatch) => {
 // =============================================================================
 // C H A N G E  S N I P P E T  F I L T E R
 export const SET_SNIPPET_FILTER = "SENT_SNIPPET_FILTER";
-export const setSnippetFilter = string => dispatch => {
-  dispatch({ type: SET_SNIPPET_FILTER, payload: string });
+export const setSnippetFilter = (string) => (dispatch) => {
+    dispatch({ type: SET_SNIPPET_FILTER, payload: string });
+};
+
+// =======================================================================
+
+//   S M A R T   S E A R C H   E N D P O I N T S
+
+export const TRAIN_MODEL_START = "TRAIN_MODEL_START";
+export const TRAIN_MODEL_SUCCESS = "TRAIN_MODEL_SUCCESS";
+export const TRAIN_MODEL_FAILURE = "TRAIN_MODEL_FAILURE";
+
+export const trainModel = (userEmailAddress) => (dispatch) => {
+    console.log("trainModel action triggered");
+    dispatch({ type: TRAIN_MODEL_START });
+    return axios
+        .post(`${url}emails/train`, {
+            email: userEmailAddress,
+            id_token: sessionStorage.getItem("id_token"),
+            host: "smtp.gmail.com"
+        })
+        .then((res) => {
+            console.log("/n/n/n/n/nTrain model res/n/n/n/n/n", res);
+            dispatch({
+                type: TRAIN_MODEL_SUCCESS
+            });
+        })
+        .catch((err) => {
+            console.log("Train model err", err);
+            dispatch({ type: TRAIN_MODEL_FAILURE });
+            return false;
+        });
+};
+
+export const SMART_SEARCH_START = "SMART_SEARCH_START";
+export const SMART_SEARCH_SUCCESS = "SMART_SEARCH_SUCCESS";
+export const SMART_SEARCH_FAILURE = "SMART_SEARCH_FAILURE";
+
+export const smartSearch = (userEmailAddress, searchParams) => (dispatch) => {
+    console.log("Smart search action triggered");
+    dispatch({ type: SMART_SEARCH_START });
+
+    const { uid, from, msg, subject } = searchParams;
+
+    return axios
+        .post(`${url}emails/predict`, {
+            email: userEmailAddress,
+            uid: uid || "",
+            from: from,
+            subject: subject,
+            msg: msg,
+            id_token: sessionStorage.getItem("id_token")
+        })
+        .then((res) => {
+            console.log("Smart search res", res);
+            const smartEmails = res.data.map((email) => {
+                const labelArray = email.labels.split(",");
+                // const toArray = email.to.toLowerCase().split(",");
+                const toArray = email.to ? email.to.toLowerCase().split(",") : null;
+                return {
+                    ...email,
+                    labels: labelArray,
+                    to: toArray
+                };
+            });
+            dispatch({
+                type: SMART_SEARCH_SUCCESS,
+                payload: smartEmails
+            });
+            return true;
+        })
+        .catch((err) => {
+            console.log("Smart search err", err);
+            dispatch({ type: SMART_SEARCH_FAILURE, payload: err });
+            return false;
+        });
 };

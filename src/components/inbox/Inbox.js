@@ -6,24 +6,23 @@ import { connect } from "react-redux";
 import Emails from "./Emails";
 
 import {
-
     getUserEmailAndId,
     getEmails,
     changeIsLoggedIn,
     updateEmails,
     incrementCounter,
-    getContacts
-
+    getContacts,
+    trainModel,
+    setIsDisplayingDropdown
 } from "../../actions";
 
 import Sidebar from "./Sidebar";
 const S = {
-  Container: styled.div`
-    display: flex;
-    height: calc(100vh - 64px);
-  `
+    Container: styled.div`
+        display: flex;
+        height: calc(100vh - 64px);
+    `
 };
-
 
 const Inbox = (props) => {
     const [token, setToken] = useState("");
@@ -40,7 +39,11 @@ const Inbox = (props) => {
                     console.log("Error", error);
                 });
         }
-    }, [props.areContactsRetrieved]);
+
+        if (props.areEmailsRetrieved && !props.isModelTrained) {
+            props.trainModel(props.emailAddress);
+        }
+    }, [props.areContactsRetrieved, props.areEmailsRetrieved]);
 
     function extractAccessTokenFromUrl(urlString) {
         // Parses OAuth access token from page URL
@@ -63,41 +66,39 @@ const Inbox = (props) => {
 
     return (
         <S.Container>
-            <Sidebar token={token} />
-            <Emails />
+            <Sidebar onClick = {() => {console.log("IS IT WORKING?")}} token={token} />
+            <Emails onClick = {() => {props.setIsDisplayingDropdown(false)}} token = {token} />
         </S.Container>
     );
 };
 
 const mapStateToProps = ({ imap, user, contacts, inbox }) => ({
-  emailAddress: user.emailAddress,
-  user_id: user.user_id,
-  userPhotoUrl: user.userPhotoUrl,
-  isEmailAddressAndIdRetrieved: user.isEmailAddressAndIdRetrieved,
-  areEmailsRetrieved: imap.areEmailsRetrieved,
-  counter: imap.streamCounter,
-  emails: imap.emails,
-  isLoggedIn: user.isLoggedIn,
-  areContactsRetrieved: contacts.areContactsRetrieved,
-  contacts: contacts.contacts,
-  sentEmails: inbox.sentEmails
- 
+    emailAddress: user.emailAddress,
+    user_id: user.user_id,
+    userPhotoUrl: user.userPhotoUrl,
+    isEmailAddressAndIdRetrieved: user.isEmailAddressAndIdRetrieved,
+    areEmailsRetrieved: imap.areEmailsRetrieved,
+    counter: imap.streamCounter,
+    emails: imap.emails,
+    isLoggedIn: user.isLoggedIn,
+    areContactsRetrieved: contacts.areContactsRetrieved,
+    contacts: contacts.contacts,
+    sentEmails: inbox.sentEmails
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      getUserEmailAndId,
-      getEmails,
-      changeIsLoggedIn,
-      getContacts,
-      updateEmails,
-      incrementCounter
-    },
-    dispatch
-  );
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators(
+        {
+            getUserEmailAndId,
+            getEmails,
+            changeIsLoggedIn,
+            getContacts,
+            updateEmails,
+            incrementCounter,
+            trainModel,
+            setIsDisplayingDropdown
+        },
+        dispatch
+    );
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
-)(Inbox);
+export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Inbox);

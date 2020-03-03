@@ -23,7 +23,7 @@ export default function FilterButton(props) {
     return (
         <S.Button>
             {props.text}
-            <i className="fa fa-times-circle" onClick={props.onClick} />
+            <i className="fa fa-times-circle searchBar" onClick={props.onClick} />
         </S.Button>
     );
 }

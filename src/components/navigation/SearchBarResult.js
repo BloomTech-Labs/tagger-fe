@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { faTags } from "@fortawesome/free-solid-svg-icons";
 const moment = require("moment");
 
 const S = {
     Result: styled.div`
         width: 99%;
+        box-sizing: border-box;
         height: 50px;
         display: flex;
         align-items: center;
-        margin-bottom: 2%;
+        margin-bottom: 5px;
         background-color: ${(props) => props.simulateFocusBackgroundColor};
         border-left: ${(props) => props.simulateFocusBorder};
         :hover {
@@ -17,10 +17,8 @@ const S = {
             border-left: 4px solid #0000ff99;
         }
         :active {
-            background-color: red;
-        }
-        :focus {
-            background-color: red;
+            background-color: #50becaad;
+            text-shadow: 1px 0px 0px #000000a1;
         }
         i {
             height: 40px;
@@ -86,16 +84,19 @@ const S = {
     `
 };
 export default function SearchBarResult(props) {
-    const [clearSearch, setSearchQuery, searchQuery, emailToDisplayInThread] = props.functions;
+    const [setShowSearchOptions, clearSearch, clearSmartSearch, setSearchQuery, searchQuery, emailToDisplayInThread, setIsDisplayingDropdown] = props.functions;
     function clearSearchAndLoadResult() {
+        //todo add clear smart search results
+        setShowSearchOptions(false)
+        // clearSmartSearch();
         emailToDisplayInThread(props.email);
-        clearSearch();
-        setSearchQuery({
-            ...searchQuery,
-            search: ""
-            //todo reset location and other values also
-        });
-        //todo FUNCTION HERE SET State being mapped over to load inside of the thread section
+
+        // clearSearch();
+        // setSearchQuery({
+        //     ...searchQuery,
+        //     search: ""
+        // });
+        setIsDisplayingDropdown(false)
     }
 
     function showDate() {
@@ -128,6 +129,7 @@ export default function SearchBarResult(props) {
     }
     return (
         <S.Result
+            className="searchResult"
             key={props.email.message_id || props.key}
             onClick={clearSearchAndLoadResult}
             simulateFocusBackgroundColor={props.email.simulateFocus ? "#f0f8ffa6" : "none"}
