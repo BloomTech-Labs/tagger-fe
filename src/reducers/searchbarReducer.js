@@ -1,7 +1,8 @@
-import { CLEAR_SEARCH_RESULT, SET_SEARCH_RESULT } from "../actions";
+import { CLEAR_SEARCH_RESULT, SET_SEARCH_RESULT, SET_IS_DISPLAYING_IN_SNIPPETS } from "../actions";
 
 const initialState = {
-    searchResults: []
+    searchResults: [],
+    isDisplayingInSnippets: false
 };
 
 export const searchbarReducer = (state = initialState, { type, payload }) => {
@@ -15,6 +16,11 @@ export const searchbarReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 searchResults: payload
+            };
+        case SET_IS_DISPLAYING_IN_SNIPPETS:
+            return {
+                ...state,
+                isDisplayingInSnippets: payload
             };
         default:
             return state;

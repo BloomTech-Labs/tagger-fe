@@ -22,8 +22,11 @@ const Snippets = (props) => {
     };
 
     let filteredEmail = [];
+    console.log("SS RESULTS #", props.smartSearchResults.length)
     if (props.smartSearchResults.length > 0) {
         filteredEmail = props.smartSearchResults;
+    } else if (props.searchResults.length > 0 && props.isDisplayingInSnippets){
+        filteredEmail = props.searchResults;
     } else {
         filteredEmail = props.emails.filter((email) => {
             return email.labels.includes(props.snippetsFilter);
@@ -32,6 +35,8 @@ const Snippets = (props) => {
     useEffect(() => {
         if (props.smartSearchResults.length > 0) {
             filteredEmail = props.smartSearchResults;
+        } else if (props.searchResults.length > 0 && props.isDisplayingInSnippets){
+            filteredEmail = props.searchResults;
         } else {
             filteredEmail = props.emails.filter((email) => {
                 return email.labels.includes(props.snippetsFilter);
@@ -50,12 +55,14 @@ const Snippets = (props) => {
     );
 };
 
-const mapStateToProps = ({ imap, user, inbox }) => ({
+const mapStateToProps = ({ imap, user, inbox, searchbar }) => ({
     isDisplayingThread: inbox.isDisplayingThread,
     areEmailsRetrieved: imap.areEmailsRetrieved,
     emails: imap.emails,
     snippetsFilter: inbox.snippetsFilter,
-    smartSearchResults: inbox.smartSearchResults
+    smartSearchResults: inbox.smartSearchResults,
+    searchResults: searchbar.searchResults,
+    isDisplayingInSnippets: searchbar.isDisplayingInSnippets
 });
 
 const mapDispatchToProps = (dispatch) =>

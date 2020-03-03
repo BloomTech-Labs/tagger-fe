@@ -262,9 +262,6 @@ export function senseSearchBar(event, searchQuery, setSearchQuery) {
         setSearchQuery({
             ...searchQuery,
             search: "",
-            filters: [],
-            optionalFilter: [],
-            results: [],
             position: -1
         });
     }

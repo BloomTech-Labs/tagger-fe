@@ -14,7 +14,7 @@ import {
     selectHighlightedEmail,
     applyOptionalFilters
 } from "./navUtils";
-import { saveSearch, changeThreadContact, changeIsLoaded, clearSmartSearch } from "../../actions";
+import { saveSearch, changeThreadContact, changeIsLoaded, clearSmartSearch, setIsDisplayingInSnippets } from "../../actions";
 import FuzzySearchBar from "./FuzzySearchBar";
 import SmartSearchBar from "./SmartSearchBar";
 import FilterOptions from "./FilterOptions";
@@ -265,6 +265,7 @@ const Nav = (props) => {
     }
     useEffect(() => {
         //=============below should rerun search logic
+        console.log("ARE THESE ChANGING?", searchQuery.filters, searchQuery.optionalFilter)
         const emails = props.emails;
         if (searchQuery.optionalFilter.length > 0) {
             applyOptionalFilters([fuzzyFunction, searchQuery, emails, props.saveSearch]);
@@ -389,12 +390,20 @@ const Nav = (props) => {
         } else if (searchQuery.optionalFilter.length > 0) {
             applyOptionalFilters([fuzzyFunction, searchQuery, emails, props.saveSearch]);
         } else {
+            console.log("SAVE SEARCH IN NAV handleInput")
             props.saveSearch(fuzzyFunction(searchQuery.search, searchQuery.filters, emails));
         }
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        selectHighlightedEmail(searchQuery, setSearchQuery, emailToDisplayInThread);
+        console.log("Query position", searchQuery.position)
+        if(searchQuery.position === -1){
+            props.setIsDisplayingInSnippets(true)
+            props.clearSmartSearch()
+        } else {
+            selectHighlightedEmail(searchQuery, setSearchQuery, emailToDisplayInThread);
+            console.log("Is it running?")
+        }
     };
     const toggleSearchOptions = (e) => {
         e.preventDefault();
@@ -532,5 +541,6 @@ export default connect(mapStateToProps, {
     changeThreadContact,
     changeIsLoaded,
     smartSearch,
-    clearSmartSearch
+    clearSmartSearch,
+    setIsDisplayingInSnippets
 })(Nav);

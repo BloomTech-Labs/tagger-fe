@@ -88,9 +88,9 @@ export default function SearchBarResult(props) {
     function clearSearchAndLoadResult() {
         //todo add clear smart search results
         setShowSearchOptions(false)
-        clearSmartSearch();
+        // clearSmartSearch();
         emailToDisplayInThread(props.email);
-        clearSearch();
+        // clearSearch();
         setSearchQuery({
             ...searchQuery,
             search: ""
