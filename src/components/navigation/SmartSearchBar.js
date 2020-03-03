@@ -57,7 +57,7 @@ export default function SmartSearchBar(props) {
         console.log("smartypants",smartState)
     };
     return (
-        <Q.Form onSubmit={handleSubmit}>
+        <Q.Form autoComplete = "off" onSubmit={handleSubmit}>
             {props.smartOptions.msg === true ? (
                 <S.SmartInput
                     type="text"

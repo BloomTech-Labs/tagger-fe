@@ -4,22 +4,26 @@ import styled from "styled-components";
 const S = {
     UL: styled.ul`
         width: 100%;
-        border: solid brown 3px;
-        height: 100%;
+        border: solid grey 1px;
         display: flex;
         flex-direction: column;
-        padding-left: 5px;
         justify-content: space-between;
+        padding: 0px;
         box-sizing: border-box;
         margin: 0px;
-
+        background-color: white;
         div {
             width: 100%;
             display: flex;
+            align-items: center;
             justify-content: flex-start;
             box-sizing: border-box;
+            border-bottom: solid grey 1px;
+            height: 30px;
+            padding: 0px 5px;
+
+
             li {
-                padding-left: 5px;
                 list-style: none;
             }
         }

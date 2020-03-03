@@ -100,15 +100,19 @@ const S = {
     `,
     SmartInput: styled.input`
         height: 50px;
-        border: 1px solid red;
+        border: 3px solid #2f86ff;
         margin-bottom: 1px;
         background-color: lightgray;
-        color: black;
+        color: #2f86ff;
         outline: none;
         width:100%;
         display: block;
         box-sizing: border-box;
         padding: 0px 2%;
+
+        ::placeholder {
+            color: #2f86ff;
+        }
         
     `,
     Magnify: styled.button`
@@ -160,8 +164,10 @@ const S = {
             height: ${(props) => props.heightLeft};
             background-color: #cfcfd2;
             z-index: 2;
-            box-shadow: ${(props) => props.boxshadowLeft};
+            // box-shadow: ${(props) => props.boxshadowLeft};
             box-sizing: border-box;
+            border-radius: 0px 0px 10px 10px;
+            overflow: hidden;
 
         }
 
@@ -170,7 +176,7 @@ const S = {
             height: ${(props) => props.heightRight};
             background-color: #cfcfd2;
             z-index: 2;
-            box-shadow: ${(props) => props.boxshadowRight};
+            // box-shadow: ${(props) => props.boxshadowRight};
             box-sizing: border-box;
 
         }
@@ -209,7 +215,8 @@ const S = {
     SmartSearchToggle: styled.button`
         height: 65%;
         width: 10%;
-        background-color: black;
+        background-color: #2f86ff;
+        color: white;
     `
 };
 
@@ -467,10 +474,10 @@ const Nav = (props) => {
                             : "0px"
                     }
                     boxshadowLeft={
-                        searchQuery.search.length > 0 ? "0px 0px 2px 1px #4c4c4c" : "none"
+                        searchQuery.search.length > 0 ? "0px 0px 2px 1px #949494" : "none"
                     }
-                    heightRight={showSearchOptions ? "300px" : "0px"}
-                    boxshadowRight={showSearchOptions ? "0px 0px 2px 1px #4c4c4c" : "none"}
+                    heightRight={showSearchOptions ? "initial" : "0px"}
+                    boxshadowRight={showSearchOptions ? "0px 0px 2px 1px #949494" : "none"}
                 >
                     <div className="left">
                         {(props.results.length > 0 && searchQuery.search.length > 0) ||
@@ -530,9 +537,8 @@ const Nav = (props) => {
             <S.SmartSearchToggle 
                 onClick = {() => {
                     setUseSmartOptions(!useSmartOptions)
-
                 }}
-            />
+            >Smart Search</S.SmartSearchToggle>
 
             <S.User>
                 <S.Avatar

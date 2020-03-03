@@ -163,7 +163,7 @@ const Sidebar = (props) => {
           </div>
           <span onClick={() => props.setSnippetFilter("\\Draft")}  >Drafts</span>
         </li>
-        <li>
+        {/* <li>
           <div>
             <S.FontAwesomeIcon icon={faTrash} />
           </div>
@@ -180,10 +180,10 @@ const Sidebar = (props) => {
             <S.FontAwesomeIcon icon={faTags} />
           </div>
           Tags
-        </li>
+        </li> */}
       </ul>
 
-            <hr />
+            {/* <hr />
 
             <ul>
                 <li>Social</li>
@@ -194,7 +194,7 @@ const Sidebar = (props) => {
                 <li>Shopping</li>
                 <li>Travel</li>
                 <li>Other</li>
-            </ul>
+            </ul> */}
         </S.Container>
     );
 };
