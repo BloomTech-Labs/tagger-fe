@@ -2,7 +2,7 @@ import axios from "axios";
 
 // The following block of code allows for easy switching between localhost and deployed endpoints throughout all API calls
 
-let local = false;
+let local = true;
 let cors = "https://cors-anywhere.herokuapp.com/"; // prefixing an endpoint URL with this negates CORS issues\\
 
 //+++++++++++++++++++++++++++++++++++++++++++
@@ -22,9 +22,31 @@ if (local) {
 // =============================================================================
 // Get User Id__________________________________________________________________
 
-
 export const CHANGE_IS_LOGGED_IN = "CHANGE_IS_LOGGED_IN";
 
-export const changeIsLoggedIn = (bool) => dispatch => {
-    dispatch({ type: CHANGE_IS_LOGGED_IN, payload: bool });
+export const changeIsLoggedIn = bool => dispatch => {
+  dispatch({ type: CHANGE_IS_LOGGED_IN, payload: bool });
+};
+
+export const GET_USER_BOXES_START = "GET_USER_BOXES_START";
+export const GET_USER_BOXES_SUCCESS = "GET_USER_BOXES_SUCCESS";
+export const GET_USER_BOXES_FAILURE = "GET_USER_BOXES_FAILURE";
+
+export const getBoxes = (email, token) => dispatch => {
+  dispatch({ type: GET_USER_BOXES_START });
+  return axios
+    .post(`http://localhost:8000/emails/boxes`, {
+      email: email,
+      host: "imap.gmail.com",
+      token: sessionStorage.getItem("auth_token"),
+      id_token: sessionStorage.getItem("id_token")
+    })
+    .then(res => {
+      console.log("BOXES", res.data);
+      dispatch({ type: GET_USER_BOXES_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log("BOXES ERROR", err);
+      dispatch({ type: GET_USER_BOXES_FAILURE, payload: err });
+    });
 };
