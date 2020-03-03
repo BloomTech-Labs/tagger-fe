@@ -36,32 +36,44 @@ const S = {
         color: #2f86ff;
         margin: 8px 2vw;
         font-weight: bolder;
+        
     `,
     MidSection: styled.div`
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         width: 60vw;
-        height: 35px;
+        height: 65%;
         div:focus-within {
             border: 2px solid #2f86ff;
         }
+        border: solid blue 3px;
+        box-sizing: border-box;
+
+        
     `,
     Top: styled.section`
         width: 100%;
         height: 100%;
         display: flex;
         align-items: flex-end;
+        justify-content: space-between;
+        border: solid red 3px;
+        box-sizing: border-box;
+
+
+        
     `,
 
     Form: styled.form`
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        width: 60vw;
+        width: 80%;
         align-items: center;
         height: 100%;
         box-sizing: border-box;
+        
     `,
 
     Search: styled.div`
@@ -71,6 +83,7 @@ const S = {
         width: 100%;
         height: 100%;
         box-sizing: border-box;
+        
     `,
 
     Input: styled.input`
@@ -83,6 +96,7 @@ const S = {
         box-sizing: border-box;
         padding: 0px 2%;
         border: none;
+        
     `,
     SmartInput: styled.input`
         height: 50px;
@@ -91,10 +105,11 @@ const S = {
         background-color: lightgray;
         color: black;
         outline: none;
-        width:51.3vw;
+        width:100%;
         display: block;
         box-sizing: border-box;
         padding: 0px 2%;
+        
     `,
     Magnify: styled.button`
         margin: 2px;
@@ -108,15 +123,17 @@ const S = {
         padding: 0px 20px;
         z-index: 2;
         height: 100%;
+        
     `,
     Button: styled.button`
         height: 100%;
         min-width: 100px;
-        width: 10vw;
+        width: 17%;
         border: solid lightgray 2px;
         border-radius: 3px;
         color: gray;
         background-color: white;
+        
 
         :hover {
             cursor: pointer;
@@ -135,21 +152,33 @@ const S = {
         width: 100%;
         overflow: visible;
         display: flex;
+        justify-content: space-between;
+        box-sizing: border-box;
         .left {
-            width: 100%;
+            width: 80%;
+            border: solid grey 3px;
             height: ${(props) => props.heightLeft};
             background-color: #cfcfd2;
             z-index: 2;
             box-shadow: ${(props) => props.boxshadowLeft};
+            box-sizing: border-box;
+
         }
 
         .right {
-            width: 10vw;
+            width: 17%;
             height: ${(props) => props.heightRight};
             background-color: #cfcfd2;
             z-index: 2;
             box-shadow: ${(props) => props.boxshadowRight};
+            box-sizing: border-box;
+
         }
+        border: solid green 3px;
+        box-sizing: border-box;
+
+
+        
     `,
     SearchDropdown: styled.section`
         display: flex;
@@ -157,16 +186,20 @@ const S = {
         overflow-y: scroll;
         width: 100%;
         height: 100%;
+        border: solid purple 3px;
+        box-sizing: border-box;
+
     `,
     User: styled.div`
-        height: 70%;
+        height: 65%;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        
     `,
 
     Avatar: styled.img`
-        height: 40px;
+        height: 100%;
         margin: 1px 2vw;
         border-radius: 50%;
         :hover {

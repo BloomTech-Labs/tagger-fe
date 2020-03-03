@@ -6,7 +6,7 @@ const Q = {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        width: 60vw;
+        width: 80%;
         align-items: center;
         height: 100%;
         box-sizing: border-box;

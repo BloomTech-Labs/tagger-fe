@@ -4,6 +4,7 @@ import styled from "styled-components";
 const S = {
     UL: styled.ul`
         width: 100%;
+        border: solid brown 3px;
         height: 92%;
         display: flex;
         flex-direction: column;
