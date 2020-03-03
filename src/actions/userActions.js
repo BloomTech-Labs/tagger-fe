@@ -42,8 +42,8 @@ export const getBoxes = (email, token) => dispatch => {
       id_token: sessionStorage.getItem("id_token")
     })
     .then(res => {
-      console.log("BOXES", res.data);
-      dispatch({ type: GET_USER_BOXES_SUCCESS, payload: res.data });
+      const boxes = res.data.slice(2)
+      dispatch({ type: GET_USER_BOXES_SUCCESS, payload: boxes });
     })
     .catch(err => {
       console.log("BOXES ERROR", err);

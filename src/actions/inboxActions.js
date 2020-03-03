@@ -117,6 +117,7 @@ export const updateEmails = (emailAddress, token) => (dispatch) => {
     dispatch({ type: EMAILS_UPDATE_START });
     const imapAccess = `user=${emailAddress}auth=Bearer ${token}`; // Between the following arrows >< is either a square or a space. IDK what it is but you need it
     const imapAccessHash = btoa(`user=${emailAddress}auth=Bearer ${token}`); // Between the following arrows >< is either a square or a space. IDK what it is but you need it
+    sessionStorage.setItem("auth_token", imapAccessHash)
     console.log("AUTH TOKEN: ", imapAccessHash);
     console.log(emailAddress, "email address \n\n");
 

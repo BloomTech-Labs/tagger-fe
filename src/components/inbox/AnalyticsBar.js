@@ -114,6 +114,7 @@ const AnalyticsBar = props => {
 // creates an array of all emails with "\Inbox" in the label array
   const inbox = props.emails.filter(email => email.labels.includes("\\Inbox"));
 // creates an array of all emails sent to whoever is set as the analytics contact
+// console.log(props.analyticsContact)
   const totalSent = sent.filter(email =>
     email.to.includes(
       props.analyticsContact.emailAddress[0].value.toLowerCase()

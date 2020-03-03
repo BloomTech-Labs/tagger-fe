@@ -151,7 +151,7 @@ const ThreadMessage = props => {
           {/* The onClick for avatar sets the analytics contact  */}
           <S.Avatar
             src={"https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"}
-            onClick={() => setAnalyticsContact(props, props.email)}
+            onClick={() => props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft" ? setAnalyticsContact(props, props.email.to[0]) : setAnalyticsContact(props, props.email)}
           />{" "}
           {/* this ternary checks if the snippetsFilter is set to "\Sent" or "\Draft" and if it is, it maps over the to array from the email object to display every email address the email was sent to. If the snippetsFilter is not set to "\Sent" or "\Draft" it displays the name of whoever sent the email if they have one, otherwise it displays the email of whoever sent it to */}
           {(props.snippetsFilter === "\\Sent" && props.email.to) ||

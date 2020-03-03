@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
@@ -8,12 +8,11 @@ import {
   faInbox,
   faFile,
   faPaperPlane,
-  faTrash,
   faTags,
   faExclamationTriangle
 } from "@fortawesome/free-solid-svg-icons";
 
-import { changeIsComposing, setSnippetFilter, getBoxes } from "../../actions";
+import { changeIsComposing, setSnippetFilter } from "../../actions";
 import ComposeComponent from "../compose/Compose";
 const S = {
   ModalContainer: styled.div`
@@ -133,24 +132,6 @@ const Sidebar = props => {
     e.preventDefault();
     props.changeIsComposing(!props.isComposing);
   };
-
-  useEffect(() => {
-    const email = props.emailAddress;
-    const token = props.token;
-    console.log(token);
-    if (props.areBoxesRetrieved === false) {
-      props
-        .getBoxes(email, token)
-        .then(res => {
-          console.log("res from sidebar", res);
-        })
-        .catch(err => {
-          console.log("err from sidebar", err);
-        });
-    }
-    console.log(props);
-  }, [props.token, props.areBoxesRetrieved]);
-  const boxes = props.boxes.slice(2);
   return (
     <S.Container>
       {/* clicking the "+ compose" button toggles the compose module to display */}
@@ -199,13 +180,15 @@ const Sidebar = props => {
           Tags
         </li>
       </ul>
-      {boxes.map((box, i) => {
-        return (
-          <ul>
-            <li onClick={() => props.setSnippetFilter(`${box.name}`)}>{box.name}</li>
-          </ul>
-        );
-      })}
+      <ul>
+        {props.boxes.map((box, i) => {
+          return (
+            <li key={i} onClick={() => props.setSnippetFilter(`${box.name}`)}>
+              {box.name}
+            </li>
+          );
+        })}
+      </ul>
     </S.Container>
   );
 };
@@ -214,8 +197,7 @@ const mapStateToProps = ({ user, composer, inbox }) => ({
   isComposing: composer.isComposing,
   snippetsFilter: inbox.snippetsFilter,
   emailAddress: user.emailAddress,
-  boxes: user.boxes,
-  areBoxesRetrieved: user.areBoxesRetrieved
+  boxes: user.boxes
 });
 
 const mapDispatchToProps = dispatch =>
@@ -223,7 +205,6 @@ const mapDispatchToProps = dispatch =>
     {
       changeIsComposing,
       setSnippetFilter,
-      getBoxes
     },
     dispatch
   );
