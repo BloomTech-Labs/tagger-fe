@@ -1,6 +1,9 @@
 import React from "react";
 import Fuse from "fuse.js";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import {setIsDisplayingDropdown} from "../../actions"
 
 var fuseOptions = {
     //options generated at fusejs.io interactive testing tool
@@ -246,8 +249,9 @@ export function senseMenu(event, setshowMenu) {
         setshowMenu(false);
     }
 }
-export function senseSearchBar(event, searchQuery, setSearchQuery) {
+export function senseSearchBar(props, event, searchQuery, setSearchQuery) {
     console.log(event, "\n\n mousedown for sense searchbar \n\n");
+    props.setIsDisplayingDropdown(false)
     if (
         event.target.className.includes("filter") ||
         event.target.parentNode.parentNode.parentNode.className.includes("filter") ||
@@ -261,11 +265,50 @@ export function senseSearchBar(event, searchQuery, setSearchQuery) {
     } else {
         setSearchQuery({
             ...searchQuery,
-            search: "",
+            // search: "",
             position: -1
         });
     }
 }
+// function senseSearchBarFunc(props, event, searchQuery, setSearchQuery) {
+//     props.setIsDisplayingDropdown(false)
+//     console.log(event, "\n\n mousedown for sense searchbar \n\n");
+//     props.setIsDisplayingDropdown(false)
+//     if (
+//         event.target.className.includes("filter") ||
+//         event.target.parentNode.parentNode.parentNode.className.includes("filter") ||
+//         event.target.className.includes("searchBar") ||
+//         event.target.parentNode.className.includes("searchBar") ||
+//         event.target.className.includes("left") ||
+//         event.target.parentNode.className.includes("searchResult") ||
+//         event.target.parentNode.parentNode.className.includes("searchResult")
+//     ) {
+//         return null;
+//     } else {
+//         setSearchQuery({
+//             ...searchQuery,
+//             // search: "",
+//             position: -1
+//         });
+//     }
+// }
+
+// const mapStateToProps = () => ({
+
+// });
+
+// const mapDispatchToProps = (dispatch) =>
+//     bindActionCreators(
+//         {
+//             setIsDisplayingDropdown
+//         },
+//         dispatch
+//     );
+
+// export const senseSearchBar = connect(mapStateToProps)(senseSearchBarFunc);
+
+
+
 
 export function selectHighlightedEmail(searchQuery, setSearchQuery, emailToDisplayInThread) {
     if (searchQuery.position === -1) {

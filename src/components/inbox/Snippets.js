@@ -26,7 +26,7 @@ const Snippets = (props) => {
     if (props.smartSearchResults.length > 0) {
         filteredEmail = props.smartSearchResults;
     } else if (props.searchResults.length > 0 && props.isDisplayingInSnippets){
-        filteredEmail = props.searchResults;
+        filteredEmail = props.searchResultsStatic;
     } else {
         filteredEmail = props.emails.filter((email) => {
             return email.labels.includes(props.snippetsFilter);
@@ -36,7 +36,7 @@ const Snippets = (props) => {
         if (props.smartSearchResults.length > 0) {
             filteredEmail = props.smartSearchResults;
         } else if (props.searchResults.length > 0 && props.isDisplayingInSnippets){
-            filteredEmail = props.searchResults;
+            filteredEmail = props.searchResultsStatic;
         } else {
             filteredEmail = props.emails.filter((email) => {
                 return email.labels.includes(props.snippetsFilter);
@@ -62,6 +62,7 @@ const mapStateToProps = ({ imap, user, inbox, searchbar }) => ({
     snippetsFilter: inbox.snippetsFilter,
     smartSearchResults: inbox.smartSearchResults,
     searchResults: searchbar.searchResults,
+    searchResultsStatic: searchbar.searchResultsStatic,
     isDisplayingInSnippets: searchbar.isDisplayingInSnippets
 });
 

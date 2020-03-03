@@ -12,7 +12,8 @@ import {
     updateEmails,
     incrementCounter,
     getContacts,
-    trainModel
+    trainModel,
+    setIsDisplayingDropdown
 } from "../../actions";
 
 import Sidebar from "./Sidebar";
@@ -65,8 +66,8 @@ const Inbox = (props) => {
 
     return (
         <S.Container>
-            <Sidebar token={token} />
-            <Emails />
+            <Sidebar onClick = {() => {console.log("IS IT WORKING?")}} token={token} />
+            <Emails onClick = {() => {props.setIsDisplayingDropdown(false)}} />
         </S.Container>
     );
 };
@@ -94,7 +95,8 @@ const mapDispatchToProps = (dispatch) =>
             getContacts,
             updateEmails,
             incrementCounter,
-            trainModel
+            trainModel,
+            setIsDisplayingDropdown
         },
         dispatch
     );

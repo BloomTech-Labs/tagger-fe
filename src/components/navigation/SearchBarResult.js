@@ -84,17 +84,18 @@ const S = {
     `
 };
 export default function SearchBarResult(props) {
-    const [setShowSearchOptions, clearSearch, clearSmartSearch, setSearchQuery, searchQuery, emailToDisplayInThread] = props.functions;
+    const [setShowSearchOptions, clearSearch, clearSmartSearch, setSearchQuery, searchQuery, emailToDisplayInThread, setIsDisplayingDropdown] = props.functions;
     function clearSearchAndLoadResult() {
         //todo add clear smart search results
         setShowSearchOptions(false)
         // clearSmartSearch();
         emailToDisplayInThread(props.email);
         // clearSearch();
-        setSearchQuery({
-            ...searchQuery,
-            search: ""
-        });
+        // setSearchQuery({
+        //     ...searchQuery,
+        //     search: ""
+        // });
+        setIsDisplayingDropdown(false)
     }
 
     function showDate() {
