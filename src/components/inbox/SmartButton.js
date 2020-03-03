@@ -7,7 +7,7 @@ import { smartSearch } from "../../actions/";
 const S = {
     Button: styled.button`
         height: 20px;
-        width: 80px;
+        // width: 80px;
         background-color: white;
         color: blue;
         :hover {
@@ -36,7 +36,7 @@ function SmartButton(props) {
         props.smartSearch(props.email, searchParams);
     };
 
-    return <S.Button onClick={handleClick}>SmartSearch</S.Button>;
+    return <S.Button onClick={handleClick}>Find similar</S.Button>;
 }
 
 const mapStateToProps = ({ user }) => ({

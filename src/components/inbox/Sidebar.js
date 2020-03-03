@@ -14,7 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Inbox from "./Inbox";
 
-import { setSnippetFilter, clearSmartSearch, changeIsComposing } from "../../actions";
+import { setSnippetFilter, clearSmartSearch, changeIsComposing, setIsDisplayingInSnippets } from "../../actions";
 import ComposeComponent from "../compose/Compose";
 const S = {
     ModalContainer: styled.div`
@@ -139,6 +139,7 @@ const Sidebar = (props) => {
     const setFilter = (filterName) => {
         props.clearSmartSearch();
         props.setSnippetFilter(filterName);
+        props.setIsDisplayingInSnippets(false)
     };
 
     return (
@@ -215,7 +216,8 @@ const mapDispatchToProps = (dispatch) =>
         {
             changeIsComposing,
             setSnippetFilter,
-            clearSmartSearch
+            clearSmartSearch,
+            setIsDisplayingInSnippets
         },
         dispatch
     );

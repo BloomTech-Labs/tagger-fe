@@ -125,6 +125,7 @@ const Reply = (props) => {
         host: "smtp.gmail.com",
         port: "465",
         userEmail: props.emailAddress,
+        token: props.token,
         receiver: "",
         CC: "",
         BCC: "",
