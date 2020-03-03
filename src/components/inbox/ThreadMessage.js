@@ -10,7 +10,7 @@ import {
 } from "../../actions";
 import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
 import FullHeightIFrame from "./FullHeightIFrame";
-const moment = require("moment");
+
 // This is the styling for the threadMessage Component
 const S = {
   Container: styled.div`
