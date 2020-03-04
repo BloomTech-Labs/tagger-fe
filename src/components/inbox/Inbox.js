@@ -11,7 +11,8 @@ import {
   incrementCounter,
   getContacts,
   trainModel,
-  setIsDisplayingDropdown
+  setIsDisplayingDropdown,
+  getBoxes
 } from "../../actions";
 import Sidebar from "./Sidebar";
 
@@ -111,7 +112,8 @@ const mapDispatchToProps = dispatch =>
       updateEmails,
       incrementCounter,
       trainModel,
-      setIsDisplayingDropdown
+      setIsDisplayingDropdown,
+      getBoxes
     },
     dispatch
   );
