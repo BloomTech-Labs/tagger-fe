@@ -16,15 +16,11 @@ const LandingPage = () => {
         backgroundImage: `url(${img1})`,
         backgroundSize: "cover"
     };
-
-    // const redirectUrl = "http://localhost:3000/inbox";
-    // const redirectUrl = "https://tagger-lab.netlify.com/inbox";
     const redirectUrl = process.env.REACT_APP_REDIRECTURI
         ? process.env.REACT_APP_REDIRECTURI
         : "http://localhost:3000/inbox";
     const response = "token id_token";
     const nonce = (12313459114561232 * Date.now()) / 10000000;
-
     const client = "765722368782-j3bqp7gm072b0vd1lv97kgh2mnp37b7j.apps.googleusercontent.com";
 
     return (
@@ -49,9 +45,6 @@ const LandingPage = () => {
                     </ul>
                 </div>
             </nav>
-            {/* 
-\      https%3A//www.googleapis.com/auth/gmail.compose
-      https%3A//www.googleapis.com/auth/gmail.send */}
 
             <div className="landing-content">
                 <div className="landing-section landing-banner" style={bannerStyle}></div>

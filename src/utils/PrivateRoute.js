@@ -5,7 +5,7 @@ import { bindActionCreators, compose } from "redux";
 
 import {
     getUserEmailAndId,
-    getEmails,
+    // getEmails,
     changeIsLoggedIn,
     updateEmails,
     incrementCounter
@@ -95,7 +95,7 @@ const mapDispatchToProps = (dispatch) =>
     bindActionCreators(
         {
             getUserEmailAndId,
-            getEmails,
+            // getEmails,
             changeIsLoggedIn,
             updateEmails,
             incrementCounter

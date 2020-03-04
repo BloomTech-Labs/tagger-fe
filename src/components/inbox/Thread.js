@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
-
 import ThreadMessage from "./ThreadMessage";
-
-import Reply from "./Reply";
-
 import { changeIsDisplayingAnalytics } from "../../actions";
 
 const S = {
@@ -26,11 +22,12 @@ const Thread = (props) => {
     const toggleIsDisplayingAnalytics = () => {
         props.changeIsDisplayingAnalytics(!props.isDisplayingAnalytics);
     };
-
+// this creates an array of emails with matching gmThreadId's returned from google 
     const showThread = props.emails.filter((email) => email.gmThreadID === props.thread.gmThreadID);
 
     return (
         <S.Container>
+            {/* this maps over the showThread array to display all emails in a thread */}
             {showThread.map((email) => {
                 return <ThreadMessage token = {props.token}key={Math.random()} email={email} />;
             })}

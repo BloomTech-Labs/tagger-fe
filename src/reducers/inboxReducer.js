@@ -5,39 +5,20 @@ import {
     CHANGE_ANALYTICS_CONTACT,
     IFRAME_LOADED,
     SET_SNIPPET_FILTER,
-    TRAIN_MODEL_START,
-    TRAIN_MODEL_SUCCESS,
-    TRAIN_MODEL_FAILURE,
-    SMART_SEARCH_START,
-    SMART_SEARCH_SUCCESS,
-    SMART_SEARCH_FAILURE,
-    CLEAR_SMART_SEARCH
 } from "../actions";
-
-// const initialState = {
-//   isDisplayingThread: false,
-//   isDisplayingAnalytics: false,
-//   threadContactEmailAddress: "CLICK ON AN EMAIL",
-//   analyticsContactEmailAddress: "",
-// };
-
 const initialState = {
     // FOR ANALYTICS BAR DEV
     isIframeLoaded: false,
     isDisplayingThread: false,
     isDisplayingAnalytics: false,
-    threadContactEmailAddress: "arnoldSchwarzeneger@gov.com",
+    threadContactEmailAddress: "",
     thread: null,
     analyticsContact: {
-        emailAddress: ["arnoldSchwarzeneger@gov.com"],
-        name: "George Washington",
+        emailAddress: [""],
+        name: "",
         coverPhoto: ""
     },
     snippetsFilter: "\\Inbox",
-    isModelTrained: false,
-    isTrainingModel: false,
-    smartSearchResults: [],
-    smartSearchError: null
 };
 
 export const inboxReducer = (state = initialState, { type, payload }) => {
@@ -88,49 +69,7 @@ export const inboxReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 snippetsFilter: payload
             };
-        // ==============================================
-        case TRAIN_MODEL_START:
-            return {
-                ...state,
-                isTrainingModel: true
-            };
-        case TRAIN_MODEL_SUCCESS:
-            return {
-                ...state,
-                isModelTrained: true,
-                isTrainingModel: false
-            };
-        case TRAIN_MODEL_FAILURE:
-            return {
-                ...state,
-                snippetsFilter: payload,
-                isTrainingModel: false
-            };
-        // ==============================================
-
-        case SMART_SEARCH_START:
-            return {
-                ...state,
-                smartSearchResults: [],
-                smartSearchError: null
-            };
-        case SMART_SEARCH_SUCCESS:
-            return {
-                ...state,
-                smartSearchResults: payload
-            };
-        case SMART_SEARCH_FAILURE:
-            return {
-                ...state,
-                smartSearchError: payload
-            };
-            case CLEAR_SMART_SEARCH:
-                return {
-                    ...state,
-                    smartSearchResults:[],
-                    smartSearchError: null
-                }
-
+       
         default:
             return state;
     }

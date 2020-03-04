@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { compose, bindActionCreators } from "redux";
-
+import { compose } from "redux";
 import { sendEmail } from "../../actions/composerActions";
 import MessageType from "./MessageType";
 import ContactButton from "./ContactButton";
+
+// Styling for the reply component
 const S = {
     Container: styled.div`
         display: flex;
@@ -20,18 +20,6 @@ const S = {
         box-sizing: border-box;
         box-shadow: 0 0 9px 1px #00000059;
     `,
-    // Header: styled.div`
-    //     display: flex;
-    //     justify-content: space-between;
-    //     border: 1px;
-    //     width: 99.8%;
-    //     height: 12%;
-    //     border: 1px solid #dadada;
-    // `,
-    // HeaderText: styled.p`
-    //     font-size: 1.5em;
-    //     margin-left: 1.5%;
-    // `,
     Input: styled.input`
         width: 98%;
         // margin-left: 2%;
@@ -120,6 +108,7 @@ const S = {
 };
 
 const Reply = (props) => {
+    // initial state for the email object that gets sent using nodemailer on the backend
     const initialState = {
         service: "gmail",
         host: "smtp.gmail.com",
@@ -136,19 +125,18 @@ const Reply = (props) => {
     const [addresses, setAddresses] = useState([]);
     const [ccAddresses, setCcAddresses] = useState([]);
     const [bccAdresses, setBccAdresses] = useState([]);
+    // useEffect to change who you reply to depending on whether you hit reply, reply all, or forward
     useEffect(() => {
         if (props.responseType === "Reply") {
             setAddresses([props.email.from]);
         } else if (props.responseType === "Forward") {
             setAddresses([]);
         } else if (props.responseType === "Reply-All") {
-            let array = props.email.to.split(", ");
+            let array = props.email.to.map(e => e);
             setAddresses(array);
         }
-
         // todo ADD CC and BCC updates here.   must also be split by (", ") before being pushed to respective arrays
     }, [props.responseType]);
-
     const removeAddress = (index) => {
         const currentAddressList = [...addresses];
         currentAddressList.splice(index, 1);
@@ -165,16 +153,14 @@ const Reply = (props) => {
         var match = string.match(regex);
         match === null ? (obj[`${name}`] = []) : (obj[`${name}`] = match);
         obj.newString = string.replace(regex, "");
-
-        console.log(obj);
+        // console.log(obj);
         return obj;
     }
     const handleChange = (e) => {
         let value = e.target.value;
         let name = e.target.name;
         const keyValue = e.nativeEvent.data;
-
-        if (keyValue === " " && e.target.name != "subject" && e.target.name != "body") {
+        if (keyValue === " " && e.target.name !== "subject" && e.target.name !== "body") {
             const { newString, receiver, CC, BCC } = extractEmailAdresses(value, name);
             setAddresses([...addresses, ...receiver]);
             setCcAddresses([...ccAddresses, ...CC]);
@@ -194,7 +180,6 @@ const Reply = (props) => {
         setEmail(initialState);
         props.setReplyIsHidden(true);
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         let finalReply = {
@@ -207,12 +192,8 @@ const Reply = (props) => {
         props.sendEmail(finalReply);
         setEmail(initialState);
     };
-
     return (
         <S.Container>
-            {/* <S.Header>
-                <S.HeaderText>Replying To: {props.threadContactEmailAddress}</S.HeaderText>
-            </S.Header> */}
             <S.Form onSubmit={(e) => handleSubmit(e)}>
                 <MessageType
                     responseType={props.responseType}
@@ -252,7 +233,6 @@ const Reply = (props) => {
                     </label>
                     <label>
                         <span>Bcc:</span>
-
                         <S.Input
                             type="text"
                             name="BCC"
@@ -262,7 +242,6 @@ const Reply = (props) => {
                     </label>
                     <label>
                         <span>Subject:</span>
-
                         <S.Input
                             type="text"
                             name="subject"

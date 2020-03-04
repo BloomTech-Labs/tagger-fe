@@ -1,32 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faInbox,
-    faFile,
-    faPaperPlane,
-    faTrash,
-    faTags,
-    faExclamationTriangle
+  faInbox,
+  faFile,
+  faPaperPlane,
+  faTags,
 } from "@fortawesome/free-solid-svg-icons";
-import Inbox from "./Inbox";
-
-import { setSnippetFilter, clearSmartSearch, changeIsComposing, setIsDisplayingInSnippets } from "../../actions";
+import {
+  setSnippetFilter,
+  clearSmartSearch,
+  changeIsComposing,
+  setIsDisplayingInSnippets
+} from "../../actions";
 import ComposeComponent from "../compose/Compose";
 const S = {
-    ModalContainer: styled.div`
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    `,
+  ModalContainer: styled.div`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
 
-    Container: styled.div`
+  Container: styled.div`
     flex-direction: row;
     // height: calc(100vh-64px);
     height: 100%;
@@ -94,132 +95,127 @@ const S = {
   };
 
   `,
-    Button: styled.div`
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 110px;
-        height: 35px;
-        color: white;
-        background-color: #2f86ff;
-        border-radius: 6px;
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 14px;
-        line-height: 16px;
-        margin: 8% 0%;
-        margin-left: calc((100% - 110px) / 2);
-        :hover {
-            cursor: pointer;
-        }
-        :active {
-            background: #9893613b;
-            -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
-            -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
-            box-shadow: inset 0px 0px 5px #c1c1c1;
-            outline: none;
-            cursor: pointer;
-        }
-    `,
+  Button: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 110px;
+    height: 35px;
+    color: white;
+    background-color: #2f86ff;
+    border-radius: 6px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+    margin: 8% 0%;
+    margin-left: calc((100% - 110px) / 2);
+    :hover {
+      cursor: pointer;
+    }
+    :active {
+      background: #9893613b;
+      -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+      -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+      box-shadow: inset 0px 0px 5px #c1c1c1;
+      outline: none;
+      cursor: pointer;
+    }
+  `,
 
-    FontAwesomeIcon: styled((props) => <FontAwesomeIcon {...props} />)`
-        margin-right: 5px;
-        color: grey;
-    `
+  FontAwesomeIcon: styled(props => <FontAwesomeIcon {...props} />)`
+    margin-right: 5px;
+    color: grey;
+  `
 };
 
-const Sidebar = (props) => {
-    const toggleIsComposing = (e) => {
-        e.preventDefault();
-        props.changeIsComposing(!props.isComposing);
-    };
-    console.log("SNIPPETFILTER", props.snippetsFilter);
+const Sidebar = props => {
+  const toggleIsComposing = e => {
+    e.preventDefault();
+    props.changeIsComposing(!props.isComposing);
+  };
 
-    const setFilter = (filterName) => {
-        props.clearSmartSearch();
-        props.setSnippetFilter(filterName);
-        props.setIsDisplayingInSnippets(false)
-    };
+  const setFilter = filterName => {
+    props.clearSmartSearch();
+    props.setSnippetFilter(filterName);
+    props.setIsDisplayingInSnippets(false);
+  };
 
-    return (
-        <S.Container>
-            {props.isComposing ? (
-                <S.ModalContainer>
-                    <ComposeComponent token={props.token} />
-                </S.ModalContainer>
-            ) : null}
-            <S.Button onClick={toggleIsComposing}>+ Compose</S.Button>
+  return (
+    <S.Container>
+      {/* clicking the "+ compose" button toggles the compose module to display */}
+      {props.isComposing ? (
+        <S.ModalContainer>
+          <ComposeComponent token={props.token} />
+        </S.ModalContainer>
+      ) : null}
+      <S.Button onClick={toggleIsComposing}>+ Compose</S.Button>
 
-            <ul>
-                <li onClick={() => setFilter("\\Inbox")}>
-                    <div>
-                        <S.FontAwesomeIcon icon={faInbox} />
-                    </div>
-                    <span>Inbox</span>
-                </li>
-                <li onClick={() => setFilter("\\Sent")}>
-                    <div>
-                        <S.FontAwesomeIcon icon={faPaperPlane} />
-                    </div>
-                    <span>Sent</span>
-                </li>
-                <li>
-                    <div>
-                        <S.FontAwesomeIcon icon={faFile} />
-                    </div>
-                    <span onClick={() => setFilter("\\Draft")}>Drafts</span>
-                </li>
-                {/* <li>
+      <ul>
+        {/* this onClick sets the snippets to filter email by received */}
+        <li onClick={() => setFilter("\\Inbox")}>
           <div>
-            <S.FontAwesomeIcon icon={faTrash} />
+            <S.FontAwesomeIcon icon={faInbox} />
           </div>
-          <span>Trash</span>
+          <span>Inbox</span>
         </li>
-        <li onClick={()=> setFilter("\\Spam")} >
+        {/* this onClick sets the snippets to filter email by sent */}
+        <li onClick={() => setFilter("\\Sent")}>
           <div>
-            <S.FontAwesomeIcon icon={faExclamationTriangle} />
+            <S.FontAwesomeIcon icon={faPaperPlane} />
           </div>
-          <span>Spam</span>
+          <span>Sent</span>
         </li>
+        <li>
+          <div>
+            <S.FontAwesomeIcon icon={faFile} />
+          </div>
+          {/* this onClick sets the snippets to filter email by drafts */}
+          <span onClick={() => setFilter("\\Draft")}>Drafts</span>
+        </li>
+      </ul>
+      <hr />
+      <ul>
         <li>
           <div>
             <S.FontAwesomeIcon icon={faTags} />
           </div>
           Tags
-        </li> */}
-            </ul>
-
-            {/* <hr />
-
-            <ul>
-                <li>Social</li>
-                <li>Finance</li>
-                <li>Entertainment</li>
-                <li>Productivity</li>
-                <li>Events</li>
-                <li>Shopping</li>
-                <li>Travel</li>
-                <li>Other</li>
-            </ul> */}
-        </S.Container>
-    );
+        </li>
+      </ul>
+      <ul>
+        {props.boxes.map((box, i) => {
+          return (
+            <li key={i} onClick={() => props.setSnippetFilter(`${box.name}`)}>
+              {box.name}
+            </li>
+          );
+        })}
+      </ul>
+    </S.Container>
+  );
 };
 
-const mapStateToProps = ({ imap, user, composer, inbox }) => ({
-    isComposing: composer.isComposing,
-    snippetsFilter: inbox.snippetsFilter
+const mapStateToProps = ({ user, composer, inbox }) => ({
+  isComposing: composer.isComposing,
+  snippetsFilter: inbox.snippetsFilter,
+  emailAddress: user.emailAddress,
+  boxes: user.boxes
 });
 
-const mapDispatchToProps = (dispatch) =>
-    bindActionCreators(
-        {
-            changeIsComposing,
-            setSnippetFilter,
-            clearSmartSearch,
-            setIsDisplayingInSnippets
-        },
-        dispatch
-    );
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      changeIsComposing,
+      setSnippetFilter,
+      clearSmartSearch,
+      setIsDisplayingInSnippets
+    },
+    dispatch
+  );
 
-export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Sidebar);
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(Sidebar);

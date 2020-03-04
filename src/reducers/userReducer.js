@@ -2,7 +2,10 @@ import {
     GET_EMAIL_USERID_START,
     GET_EMAIL_USERID_SUCCESS,
     GET_EMAIL_USERID_FAILURE,
-    CHANGE_IS_LOGGED_IN
+    CHANGE_IS_LOGGED_IN,
+    GET_USER_BOXES_START,
+    GET_USER_BOXES_SUCCESS,
+    GET_USER_BOXES_FAILURE
   } from "../actions";
   
   const initialState = {
@@ -12,6 +15,9 @@ import {
     isEmailAddressAndIdRetrieved: false,
     errors: null,
     isLoggedIn: false,
+    boxes: [],
+    boxesError: null,
+    areBoxesRetrieved: false
   };
   
   export const userReducer = (state = initialState, {type, payload}) => {
@@ -48,7 +54,27 @@ import {
 
 
     //================================================
-        
+        case GET_USER_BOXES_START:
+          return{
+            ...state,
+            boxes:[],
+            boxesError:null,
+            areBoxesRetrieved: false
+          };
+          case GET_USER_BOXES_SUCCESS:
+            return{
+              ...state,
+              boxes: payload,
+              boxesError: null,
+              areBoxesRetrieved:true,
+            };
+            case GET_USER_BOXES_FAILURE:
+              return {
+                ...state,
+                boxes: [],
+                boxesError: payload,
+                areBoxesRetrieved:false
+              }
       default:
         return state;
     }

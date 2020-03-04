@@ -35,8 +35,7 @@ export const changeIsReplying = bool => dispatch => {
   dispatch({ type: CHANGE_IS_REPLYING, payload: bool });
 };
 export const sendEmail = (email) => dispatch => {
-  console.log("SEND EMAIL ACTION", email);
-  
+  // console.log("SEND EMAIL ACTION", email);
   axios
     .post(`${url}compose/`, email)
     .then(res => {

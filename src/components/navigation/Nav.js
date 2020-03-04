@@ -432,7 +432,7 @@ const Nav = (props) => {
             document.removeEventListener("mouseup", closeSearch);
         };
     }, [searchQuery]);
-
+    
     function emailToDisplayInThread(emailObj) {
         emailObj.email_body === "false" || emailObj.email_body === "0"
             ? props.changeIsLoaded(true)
@@ -542,7 +542,7 @@ function mapStateToProps({ searchbar, imap, user, inbox }) {
         userPhoto: user.userPhotoUrl,
         threadContactEmailAddress: inbox.threadContactEmailAddress,
         userEmail: user.emailAddress,
-        smartResults: inbox.smartSearchResults,
+        smartResults: searchbar.smartSearchResults,
         isDisplayingDropdown: searchbar.isDisplayingDropdown
     };
 }

@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { changeIsDisplayingThread } from "../../actions";
 import Snippet from "./Snippet.js";
 
+// This is the styling for the snippets Component
 const S = {
     Container: styled.div`
         width: ${(props) => props.widthPercentage}%;
@@ -20,9 +21,8 @@ const Snippets = (props) => {
     const toggleIsDisplayingThread = () => {
         props.changeIsDisplayingThread(!props.isDisplayingThread);
     };
-
     let filteredEmail = [];
-    console.log("SS RESULTS #", props.smartSearchResults.length)
+   
     if (props.smartSearchResults.length > 0) {
         filteredEmail = props.smartSearchResults;
     } else if (props.searchResults.length > 0 && props.isDisplayingInSnippets){
@@ -55,12 +55,12 @@ const Snippets = (props) => {
     );
 };
 
-const mapStateToProps = ({ imap, user, inbox, searchbar }) => ({
+const mapStateToProps = ({ imap, inbox, searchbar }) => ({
     isDisplayingThread: inbox.isDisplayingThread,
     areEmailsRetrieved: imap.areEmailsRetrieved,
     emails: imap.emails,
     snippetsFilter: inbox.snippetsFilter,
-    smartSearchResults: inbox.smartSearchResults,
+    smartSearchResults: searchbar.smartSearchResults,
     searchResults: searchbar.searchResults,
     searchResultsStatic: searchbar.searchResultsStatic,
     isDisplayingInSnippets: searchbar.isDisplayingInSnippets
