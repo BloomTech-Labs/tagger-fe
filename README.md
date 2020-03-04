@@ -65,7 +65,7 @@ This email client has a more functional, data-science based approach to implemen
 
 To facilitate hand off to future developers of this project, a flow chart was created. This flow chart depicts data flow and UI flow between the components. Please contact Nate Mosco if you want the pdf and editing base file.
 
-[<img src="https://imgur.com/kxWmMdI.jpg">](https://imgur.com/kxWmMdI.jpg)
+[<img src="https://imgur.com/T6xag5s.jpg">](https://imgur.com/T6xag5s.jpg)
 
 ##### - [x] React (https://www.npmjs.com/package/react)
 
