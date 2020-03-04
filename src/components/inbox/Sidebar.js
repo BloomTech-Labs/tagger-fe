@@ -11,8 +11,8 @@ import {
   faTags,
   faExclamationTriangle
 } from "@fortawesome/free-solid-svg-icons";
-
-import { changeIsComposing, setSnippetFilter } from "../../actions";
+import Inbox from "./Inbox";
+import { setSnippetFilter, clearSmartSearch, changeIsComposing, setIsDisplayingInSnippets } from "../../actions";
 import ComposeComponent from "../compose/Compose";
 const S = {
   ModalContainer: styled.div`
@@ -127,44 +127,57 @@ const S = {
   `
 };
 
-const Sidebar = props => {
-  const toggleIsComposing = e => {
-    e.preventDefault();
-    props.changeIsComposing(!props.isComposing);
-  };
-  return (
-    <S.Container>
-      {/* clicking the "+ compose" button toggles the compose module to display */}
-      {props.isComposing ? (
-        <S.ModalContainer>
-          <ComposeComponent token={props.token} />
-        </S.ModalContainer>
-      ) : null}
-      <S.Button onClick={toggleIsComposing}>+ Compose</S.Button>
-      <ul>
-        {/* this onClick sets the snippets to filter email by received */}
-        <li onClick={() => props.setSnippetFilter("\\Inbox")}>
+const Sidebar = (props) => {
+    const toggleIsComposing = (e) => {
+        e.preventDefault();
+        props.changeIsComposing(!props.isComposing);
+    };
+
+    const setFilter = (filterName) => {
+        props.clearSmartSearch();
+        props.setSnippetFilter(filterName);
+        props.setIsDisplayingInSnippets(false)
+    };
+
+    return (
+        <S.Container>
+           {/* clicking the "+ compose" button toggles the compose module to display */}
+            {props.isComposing ? (
+                <S.ModalContainer>
+                    <ComposeComponent token={props.token} />
+                </S.ModalContainer>
+            ) : null}
+            <S.Button onClick={toggleIsComposing}>+ Compose</S.Button>
+
+            <ul>
+               {/* this onClick sets the snippets to filter email by received */}
+                <li onClick={() => setFilter("\\Inbox")}>
+                    <div>
+                        <S.FontAwesomeIcon icon={faInbox} />
+                    </div>
+                    <span>Inbox</span>
+                </li>
+                {/* this onClick sets the snippets to filter email by sent */}
+                <li onClick={() => setFilter("\\Sent")}>
+                    <div>
+                        <S.FontAwesomeIcon icon={faPaperPlane} />
+                    </div>
+                    <span>Sent</span>
+                </li>
+                <li>
+                    <div>
+                        <S.FontAwesomeIcon icon={faFile} />
+                    </div>
+                    {/* this onClick sets the snippets to filter email by drafts */}
+                    <span onClick={() => setFilter("\\Draft")}>Drafts</span>
+                </li>
+                {/* <li>
           <div>
-            <S.FontAwesomeIcon icon={faInbox} />
+            <S.FontAwesomeIcon icon={faTrash} />
           </div>
-          <span>Inbox</span>
+          <span>Trash</span>
         </li>
-        {/* this onClick sets the snippets to filter email by sent */}
-        <li onClick={() => props.setSnippetFilter("\\Sent")}>
-          <div>
-            <S.FontAwesomeIcon icon={faPaperPlane} />
-          </div>
-          <span>Sent</span>
-        </li>
-        <li>
-          <div>
-            <S.FontAwesomeIcon icon={faFile} />
-          </div>
-          {/* this onClick sets the snippets to filter email by drafts */}
-          <span onClick={() => props.setSnippetFilter("\\Draft")}>Drafts</span>
-        </li>
-        {/* this onClick sets the snippets to filter email by spam */}
-        <li onClick={() => props.setSnippetFilter("\\Spam")}>
+        <li onClick={()=> setFilter("\\Spam")} >
           <div>
             <S.FontAwesomeIcon icon={faExclamationTriangle} />
           </div>
@@ -178,19 +191,23 @@ const Sidebar = props => {
             <S.FontAwesomeIcon icon={faTags} />
           </div>
           Tags
-        </li>
-      </ul>
-      <ul>
-        {props.boxes.map((box, i) => {
-          return (
-            <li key={i} onClick={() => props.setSnippetFilter(`${box.name}`)}>
-              {box.name}
-            </li>
-          );
-        })}
-      </ul>
-    </S.Container>
-  );
+        </li> */}
+            </ul>
+
+            {/* <hr />
+
+            <ul>
+                <li>Social</li>
+                <li>Finance</li>
+                <li>Entertainment</li>
+                <li>Productivity</li>
+                <li>Events</li>
+                <li>Shopping</li>
+                <li>Travel</li>
+                <li>Other</li>
+            </ul> */}
+        </S.Container>
+    );
 };
 
 const mapStateToProps = ({ user, composer, inbox }) => ({
@@ -200,14 +217,16 @@ const mapStateToProps = ({ user, composer, inbox }) => ({
   boxes: user.boxes
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      changeIsComposing,
-      setSnippetFilter,
-    },
-    dispatch
-  );
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators(
+        {
+            changeIsComposing,
+            setSnippetFilter,
+            clearSmartSearch,
+            setIsDisplayingInSnippets
+        },
+        dispatch
+    );
 
 export default compose(
   withRouter,

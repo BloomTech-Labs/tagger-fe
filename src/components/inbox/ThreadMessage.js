@@ -1,79 +1,46 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import Reply from "./Reply";
-import {
-  changeIsDisplayingAnalytics,
-  changeAnalyticsContact
-} from "../../actions";
+
+import { changeIsDisplayingAnalytics, changeAnalyticsContact } from "../../actions";
 import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
 import FullHeightIFrame from "./FullHeightIFrame";
-// This is the styling for the threadMessage Component
+import SmartButton from "./SmartButton";
+
+
 const S = {
-  Container: styled.div`
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 0.5%;
-    padding: 1%;
-    font-size: 0.8rem;
-    background-color: white;
-    border-radius: 3px;
-  `,
-  ContactHeader: styled.div`
-    display: flex;
-    justify-content: space-between;
-    height: 40px;
-    box-sizing: border-box;
-    width: 100%;
-    align-items: center;
-  `,
-  ContactInfo: styled.div`
-    width: 40%;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    h3 {
-      margin-left: 0;
-      border-bottom: 1px solid #00000000;
-
-      :hover {
-        color: #2196f3;
-        font-weight: 900;
-        border-bottom: 1px solid #00000033;
-        text-shadow: 0px 1px #2196f387;
-        cursor: pointer;
-      }
-      :active {
-        background: #9893613b;
-        -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
-        -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
-        box-shadow: inset 0px 0px 5px #c1c1c1;
-        outline: none;
-        cursor: pointer;
-      }
-
-      span {
-        overflow: hidden;
-        white-space: nowrap;
-        word-break: break-word;
-        text-align: left;
-        text-overflow: ellipsis;
-      }
-    }
-  `,
-  MessageActions: styled.div`
-    width: 10%;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    Container: styled.div`
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 0.5%;
+        padding: 1%;
+        font-size: 0.8rem;
+        background-color: white;
+        border-radius: 3px;
+    `,
+    ContactHeader: styled.div`
+        display: flex;
+        justify-content: space-between;
+        height: 40px;
+        box-sizing: border-box;
+        width: 100%;
+        align-items: center;
+    `,
+    ContactInfo: styled.div`
+        width: 40%;
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        h3 {
+            margin-left: 0;
+            border-bottom: 1px solid #00000000;
 
             :hover {
                 color: #2196f3;
@@ -90,54 +57,72 @@ const S = {
                 outline: none;
                 cursor: pointer;
             }
+
+            span {
+                overflow: hidden;
+                white-space: nowrap;
+                word-break: break-word;
+                text-align: left;
+                text-overflow: ellipsis;
+            }
         }
     `,
-  MessageActions: styled.div`
-    width: 10%;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .button {
-      height: 20px;
-      width: 20px;
-    }
-  `,
-  Avatar: styled.img`
-    height: 30px;
-    width: 30px;
-    background-color: black;
-    border-radius: 15px;
-    :hover {
-      cursor: pointer;
-    }
-    :active {
-      cursor: pointer;
-    }
-  `,
-  Subject: styled.h2``,
-  Message: styled.article`
-    text-align: left;
-  `,
-  Spinner: styled.div`
-    border: 2px solid #f3f3f3; /* Light grey */
-    border-top: 2px solid #2f86ff; /* Blue */
-    border-bottom: 2px solid #2f86ff; /* Blue */
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 2s linear infinite;
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-  `
+    MessageActions: styled.div`
+        width: 20%;
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        i:hover {
+            color: #2196f3;
+            font-weight: 900;
+            border-bottom: 1px solid #00000033;
+            text-shadow: 0px 1px #2196f387;
+            cursor: pointer;
+        }
+        i:active {
+            background: #9893613b;
+            -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+            -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+            box-shadow: inset 0px 0px 5px #c1c1c1;
+            outline: none;
+            cursor: pointer;
+        }
+    `,
+    Avatar: styled.img`
+        height: 30px;
+        width: 30px;
+        background-color: black;
+        border-radius: 15px;
+        :hover {
+            cursor: pointer;
+        }
+        :active {
+            cursor: pointer;
+        }
+    `,
+    Subject: styled.h2``,
+    Message: styled.article`
+        text-align: left;
+    `,
+    Spinner: styled.div`
+        border: 2px solid #f3f3f3; /* Light grey */
+        border-top: 2px solid #2f86ff; /* Blue */
+        border-bottom: 2px solid #2f86ff; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    `
 };
 
 const ThreadMessage = props => {
@@ -185,6 +170,7 @@ const ThreadMessage = props => {
           )}
         </S.ContactInfo>
         <S.MessageActions>
+        <SmartButton thisEmail={props.email} />
           <i
             title="Reply"
             className="fa fa-reply button"
@@ -246,23 +232,20 @@ const ThreadMessage = props => {
   );
 };
 
-const mapStateToProps = ({ imap, user, inbox, contacts }) => ({
-  contacts: contacts.contacts,
-  isLoaded: inbox.isIframeLoaded,
-  snippetsFilter: inbox.snippetsFilter,
-  analyticsContact: inbox.analyticsContact
+const mapStateToProps = ({ inbox, contacts }) => ({
+    contacts: contacts.contacts,
+    isLoaded: inbox.isIframeLoaded,
+    snippetsFilter: inbox.snippetsFilter,
+    analyticsContact: inbox.analyticsContact
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      changeIsDisplayingAnalytics,
-      changeAnalyticsContact
-    },
-    dispatch
-  );
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators(
+        {
+            changeIsDisplayingAnalytics,
+            changeAnalyticsContact
+        },
+        dispatch
+    );
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
-)(ThreadMessage);
+export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(ThreadMessage);

@@ -22,7 +22,6 @@ const S = {
             height: 30px;
             padding: 0px 5px;
 
-
             li {
                 list-style: none;
             }
@@ -32,8 +31,10 @@ const S = {
 
 export default function FilterOptions(props) {
     const [options, handleCheckbox, useSmartOptions, smartOptions] = props.options;
+
     const keyList = useSmartOptions ? smartOptions : options;
     let optionsArray = Object.keys(keyList);
+    useSmartOptions ? optionsArray.shift() : (optionsArray = optionsArray);
     let listItem = optionsArray.map((option, index) => {
         return (
             <div key={index} id={option} onClick={handleCheckbox}>

@@ -14,7 +14,14 @@ import {
     selectHighlightedEmail,
     applyOptionalFilters
 } from "./navUtils";
-import { saveSearch, changeThreadContact, changeIsLoaded, clearSmartSearch } from "../../actions";
+import { saveSearch,
+     changeThreadContact,
+     changeIsLoaded,
+     clearSmartSearch,
+     setIsDisplayingInSnippets,
+     setIsDisplayingDropdown,
+     saveStaticSearch
+} from "../../actions";
 import FuzzySearchBar from "./FuzzySearchBar";
 import SmartSearchBar from "./SmartSearchBar";
 import FilterOptions from "./FilterOptions";
@@ -36,7 +43,6 @@ const S = {
         color: #2f86ff;
         margin: 8px 2vw;
         font-weight: bolder;
-        
     `,
     MidSection: styled.div`
         display: flex;
@@ -49,8 +55,6 @@ const S = {
         }
         // border: solid blue 3px;
         box-sizing: border-box;
-
-        
     `,
     Top: styled.section`
         width: 100%;
@@ -60,9 +64,6 @@ const S = {
         justify-content: space-between;
         // border: solid red 3px;
         box-sizing: border-box;
-
-
-        
     `,
 
     Form: styled.form`
@@ -73,7 +74,6 @@ const S = {
         align-items: center;
         height: 100%;
         box-sizing: border-box;
-        
     `,
 
     Search: styled.div`
@@ -83,7 +83,6 @@ const S = {
         width: 100%;
         height: 100%;
         box-sizing: border-box;
-        
     `,
 
     Input: styled.input`
@@ -96,7 +95,6 @@ const S = {
         box-sizing: border-box;
         padding: 0px 2%;
         border: none;
-        
     `,
     SmartInput: styled.input`
         height: 50px;
@@ -105,7 +103,7 @@ const S = {
         background-color: lightgray;
         color: #2f86ff;
         outline: none;
-        width:100%;
+        width: 100%;
         display: block;
         box-sizing: border-box;
         padding: 0px 2%;
@@ -113,7 +111,6 @@ const S = {
         ::placeholder {
             color: #2f86ff;
         }
-        
     `,
     Magnify: styled.button`
         margin: 2px;
@@ -127,7 +124,6 @@ const S = {
         padding: 0px 20px;
         z-index: 2;
         height: 100%;
-        
     `,
     Button: styled.button`
         height: 100%;
@@ -137,7 +133,6 @@ const S = {
         border-radius: 3px;
         color: gray;
         background-color: white;
-        
 
         :hover {
             cursor: pointer;
@@ -194,14 +189,12 @@ const S = {
         height: 100%;
         // border: solid purple 3px;
         box-sizing: border-box;
-
     `,
     User: styled.div`
         height: 65%;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        
     `,
 
     Avatar: styled.img`
@@ -229,8 +222,6 @@ const Nav = (props) => {
         position: -1 //used to highlight the current search result on up and down arrow key press
     });
     const [options, setOptions] = useState({
-        // fuzzySearch: true,
-        // smartSearch: false,
         exact: false,
         to: false,
         body: false,
@@ -244,8 +235,6 @@ const Nav = (props) => {
         ".org": false
     });
     const [smartOptions, setSmartOptions] = useState({
-        // fuzzySearch: false,
-        // smartSearch: true,
         msg: true,
         from: false,
         subject: false
@@ -283,6 +272,7 @@ const Nav = (props) => {
     }
     useEffect(() => {
         //=============below should rerun search logic
+        console.log("ARE THESE ChANGING?", searchQuery.filters, searchQuery.optionalFilter)
         const emails = props.emails;
         if (searchQuery.optionalFilter.length > 0) {
             applyOptionalFilters([fuzzyFunction, searchQuery, emails, props.saveSearch]);
@@ -310,9 +300,10 @@ const Nav = (props) => {
         const name = e.target.id;
         const keyList = useSmartOptions ? smartOptions : options;
         const value = keyList[name];
-        if (name === "fuzzySearch" || name === "smartSearch") {
-            setUseSmartOptions(!useSmartOptions);
-        } else if (useSmartOptions) {
+        // if (name === "fuzzySearch" || name === "smartSearch") {
+        //     setUseSmartOptions(!useSmartOptions);
+        // } else
+        if (useSmartOptions && name != "msg") {
             // if this thing is being checked true add that value to the string inside of the searchQuery.search
             // if this thing is being checked false, run the clear filters function
             setSmartOptions({
@@ -372,6 +363,7 @@ const Nav = (props) => {
     }, [searchQuery.search]);
     const handleInput = (e) => {
         // console.log(e, "EVENT \n\n\n****************");
+        props.setIsDisplayingDropdown(true)
         e.persist();
         e.preventDefault();
         e.stopPropagation();
@@ -406,12 +398,21 @@ const Nav = (props) => {
         } else if (searchQuery.optionalFilter.length > 0) {
             applyOptionalFilters([fuzzyFunction, searchQuery, emails, props.saveSearch]);
         } else {
+            console.log("SAVE SEARCH IN NAV handleInput")
             props.saveSearch(fuzzyFunction(searchQuery.search, searchQuery.filters, emails));
         }
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        selectHighlightedEmail(searchQuery, setSearchQuery, emailToDisplayInThread);
+        props.saveStaticSearch()
+        console.log("Query position", searchQuery.position)
+        if(searchQuery.position === -1){
+            props.setIsDisplayingInSnippets(true)
+            props.clearSmartSearch()
+        } else {
+            selectHighlightedEmail(searchQuery, setSearchQuery, emailToDisplayInThread);
+        }
+        props.setIsDisplayingDropdown(false)
     };
     const toggleSearchOptions = (e) => {
         e.preventDefault();
@@ -419,7 +420,7 @@ const Nav = (props) => {
         setShowSearchOptions(!showSearchOptions);
     };
     const closeMenu = (event) => senseMenu(event, setshowMenu);
-    const closeSearch = (event) => senseSearchBar(event, searchQuery, setSearchQuery);
+    const closeSearch = (event) => senseSearchBar(props, event, searchQuery, setSearchQuery);
 
     useEffect(() => {
         document.addEventListener("keydown", handleArrowSelect);
@@ -438,7 +439,7 @@ const Nav = (props) => {
             : props.changeIsLoaded(false);
         props.changeThreadContact(emailObj);
     }
-    
+
     return (
         <S.Container>
             <S.Header>Tagger</S.Header>
@@ -467,21 +468,15 @@ const Nav = (props) => {
                     </S.Button>
                 </S.Top>
                 <S.Bottom
-                    heightLeft={
-                        searchQuery.search.length > 0 ||
-                        (props.smartResults.length > 0 && useSmartOptions === true)
-                            ? "330px"
-                            : "0px"
-                    }
+                    heightLeft={props.isDisplayingDropdown ? "330px" : "0px"}
                     boxshadowLeft={
-                        searchQuery.search.length > 0 ? "0px 0px 2px 1px #949494" : "none"
+                        props.isDisplayingDropdown ? "0px 0px 2px 1px #949494" : "none"
                     }
                     heightRight={showSearchOptions ? "initial" : "0px"}
                     boxshadowRight={showSearchOptions ? "0px 0px 2px 1px #949494" : "none"}
                 >
                     <div className="left">
-                        {(props.results.length > 0 && searchQuery.search.length > 0) ||
-                        (props.smartResults.length > 0 && useSmartOptions === true) ? (
+                        {props.results.length > 0 && props.isDisplayingDropdown ? (
                             <S.SearchDropdown
                                 className="searchDropDown"
                                 id="dropDown"
@@ -489,39 +484,24 @@ const Nav = (props) => {
                                     clearArrowHighlight(searchQuery, setSearchQuery);
                                 }}
                             >
-                                {useSmartOptions
-                                    ? props.smartResults.map((eachEmail, i) => {
-                                          return (
-                                              <SearchBarResult
-                                                  key={i}
-                                                  functions={[
-                                                      setShowSearchOptions,
-                                                      props.clearSmartSearch,
-                                                      props.clearSearch,
-                                                      setSearchQuery,
-                                                      searchQuery,
-                                                      emailToDisplayInThread
-                                                  ]}
-                                                  email={eachEmail}
-                                              />
-                                          );
-                                      })
-                                    : searchQuery.results.map((eachEmail, i) => {
-                                          return (
-                                              <SearchBarResult
-                                                  key={i}
-                                                  functions={[
-                                                    setShowSearchOptions,
-                                                    props.clearSmartSearch,
-                                                      props.clearSearch,
-                                                      setSearchQuery,
-                                                      searchQuery,
-                                                      emailToDisplayInThread
-                                                  ]}
-                                                  email={eachEmail}
-                                              />
-                                          );
-                                      })}
+                                {" "}
+                                {searchQuery.results.map((eachEmail, i) => {
+                                    return (
+                                        <SearchBarResult
+                                            key={i}
+                                            functions={[
+                                                setShowSearchOptions,
+                                                props.clearSmartSearch,
+                                                props.clearSearch,
+                                                setSearchQuery,
+                                                searchQuery,
+                                                emailToDisplayInThread,
+                                                props.setIsDisplayingDropdown,
+                                            ]}
+                                            email={eachEmail}
+                                        />
+                                    );
+                                })}
                             </S.SearchDropdown>
                         ) : null}
                     </div>
@@ -534,11 +514,13 @@ const Nav = (props) => {
                     </div>
                 </S.Bottom>
             </S.MidSection>
-            <S.SmartSearchToggle 
-                onClick = {() => {
-                    setUseSmartOptions(!useSmartOptions)
+            <S.SmartSearchToggle
+                onClick={() => {
+                    setUseSmartOptions(!useSmartOptions);
                 }}
-            >Smart Search</S.SmartSearchToggle>
+            >
+                Smart Search
+            </S.SmartSearchToggle>
 
             <S.User>
                 <S.Avatar
@@ -560,7 +542,8 @@ function mapStateToProps({ searchbar, imap, user, inbox }) {
         userPhoto: user.userPhotoUrl,
         threadContactEmailAddress: inbox.threadContactEmailAddress,
         userEmail: user.emailAddress,
-        smartResults: searchbar.smartSearchResults
+        smartResults: searchbar.smartSearchResults,
+        isDisplayingDropdown: searchbar.isDisplayingDropdown
     };
 }
 export default connect(mapStateToProps, {
@@ -569,5 +552,8 @@ export default connect(mapStateToProps, {
     changeThreadContact,
     changeIsLoaded,
     smartSearch,
-    clearSmartSearch
+    clearSmartSearch,
+    setIsDisplayingInSnippets,
+    setIsDisplayingDropdown,
+    saveStaticSearch
 })(Nav);

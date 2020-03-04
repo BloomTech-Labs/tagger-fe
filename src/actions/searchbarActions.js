@@ -10,8 +10,12 @@ console.log("URL", url);
 // =============================================================================
 // S E A R C H  B A R  A C T I O N S  
 export const SET_SEARCH_RESULT = "SET_SEARCH_RESULT";
+export const SET_STATIC_SEARCH_RESULT = "SET_STATIC_SEARCH_RESULT";
 export const CLEAR_SEARCH_RESULT = "CLEAR_SEARCH_RESULT";
 export const CLEAR_SMART_SEARCH = "CLEAR_SMART_SEARCH"
+export const SET_IS_DISPLAYING_IN_SNIPPETS = "SET_IS_DISPLAYING_IN_SNIPPETS"
+export const SET_IS_DISPLAYING_DROPDOWN = "SET_IS_DISPLAYING_DROPDOWN"
+
 
 export const saveSearch = (results) => (dispatch) => {
     dispatch({
@@ -19,6 +23,13 @@ export const saveSearch = (results) => (dispatch) => {
         payload: results
     });
 };
+
+export const saveStaticSearch = (results) => (dispatch) => {
+    dispatch({
+        type: SET_STATIC_SEARCH_RESULT
+    });
+};
+
 
 export const clearSearch = () => (dispatch) => {
     dispatch({
@@ -79,7 +90,7 @@ export const smartSearch = (userEmailAddress, searchParams) => (dispatch) => {
             id_token: sessionStorage.getItem("id_token")
         })
         .then((res) => {
-            console.log("Smart search res", res);
+            // console.log("Smart search res", res);
             dispatch({
                 type: SMART_SEARCH_SUCCESS,
                 payload: res.data
@@ -87,9 +98,24 @@ export const smartSearch = (userEmailAddress, searchParams) => (dispatch) => {
             return true;
         })
         .catch((err) => {
-            console.log("Smart search err", err);
+            // console.log("Smart search err", err);
             dispatch({ type: SMART_SEARCH_FAILURE, payload: err });
             return false;
         });
 };
-
+// =============================================================================
+// R E S U L T  D I S P L A Y  S W I T C H E S
+export const setIsDisplayingInSnippets = (bool) => dispatch => {
+    // Set whether search results from the fuzzy search are displayed in Snippets
+    dispatch({
+        type: SET_IS_DISPLAYING_IN_SNIPPETS,
+        payload: bool
+    })
+};
+export const setIsDisplayingDropdown = (bool) => dispatch => {
+    // Set whether search results from the fuzzy search are displayed in Snippets
+    dispatch({
+        type: SET_IS_DISPLAYING_DROPDOWN,
+        payload: bool
+    })
+};

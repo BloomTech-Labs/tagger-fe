@@ -6,13 +6,12 @@ import { connect } from "react-redux";
 import Emails from "./Emails";
 import {
   getUserEmailAndId,
-  // getEmails,
   changeIsLoggedIn,
   updateEmails,
   incrementCounter,
   getContacts,
   trainModel,
-  getBoxes
+  setIsDisplayingDropdown
 } from "../../actions";
 import Sidebar from "./Sidebar";
 
@@ -76,12 +75,17 @@ const Inbox = props => {
   return (
     <S.Container>
       <Sidebar token={token} />
-      <Emails token={token} />
+      <Emails
+        onClick={() => {
+          props.setIsDisplayingDropdown(false);
+        }}
+        token={token}
+      />
     </S.Container>
   );
 };
 
-const mapStateToProps = ({ imap, user, contacts, inbox,searchbar }) => ({
+const mapStateToProps = ({ imap, user, contacts, inbox, searchbar }) => ({
   emailAddress: user.emailAddress,
   user_id: user.user_id,
   userPhotoUrl: user.userPhotoUrl,
@@ -102,13 +106,12 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getUserEmailAndId,
-      // getEmails,
       changeIsLoggedIn,
       getContacts,
       updateEmails,
       incrementCounter,
       trainModel,
-      getBoxes
+      setIsDisplayingDropdown
     },
     dispatch
   );
