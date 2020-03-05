@@ -8,7 +8,7 @@ import {
   faInbox,
   faFile,
   faPaperPlane,
-  faTags,
+  faFolder
 } from "@fortawesome/free-solid-svg-icons";
 import {
   setSnippetFilter,
@@ -179,9 +179,9 @@ const Sidebar = props => {
       <ul>
         <li>
           <div>
-            <S.FontAwesomeIcon icon={faTags} />
+            <S.FontAwesomeIcon icon={faFolder} />
           </div>
-          Tags
+          Folders
         </li>
       </ul>
       <ul>
