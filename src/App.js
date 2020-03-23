@@ -39,9 +39,9 @@ function App(props) {
             {props.isLoggedIn ? <Nav /> : null}
             <Switch>
                 {/* TO SAVE TIME IN DEVELOPMENT, UNCOMMENT TO OVERRIDE "/" */}
-                <Route exact path="/" component={Inbox}></Route>
+                {/* <Route exact path="/" component={Inbox}></Route> */}
 
-                {/* <Route exact path="/" component={LandingPage}></Route> */}
+                <Route exact path="/" component={LandingPage}></Route>
                 <PrivateRoute path="/inbox" component={Inbox} />
                 {/* <Route path="/inbox" component={Inbox}></Route> */}
             </Switch>
