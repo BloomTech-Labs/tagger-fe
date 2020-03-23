@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
-import "./App.css";
+import "./App.scss";
 import styled from "styled-components";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
@@ -39,9 +39,9 @@ function App(props) {
             {props.isLoggedIn ? <Nav /> : null}
             <Switch>
                 {/* TO SAVE TIME IN DEVELOPMENT, UNCOMMENT TO OVERRIDE "/" */}
-                {/* <Route exact path="/" component={Inbox}></Route> */}
+                <Route exact path="/" component={Inbox}></Route>
 
-                <Route exact path="/" component={LandingPage}></Route>
+                {/* <Route exact path="/" component={LandingPage}></Route> */}
                 <PrivateRoute path="/inbox" component={Inbox} />
                 {/* <Route path="/inbox" component={Inbox}></Route> */}
             </Switch>
