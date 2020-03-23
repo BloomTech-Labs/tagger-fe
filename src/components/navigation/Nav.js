@@ -28,16 +28,6 @@ import FilterOptions from "./FilterOptions";
 import Menu from "./Menu";
 import avatarPlaceholder from "../../images/avatarPlaceholder.png";
 const S = {
-    Container: styled.div`
-        height: 64px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        box-sizing: border-box;
-        font-size: 0.9rem;
-        border-bottom: solid #e0e0e0 1px;
-    `,
     Header: styled.h1`
         font-size: 1.8rem;
         color: #2f86ff;
@@ -441,7 +431,7 @@ const Nav = (props) => {
     }
 
     return (
-        <S.Container>
+        <div className="top row">
             <S.Header>Tagger</S.Header>
             <S.MidSection>
                 <S.Top>
@@ -532,7 +522,7 @@ const Nav = (props) => {
                 />
                 <Menu showMenu={showMenu} setshowMenu={setshowMenu} />
             </S.User>
-        </S.Container>
+        </div>
     );
 };
 function mapStateToProps({ searchbar, imap, user, inbox }) {

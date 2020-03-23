@@ -16,12 +16,12 @@ import {
 } from "../../actions";
 import Sidebar from "./Sidebar";
 
-const S = {
-  Container: styled.div`
-    display: flex;
-    height: calc(100vh - 64px);
-  `
-};
+// const S = {
+//   Container: styled.div`
+//     display: flex;
+//     height: calc(100vh - 64px);
+//   `
+// };
 
 const Inbox = props => {
   const [token, setToken] = useState("");
@@ -74,7 +74,7 @@ const Inbox = props => {
   }, [props.token, props.areBoxesRetrieved]);
 
   return (
-    <S.Container>
+    <main>
       <Sidebar token={token} />
       <Emails
         onClick={() => {
@@ -82,7 +82,7 @@ const Inbox = props => {
         }}
         token={token}
       />
-    </S.Container>
+    </main>
   );
 };
 

@@ -143,7 +143,7 @@ const Sidebar = props => {
   };
 
   return (
-    <S.Container>
+    <div className="sidebar">
       {/* clicking the "+ compose" button toggles the compose module to display */}
       {props.isComposing ? (
         <S.ModalContainer>
@@ -193,7 +193,7 @@ const Sidebar = props => {
           );
         })}
       </ul>
-    </S.Container>
+    </div>
   );
 };
 

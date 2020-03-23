@@ -26,12 +26,14 @@ const Thread = (props) => {
     const showThread = props.emails.filter((email) => email.gmThreadID === props.thread.gmThreadID);
 
     return (
-        <S.Container>
+        <>
+        {/* <S.Container> */}
             {/* this maps over the showThread array to display all emails in a thread */}
             {showThread.map((email) => {
                 return <ThreadMessage token = {props.token}key={Math.random()} email={email} />;
             })}
-        </S.Container>
+        {/* </S.Container> */}
+        </>
     );
 };
 

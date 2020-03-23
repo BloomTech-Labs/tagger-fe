@@ -1,9 +1,11 @@
 @import './styles/index.scss';
-.App {
-    text-align: center;
+body {
+    // text-align: center;
     box-sizing: border-box;
     font-size: 62.5%;
     font-family: "Roboto", sans-serif;
+    background-color: $bg;
+    overflow: hidden;
 }
 
 // .App-logo {

@@ -8,14 +8,14 @@ import { changeIsDisplayingThread } from "../../actions";
 import Snippet from "./Snippet.js";
 
 // This is the styling for the snippets Component
-const S = {
-    Container: styled.div`
-        width: ${(props) => props.widthPercentage}%;
-        height: calc(100vh-64px);
-        overflow-y: auto;
-        padding: 0.5%;
-    `
-};
+// const S = {
+//     Container: styled.div`
+//         width: ${(props) => props.widthPercentage}%;
+//         height: calc(100vh-64px);
+//         overflow-y: auto;
+//         padding: 0.5%;
+//     `
+// };
 
 const Snippets = (props) => {
     const toggleIsDisplayingThread = () => {
@@ -45,13 +45,15 @@ const Snippets = (props) => {
     }, [props.smartSearchResults]);
 
     return (
-        <S.Container widthPercentage={props.isDisplayingThread ? 25 : 100}>
+        <>
+        {/* <S.Container widthPercentage={props.isDisplayingThread ? 25 : 100}> */}
             {filteredEmail.map((email) => {
                 return (
                     <Snippet key={email.message_id} email={email} /> // emails in redux are currently numbers 1-10 in an array
                 );
             })}
-        </S.Container>
+        {/* </S.Container> */}
+        </>
     );
 };
 
