@@ -155,12 +155,14 @@ function showContact() {
     }
 }
   return (
-    <S.Container
+      <>
+    {/* <S.Container
       heightInPx={
         props.isDisplayingThread ? (props.isDisplayingAnalytics ? 100 : 80) : 75
       }
       onClick={() => setThreadContact()}
-    >
+    > */}
+    <div className="thread" onClick={() => setThreadContact()}>
       <S.SnipHeader>
           {/* the onClick in here sets the analyticsContact to either who sent the email or who it was sent to depending on the snippetsFilter */}
         <S.Avatar
@@ -177,7 +179,9 @@ function showContact() {
       </S.SnipHeader>
       <S.Subject>{props.email.subject}</S.Subject>
       <S.Message>{props.email.email_body_text}</S.Message>
-    </S.Container>
+      </div>
+    {/* </S.Container> */}
+    </>
   );
 };
 

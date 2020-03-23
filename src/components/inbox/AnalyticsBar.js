@@ -4,28 +4,31 @@ import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import { changeIsDisplayingAnalytics } from "../../actions";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 // Styling for the analytics bar
 const S = {
-  Container: styled.div`
-    width: 30%;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  // Container: styled.div`
+  //   width: 30%;
+  //   height: 100%;
+  //   box-sizing: border-box;
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
 
-    button {
-      align-self: flex-end;
-    }
+  //   button {
+  //     align-self: flex-end;
+  //   }
 
-    hr {
-      width: 90%;
-    }
-  `,
-  Avatar: styled.img`
-    width: 60%;
-    border-radius: 50%;
-  `,
+  //   hr {
+  //     width: 90%;
+  //   }
+  // `,
+  // Avatar: styled.img`
+  //   width: 30%;
+  //   border-radius: 50%;
+  // `,
   Para: styled.p`
     line-height: 1px;
   `,
@@ -132,16 +135,18 @@ const AnalyticsBar = props => {
   const sentWidth = (totalSent.length / totalEmails) * 100 + "%";
 
   return (
-    <S.Container>
-      <button onClick={() => closeAnalytics()}>X</button>
+    <div className="analytics-bar">
+      <FontAwesomeIcon icon={faTimesCircle} className="analytics-bar-close" onClick={() => closeAnalytics()}/>
+      {/* <button onClick={() => closeAnalytics()}>X</button> */}
       {/*If the contact has a cover photo display it, if not display the placeholder image*/}
-      <S.Avatar
+      {/* <S.Avatar
         src={
           props.analyticsContact.coverPhoto
             ? props.analyticsContact.coverPhoto
             : "https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"
         }
-      />
+      /> */}
+      <FontAwesomeIcon icon={faUserCircle} className="analytics-bar-avatar"/>
       {/* Maps over the "to" array from the email object to display everyone it was sent to */}
       <h2>{props.analyticsContact.name}</h2>
       {props.analyticsContact.emailAddress.map(email => {
@@ -172,7 +177,7 @@ const AnalyticsBar = props => {
         <span>Last interaction:</span>
         <span>2 hours ago</span>
       </S.LastInteraction> */}
-    </S.Container>
+    </div>
   );
 };
 

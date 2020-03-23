@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 
-
 import Snippets from "./Snippets";
 import Thread from "./Thread";
 import AnalyticsBar from "./AnalyticsBar";
@@ -24,11 +23,9 @@ const Emails = props => {
       <div className={props.isDisplayingThread ? 'email-list-340' : 'email-list'}>
         <Snippets />
       </div>
-      <div className="email-body">
+      <div className={props.isDisplayingThread && 'email-body'} id={props.isDisplayingAnalytics && 'email-body-analytics'}>
         {props.isDisplayingThread ? <Thread token={props.token}/> : null}
-        {/* {props.isDisplayingAnalytics && props.isDisplayingThread ? (
-          <AnalyticsBar />
-        ) : null} */}
+        {(props.isDisplayingAnalytics && props.isDisplayingThread) && <AnalyticsBar />}
       </div>
     </>
   );

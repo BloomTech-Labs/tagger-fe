@@ -1,8 +1,9 @@
 @import './styles/index.scss';
-body {
-    // text-align: center;
+* {
     box-sizing: border-box;
-    font-size: 62.5%;
+}
+body {
+    font-size: 10px;
     font-family: "Roboto", sans-serif;
     background-color: $bg;
     overflow: hidden;

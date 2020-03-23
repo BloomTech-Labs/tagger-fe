@@ -57,8 +57,49 @@ main {
 .email-body {
     position: absolute;
     left: 600px;
-    width: calc(100vw - 560px);
+    width: calc(100vw - 600px);
     top:64px;
+    background-color: $white;
+    height: calc(100vh - 64px);
+    margin-top: 0.3rem;
+}
+
+#email-body-analytics {
+    width: calc(100vw - 600px - 260px - 0.3rem)
+}
+
+.thread {
+    margin:0.3rem;
+    background-color: $white;
+    height: 5rem;
+    padding:0.5rem;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $hover;
+    }
+}
+
+.analytics-bar {
+    position: fixed;
+    right:0px;
+    top:64px;
+    height: calc(100vh - 64px);
+    width: 260px;
+    background-color: $white;
+    margin-top: 0.3rem;
+    padding:0.5rem;
+}
+
+.analytics-bar-close {
+    font-size: 1rem;
+    color: $grey;
+}
+
+.analytics-bar-avatar {
+    font-size: 5rem;
+    color:$accentBlue;
 }
 
 
