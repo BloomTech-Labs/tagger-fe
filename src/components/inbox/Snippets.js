@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
+import SimpleBar from 'simplebar-react';
+import 'simplebar/dist/simplebar.min.css';
 
 import { changeIsDisplayingThread } from "../../actions";
 import Snippet from "./Snippet.js";
@@ -45,7 +47,7 @@ const Snippets = (props) => {
     }, [props.smartSearchResults]);
 
     return (
-        <>
+        <SimpleBar forceVisible="y" autoHide={true} style={{height:'100%'}}>
         {/* <S.Container widthPercentage={props.isDisplayingThread ? 25 : 100}> */}
             {filteredEmail.map((email) => {
                 return (
@@ -53,7 +55,7 @@ const Snippets = (props) => {
                 );
             })}
         {/* </S.Container> */}
-        </>
+        </SimpleBar>
     );
 };
 
