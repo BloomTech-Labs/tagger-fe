@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
@@ -11,97 +10,9 @@ import {
     changeIsDisplayingAnalytics
 } from "../../actions";
 import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
 const moment = require("moment");
-// styling for the Snippet Component
-const S = {
-    Container: styled.div`
-        width: 100%;
-        height: ${(props) => props.heightInPx}px;
-        box-sizing: border-box;
-        font-size: 0.8rem;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 3px 1%;
-        border-bottom: solid #e0e0e0 1px;
-        :hover {
-            background-color: #80808038;
-            cursor: pointer;
-        }
-    `,
-    SnipHeader: styled.div`
-        width: 100%;
-        // border: solid green 1px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        // background-color: yellow;
-
-        h3 {
-            margin: 0px;
-            overflow: hidden;
-            white-space: nowrap;
-            word-break: break-word;
-            text-align: left;
-            text-overflow: ellipsis;
-        }
-        div {
-            width: calc(100% - 30px);
-            box-sizing: border-box;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #00000000;
-
-            :hover {
-                color: #2196f3;
-                font-weight: 900;
-                border-bottom: 1px solid #00000033;
-                text-shadow: 0px 1px #2196f387;
-                cursor: pointer;
-            }
-            :active {
-                background: #9893613b;
-                -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
-                -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
-                box-shadow: inset 0px 0px 5px #c1c1c1;
-                outline: none;
-                cursor: pointer;
-            }
-        }
-    `,
-    Avatar: styled.img`
-        width: 30px;
-        height: 30px;
-        background-color: black;
-        border-radius: 15px;
-        margin: 0px;
-        margin-right: 1%;
-        :hover {
-            cursor: pointer;
-        }
-    `,
-    Subject: styled.div`
-        font-weight: 700;
-        width: 100%;
-        text-align: left;
-        overflow: hidden;
-        white-space: nowrap;
-        word-break: break-word;
-        text-align: left;
-        text-overflow: ellipsis;
-    `,
-    Message: styled.div`
-        width: 100%;
-        text-align: left;
-        overflow: hidden;
-        white-space: nowrap;
-        word-break: break-word;
-        text-align: left;
-        text-overflow: ellipsis;
-    `
-};
 
 const Snippet = (props) => {
     // this function sets the Thread Contact and sets the changeIsLoaded to true if the email body has no HTML so the spinner doesn't load
@@ -156,31 +67,27 @@ function showContact() {
 }
   return (
       <>
-    {/* <S.Container
-      heightInPx={
-        props.isDisplayingThread ? (props.isDisplayingAnalytics ? 100 : 80) : 75
-      }
-      onClick={() => setThreadContact()}
-    > */}
-    <div className="thread" onClick={() => setThreadContact()}>
-      <S.SnipHeader>
-          {/* the onClick in here sets the analyticsContact to either who sent the email or who it was sent to depending on the snippetsFilter */}
-        <S.Avatar
-        src="https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"
-          onClick={() => setContact()}
-        />
-        <div>
-        {/* This ternary checks whether to display who its from or who it was sent to depending on what snippetsFilter is set to */}
-          <h3 onClick={() =>setContact()} >
-           {showContact()}
-          </h3>
-          <h3>{showDate(props.email.date)}</h3>
+    <div className="snippet" onClick={() => setThreadContact()}>
+        <div className="snippet-header row">
+            {/* the onClick in here sets the analyticsContact to either who sent the email or who it was sent to depending on the snippetsFilter */}
+            <FontAwesomeIcon icon={faUserCircle} onClick={() => setContact()} />
+            <div className="snippet-meta row">
+                {/* This ternary checks whether to display who its from or who it was sent to depending on what snippetsFilter is set to */}
+                <h3 onClick={() =>setContact()} >
+                    {showContact()}
+                </h3>
+                <time>
+                    {showDate(props.email.date)}
+                </time>
+            </div>
         </div>
-      </S.SnipHeader>
-      <S.Subject>{props.email.subject}</S.Subject>
-      <S.Message>{props.email.email_body_text}</S.Message>
-      </div>
-    {/* </S.Container> */}
+        <p className="snippet-subject">
+            {props.email.subject}
+        </p>
+        <p className="snippet-message">
+            {props.email.email_body_text}
+        </p>
+    </div>
     </>
   );
 };

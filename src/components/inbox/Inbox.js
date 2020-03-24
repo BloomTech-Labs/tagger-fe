@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
@@ -15,16 +14,11 @@ import {
   getBoxes
 } from "../../actions";
 import Sidebar from "./Sidebar";
-
-// const S = {
-//   Container: styled.div`
-//     display: flex;
-//     height: calc(100vh - 64px);
-//   `
-// };
+import Compose from '../compose/Compose';
 
 const Inbox = props => {
   const [token, setToken] = useState("");
+  const [isCompose, setIsCompose] = useState(false);
 
   useEffect(() => {
     const url = props.history.location.hash;
@@ -74,8 +68,9 @@ const Inbox = props => {
   }, [props.token, props.areBoxesRetrieved]);
 
   return (
+    <>
     <main>
-      <Sidebar token={token} />
+      <Sidebar token={token} setIsCompose={setIsCompose} />
       <Emails
         onClick={() => {
           props.setIsDisplayingDropdown(false);
@@ -83,6 +78,8 @@ const Inbox = props => {
         token={token}
       />
     </main>
+    {isCompose && <Compose token={props.token} setIsCompose={setIsCompose} />}
+    </>
   );
 };
 

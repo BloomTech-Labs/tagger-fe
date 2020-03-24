@@ -9,26 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 // Styling for the analytics bar
 const S = {
-  // Container: styled.div`
-  //   width: 30%;
-  //   height: 100%;
-  //   box-sizing: border-box;
-  //   display: flex;
-  //   flex-direction: column;
-  //   align-items: center;
-
-  //   button {
-  //     align-self: flex-end;
-  //   }
-
-  //   hr {
-  //     width: 90%;
-  //   }
-  // `,
-  // Avatar: styled.img`
-  //   width: 30%;
-  //   border-radius: 50%;
-  // `,
+  
   Para: styled.p`
     line-height: 1px;
   `,

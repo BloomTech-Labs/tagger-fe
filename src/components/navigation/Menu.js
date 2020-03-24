@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 import styled from "styled-components";
 
@@ -59,11 +61,14 @@ export default function Menu(props) {
 
     return (
         <S.Menu className="menu" transform={props.showMenu ? "translateX(-200px)" : ""}>
-            <ul>
+            {/* <ul>
                 <li onClick={logout}>
                     <i className="fas fa-sign-out-alt"></i> Logout
                 </li>
-            </ul>
+            </ul> */}
+            <span className="logout">
+                <FontAwesomeIcon icon={faSignOutAlt} onClick={logout}/>Logout
+            </span>
         </S.Menu>
     );
 }

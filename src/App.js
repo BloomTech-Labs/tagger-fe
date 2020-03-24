@@ -1,25 +1,15 @@
 import React, { useEffect } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import "./App.scss";
-import styled from "styled-components";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
-import { createBrowserHistory } from "history";
+//import { createBrowserHistory } from "history";
 import ReactGA from "react-ga";
 
 import LandingPage from "./components/landing/LandingPage";
 import Inbox from "./components/inbox/Inbox";
 import Nav from "./components/navigation/Nav";
 import PrivateRoute from "./utils/PrivateRoute";
-// const S = {
-//     Container: styled.div`
-//         // width: calc(100vw - (100vw - 100%));
-//         width: 100%;
-//         margin: 0px;
-//         height: calc(100vh - (100vh - 100%));
-//         font-size: 1.1rem;
-//     `
-// };
 
 ReactGA.event({
     category: "SignIn",

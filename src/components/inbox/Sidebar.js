@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInbox,
   faFile,
-  faPaperPlane,
-  faTags,
+  faEnvelope,
+  faTags
 } from "@fortawesome/free-solid-svg-icons";
 import {
   setSnippetFilter,
@@ -37,11 +37,6 @@ const S = {
     flex-direction: column;
     overflow-y: auto;
     border-right: solid #e0e0e0 1px;
-
-    hr {
-      width: 90%;
-      margin: 15% auto;
-    }
 
     ul {
       padding: 0px;
@@ -122,18 +117,15 @@ const S = {
       outline: none;
       cursor: pointer;
     }
-  `,
-
-  FontAwesomeIcon: styled(props => <FontAwesomeIcon {...props} />)`
-    margin-right: 5px;
-    color: grey;
   `
 };
 
 const Sidebar = props => {
-  const toggleIsComposing = e => {
-    e.preventDefault();
+
+
+  const toggleIsComposing = () => {
     props.changeIsComposing(!props.isComposing);
+    props.setIsCompose(true);
   };
 
   const setFilter = filterName => {
@@ -143,47 +135,26 @@ const Sidebar = props => {
   };
 
   return (
-    <div className="sidebar">
+    <div className="sidebar col">
       {/* clicking the "+ compose" button toggles the compose module to display */}
-      {props.isComposing ? (
+      {/* {props.isComposing && (
         <S.ModalContainer>
           <ComposeComponent token={props.token} />
         </S.ModalContainer>
-      ) : null}
-      <S.Button onClick={toggleIsComposing}>+ Compose</S.Button>
-
-      <ul>
+      )} */}
+      {/* <S.Button onClick={toggleIsComposing}>+ Compose</S.Button> */}
+      <input type="button" className="compose btn" onClick={toggleIsComposing} value="Compose" />
+      <nav>
         {/* this onClick sets the snippets to filter email by received */}
-        <li onClick={() => setFilter("\\Inbox")}>
-          <div>
-            <S.FontAwesomeIcon icon={faInbox} />
-          </div>
-          <span>Inbox</span>
-        </li>
+        <li onClick={() => setFilter("\\Inbox")}><FontAwesomeIcon icon={faInbox} />Inbox</li>
         {/* this onClick sets the snippets to filter email by sent */}
-        <li onClick={() => setFilter("\\Sent")}>
-          <div>
-            <S.FontAwesomeIcon icon={faPaperPlane} />
-          </div>
-          <span>Sent</span>
-        </li>
-        <li>
-          <div>
-            <S.FontAwesomeIcon icon={faFile} />
-          </div>
-          {/* this onClick sets the snippets to filter email by drafts */}
-          <span onClick={() => setFilter("\\Draft")}>Drafts</span>
-        </li>
-      </ul>
-      <hr />
-      <ul>
-        <li>
-          <div>
-            <S.FontAwesomeIcon icon={faTags} />
-          </div>
-          Tags
-        </li>
-      </ul>
+        <li onClick={() => setFilter("\\Sent")}><FontAwesomeIcon icon={faEnvelope} />Sent</li>
+        {/* this onClick sets the snippets to filter email by drafts */}
+        <li onClick={() => setFilter("\\Draft")}><FontAwesomeIcon icon={faFile} />Draft</li>
+      </nav>
+      <div className="tags">
+        <li><FontAwesomeIcon icon={faTags} />Tags</li>
+      </div>
       <ul>
         {props.boxes.map((box, i) => {
           return (

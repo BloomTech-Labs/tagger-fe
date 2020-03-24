@@ -1,22 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import ThreadMessage from "./ThreadMessage";
 import { changeIsDisplayingAnalytics } from "../../actions";
-
-const S = {
-    Container: styled.div`
-        width: 75%; //
-        height: 100%;
-        box-sizing: border-box;
-        overflow-y: auto;
-
-        padding: 0% 0.5%;
-        background-color: #ebebeb;
-    `
-};
 
 const Thread = (props) => {
     const toggleIsDisplayingAnalytics = () => {
@@ -27,12 +14,10 @@ const Thread = (props) => {
 
     return (
         <>
-        {/* <S.Container> */}
             {/* this maps over the showThread array to display all emails in a thread */}
             {showThread.map((email) => {
                 return <ThreadMessage token = {props.token}key={Math.random()} email={email} />;
             })}
-        {/* </S.Container> */}
         </>
     );
 };

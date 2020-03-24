@@ -1,0 +1,67 @@
+.thread-window {
+    background-color: $white;
+    padding:0.6rem;
+    margin-right: 0.3rem;
+
+
+    .thread-head {
+        
+        width: 100%;
+        justify-content: space-between;
+
+        .thread-avatar {
+            margin-right: 0.5rem;
+            font-size: 1.6rem;
+            color:$accentBlue;
+        }
+    }
+
+    .thread-actions {
+        margin-right: 2rem;
+
+        .thread-similar {
+            background-color: $accentBlue;
+            padding: 4px 12px;
+            border: 1px solid $accentBlue;
+            border-radius: 3px;
+            font-size: .7rem;
+            cursor: pointer;
+            margin-right: 2rem;
+            color:$white;
+
+            &:hover {
+                color:$white;
+                background-color: $darkGrey;
+                border:1px solid $darkGrey;
+            }
+        }
+
+        svg {
+            font-size: 1rem;
+            color: $darkGrey;
+            margin:0 0.6rem;
+            align-self: center;
+            cursor: pointer;
+        }
+    }
+
+    .spinner {
+        margin: 0 auto;
+        border: 2px solid #f3f3f3; /* Light grey */
+        border-top: 2px solid #2f86ff; /* Blue */
+        border-bottom: 2px solid #2f86ff; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    }
+}
+
