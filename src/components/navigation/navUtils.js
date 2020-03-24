@@ -136,6 +136,7 @@ export function addSearchTag(str, searchQuery, options, setOpt) {
         keyFilter.push("body");
         setOpt({ ...options, ["body"]: true });
     }
+
     let results = {
         string: string,
         filter: keyFilter,
@@ -239,18 +240,23 @@ export function arrowUp(searchQuery, setSearchQuery, dropDownDiv) {
 }
 
 export function senseMenu(event, setshowMenu) {
-    if (event.target.className.includes("menu")) {
-        return null;
-    } else if (event.target.className.includes("menu")) {
-        return null;
-    } else if (event.target.offsetParent.className.includes("menu")) {
-        return null;
-    } else {
-        setshowMenu(false);
+    try {
+        if (event.target.className.includes("menu")) {
+            return null;
+        } else if (event.target.className.includes("menu")) {
+            return null;
+        } else if (event.target.offsetParent.className.includes("menu")) {
+            return null;
+        } else {
+            setshowMenu(false);
+        }
+    } catch (e) {
+        console.log('senseMenu ' + e)
     }
 }
 export function senseSearchBar(props, event, searchQuery, setSearchQuery) {
     console.log(event, "\n\n mousedown for sense searchbar \n\n");
+    try {
     if (
         event.target.className.includes("filter") ||
         event.target.parentNode.parentNode.parentNode.className.includes("filter") ||
@@ -268,6 +274,9 @@ export function senseSearchBar(props, event, searchQuery, setSearchQuery) {
             // search: "",
             position: -1
         });
+    }
+    } catch (e) {
+        console.log('senseSearchBar ' + e)
     }
 }
 // function senseSearchBarFunc(props, event, searchQuery, setSearchQuery) {
