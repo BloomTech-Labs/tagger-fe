@@ -1,20 +1,21 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState, useEffect }from "react";
+// import SimpleBar from "simplebar-react";
+import "simplebar/dist/simplebar.min.css";
+// import {faUserCirle, faReply, faReplyall, faShareSquare, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawsome";
+// import Reply from './Reply';
+// import Replyall from './ReplyAll';
 
-const S = {
-    Form: styled.form`
-        margin-top: 10px;
-        width: 100px;
-        height: 40px;
-    `
-};
 export default function MessageType(props) {
+    const [reply, setReply ] = useState();
+    const [forward, setForward] = useState();
+
     function selectResponseType(e) {
         props.setResponseType(e.target.value);
         // alert(props.responseType);
     }
     return (
-        <S.Form title="Type of Response">
+        <form title="Type of Response">
             <select
                 value={props.responseType}
                 onChange={selectResponseType}
@@ -25,6 +26,6 @@ export default function MessageType(props) {
                 <option value="Reply-All">Reply All</option>
                 <option value="Forward">Forward</option>
             </select>
-        </S.Form>
+        </form>
     );
 }

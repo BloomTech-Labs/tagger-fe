@@ -1,0 +1,63 @@
+.snippet {
+    margin:0.3rem;
+    background-color: $white;
+    height: 5rem;
+    padding:0.6rem;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $hover;
+    }
+
+    .snippet-header {
+        width: 100%;
+        height: 30px;
+        align-items: center;
+
+        svg {
+            font-size: 1.5rem;
+            color:$accentBlue;
+            margin-right: 0.5rem;
+        }
+
+        .snippet-meta {
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        h3 {
+            overflow: hidden;
+            white-space: nowrap;
+            word-break: break-word;
+            text-align: left;
+            text-overflow: ellipsis;
+        }
+
+        time {
+            font-size: .8rem;
+            font-weight: bold;
+        }
+
+    }
+
+    .snippet-subject {
+        margin-left: 2rem;
+        font-size: 0.8rem;
+        font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .snippet-message {
+        margin-left: 2rem;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        word-break: break-word;
+        text-overflow: ellipsis;
+        font-size: 0.8rem;
+    }
+}

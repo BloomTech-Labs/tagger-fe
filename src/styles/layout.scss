@@ -1,0 +1,206 @@
+/* Desktop First */
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.top {
+    height: 64px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $border;
+    font-size: 0.9rem;
+    background-color: $white;
+    position: fixed;
+    top:0;
+    width: 100vw;
+    z-index: 10;
+    padding:0 2rem;
+}
+
+main {
+    height: calc(100vh - 64px);
+    display: flex;
+}
+
+.sidebar {
+    position: fixed;
+    left:0;
+    top:64px;
+    width: 260px;
+    height: calc(100vh - 64px);
+    border-right: 1px solid $border;
+    background-color: $bg-light;
+
+    nav {
+        padding: 0.5rem 1.2rem;
+        border-bottom: 1px solid $border;
+        border-top: 1px solid $border;
+    
+        li {
+            color: $darkGrey;
+            list-style: none;
+            margin: 1rem 0;
+            cursor: pointer;
+        }
+    }
+
+    .tags {
+        padding: 0.5rem 1.2rem;
+
+        li {
+            color: $darkGrey;
+            list-style: none;
+            margin: 1rem 0;
+            cursor: pointer;
+        }
+    }
+}
+
+
+
+.email-list {
+    position: absolute;
+    left:260px;
+    top:64px;
+    width: calc(100vw - 260px);
+    height: 100%;
+}
+
+.email-list-min {
+    position: absolute;
+    left:260px;
+    top:64px;
+    width: 340px;
+    height: 100%;
+}
+
+.email-body {
+    position: absolute;
+    left: 600px;
+    width: calc(100vw - 600px);
+    top:64px;
+    background-color: $white;
+    height: calc(100vh - 64px);
+    margin-top: 0.3rem;
+}
+
+#email-body-analytics {
+    width: calc(100vw - 600px - 260px - 0.3rem)
+}
+
+
+
+.analytics-bar {
+    position: fixed;
+    right:0px;
+    top:64px;
+    height: calc(100vh - 64px);
+    width: 260px;
+    background-color: $white;
+    margin-top: 0.3rem;
+    padding:0.5rem;
+}
+
+.analytics-bar-close {
+    font-size: 1rem;
+    color: $grey;
+}
+
+.analytics-bar-avatar {
+    font-size: 5rem;
+    color:$accentBlue;
+}
+
+.logout {
+    color: $darkGrey;
+    cursor: pointer;
+
+    &:hover {
+        color: $accentBlue;
+    }
+}
+
+/* Yannick */
+form {
+    margin-top: 10px;
+    width: 100px;
+    height: 40px;
+}
+
+.end {
+    align-self: flex-end;
+    margin-right: 0rem;
+    margin-left: 1rem;
+  }
+
+/* Tablet */
+$breakpoint-tablet: 1024px;
+@media (max-width: $breakpoint-tablet) {
+    .sidebar {
+        visibility: hidden;
+        position: fixed;
+        left:0;
+        top:64px;
+        width: 260px;
+        height: calc(100vh - 64px);    
+    }
+
+    .email-list {
+        position: absolute;
+        left:0;
+        top:64px;
+        width: 100vw;
+        height: 100%;
+    }
+    
+    .email-list-min {
+        position: absolute;
+        left:0;
+        top:64px;
+        width: 340px;
+        height: 100%;
+    }
+    
+    .email-body {
+        position: absolute;
+        left: 340px;
+        width: calc(100vw - 340px);
+        top:64px;
+        background-color: $white;
+        height: calc(100vh - 64px);
+        margin-top: 0.3rem;
+    }
+    
+}
+
+
+/* Mobile */
+$breakpoint-mobile: 480px;
+@media (max-width: $breakpoint-mobile) {
+  
+    .email-list-min {
+        display: hidden;
+        position: absolute;
+        left:260px;
+        top:64px;
+        width: 340px;
+        height: 100%;
+    }
+
+    .email-body {
+        position: absolute;
+        left: 0;
+        width: 100vw;
+        top:64px;
+        background-color: $white;
+        height: calc(100vh - 64px);
+        margin-top: 0.3rem;
+    }
+}

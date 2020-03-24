@@ -27,23 +27,9 @@ import SmartSearchBar from "./SmartSearchBar";
 import FilterOptions from "./FilterOptions";
 import Menu from "./Menu";
 import avatarPlaceholder from "../../images/avatarPlaceholder.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 const S = {
-    Container: styled.div`
-        height: 64px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        box-sizing: border-box;
-        font-size: 0.9rem;
-        border-bottom: solid #e0e0e0 1px;
-    `,
-    Header: styled.h1`
-        font-size: 1.8rem;
-        color: #2f86ff;
-        margin: 8px 2vw;
-        font-weight: bolder;
-    `,
     MidSection: styled.div`
         display: flex;
         flex-direction: row;
@@ -242,6 +228,8 @@ const Nav = (props) => {
     const [showSearchOptions, setShowSearchOptions] = useState(false); // when you click button next to searchbar
     const [useSmartOptions, setUseSmartOptions] = useState(false);
     const [showMenu, setshowMenu] = useState(false); // when you click avatar
+    const [showSidebar, setShowSidebar] = useState(true);
+
     useEffect(() => {
         let addSimulatedFocusProperty = props.results.map((eachObj) => {
             return {
@@ -441,8 +429,11 @@ const Nav = (props) => {
     }
 
     return (
-        <S.Container>
-            <S.Header>Tagger</S.Header>
+        <div className="top row">
+            <div className="sidebar-btn btn">
+                <FontAwesomeIcon icon={faBars} />
+            </div>
+            <h1>Tagger</h1>
             <S.MidSection>
                 <S.Top>
                     {useSmartOptions ? (
@@ -532,7 +523,7 @@ const Nav = (props) => {
                 />
                 <Menu showMenu={showMenu} setshowMenu={setshowMenu} />
             </S.User>
-        </S.Container>
+        </div>
     );
 };
 function mapStateToProps({ searchbar, imap, user, inbox }) {

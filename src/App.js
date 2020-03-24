@@ -1,25 +1,15 @@
 import React, { useEffect } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
-import "./App.css";
-import styled from "styled-components";
+import "./App.scss";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
-import { createBrowserHistory } from "history";
+//import { createBrowserHistory } from "history";
 import ReactGA from "react-ga";
 
 import LandingPage from "./components/landing/LandingPage";
 import Inbox from "./components/inbox/Inbox";
 import Nav from "./components/navigation/Nav";
 import PrivateRoute from "./utils/PrivateRoute";
-const S = {
-    Container: styled.div`
-        // width: calc(100vw - (100vw - 100%));
-        width: 100%;
-        margin: 0px;
-        height: calc(100vh - (100vh - 100%));
-        font-size: 1.1rem;
-    `
-};
 
 ReactGA.event({
     category: "SignIn",
@@ -35,7 +25,7 @@ function App(props) {
     // End Google Analytics
 
     return (
-        <S.Container className="App">
+        <>
             {props.isLoggedIn ? <Nav /> : null}
             <Switch>
                 {/* TO SAVE TIME IN DEVELOPMENT, UNCOMMENT TO OVERRIDE "/" */}
@@ -46,7 +36,7 @@ function App(props) {
                 {/* <Route path="/inbox" component={Inbox}></Route> */}
             </Switch>
             {/* <Route path="/inbox" component={Sidebar}></Route> */}
-        </S.Container>
+        </>
     );
 }
 
