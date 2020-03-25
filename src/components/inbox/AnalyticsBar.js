@@ -117,7 +117,7 @@ const AnalyticsBar = props => {
 
   return (
     <div className="analytics-bar">
-      <FontAwesomeIcon icon={faTimesCircle} className="analytics-bar-close" onClick={() => closeAnalytics()}/>
+      <FontAwesomeIcon icon={faTimesCircle} className="analytics-bar-close btn" onClick={() => closeAnalytics()}/>
       {/* <button onClick={() => closeAnalytics()}>X</button> */}
       {/*If the contact has a cover photo display it, if not display the placeholder image*/}
       {/* <S.Avatar

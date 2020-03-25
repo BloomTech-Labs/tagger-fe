@@ -6,9 +6,10 @@ import ThreadMessage from "./ThreadMessage";
 import { changeIsDisplayingAnalytics } from "../../actions";
 
 const Thread = (props) => {
-    const toggleIsDisplayingAnalytics = () => {
-        props.changeIsDisplayingAnalytics(!props.isDisplayingAnalytics);
-    };
+    // Commented out by Milo (were not used)
+    // const toggleIsDisplayingAnalytics = () => {
+    //     props.changeIsDisplayingAnalytics(!props.isDisplayingAnalytics);
+    // };
 // this creates an array of emails with matching gmThreadId's returned from google 
     const showThread = props.emails.filter((email) => email.gmThreadID === props.thread.gmThreadID);
 
@@ -16,7 +17,7 @@ const Thread = (props) => {
         <>
             {/* this maps over the showThread array to display all emails in a thread */}
             {showThread.map((email) => {
-                return <ThreadMessage token = {props.token}key={Math.random()} email={email} />;
+                return <ThreadMessage token ={props.token} key={Math.random()} email={email} />;
             })}
         </>
     );

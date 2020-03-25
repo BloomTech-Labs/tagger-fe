@@ -9,46 +9,11 @@ import ContactButton from "./ContactButton";
 
 // Styling for the reply component
 const S = {
-    Container: styled.div`
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 95%;
-        background-color: white;
-        border-radius: 15px;
-        padding: 0% 3%;
-        box-sizing: border-box;
-        box-shadow: 0 0 9px 1px #00000059;
-    `,
+
     Input: styled.input`
         width: 98%;
         // margin-left: 2%;
         border-radius: 2px;
-    `,
-    Form: styled.form`
-        width: 100%;
-    `,
-    LabelsContainer: styled.div`
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        align-items: center;
-        label {
-            width: 100%;
-            display: flex;
-            padding-top: 7px;
-            padding-bottom: 5px;
-            span {
-                width: 65px;
-                margin-left: 5%;
-            }
-            .ContactButton {
-                width: 100%;
-                height: fit-content;
-                display: flex;
-                flex-wrap: wrap;
-            }
-        }
     `,
     TextBox: styled.textarea`
         width: 100%;
@@ -193,19 +158,19 @@ const Reply = (props) => {
         setEmail(initialState);
     };
     return (
-        <S.Container>
-            <S.Form onSubmit={(e) => handleSubmit(e)}>
+        <div className="reply">
+            <form className="reply-form" onSubmit={(e) => handleSubmit(e)}>
                 <MessageType
                     responseType={props.responseType}
                     setResponseType={props.setResponseType}
                 />
-                <S.LabelsContainer>
+                <div className="label-container">
                     <label>
                         <span>TO:</span>
                         <div className="ContactButton">
                             {addresses.map((address, index) => {
                                 return (
-                                    <ContactButton
+                                    <divButton
                                         key={`ContactButton${index}`}
                                         text={address}
                                         index={index}
@@ -250,8 +215,8 @@ const Reply = (props) => {
                             onChangeCapture={handleChange}
                         />
                     </label>
-                </S.LabelsContainer>
-            </S.Form>
+                </div>
+            </form>
             <S.TextBox
                 type="text"
                 name="body"
@@ -265,7 +230,7 @@ const Reply = (props) => {
                     Send
                 </S.Send>
             </S.Footer>
-        </S.Container>
+        </div>
     );
 };
 const mapStateToProps = ({ imap, user, inbox }) => ({

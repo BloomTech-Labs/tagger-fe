@@ -12,7 +12,6 @@
 
 .top {
     height: 64px;
-    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid $border;
     font-size: 0.9rem;
@@ -22,6 +21,38 @@
     width: 100vw;
     z-index: 10;
     padding:0 2rem;
+
+    .sidebar-btn {
+        display: none;
+    }
+
+    .logo {
+        width: 230px;
+    }
+
+    .nav-mid {
+        min-width: calc((100vw - 260px) / 2);
+        height: 100%;
+    }
+
+    input[name='search']{
+        height: 2.5rem;
+        width: calc((100vw - 260px) / 2);
+        background-color: $bg;
+        border: none;
+        border-radius: 5px;
+        padding: 0 1rem;
+    }
+
+    .user-avatar {
+        position: absolute;
+        right:2rem;
+        
+        img {
+            border-radius: 50%;
+            height: 40px;
+        }
+    }
 }
 
 main {
@@ -127,6 +158,12 @@ main {
     }
 }
 
+.end {
+    align-self: flex-end;
+    margin-right: 0rem;
+    margin-left: 1rem;
+  }
+
 /* Yannick */
 form {
     margin-top: 10px;
@@ -134,11 +171,11 @@ form {
     height: 40px;
 }
 
-.end {
-    align-self: flex-end;
-    margin-right: 0rem;
-    margin-left: 1rem;
-  }
+/* HIDDEN */
+.filter, .smart-search-btn {
+    display: none;
+}
+
 
 /* Tablet */
 $breakpoint-tablet: 1024px;
@@ -150,6 +187,18 @@ $breakpoint-tablet: 1024px;
         top:64px;
         width: 260px;
         height: calc(100vh - 64px);    
+    }
+
+    .sidebar-btn {
+        display: inline;
+    }
+    .slidebar {
+        position: fixed;
+        left:0;
+        top:64px;
+        width: 260px;
+        height: calc(100vh - 64px);
+        z-index: 5;
     }
 
     .email-list {
@@ -171,12 +220,18 @@ $breakpoint-tablet: 1024px;
     .email-body {
         position: absolute;
         left: 340px;
-        width: calc(100vw - 340px);
+        width: calc(100vw - 340px - 0.3rem);
         top:64px;
         background-color: $white;
         height: calc(100vh - 64px);
         margin-top: 0.3rem;
     }
+
+    #email-body-analytics {
+        width: calc(100vw - 340px - 260px - 0.3rem)
+    }
+
+    /* Yannick */
     
 }
 
@@ -184,10 +239,17 @@ $breakpoint-tablet: 1024px;
 /* Mobile */
 $breakpoint-mobile: 480px;
 @media (max-width: $breakpoint-mobile) {
-  
+    
+    .top {
+        padding:0 0.8rem;
+
+        .sidebar-btn {
+            display: inline;
+        }
+    }
     .email-list-min {
-        display: hidden;
-        position: absolute;
+        visibility: hidden;
+        position: fixed;
         left:260px;
         top:64px;
         width: 340px;
@@ -203,4 +265,53 @@ $breakpoint-mobile: 480px;
         height: calc(100vh - 64px);
         margin-top: 0.3rem;
     }
+
+
+    /* Yannick */
+}
+
+.reply{
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 95%;
+        background-color: white;
+        border-radius: 15px;
+        padding: 0% 3%;
+        box-sizing: border-box;
+        box-shadow: 0 0 9px 1px #00000059;
+
+
+        .reply-form {
+
+          width: 100%;
+          
+        }
+
+        .label-container {
+
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        label {
+            width: 100%;
+            display: flex;
+            padding-top: 7px;
+            padding-bottom: 5px;
+            span {
+                width: 65px;
+                margin-left: 5%;
+            }
+            .ContactButton {
+                width: 100%;
+                height: fit-content;
+                display: flex;
+                flex-wrap: wrap;
+            }
+        }
+
+        }
+
 }
