@@ -291,14 +291,15 @@ const Nav = (props) => {
                     </button>
                 </section>
                 <section
-                    heightLeft={props.isDisplayingDropdown ? "330px" : "0px"}
-                    boxshadowLeft={
-                        props.isDisplayingDropdown ? "0px 0px 2px 1px #949494" : "none"
-                    }
-                    heightRight={showSearchOptions ? "initial" : "0px"}
-                    boxshadowRight={showSearchOptions ? "0px 0px 2px 1px #949494" : "none"}
+                    // heightLeft={props.isDisplayingDropdown ? "330px" : "0px"}
+                    // boxshadowLeft={
+                    //     props.isDisplayingDropdown ? "0px 0px 2px 1px #949494" : "none"
+                    // }
+                    // heightRight={showSearchOptions ? "initial" : "0px"}
+                    // boxshadowRight={showSearchOptions ? "0px 0px 2px 1px #949494" : "none"}
                 >
                     <div className="left">
+                        
                         {props.results.length > 0 && props.isDisplayingDropdown ? (
                             <section
                                 className="searchDropDown"
@@ -307,6 +308,7 @@ const Nav = (props) => {
                                     clearArrowHighlight(searchQuery, setSearchQuery);
                                 }}
                             >
+                                
                                 {" "}
                                 {searchQuery.results.map((eachEmail, i) => {
                                     return (
@@ -327,6 +329,7 @@ const Nav = (props) => {
                                 })}
                             </section>
                         ) : null}
+                        
                     </div>
                     <div className="right filter">
                         {showSearchOptions ? (
