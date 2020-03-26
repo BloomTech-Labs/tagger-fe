@@ -32,7 +32,7 @@ const Compose = (props) => {
 // invokes the sendEmail function brought in from ComposerActions.js 
     const handleSubmit = () => {
         console.log("PROPS", props);
-        console.log(email, "Email")
+        console.log(email, "Email");
         props.sendEmail(email, props.token);
     };
 // toggles the isComposing state to not show the composing component

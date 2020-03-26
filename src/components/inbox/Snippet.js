@@ -12,6 +12,7 @@ import {
 import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
+
 const moment = require("moment");
 
 const Snippet = (props) => {
