@@ -351,7 +351,7 @@ const Nav = (props) => {
     }, [searchQuery.search]);
     const handleInput = (e) => {
         // console.log(e, "EVENT \n\n\n****************");
-        props.setIsDisplayingDropdown(true)
+        props.setIsDisplayingDropdown(true);
         e.persist();
         e.preventDefault();
         e.stopPropagation();
@@ -392,10 +392,10 @@ const Nav = (props) => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.saveStaticSearch()
-        console.log("Query position", searchQuery.position)
+        props.saveStaticSearch();
+        console.log("Query position", searchQuery.position);
         if(searchQuery.position === -1){
-            props.setIsDisplayingInSnippets(true)
+            props.setIsDisplayingInSnippets(true);
             props.clearSmartSearch()
         } else {
             selectHighlightedEmail(searchQuery, setSearchQuery, emailToDisplayInThread);
