@@ -12,7 +12,6 @@ import {
 import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
-import { showDate } from "../navigation/SearchBarResult";
 
 const moment = require("moment");
 
@@ -27,6 +26,27 @@ const Snippet = (props) => {
         props.changeThreadContact(emailObj);
     };
 
+    // This function converts the unix date string to a readable date
+    function showDate() {
+        let formatDate;
+        if (typeof props.email.date === "string") {
+            if (props.email.date.includes("T") || props.email.date.includes("-")) {
+                formatDate = new Date(props.email.date);
+            } else {
+                formatDate = new Date(Number(props.email.date));
+            }
+        } else {
+            formatDate = new Date(props.email.date);
+        }
+
+        let emailDateYear = moment(formatDate).format("YYYY");
+        let currentYear = moment().format("YYYY");
+        if (emailDateYear === currentYear) {
+            return moment(formatDate).format("MMM Do");
+        } else {
+            return moment(formatDate).format("MMM Do YYYY");
+        }
+    }
 function setContact() {
     if (props.snippetsFilter === "\\Sent" || props.snippetsFilter === "\\Draft"){
         setAnalyticsContact(props, props.email.to[0])

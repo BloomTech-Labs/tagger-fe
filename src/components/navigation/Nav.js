@@ -386,7 +386,7 @@ const Nav = (props) => {
         } else if (searchQuery.optionalFilter.length > 0) {
             applyOptionalFilters([fuzzyFunction, searchQuery, emails, props.saveSearch]);
         } else {
-            console.log("SAVE SEARCH IN NAV handleInput")
+            console.log("SAVE SEARCH IN NAV handleInput");
             props.saveSearch(fuzzyFunction(searchQuery.search, searchQuery.filters, emails));
         }
     };

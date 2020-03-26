@@ -83,6 +83,8 @@ const S = {
         }
     `
 };
+
+
 export default function SearchBarResult(props) {
     const [setShowSearchOptions, clearSearch, clearSmartSearch, setSearchQuery, searchQuery, emailToDisplayInThread, setIsDisplayingDropdown] = props.functions;
     function clearSearchAndLoadResult() {
@@ -99,7 +101,7 @@ export default function SearchBarResult(props) {
         setIsDisplayingDropdown(false)
     }
 
-    export function showDate() {
+    function showDate() {
         let formatDate;
         if (typeof props.email.date === "string") {
             if (props.email.date.includes("T") || props.email.date.includes("-")) {
