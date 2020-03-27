@@ -181,7 +181,7 @@ const Nav = (props) => {
 
     const handleInput = (e) => {
         // console.log(e, "EVENT \n\n\n****************");
-        props.setIsDisplayingDropdown(true)
+        props.setIsDisplayingDropdown(true);
         e.persist();
         e.preventDefault();
         e.stopPropagation();
@@ -216,17 +216,17 @@ const Nav = (props) => {
         } else if (searchQuery.optionalFilter.length > 0) {
             applyOptionalFilters([fuzzyFunction, searchQuery, emails, props.saveSearch]);
         } else {
-            console.log("SAVE SEARCH IN NAV handleInput")
+            console.log("SAVE SEARCH IN NAV handleInput");
             props.saveSearch(fuzzyFunction(searchQuery.search, searchQuery.filters, emails));
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.saveStaticSearch()
-        console.log("Query position", searchQuery.position)
+        props.saveStaticSearch();
+        console.log("Query position", searchQuery.position);
         if(searchQuery.position === -1){
-            props.setIsDisplayingInSnippets(true)
+            props.setIsDisplayingInSnippets(true);
             props.clearSmartSearch()
         } else {
             selectHighlightedEmail(searchQuery, setSearchQuery, emailToDisplayInThread);

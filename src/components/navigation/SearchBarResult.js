@@ -93,9 +93,8 @@ const SearchBarResult = props => {
     function clearSearchAndLoadResult(e) {
         e.preventDefault();
         console.log('search result clicked')
-
         //todo add clear smart search results
-        setShowSearchOptions(false)
+        setShowSearchOptions(false);
         // clearSmartSearch();
         emailToDisplayInThread(props.email);
 
