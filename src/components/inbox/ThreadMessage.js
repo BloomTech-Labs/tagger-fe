@@ -6,7 +6,7 @@ import Reply from "./Reply";
 
 import { changeIsDisplayingAnalytics, changeAnalyticsContact } from "../../actions";
 import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
-import FullHeightIFrame from "./FullHeightIFrame";
+import { makeHtmlSafe } from "./helpers/MessageHelper";
 import SmartButton from "./SmartButton";
 
 import SimpleBar from 'simplebar-react';
@@ -85,25 +85,9 @@ const ThreadMessage = props => {
       </div>
 
       <h2>{props.email.subject}</h2>
-      { /* the spinner displays if isLoaded is false  */}
-      <div className="spinner"
-        style={{
-          display:
-            props.isLoaded === false
-              ? "block"
-              : props.email.email_body === "false" ||
-                props.email.email_body === "0" ||
-                props.isLoaded === true
-              ? "none"
-              : "block"
-        }}
-      ></div>
-      {/* the ternary below checks to see if the email object has html if it doesn't then it displays the the plain text instead of the HTML */}
-      {props.email.email_body === "false" || props.email.email_body === "0" ? (
-        <div className="thread-message">{props.email.email_body_text}</div>
-      ) : (
-        <FullHeightIFrame src={props.email.email_body} />
-      )}
+      <div className="thread-message"
+        dangerouslySetInnerHTML={{ __html: makeHtmlSafe(props.email.email_body) }} />
+
       {/* the ternary below checks to see if replyIsHidden is true, if it is the Reply component is hidden, if it's false the reply component is shown */}
       {replyIsHidden ? null : (
         <Reply
