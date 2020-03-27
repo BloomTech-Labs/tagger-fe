@@ -8,14 +8,17 @@ import { inboxReducer } from "./inboxReducer";
 import { searchbarReducer } from "./searchbarReducer";
 import { composerReducer } from "./composerReducer";
 import { contactsReducer } from "./contactsReducer";
-import { smartSearch } from "../actions";
+import { sidebarReducer } from "./sidebarReducer";
+//import { smartSearch } from "../actions";
+
 const rootReducer = combineReducers({
     imap: imapReducer,
     user: userReducer,
     inbox: inboxReducer,
     searchbar: searchbarReducer,
     composer: composerReducer,
-    contacts: contactsReducer
+    contacts: contactsReducer,
+    sidebar: sidebarReducer
 });
 
 let store;

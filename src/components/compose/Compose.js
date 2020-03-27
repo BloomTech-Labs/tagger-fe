@@ -23,10 +23,10 @@ const Compose = (props) => {
     });
 // handles the input change for the input fields
     const handleChange = e => {
-        let value = e.target.value;
+
         setEmail({
             ...email,
-            [e.target.name]: value
+            [e.target.name]: e.target.value
         });
     };
 // invokes the sendEmail function brought in from ComposerActions.js 
@@ -38,7 +38,7 @@ const Compose = (props) => {
 // toggles the isComposing state to not show the composing component
     const changeIsComposing = () => {
         props.changeIsComposing(!props.isComposing);
-        props.setIsCompose(false);
+        //props.setIsCompose(false);
     };
     return (
         <>

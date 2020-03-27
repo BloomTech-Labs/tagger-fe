@@ -19,13 +19,13 @@ import { saveSearch,
      clearSmartSearch,
      setIsDisplayingInSnippets,
      setIsDisplayingDropdown,
-     saveStaticSearch
+     saveStaticSearch,
+     setSliding
 } from "../../actions";
 import FuzzySearchBar from "./FuzzySearchBar";
 import SmartSearchBar from "./SmartSearchBar";
 import FilterOptions from "./FilterOptions";
 import Menu from "./Menu";
-import avatarPlaceholder from "../../images/avatarPlaceholder.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
@@ -58,7 +58,6 @@ const Nav = (props) => {
     const [showSearchOptions, setShowSearchOptions] = useState(false); // when you click button next to searchbar
     const [useSmartOptions, setUseSmartOptions] = useState(false);
     const [showMenu, setshowMenu] = useState(false); // when you click avatar
-    const [showSidebar, setShowSidebar] = useState(true);
 
     useEffect(() => {
         let addSimulatedFocusProperty = props.results.map((eachObj) => {
@@ -121,7 +120,7 @@ const Nav = (props) => {
         // if (name === "fuzzySearch" || name === "smartSearch") {
         //     setUseSmartOptions(!useSmartOptions);
         // } else
-        if (useSmartOptions && name != "msg") {
+        if (useSmartOptions && name !== "msg") {
             // if this thing is being checked true add that value to the string inside of the searchQuery.search
             // if this thing is being checked false, run the clear filters function
             setSmartOptions({
@@ -179,6 +178,7 @@ const Nav = (props) => {
             });
         }
     }, [searchQuery.search]);
+
     const handleInput = (e) => {
         // console.log(e, "EVENT \n\n\n****************");
         props.setIsDisplayingDropdown(true)
@@ -220,6 +220,7 @@ const Nav = (props) => {
             props.saveSearch(fuzzyFunction(searchQuery.search, searchQuery.filters, emails));
         }
     };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         props.saveStaticSearch()
@@ -232,6 +233,7 @@ const Nav = (props) => {
         }
         props.setIsDisplayingDropdown(false)
     };
+
     const toggleSearchOptions = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -252,15 +254,22 @@ const Nav = (props) => {
     }, [searchQuery]);
     
     function emailToDisplayInThread(emailObj) {
+        console.log('emailToDisplayInThread CLICKED')
         emailObj.email_body === "false" || emailObj.email_body === "0"
             ? props.changeIsLoaded(true)
             : props.changeIsLoaded(false);
         props.changeThreadContact(emailObj);
     }
 
+
+    const handleSlidebar = () => {
+        props.setSliding(!props.slidebar)
+        console.log('slidebar is', props.slidebar)
+    }
+
     return (
         <div className="top row">
-            <div className="sidebar-btn btn">
+            <div className="sidebar-btn btn" onClick={handleSlidebar}>
                 <FontAwesomeIcon icon={faBars} />
             </div>
             <div className="logo">
@@ -290,14 +299,7 @@ const Nav = (props) => {
                         )}
                     </button>
                 </section>
-                <section
-                    // heightLeft={props.isDisplayingDropdown ? "330px" : "0px"}
-                    // boxshadowLeft={
-                    //     props.isDisplayingDropdown ? "0px 0px 2px 1px #949494" : "none"
-                    // }
-                    // heightRight={showSearchOptions ? "initial" : "0px"}
-                    // boxshadowRight={showSearchOptions ? "0px 0px 2px 1px #949494" : "none"}
-                >
+                <section>
                     <div className="left">
                         
                         {props.results.length > 0 && props.isDisplayingDropdown ? (
@@ -312,6 +314,7 @@ const Nav = (props) => {
                                 {" "}
                                 {searchQuery.results.map((eachEmail, i) => {
                                     return (
+                                        <>
                                         <SearchBarResult
                                             key={i}
                                             functions={[
@@ -325,6 +328,7 @@ const Nav = (props) => {
                                             ]}
                                             email={eachEmail}
                                         />
+                                        </>
                                     );
                                 })}
                             </section>
@@ -348,7 +352,8 @@ const Nav = (props) => {
                 Smart Search
             </button>
 
-            <div className="user-avatar">
+            <Menu showMenu={showMenu} setshowMenu={setshowMenu} />
+            {/* <div className="user-avatar">
                 <img
                     onClick={() => {
                         setshowMenu(!showMenu);
@@ -357,11 +362,11 @@ const Nav = (props) => {
                     alt="Avatar"
                 />
                 <Menu showMenu={showMenu} setshowMenu={setshowMenu} />
-            </div>
+            </div> */}
         </div>
     );
 };
-function mapStateToProps({ searchbar, imap, user, inbox }) {
+function mapStateToProps({ searchbar, imap, user, inbox}) {
     return {
         results: searchbar.searchResults,
         emails: imap.emails,
@@ -381,5 +386,6 @@ export default connect(mapStateToProps, {
     clearSmartSearch,
     setIsDisplayingInSnippets,
     setIsDisplayingDropdown,
-    saveStaticSearch
+    saveStaticSearch,
+    setSliding
 })(Nav);

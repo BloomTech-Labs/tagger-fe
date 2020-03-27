@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
@@ -7,86 +6,6 @@ import { changeIsDisplayingAnalytics } from "../../actions";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-// Styling for the analytics bar
-const S = {
-  
-  Para: styled.p`
-    line-height: 1px;
-  `,
-  Graph: styled.ul`
-    width: 90%;
-    box-sizing: border-box;
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-
-    li {
-      margin: 0px;
-      width: 100%;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-bottom: 8%;
-
-      h6 {
-        font-size: 1rem;
-        margin: 0px;
-        margin-bottom: 5px;
-      }
-    }
-    li:nth-last-child(1) {
-      margin-bottom: 0px;
-    }
-  `,
-  LastInteraction: styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    margin-top: 10%;
-    span {
-    }
-  `,
-  TotalWidth: styled.div`
-    background-color: #2f86ff;
-    width: 100%;
-    min-width: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    border-radius: 0px 15px 15px 0px;
-    padding: 2px;
-  `,
-  ReceivedWidth: styled.div`
-    background-color: #2f86ff;
-    width: ${props => props.rWidth};
-    min-width: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    border-radius: 0px 15px 15px 0px;
-    padding: 2px;
-  `,
-  SentWidth: styled.div`
-    background-color: #2f86ff;
-    width: ${props => props.sWidth};
-    min-width: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    border-radius: 0px 15px 15px 0px;
-    padding: 2px;
-  `,
-  Num: styled.span`
-    color: white;
-    margin-left: 5px;
-    font-weight: 900;
-    font-size: 1.2rem;
-  `
-};
 
 const AnalyticsBar = props => {
   // changes the isDisplayingAnalyticsBar to false to not show the analytics bar
@@ -127,33 +46,30 @@ const AnalyticsBar = props => {
             : "https://i.postimg.cc/kX2k4dmS/avatar-Placeholder.png"
         }
       /> */}
-      <FontAwesomeIcon icon={faUserCircle} className="analytics-bar-avatar"/>
-      {/* Maps over the "to" array from the email object to display everyone it was sent to */}
-      <h2>{props.analyticsContact.name}</h2>
-      {props.analyticsContact.emailAddress.map(email => {
-        return <S.Para key={Math.random()}>{email.value}</S.Para>;
-      })}
-      <hr />
-      <S.Graph>
-        <li>
-          <h6>Total messages</h6>
-          <S.TotalWidth>
-            <S.Num>{totalEmails}</S.Num>
-          </S.TotalWidth>
-        </li>
-        <li>
-          <h6>Sent messages</h6>
-          <S.SentWidth sWidth={sentWidth}>
-            <S.Num>{totalSent.length}</S.Num>
-          </S.SentWidth>
-        </li>
-        <li>
-          <h6>Received messages</h6>
-          <S.ReceivedWidth rWidth={receivedWidth}>
-            <S.Num>{totalReceived.length}</S.Num>
-          </S.ReceivedWidth>
-        </li>
-      </S.Graph>
+      <div className="analytics-avatar col">
+        <FontAwesomeIcon icon={faUserCircle} className="analytics-bar-avatar"/>
+        <h2>{props.analyticsContact.name}</h2>
+        {/* Maps over the "to" array from the email object to display everyone it was sent to */}
+        {props.analyticsContact.emailAddress.map(email => {
+          return <p key={Math.random()}>{email.value}</p>;
+        })}
+      </div>
+      <div className="analytics-body">
+          <p>Total messages</p>
+          <div style={{width:'100%'}} className="barwidth">
+            <span className="num">{totalEmails}</span>
+          </div>
+
+          <p>Sent messages</p>
+          <div style={{width:sentWidth}} className="barwidth">
+            <span className="num">{totalSent.length}</span>
+          </div>
+
+          <p>Received messages</p>
+          <div style={{width:receivedWidth}} className="barwidth">
+            <span className="num">{totalReceived.length}</span>
+          </div>
+        </div>
       {/* <S.LastInteraction>
         <span>Last interaction:</span>
         <span>2 hours ago</span>

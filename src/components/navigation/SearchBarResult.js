@@ -1,5 +1,7 @@
 import React from "react";
-import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
+//import styled from "styled-components";
 
 const moment = require("moment");
 
@@ -84,9 +86,14 @@ const moment = require("moment");
 //         }
 //     `
 // };
-export default function SearchBarResult(props) {
-    const [setShowSearchOptions, clearSearch, clearSmartSearch, setSearchQuery, searchQuery, emailToDisplayInThread, setIsDisplayingDropdown] = props.functions;
-    function clearSearchAndLoadResult() {
+const SearchBarResult = props => {
+
+    const [setShowSearchOptions, emailToDisplayInThread, setIsDisplayingDropdown] = props.functions; // removed by Milo clearSearch, clearSmartSearch, setSearchQuery, searchQuery
+
+    function clearSearchAndLoadResult(e) {
+        e.preventDefault();
+        console.log('search result clicked')
+
         //todo add clear smart search results
         setShowSearchOptions(false)
         // clearSmartSearch();
@@ -128,23 +135,47 @@ export default function SearchBarResult(props) {
             return `${props.email.name}:(${props.email.from})`;
         }
     }
+    // const testingFunction = () => {
+    //     alert('Hi')
+    // }
     return (
-        <div
-            className="search-result row"
+        // <div
+        //     className="search-result row"
+        //     key={props.email.message_id || props.key}
+        //     onClick={clearSearchAndLoadResult}
+        //     simulateFocusBackgroundColor={props.email.simulateFocus ? "#f0f8ffa6" : "none"}
+        //     simulateFocusBorder={props.email.simulateFocus ? "4px solid #0000ff99" : "none"}
+        // >
+        //     <i className="fa fa-envelope"></i>
+        //     <section className="content">
+        //         <div className="subject">{props.email.subject}</div>
+        //         <div className="body">{props.email.email_body_text}</div>
+        //         <div className="participants">{showParticipants()}</div>
+        //     </section>
+        //     <span className="date">
+        //         <h4>{showDate()}</h4>
+        //     </span>
+        // </div>
+        <>
+        <div className="search-result row"
             key={props.email.message_id || props.key}
             onClick={clearSearchAndLoadResult}
-            simulateFocusBackgroundColor={props.email.simulateFocus ? "#f0f8ffa6" : "none"}
-            simulateFocusBorder={props.email.simulateFocus ? "4px solid #0000ff99" : "none"}
+            //onClick={testingFunction}
         >
-            <i className="fa fa-envelope"></i>
-            <section className="content">
-                <div className="subject">{props.email.subject}</div>
-                <div className="body">{props.email.email_body_text}</div>
-                <div className="participants">{showParticipants()}</div>
-            </section>
-            <span className="date">
-                <h4>{showDate()}</h4>
+            <span className="envelope">
+                <FontAwesomeIcon icon={faEnvelope} />
             </span>
+            <section className="search-result-content col">
+                <div className="search-result-subject">{props.email.subject}</div>
+                <div className="search-result-body">{props.email.email_body_text}</div>
+                <div className="search-result-participants">{showParticipants()}</div>
+            </section>
+            <span className="search-result-date">
+                <h4>{showDate()}</h4>
+            </span>            
         </div>
+        </>
     );
 }
+
+export default SearchBarResult;

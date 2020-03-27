@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInbox,
-  faFile,
+  faFolderOpen,
   faEnvelope,
   faTags
 } from "@fortawesome/free-solid-svg-icons";
@@ -15,14 +15,12 @@ import {
   changeIsComposing,
   setIsDisplayingInSnippets
 } from "../../actions";
-import ComposeComponent from "../compose/Compose";
+//import ComposeComponent from "../compose/Compose";
 
 const Sidebar = props => {
 
-
   const toggleIsComposing = () => {
     props.changeIsComposing(!props.isComposing);
-    props.setIsCompose(true);
   };
 
   const setFilter = filterName => {
@@ -32,7 +30,7 @@ const Sidebar = props => {
   };
 
   return (
-    <div className="sidebar col">
+    <div className="sidebar col" id={props.sidebar.sliderbar && 'slidebar'}>
       {/* clicking the "+ compose" button toggles the compose module to display */}
       {/* {props.isComposing && (
         <S.ModalContainer>
@@ -47,7 +45,7 @@ const Sidebar = props => {
         {/* this onClick sets the snippets to filter email by sent */}
         <li onClick={() => setFilter("\\Sent")}><FontAwesomeIcon icon={faEnvelope} />Sent</li>
         {/* this onClick sets the snippets to filter email by drafts */}
-        <li onClick={() => setFilter("\\Draft")}><FontAwesomeIcon icon={faFile} />Draft</li>
+        <li onClick={() => setFilter("\\Draft")}><FontAwesomeIcon icon={faFolderOpen} />Draft</li>
       </nav>
       <div className="tags">
         <li><FontAwesomeIcon icon={faTags} />Tags</li>
@@ -65,11 +63,12 @@ const Sidebar = props => {
   );
 };
 
-const mapStateToProps = ({ user, composer, inbox }) => ({
+const mapStateToProps = ({ user, composer, inbox, sidebar }) => ({
   isComposing: composer.isComposing,
   snippetsFilter: inbox.snippetsFilter,
   emailAddress: user.emailAddress,
-  boxes: user.boxes
+  boxes: user.boxes,
+  sidebar:sidebar
 });
 
 const mapDispatchToProps = dispatch =>

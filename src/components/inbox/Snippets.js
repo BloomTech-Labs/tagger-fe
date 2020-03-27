@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
-import { changeIsDisplayingThread } from "../../actions";
+import { changeIsDisplayingThread, changeIsComposing } from "../../actions";
 import Snippet from "./Snippet.js";
 
 const Snippets = (props) => {
@@ -35,15 +35,18 @@ const Snippets = (props) => {
         }
     }, [props.smartSearchResults]);
 
+    const toggleIsComposing = () => {
+        props.changeIsComposing(!props.isComposing);
+    };
+
     return (
         <SimpleBar forceVisible="y" autoHide={true} style={{height:'100%'}}>
-        {/* <S.Container widthPercentage={props.isDisplayingThread ? 25 : 100}> */}
             {filteredEmail.map((email) => {
                 return (
                     <Snippet key={email.message_id} email={email} /> // emails in redux are currently numbers 1-10 in an array
                 );
             })}
-        {/* </S.Container> */}
+            <div className="compose-circle-btn btn" onClick={toggleIsComposing}>+</div>
         </SimpleBar>
     );
 };
@@ -62,7 +65,8 @@ const mapStateToProps = ({ imap, inbox, searchbar }) => ({
 const mapDispatchToProps = (dispatch) =>
     bindActionCreators(
         {
-            changeIsDisplayingThread
+            changeIsDisplayingThread,
+            changeIsComposing
         },
         dispatch
     );

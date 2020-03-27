@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+//import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -38,7 +38,7 @@ const Reply = (props) => {
             setAddresses(array);
         }
         // todo ADD CC and BCC updates here.   must also be split by (", ") before being pushed to respective arrays
-    }, [props.responseType]);
+    }, [props.responseType, props.email.from, props.email.to]); // added by Milo props.email.from, props.email.to
     const removeAddress = (index) => {
         const currentAddressList = [...addresses];
         currentAddressList.splice(index, 1);
@@ -177,3 +177,22 @@ const mapDispatchToProps = {
     sendEmail
 };
 export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Reply);
+
+
+// <div>
+// 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
