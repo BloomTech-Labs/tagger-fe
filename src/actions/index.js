@@ -3,3 +3,4 @@ export * from "./userActions";
 export * from "./searchbarActions";
 export * from "./composerActions";
 export * from "./contactsActions";
+export * from "./sidebarActions";

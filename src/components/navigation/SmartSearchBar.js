@@ -1,36 +1,36 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const Q = {
-    Form: styled.form`
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 80%;
-        align-items: center;
-        height: 100%;
-        box-sizing: border-box;
-        z-index: 1;
-    `,
-    Button: styled.button`
-        display: none;
-    `
-    // Input: styled.input`
-    //     height: 35px;
-    //     border: 1px solid red;
-    //     margin-bottom: 1px;
-    //     background-color: lightgray;
-    //     color: black;
-    //     outline: none;
-    //     width: 50vw;
-    //     display: block;
-    //     box-sizing: border-box;
-    //     padding: 0px 2%;
-    //     border: none;
-    // `
-};
+// const Q = {
+//     Form: styled.form`
+//         display: flex;
+//         flex-direction: row;
+//         justify-content: space-between;
+//         width: 80%;
+//         align-items: center;
+//         height: 100%;
+//         box-sizing: border-box;
+//         z-index: 1;
+//     `,
+//     Button: styled.button`
+//         display: none;
+//     `
+//     Input: styled.input`
+//         height: 35px;
+//         border: 1px solid red;
+//         margin-bottom: 1px;
+//         background-color: lightgray;
+//         color: black;
+//         outline: none;
+//         width: 50vw;
+//         display: block;
+//         box-sizing: border-box;
+//         padding: 0px 2%;
+//         border: none;
+//     `
+// };
 export default function SmartSearchBar(props) {
-    const [S] = props.S;
+    //const [S] = props.S;
     const [smartState, setSmartState] = useState({
         msg: "",
         subject: "",
@@ -58,37 +58,37 @@ export default function SmartSearchBar(props) {
         console.log("smartypants", smartState);
     };
     return (
-        <Q.Form autoComplete="off" onSubmit={handleSubmit}>
+        <form autoComplete="off" onSubmit={handleSubmit}>
             {props.smartOptions.msg === true ? (
-                <S.SmartInput
+                <input
                     type="text"
                     onChange={handleChange}
                     value={smartState.msg}
                     name="msg"
                     placeholder="Body"
-                ></S.SmartInput>
+                />
             ) : null}
 
             {props.smartOptions.from === true ? (
-                <S.SmartInput
+                <input
                     type="text"
                     onChange={handleChange}
                     value={smartState.from}
                     name="from"
                     placeholder="From"
-                ></S.SmartInput>
+                />
             ) : null}
 
             {props.smartOptions.subject === true ? (
-                <S.SmartInput
+                <input
                     type="text"
                     onChange={handleChange}
                     value={smartState.subject}
                     name="subject"
                     placeholder="Subject"
-                ></S.SmartInput>
+                />
             ) : null}
-            <Q.Button type="submit" />
-        </Q.Form>
+            <input type="submit" />
+        </form>
     );
 }

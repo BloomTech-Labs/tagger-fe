@@ -2,10 +2,10 @@ import React from "react";
 import FilterButton from "./FilterButton";
 
 export default function FuzzySearchDisplay(props) {
-    const [removeFilter, handleInput, searchQuery, S, handleSubmit] = props.functions;
+    const [removeFilter, handleInput, searchQuery, handleSubmit] = props.functions;
     return (
-        <S.Form autoComplete="off" onSubmit={handleSubmit}>
-            <S.Search className="searchBar">
+        <form autoComplete="off" onSubmit={handleSubmit}>
+            <div className="searchBar">
                 {searchQuery.filters.map((eachFilter, index) => {
                     return (
                         <FilterButton
@@ -32,7 +32,7 @@ export default function FuzzySearchDisplay(props) {
                     );
                 })}
 
-                <S.Input
+                <input
                     type="text"
                     name="search"
                     placeholder="Search for people, conversations, files..."
@@ -42,8 +42,8 @@ export default function FuzzySearchDisplay(props) {
                         return 0;
                     }}
                     // todo ask team if ok to leave in code or see alternative way of adding key capture
-                ></S.Input>
-            </S.Search>
-        </S.Form>
+                />
+            </div>
+        </form>
     );
 }

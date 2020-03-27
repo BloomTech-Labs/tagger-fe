@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+//import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -7,105 +7,7 @@ import { sendEmail } from "../../actions/composerActions";
 import MessageType from "./MessageType";
 import ContactButton from "./ContactButton";
 
-// Styling for the reply component
-const S = {
-    Container: styled.div`
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 95%;
-        background-color: white;
-        border-radius: 15px;
-        padding: 0% 3%;
-        box-sizing: border-box;
-        box-shadow: 0 0 9px 1px #00000059;
-    `,
-    Input: styled.input`
-        width: 98%;
-        // margin-left: 2%;
-        border-radius: 2px;
-    `,
-    Form: styled.form`
-        width: 100%;
-    `,
-    LabelsContainer: styled.div`
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        align-items: center;
-        label {
-            width: 100%;
-            display: flex;
-            padding-top: 7px;
-            padding-bottom: 5px;
-            span {
-                width: 65px;
-                margin-left: 5%;
-            }
-            .ContactButton {
-                width: 100%;
-                height: fit-content;
-                display: flex;
-                flex-wrap: wrap;
-            }
-        }
-    `,
-    TextBox: styled.textarea`
-        width: 100%;
-        height: 35vh;
-        border-color: #cccccc;
-    `,
-    Footer: styled.footer`
-        display: flex;
-        align-items: center;
-        width: 99.8%;
-        height: 80px;
-        justify-content: flex-end;
-    `,
-    Send: styled.button`
-        border-radius: 5px;
-        width: 8vw;
-        height: 40px;
-        font-size: 1.1rem;
-        background-color: #007bff;
-        color: white;
-        cursor: pointer;
-        :hover {
-            color: #007bff;
-            background-color: #e6e7e8;
-            text-shadow: 0px 1px #0000004f;
-        }
-        :active {
-            background: #b8bac1;
-            -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
-            -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
-            box-shadow: inset 0px 0px 5px #c1c1c1;
-            outline: none;
-        }
-    `,
-
-    Cancel: styled.button`
-        border-radius: 5px;
-        width: 8vw;
-        height: 40px;
-        font-size: 1.1rem;
-        background-color: white;
-        color: #007bff;
-        cursor: pointer;
-        :hover {
-            color: white;
-            background-color: #007bff;
-            text-shadow: 0px 2px black;
-        }
-        :active {
-            background: #b8bac1;
-            -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
-            -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
-            box-shadow: inset 0px 0px 5px #c1c1c1;
-            outline: none;
-        }
-    `
-};
+// Styling done in layout 
 
 const Reply = (props) => {
     // initial state for the email object that gets sent using nodemailer on the backend
@@ -136,7 +38,7 @@ const Reply = (props) => {
             setAddresses(array);
         }
         // todo ADD CC and BCC updates here.   must also be split by (", ") before being pushed to respective arrays
-    }, [props.responseType]);
+    }, [props.responseType, props.email.from, props.email.to]); // added by Milo props.email.from, props.email.to
     const removeAddress = (index) => {
         const currentAddressList = [...addresses];
         currentAddressList.splice(index, 1);
@@ -193,19 +95,19 @@ const Reply = (props) => {
         setEmail(initialState);
     };
     return (
-        <S.Container>
-            <S.Form onSubmit={(e) => handleSubmit(e)}>
+        <div className="reply">
+            <form className="reply-form" onSubmit={(e) => handleSubmit(e)}>
                 <MessageType
                     responseType={props.responseType}
                     setResponseType={props.setResponseType}
                 />
-                <S.LabelsContainer>
+                <div className="label-container">
                     <label>
                         <span>TO:</span>
                         <div className="ContactButton">
                             {addresses.map((address, index) => {
                                 return (
-                                    <ContactButton
+                                    <divButton
                                         key={`ContactButton${index}`}
                                         text={address}
                                         index={index}
@@ -213,7 +115,7 @@ const Reply = (props) => {
                                     />
                                 );
                             })}
-                            <S.Input
+                            <input className="label-input"
                                 type="text"
                                 name="receiver"
                                 value={email.receiver}
@@ -224,7 +126,7 @@ const Reply = (props) => {
                     <label>
                         <span>CC:</span>
 
-                        <S.Input
+                        <input className="label-input"
                             type="text"
                             name="CC"
                             value={email.CC}
@@ -233,7 +135,7 @@ const Reply = (props) => {
                     </label>
                     <label>
                         <span>Bcc:</span>
-                        <S.Input
+                        <input className="label-input"
                             type="text"
                             name="BCC"
                             value={email.BCC}
@@ -242,7 +144,7 @@ const Reply = (props) => {
                     </label>
                     <label>
                         <span>Subject:</span>
-                        <S.Input
+                        <input className="label-input"
                             type="text"
                             name="subject"
                             id="subject"
@@ -250,22 +152,22 @@ const Reply = (props) => {
                             onChangeCapture={handleChange}
                         />
                     </label>
-                </S.LabelsContainer>
-            </S.Form>
-            <S.TextBox
+                </div>
+            </form>
+            <textarea className="label-textarea"
                 type="text"
                 name="body"
                 id="body"
                 value={email.body}
                 onChangeCapture={handleChange}
             />
-            <S.Footer>
-                <S.Cancel onClick={handleCancel}>Cancel</S.Cancel>
-                <S.Send onClick={handleSubmit} type="submit">
+            <footer className="label-footer">
+                <button className="reply-cancel" onClick={handleCancel}>Cancel</button>
+                <button className="reply-send" onClick={handleSubmit} type="submit">
                     Send
-                </S.Send>
-            </S.Footer>
-        </S.Container>
+                </button>
+            </footer>
+        </div>
     );
 };
 const mapStateToProps = ({ imap, user, inbox }) => ({
@@ -275,3 +177,22 @@ const mapDispatchToProps = {
     sendEmail
 };
 export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Reply);
+
+
+// <div>
+// 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//

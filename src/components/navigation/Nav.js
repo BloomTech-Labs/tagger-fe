@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { connect } from "react-redux";
 import { clearSearch, smartSearch } from "../../actions";
 import SearchBarResult from "./SearchBarResult";
@@ -20,184 +19,15 @@ import { saveSearch,
      clearSmartSearch,
      setIsDisplayingInSnippets,
      setIsDisplayingDropdown,
-     saveStaticSearch
+     saveStaticSearch,
+     setSliding
 } from "../../actions";
 import FuzzySearchBar from "./FuzzySearchBar";
 import SmartSearchBar from "./SmartSearchBar";
 import FilterOptions from "./FilterOptions";
 import Menu from "./Menu";
-import avatarPlaceholder from "../../images/avatarPlaceholder.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-const S = {
-    MidSection: styled.div`
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 60vw;
-        height: 65%;
-        div:focus-within {
-            border: 2px solid #2f86ff;
-        }
-        // border: solid blue 3px;
-        box-sizing: border-box;
-    `,
-    Top: styled.section`
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        // border: solid red 3px;
-        box-sizing: border-box;
-    `,
-
-    Form: styled.form`
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 80%;
-        align-items: center;
-        height: 100%;
-        box-sizing: border-box;
-    `,
-
-    Search: styled.div`
-        display: flex;
-        align-items: center;
-        background: lightgray;
-        width: 100%;
-        height: 100%;
-        box-sizing: border-box;
-    `,
-
-    Input: styled.input`
-        height: 100%;
-        background-color: lightgray;
-        color: black;
-        outline: none;
-        width: 50vw;
-        display: block;
-        box-sizing: border-box;
-        padding: 0px 2%;
-        border: none;
-    `,
-    SmartInput: styled.input`
-        height: 50px;
-        border: 3px solid #2f86ff;
-        margin-bottom: 1px;
-        background-color: lightgray;
-        color: #2f86ff;
-        outline: none;
-        width: 100%;
-        display: block;
-        box-sizing: border-box;
-        padding: 0px 2%;
-
-        ::placeholder {
-            color: #2f86ff;
-        }
-    `,
-    Magnify: styled.button`
-        margin: 2px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        font-size: 20px;
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 0px 20px;
-        z-index: 2;
-        height: 100%;
-    `,
-    Button: styled.button`
-        height: 100%;
-        min-width: 100px;
-        width: 17%;
-        border: solid lightgray 2px;
-        border-radius: 3px;
-        color: gray;
-        background-color: white;
-
-        :hover {
-            cursor: pointer;
-        }
-        :active {
-            background: #9893613b;
-            -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
-            -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
-            box-shadow: inset 0px 0px 5px #c1c1c1;
-            outline: none;
-            cursor: pointer;
-        }
-    `,
-    Bottom: styled.section`
-        height: 0px;
-        width: 100%;
-        overflow: visible;
-        display: flex;
-        justify-content: space-between;
-        box-sizing: border-box;
-        .left {
-            width: 80%;
-            // border: solid grey 3px;
-            height: ${(props) => props.heightLeft};
-            background-color: #cfcfd2;
-            z-index: 2;
-            // box-shadow: ${(props) => props.boxshadowLeft};
-            box-sizing: border-box;
-            border-radius: 0px 0px 10px 10px;
-            overflow: hidden;
-
-        }
-
-        .right {
-            width: 17%;
-            height: ${(props) => props.heightRight};
-            background-color: #cfcfd2;
-            z-index: 2;
-            // box-shadow: ${(props) => props.boxshadowRight};
-            box-sizing: border-box;
-
-        }
-        // border: solid green 3px;
-        box-sizing: border-box;
-
-
-        
-    `,
-    SearchDropdown: styled.section`
-        display: flex;
-        flex-direction: column;
-        overflow-y: scroll;
-        width: 100%;
-        height: 100%;
-        // border: solid purple 3px;
-        box-sizing: border-box;
-    `,
-    User: styled.div`
-        height: 65%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    `,
-
-    Avatar: styled.img`
-        height: 100%;
-        margin: 1px 2vw;
-        border-radius: 50%;
-        :hover {
-            cursor: pointer;
-        }
-    `,
-    SmartSearchToggle: styled.button`
-        height: 65%;
-        width: 10%;
-        background-color: #2f86ff;
-        color: white;
-    `
-};
 
 const Nav = (props) => {
     const [searchQuery, setSearchQuery] = useState({
@@ -228,7 +58,6 @@ const Nav = (props) => {
     const [showSearchOptions, setShowSearchOptions] = useState(false); // when you click button next to searchbar
     const [useSmartOptions, setUseSmartOptions] = useState(false);
     const [showMenu, setshowMenu] = useState(false); // when you click avatar
-    const [showSidebar, setShowSidebar] = useState(true);
 
     useEffect(() => {
         let addSimulatedFocusProperty = props.results.map((eachObj) => {
@@ -291,7 +120,7 @@ const Nav = (props) => {
         // if (name === "fuzzySearch" || name === "smartSearch") {
         //     setUseSmartOptions(!useSmartOptions);
         // } else
-        if (useSmartOptions && name != "msg") {
+        if (useSmartOptions && name !== "msg") {
             // if this thing is being checked true add that value to the string inside of the searchQuery.search
             // if this thing is being checked false, run the clear filters function
             setSmartOptions({
@@ -349,6 +178,7 @@ const Nav = (props) => {
             });
         }
     }, [searchQuery.search]);
+
     const handleInput = (e) => {
         // console.log(e, "EVENT \n\n\n****************");
         props.setIsDisplayingDropdown(true);
@@ -390,6 +220,7 @@ const Nav = (props) => {
             props.saveSearch(fuzzyFunction(searchQuery.search, searchQuery.filters, emails));
         }
     };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         props.saveStaticSearch();
@@ -402,6 +233,7 @@ const Nav = (props) => {
         }
         props.setIsDisplayingDropdown(false)
     };
+
     const toggleSearchOptions = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -422,62 +254,67 @@ const Nav = (props) => {
     }, [searchQuery]);
     
     function emailToDisplayInThread(emailObj) {
+        console.log('emailToDisplayInThread CLICKED')
         emailObj.email_body === "false" || emailObj.email_body === "0"
             ? props.changeIsLoaded(true)
             : props.changeIsLoaded(false);
         props.changeThreadContact(emailObj);
     }
 
+
+    const handleSlidebar = () => {
+        props.setSliding(!props.slidebar)
+        console.log('slidebar is', props.slidebar)
+    }
+
     return (
         <div className="top row">
-            <div className="sidebar-btn btn">
+            <div className="sidebar-btn btn" onClick={handleSlidebar}>
                 <FontAwesomeIcon icon={faBars} />
             </div>
-            <h1>Tagger</h1>
-            <S.MidSection>
-                <S.Top>
+            <div className="logo">
+                <h1>Tagger</h1>
+            </div>
+            <div className="nav-mid">
+                <section className="row">
                     {useSmartOptions ? (
                         <SmartSearchBar
                             smartOptions={smartOptions}
-                            S={[S]}
+                            // S={[S]}
                             sendSearch={props.smartSearch}
                             userEmail={props.userEmail}
                         />
                     ) : (
                         <FuzzySearchBar
-                            functions={[removeFilter, handleInput, searchQuery, S, handleSubmit]}
+                            functions={[removeFilter, handleInput, searchQuery, handleSubmit]}
                         />
                     )}
 
-                    <S.Button onClick={toggleSearchOptions} className="filter">
+                    <button onClick={toggleSearchOptions} className="filter">
                         Filters
                         {showSearchOptions ? (
                             <i className="fa fa-times filter"></i>
                         ) : (
                             <i className="fa fa-filter filter"></i>
                         )}
-                    </S.Button>
-                </S.Top>
-                <S.Bottom
-                    heightLeft={props.isDisplayingDropdown ? "330px" : "0px"}
-                    boxshadowLeft={
-                        props.isDisplayingDropdown ? "0px 0px 2px 1px #949494" : "none"
-                    }
-                    heightRight={showSearchOptions ? "initial" : "0px"}
-                    boxshadowRight={showSearchOptions ? "0px 0px 2px 1px #949494" : "none"}
-                >
+                    </button>
+                </section>
+                <section>
                     <div className="left">
+                        
                         {props.results.length > 0 && props.isDisplayingDropdown ? (
-                            <S.SearchDropdown
+                            <section
                                 className="searchDropDown"
                                 id="dropDown"
                                 onMouseOver={() => {
                                     clearArrowHighlight(searchQuery, setSearchQuery);
                                 }}
                             >
+                                
                                 {" "}
                                 {searchQuery.results.map((eachEmail, i) => {
                                     return (
+                                        <>
                                         <SearchBarResult
                                             key={i}
                                             functions={[
@@ -491,10 +328,12 @@ const Nav = (props) => {
                                             ]}
                                             email={eachEmail}
                                         />
+                                        </>
                                     );
                                 })}
-                            </S.SearchDropdown>
+                            </section>
                         ) : null}
+                        
                     </div>
                     <div className="right filter">
                         {showSearchOptions ? (
@@ -503,18 +342,19 @@ const Nav = (props) => {
                             />
                         ) : null}
                     </div>
-                </S.Bottom>
-            </S.MidSection>
-            <S.SmartSearchToggle
+                </section>
+            </div>
+            <button className="smart-search-btn"
                 onClick={() => {
                     setUseSmartOptions(!useSmartOptions);
                 }}
             >
                 Smart Search
-            </S.SmartSearchToggle>
+            </button>
 
-            <S.User>
-                <S.Avatar
+            <Menu showMenu={showMenu} setshowMenu={setshowMenu} />
+            {/* <div className="user-avatar">
+                <img
                     onClick={() => {
                         setshowMenu(!showMenu);
                     }}
@@ -522,11 +362,11 @@ const Nav = (props) => {
                     alt="Avatar"
                 />
                 <Menu showMenu={showMenu} setshowMenu={setshowMenu} />
-            </S.User>
+            </div> */}
         </div>
     );
 };
-function mapStateToProps({ searchbar, imap, user, inbox }) {
+function mapStateToProps({ searchbar, imap, user, inbox}) {
     return {
         results: searchbar.searchResults,
         emails: imap.emails,
@@ -546,5 +386,6 @@ export default connect(mapStateToProps, {
     clearSmartSearch,
     setIsDisplayingInSnippets,
     setIsDisplayingDropdown,
-    saveStaticSearch
+    saveStaticSearch,
+    setSliding
 })(Nav);

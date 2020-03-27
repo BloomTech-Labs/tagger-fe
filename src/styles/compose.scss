@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    z-index: 10;
+    z-index: 250;
   }
   
 .compose-card {
@@ -21,7 +21,7 @@
   height: 70vh;
   padding:2rem;
   border-radius: 5px;
-  z-index: 100;
+  z-index: 999;
 
   textarea {
     height: 50%;
@@ -44,5 +44,38 @@
   
   .close:hover {
     color: $darkGrey;
+  }
+}
+
+.compose-circle-btn {
+  display: none;
+}
+
+$breakpoint-tablet: 1024px;
+@media (max-width: $breakpoint-tablet) {
+
+  .compose-card {
+    width: 100vw;
+    height: 100vh;
+    top:0;
+    left:0;
+    border-radius: 0px;
+  }
+
+  .compose-circle-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    position: fixed;
+    z-index: 20;
+    background-color: $accentBlue;
+    color:$white;
+    font-size: 2rem;
+    font-weight: bold;
+    bottom: 3rem;
+    right:3rem;
+    height: 60px;
+    width: 60px;
   }
 }

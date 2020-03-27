@@ -18,7 +18,6 @@ import Compose from '../compose/Compose';
 
 const Inbox = props => {
   const [token, setToken] = useState("");
-  const [isCompose, setIsCompose] = useState(false);
 
   useEffect(() => {
     const url = props.history.location.hash;
@@ -70,7 +69,7 @@ const Inbox = props => {
   return (
     <>
     <main>
-      <Sidebar token={token} setIsCompose={setIsCompose} />
+      <Sidebar token={token} />
       <Emails
         onClick={() => {
           props.setIsDisplayingDropdown(false);
@@ -78,12 +77,12 @@ const Inbox = props => {
         token={token}
       />
     </main>
-    {isCompose && <Compose token={props.token} setIsCompose={setIsCompose} />}
+    {props.isComposing && <Compose token={props.token} />}
     </>
   );
 };
 
-const mapStateToProps = ({ imap, user, contacts, inbox, searchbar }) => ({
+const mapStateToProps = ({ imap, user, contacts, inbox, searchbar, composer }) => ({
   emailAddress: user.emailAddress,
   user_id: user.user_id,
   userPhotoUrl: user.userPhotoUrl,
@@ -97,7 +96,8 @@ const mapStateToProps = ({ imap, user, contacts, inbox, searchbar }) => ({
   sentEmails: inbox.sentEmails,
   boxes: user.boxes,
   areBoxesRetrieved: user.areBoxesRetrieved,
-  isModelTrained: searchbar.isModelTrained
+  isModelTrained: searchbar.isModelTrained,
+  isComposing: composer.isComposing
 });
 
 const mapDispatchToProps = dispatch =>

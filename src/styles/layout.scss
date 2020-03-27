@@ -12,7 +12,6 @@
 
 .top {
     height: 64px;
-    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid $border;
     font-size: 0.9rem;
@@ -22,6 +21,156 @@
     width: 100vw;
     z-index: 10;
     padding:0 2rem;
+
+    .sidebar-btn {
+        display: none;
+    }
+
+    .logo {
+        width: 230px;
+    }
+
+    .nav-mid {
+        min-width: calc((100vw - 260px) / 2);
+        height: 100%;
+    }
+
+    input[name='search']{
+        height: 2.5rem;
+        width: calc((100vw - 260px) / 2);
+        background-color: $bg;
+        border: 1px solid $white;
+        border-radius: 5px;
+        padding: 0 1rem;
+
+        &:focus {
+            background-color: $white;
+            outline: none;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border:1px solid $border;
+        }
+
+        &:active {
+            background-color: $white;
+        }
+    }
+
+    .left {
+        background-color: $white;
+        width: calc((100vw - 260px) / 2);
+        height: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        // overflow: hidden;
+        max-height: 16rem;
+        border-left:1px solid $border;
+        border-right:1px solid $border;
+        //border-bottom:1px solid $border;
+        // border-top: none;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        box-sizing: border-box;
+        -ms-overflow-style: none;
+        
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .user-avatar {
+        position: absolute;
+        right:2rem;
+        
+        img {
+            border-radius: 50%;
+            height: 40px;
+        }
+    }
+}
+
+/* Search Result */
+
+.search-result {
+    border-bottom:1px solid $border;
+    border-top:none;
+    width: 100%;
+    height: 4rem;
+    padding:0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: $bg-light;
+    }
+
+    .envelope {
+        height: 40px;
+        width: 50px;
+        margin: 0px 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;        
+    }
+
+    .search-result-content {
+        width:calc(((100vw - 260px) / 2) - 150px);
+        // min-width: 70%;
+        // max-width: 70%;
+        height: 100%;
+        justify-content: flex-start;
+        pointer-events: all;
+
+        .search-result-subject {
+            min-width: 100%;
+            max-width: 100%;
+            height: 33%;
+            overflow: hidden;
+            white-space: nowrap;
+            word-break: break-word;
+            text-align: left;
+            text-overflow: ellipsis;
+            padding: 1px;
+        }
+
+        .search-result-body {
+            min-width: 100%;
+            max-width: 100%;
+            height: 33%;
+            overflow: hidden;
+            white-space: nowrap;
+            word-break: break-word;
+            text-align: left;
+            text-overflow: ellipsis;
+            padding: 1px;
+        }
+
+        .search-result-participants {
+            min-width: 100%;
+            max-width: 100%;
+            height: 33%;
+            overflow: hidden;
+            white-space: nowrap;
+            word-break: break-word;
+            text-align: left;
+            text-overflow: ellipsis;
+            padding: 1px;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            font-weight: 900;
+            color: #17191dad;
+        }
+    }
+
+    .search-result-date {
+        height: 100%;
+        width: 80px;
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+    }
 }
 
 main {
@@ -95,8 +244,6 @@ main {
     width: calc(100vw - 600px - 260px - 0.3rem)
 }
 
-
-
 .analytics-bar {
     position: fixed;
     right:0px;
@@ -105,17 +252,6 @@ main {
     width: 260px;
     background-color: $white;
     margin-top: 0.3rem;
-    padding:0.5rem;
-}
-
-.analytics-bar-close {
-    font-size: 1rem;
-    color: $grey;
-}
-
-.analytics-bar-avatar {
-    font-size: 5rem;
-    color:$accentBlue;
 }
 
 .logout {
@@ -127,6 +263,12 @@ main {
     }
 }
 
+.end {
+    align-self: flex-end;
+    margin-right: 0rem;
+    margin-left: 1rem;
+}
+
 /* Yannick */
 form {
     margin-top: 10px;
@@ -134,15 +276,63 @@ form {
     height: 40px;
 }
 
-.end {
-    align-self: flex-end;
-    margin-right: 0rem;
-    margin-left: 1rem;
-  }
+/* HIDDEN */
+.filter, .smart-search-btn {
+    display: none;
+}
+
 
 /* Tablet */
 $breakpoint-tablet: 1024px;
 @media (max-width: $breakpoint-tablet) {
+
+    .top {
+
+        .logo {
+            width: 75px;
+        }
+
+        h1 {
+            display: none;
+        }
+
+        .sidebar-btn {
+            display: inline-block;
+        }
+
+        .nav-mid {
+            min-width: calc((100vw) / 1.5);
+            height: 100%;
+        }
+
+        input[name='search']{
+            height: 2.5rem;
+            width: calc((100vw - 100px) / 1.5);
+            background-color: $bg;
+            border: 1px solid $white;
+            border-radius: 5px;
+            padding: 0 1rem;
+    
+            &:focus {
+                background-color: $white;
+                outline: none;
+                border-top-right-radius: 5px;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 0px;
+                border-bottom-right-radius: 0px;
+                border:1px solid $border;
+            }
+    
+            &:active {
+                background-color: $white;
+            }
+        }
+
+        .left {
+            width:calc(((100vw - 100px) / 1.5));
+        }
+    }
+    
     .sidebar {
         visibility: hidden;
         position: fixed;
@@ -150,6 +340,27 @@ $breakpoint-tablet: 1024px;
         top:64px;
         width: 260px;
         height: calc(100vh - 64px);    
+    }
+    
+    #slidebar {
+        visibility: visible;
+        position: fixed;
+        left:0;
+        top:64px;
+        width: 260px;
+        height: calc(100vh - 64px);
+        z-index: 200;
+    }
+
+    .analytics-bar {
+        position: fixed;
+        right:0px;
+        top:64px;
+        height: calc(100vh - 64px);
+        width: 260px;
+        background-color: $white;
+        margin-top: 0.3rem;
+        z-index: 200;
     }
 
     .email-list {
@@ -171,12 +382,18 @@ $breakpoint-tablet: 1024px;
     .email-body {
         position: absolute;
         left: 340px;
-        width: calc(100vw - 340px);
+        width: calc(100vw - 340px - 0.3rem);
         top:64px;
         background-color: $white;
         height: calc(100vh - 64px);
         margin-top: 0.3rem;
     }
+
+    #email-body-analytics {
+        width: calc(100vw - 340px - 0.3rem)
+    }
+
+    /* Yannick */
     
 }
 
@@ -184,10 +401,42 @@ $breakpoint-tablet: 1024px;
 /* Mobile */
 $breakpoint-mobile: 480px;
 @media (max-width: $breakpoint-mobile) {
-  
+
+    .logo {
+        width: 50px;
+    }
+    
+    .nav-mid {
+        min-width: calc((100vw) / 1.5);
+        height: 100%;
+    }
+
+    input[name='search']{
+        height: 2.5rem;
+        width: calc((100vw) / 1.5);
+        background-color: $bg;
+        border: 1px solid $white;
+        border-radius: 5px;
+        padding: 0 1rem;
+
+        &:focus {
+            background-color: $white;
+            outline: none;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border:1px solid $border;
+        }
+
+        &:active {
+            background-color: $white;
+        }
+    }
+
     .email-list-min {
-        display: hidden;
-        position: absolute;
+        visibility: hidden;
+        position: fixed;
         left:260px;
         top:64px;
         width: 340px;
@@ -203,4 +452,133 @@ $breakpoint-mobile: 480px;
         height: calc(100vh - 64px);
         margin-top: 0.3rem;
     }
+
+    #email-body-analytics {
+        width: 100vw;
+    }
+
+    /* Yannick */
+}
+
+.reply{
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 95%;
+        background-color: white;
+        border-radius: 15px;
+        padding: 0% 3%;
+        box-sizing: border-box;
+        box-shadow: 0 0 9px 1px #00000059;
+
+
+        .reply-form {
+
+          width: 100%;
+          
+        }
+
+        .label-container {
+
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        label {
+            width: 100%;
+            display: flex;
+            padding-top: 7px;
+            padding-bottom: 5px;
+            span {
+                width: 65px;
+                margin-left: 5%;
+            }
+            .ContactButton {
+                width: 100%;
+                height: fit-content;
+                display: flex;
+                flex-wrap: wrap;
+            }
+        }
+
+        }
+        
+        .label-input {
+            
+            width: 98%;
+            // margin-left: 2%;
+            border-radius: 2px;
+        }
+
+        .label-textarea {
+
+        width: 100%;
+        height: 35vh;
+        border-color: #cccccc;
+
+        }
+
+        .label-footer {
+            
+            display: flex;
+            align-items: center;
+            width: 99.8%;
+            height: 80px;
+            justify-content: flex-end; 
+        }
+
+        .reply-cancel {
+
+            border-radius: 5px;
+        width: 8vw;
+        height: 40px;
+        font-size: 1.1rem;
+        background-color: white;
+        color: #007bff;
+        cursor: pointer;
+        :hover {
+            color: white;
+            background-color: #007bff;
+            text-shadow: 0px 2px black;
+        }
+        :active {
+            background: #b8bac1;
+            -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+            -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+            box-shadow: inset 0px 0px 5px #c1c1c1;
+            outline: none;
+        }
+        
+        }
+        
+        .reply-send {
+
+            border-radius: 5px;
+        width: 8vw;
+        height: 40px;
+        font-size: 1.1rem;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        :hover {
+            color: #007bff;
+            background-color: #e6e7e8;
+            text-shadow: 0px 1px #0000004f;
+        }
+        :active {
+            background: #b8bac1;
+            -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+            -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+            box-shadow: inset 0px 0px 5px #c1c1c1;
+            outline: none;
+        }
+            
+        
+
+        
+
+}
+
+
 }

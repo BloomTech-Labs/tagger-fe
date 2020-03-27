@@ -30,7 +30,7 @@ const ThreadMessage = props => {
     <SimpleBar forceVisible="y" autoHide={true} style={{height:'100%'}}>
     <div className="thread-window">
       <div className="thread-head row">
-        <div className="thread-contact row">
+        <div className="thread-contact row btn">
           {/* The onClick for avatar sets the analytics contact  */}
           <FontAwesomeIcon icon={faUserCircle} onClick={() => setContact()} className="thread-avatar" />
           {/* this ternary checks if the snippetsFilter is set to "\Sent" or "\Draft" and if it is, it maps over the to array from the email object to display every email address the email was sent to. If the snippetsFilter is not set to "\Sent" or "\Draft" it displays the name of whoever sent the email if they have one, otherwise it displays the email of whoever sent it to */}

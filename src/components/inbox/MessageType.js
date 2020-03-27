@@ -3,8 +3,8 @@ import React, { useState, useEffect }from "react";
 import "simplebar/dist/simplebar.min.css";
 // import {faUserCirle, faReply, faReplyall, faShareSquare, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawsome";
-// import Reply from './Reply';
-// import Replyall from './ReplyAll';
+
+
 
 export default function MessageType(props) {
     const [reply, setReply ] = useState();
