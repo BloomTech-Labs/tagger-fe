@@ -7,7 +7,8 @@ import {
     changeThreadContact,
     changeIsDisplayingThread,
     changeAnalyticsContact,
-    changeIsDisplayingAnalytics
+    changeIsDisplayingAnalytics,
+    setBackButton
 } from "../../actions";
 import { setAnalyticsContact } from "./helpers/AnalyticsHelper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,6 +25,7 @@ const Snippet = (props) => {
             ? props.changeIsLoaded(true)
             : props.changeIsLoaded(false);
         props.changeThreadContact(emailObj);
+        props.setBackButton(true);
     };
 
     // This function converts the unix date string to a readable date
@@ -108,7 +110,8 @@ const mapDispatchToProps = (dispatch) =>
             changeIsDisplayingThread,
             changeAnalyticsContact,
             changeIsDisplayingAnalytics,
-            changeIsLoaded
+            changeIsLoaded,
+            setBackButton
         },
         dispatch
     );

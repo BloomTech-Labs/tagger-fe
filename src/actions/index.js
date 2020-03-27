@@ -4,3 +4,4 @@ export * from "./searchbarActions";
 export * from "./composerActions";
 export * from "./contactsActions";
 export * from "./sidebarActions";
+export * from "./backButtonActions";

@@ -107,7 +107,7 @@ const Reply = (props) => {
                         <div className="ContactButton">
                             {addresses.map((address, index) => {
                                 return (
-                                    <divButton
+                                    <ContactButton
                                         key={`ContactButton${index}`}
                                         text={address}
                                         index={index}
@@ -177,22 +177,3 @@ const mapDispatchToProps = {
     sendEmail
 };
 export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Reply);
-
-
-// <div>
-// 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//

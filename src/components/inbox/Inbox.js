@@ -47,17 +47,19 @@ const Inbox = props => {
       .join("");
     return token;
   }
-  function extractIdTokenFromUrl(urlString) {
-    const tokenStartIndex = urlString.indexOf("id_token=");
-    const tokenEndIndex = urlString
-      .substring(tokenStartIndex, urlString.length - 1)
-      .indexOf("&");
-    const id_token = urlString.substring(
-      tokenStartIndex + 9,
-      tokenStartIndex + tokenEndIndex
-    );
-    return id_token;
-  }
+
+  // COMMENTED OUT BY MILO
+  // function extractIdTokenFromUrl(urlString) {
+  //   const tokenStartIndex = urlString.indexOf("id_token=");
+  //   const tokenEndIndex = urlString
+  //     .substring(tokenStartIndex, urlString.length - 1)
+  //     .indexOf("&");
+  //   const id_token = urlString.substring(
+  //     tokenStartIndex + 9,
+  //     tokenStartIndex + tokenEndIndex
+  //   );
+  //   return id_token;
+  // }
   useEffect(() => {
     const email = props.emailAddress;
     const token = props.token;

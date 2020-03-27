@@ -9,6 +9,7 @@ import { searchbarReducer } from "./searchbarReducer";
 import { composerReducer } from "./composerReducer";
 import { contactsReducer } from "./contactsReducer";
 import { sidebarReducer } from "./sidebarReducer";
+import { backButtonReducer } from './backButtonReducer';
 //import { smartSearch } from "../actions";
 
 const rootReducer = combineReducers({
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     searchbar: searchbarReducer,
     composer: composerReducer,
     contacts: contactsReducer,
-    sidebar: sidebarReducer
+    sidebar: sidebarReducer,
+    back: backButtonReducer
 });
 
 let store;

@@ -1,98 +1,26 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
-//import styled from "styled-components";
+
+// Testing by Milo
+import { withRouter } from "react-router-dom";
+import { bindActionCreators, compose } from "redux";
+import { connect } from "react-redux";
+import {
+    changeIsLoaded,
+    changeThreadContact,
+    setBackButton
+} from "../../actions";
 
 const moment = require("moment");
 
-// const S = {
-//     Result: styled.div`
-//         width: 99%;
-//         box-sizing: border-box;
-//         height: 50px;
-//         display: flex;
-//         align-items: center;
-//         margin-bottom: 5px;
-//         background-color: ${(props) => props.simulateFocusBackgroundColor};
-//         border-left: ${(props) => props.simulateFocusBorder};
-//         :hover {
-//             background-color: #f0f8ffa6;
-//             border-left: 4px solid #0000ff99;
-//         }
-//         :active {
-//             background-color: #50becaad;
-//             text-shadow: 1px 0px 0px #000000a1;
-//         }
-//         i {
-//             height: 40px;
-//             width: 50px;
-//             margin: 0px 2px;
-//             display: flex;
-//             justify-content: center;
-//             align-items: center;
-//         }
-//         .content {
-//             min-width: 70%;
-//             max-width: 70%;
-//             height: 100%;
-//             display: flex;
-//             flex-direction: column;
-//             justify-content: flex-start;
-//             .subject {
-//                 min-width: 100%;
-//                 max-width: 100%;
-//                 height: 33%;
-//                 overflow: hidden;
-//                 white-space: nowrap;
-//                 word-break: break-word;
-//                 text-align: left;
-//                 text-overflow: ellipsis;
-//                 padding: 1px;
-//             }
-//             .body {
-//                 min-width: 100%;
-//                 max-width: 100%;
-//                 height: 33%;
-//                 overflow: hidden;
-//                 white-space: nowrap;
-//                 word-break: break-word;
-//                 text-align: left;
-//                 text-overflow: ellipsis;
-//                 padding: 1px;
-//             }
-//             .participants {
-//                 min-width: 100%;
-//                 max-width: 100%;
-//                 height: 33%;
-//                 overflow: hidden;
-//                 white-space: nowrap;
-//                 word-break: break-word;
-//                 text-align: left;
-//                 text-overflow: ellipsis;
-//                 padding: 1px;
-//                 font-size: 0.8rem;
-//                 letter-spacing: 1.5px;
-//                 font-weight: 900;
-//                 color: #17191dad;
-//             }
-//         }
-
-//         .date {
-//             height: 100%;
-//             width: 15%;
-//             display: flex;
-//             align-items: center;
-//             padding: 0 5px;
-//         }
-//     `
-// };
 const SearchBarResult = props => {
 
     const [setShowSearchOptions, emailToDisplayInThread, setIsDisplayingDropdown] = props.functions; // removed by Milo clearSearch, clearSmartSearch, setSearchQuery, searchQuery
 
     function clearSearchAndLoadResult(e) {
-        e.preventDefault();
-        console.log('search result clicked')
+        e.stopPropagation();
+        console.log('SEARCH RESULT CLICKED')
         //todo add clear smart search results
         setShowSearchOptions(false);
         // clearSmartSearch();
@@ -134,32 +62,24 @@ const SearchBarResult = props => {
             return `${props.email.name}:(${props.email.from})`;
         }
     }
-    // const testingFunction = () => {
-    //     alert('Hi')
-    // }
+
+    // Testing by Milo
+    const setThreadContact = () => {
+        console.log('SEARCH RESULT CLICKED')
+        const emailObj = props.email;
+        emailObj.email_body === "false" || emailObj.email_body === "0"
+            ? props.changeIsLoaded(true)
+            : props.changeIsLoaded(false);
+        props.changeThreadContact(emailObj);
+        setIsDisplayingDropdown(false);
+        props.setBackButton(true)
+    };
+
     return (
-        // <div
-        //     className="search-result row"
-        //     key={props.email.message_id || props.key}
-        //     onClick={clearSearchAndLoadResult}
-        //     simulateFocusBackgroundColor={props.email.simulateFocus ? "#f0f8ffa6" : "none"}
-        //     simulateFocusBorder={props.email.simulateFocus ? "4px solid #0000ff99" : "none"}
-        // >
-        //     <i className="fa fa-envelope"></i>
-        //     <section className="content">
-        //         <div className="subject">{props.email.subject}</div>
-        //         <div className="body">{props.email.email_body_text}</div>
-        //         <div className="participants">{showParticipants()}</div>
-        //     </section>
-        //     <span className="date">
-        //         <h4>{showDate()}</h4>
-        //     </span>
-        // </div>
-        <>
         <div className="search-result row"
             key={props.email.message_id || props.key}
-            onClick={clearSearchAndLoadResult}
-            //onClick={testingFunction}
+            //onClick={clearSearchAndLoadResult} ORIGINAL
+            onClick={setThreadContact}
         >
             <span className="envelope">
                 <FontAwesomeIcon icon={faEnvelope} />
@@ -173,8 +93,19 @@ const SearchBarResult = props => {
                 <h4>{showDate()}</h4>
             </span>            
         </div>
-        </>
     );
 }
 
-export default SearchBarResult;
+//export default SearchBarResult;
+
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators(
+        {
+            changeThreadContact,
+            changeIsLoaded,
+            setBackButton
+        },
+        dispatch
+    );
+
+export default compose(withRouter, connect(null,mapDispatchToProps))(SearchBarResult);

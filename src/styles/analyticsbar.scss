@@ -46,3 +46,11 @@
         font-size: 1.2rem;
     }
 }
+
+$breakpoint-tablet: 1024px;
+@media (max-width: $breakpoint-tablet) {
+    .analytics-bar {
+        border-top:1px solid $border;
+        border-left:1px solid $border;
+    }
+}
