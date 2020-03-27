@@ -20,14 +20,16 @@ import { saveSearch,
      setIsDisplayingInSnippets,
      setIsDisplayingDropdown,
      saveStaticSearch,
-     setSliding
+     setSliding,
+     setBackButton,
+     changeIsDisplayingThread
 } from "../../actions";
 import FuzzySearchBar from "./FuzzySearchBar";
 import SmartSearchBar from "./SmartSearchBar";
 import FilterOptions from "./FilterOptions";
 import Menu from "./Menu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Nav = (props) => {
     const [searchQuery, setSearchQuery] = useState({
@@ -267,11 +269,31 @@ const Nav = (props) => {
         console.log('slidebar is', props.slidebar)
     }
 
+    const handleBackToEmailList = () => {
+        props.setBackButton(false)
+        props.changeIsDisplayingThread(!props.isDisplayingThread)
+    }
+    console.log('BACK BUTTON STATE IS',props.backButton)
+
     return (
         <div className="top row">
+            {/* Below Div is for mobile */}
+            <div className="back-or-bar">
+                {props.backButton ? (
+                    <div className="back-btn btn" onClick={handleBackToEmailList}>
+                        <FontAwesomeIcon icon={faArrowLeft} />
+                    </div>
+                ) : (
+                    <div className="sidebar-mob-btn btn" onClick={handleSlidebar}>
+                        <FontAwesomeIcon icon={faBars} />
+                    </div>
+                )}
+            </div>
+            {/* Below Div is for Tablet */}
             <div className="sidebar-btn btn" onClick={handleSlidebar}>
                 <FontAwesomeIcon icon={faBars} />
             </div>
+            {/* Below Div is for Desktop */}
             <div className="logo">
                 <h1>Tagger</h1>
             </div>
@@ -366,7 +388,7 @@ const Nav = (props) => {
         </div>
     );
 };
-function mapStateToProps({ searchbar, imap, user, inbox}) {
+function mapStateToProps({ searchbar, imap, user, inbox, back}) {
     return {
         results: searchbar.searchResults,
         emails: imap.emails,
@@ -374,7 +396,9 @@ function mapStateToProps({ searchbar, imap, user, inbox}) {
         threadContactEmailAddress: inbox.threadContactEmailAddress,
         userEmail: user.emailAddress,
         smartResults: searchbar.smartSearchResults,
-        isDisplayingDropdown: searchbar.isDisplayingDropdown
+        isDisplayingDropdown: searchbar.isDisplayingDropdown,
+        backButton:back.backButton,
+        isDisplayingThread: inbox.isDisplayingThread
     };
 }
 export default connect(mapStateToProps, {
@@ -387,5 +411,7 @@ export default connect(mapStateToProps, {
     setIsDisplayingInSnippets,
     setIsDisplayingDropdown,
     saveStaticSearch,
-    setSliding
+    setSliding,
+    setBackButton,
+    changeIsDisplayingThread
 })(Nav);
