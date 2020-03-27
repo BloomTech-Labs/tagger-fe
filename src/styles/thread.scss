@@ -3,7 +3,6 @@
     padding:0.6rem;
     margin-right: 0.3rem;
 
-
     .thread-head {
         
         width: 100%;
@@ -65,3 +64,24 @@
     }
 }
 
+$breakpoint-mobile: 480px;
+@media (max-width: $breakpoint-mobile) {
+
+    .thread-window {
+        margin-right:0;
+        padding:0.3rem;
+        padding-top: 1rem;
+
+        .thread-head {
+            margin-bottom: 2rem;
+
+            .thread-contact {
+                margin-left: 0.5rem;
+            }
+
+            .thread-actions {
+                margin-right: 0rem;
+            }
+        }
+    }
+}

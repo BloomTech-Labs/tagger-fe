@@ -13,7 +13,8 @@ import {
   setSnippetFilter,
   clearSmartSearch,
   changeIsComposing,
-  setIsDisplayingInSnippets
+  setIsDisplayingInSnippets,
+  setSliding
 } from "../../actions";
 //import ComposeComponent from "../compose/Compose";
 
@@ -27,6 +28,7 @@ const Sidebar = props => {
     props.clearSmartSearch();
     props.setSnippetFilter(filterName);
     props.setIsDisplayingInSnippets(false);
+    props.setSliding(false)
   };
 
   return (
@@ -77,7 +79,8 @@ const mapDispatchToProps = dispatch =>
       changeIsComposing,
       setSnippetFilter,
       clearSmartSearch,
-      setIsDisplayingInSnippets
+      setIsDisplayingInSnippets,
+      setSliding
     },
     dispatch
   );

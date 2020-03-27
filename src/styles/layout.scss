@@ -449,6 +449,21 @@ $breakpoint-mobile: 480px;
         }
     }
 
+    .search-result {
+
+        .envelope {
+            display: none;
+        }
+
+        .search-result-content {
+            width:80%
+        }
+
+        .search-result-date {
+
+        }
+    }
+
     .email-list-min {
         visibility: hidden;
         position: fixed;

@@ -241,22 +241,21 @@ const Nav = (props) => {
         e.stopPropagation();
         setShowSearchOptions(!showSearchOptions);
     };
-    const closeMenu = (event) => senseMenu(event, setshowMenu);
-    const closeSearch = (event) => senseSearchBar(props, event, searchQuery, setSearchQuery);
+    // const closeMenu = (event) => senseMenu(event, setshowMenu);
+    // const closeSearch = (event) => senseSearchBar(props, event, searchQuery, setSearchQuery);
 
-    useEffect(() => {
-        document.addEventListener("keydown", handleArrowSelect);
-        document.addEventListener("mouseup", closeMenu);
-        document.addEventListener("mouseup", closeSearch);
-        return () => {
-            document.removeEventListener("keydown", handleArrowSelect);
-            document.removeEventListener("mouseup", closeMenu);
-            document.removeEventListener("mouseup", closeSearch);
-        };
-    }, [searchQuery]);
+    // useEffect(() => {
+    //     document.addEventListener("keydown", handleArrowSelect);
+    //     document.addEventListener("mouseup", closeMenu);
+    //     document.addEventListener("mouseup", closeSearch);
+    //     return () => {
+    //         document.removeEventListener("keydown", handleArrowSelect);
+    //         document.removeEventListener("mouseup", closeMenu);
+    //         document.removeEventListener("mouseup", closeSearch);
+    //     };
+    // }, [searchQuery]);
     
     function emailToDisplayInThread(emailObj) {
-        console.log('emailToDisplayInThread CLICKED')
         emailObj.email_body === "false" || emailObj.email_body === "0"
             ? props.changeIsLoaded(true)
             : props.changeIsLoaded(false);
@@ -266,14 +265,12 @@ const Nav = (props) => {
 
     const handleSlidebar = () => {
         props.setSliding(!props.slidebar)
-        console.log('slidebar is', props.slidebar)
     }
 
     const handleBackToEmailList = () => {
         props.setBackButton(false)
         props.changeIsDisplayingThread(!props.isDisplayingThread)
     }
-    console.log('BACK BUTTON STATE IS',props.backButton)
 
     return (
         <div className="top row">
@@ -302,7 +299,6 @@ const Nav = (props) => {
                     {useSmartOptions ? (
                         <SmartSearchBar
                             smartOptions={smartOptions}
-                            // S={[S]}
                             sendSearch={props.smartSearch}
                             userEmail={props.userEmail}
                         />
