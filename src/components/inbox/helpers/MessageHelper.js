@@ -7,16 +7,11 @@ function makeHtmlSafe(untrustedHtml) {
 
   domPurify.setConfig({ ADD_ATTR: ["target"] });
 
-  // domPurify.addHook("uponSanitizeElement", (currentNode, data) => {
-  //   if (currentNode.tagName === "A") {
-  //      const textContent = currentNode.textContent;
-  //      const target = currentNode.target;
-  //      const log = `textContent="${textContent}" target="${target}"`;
-  //      console.log(log);
-  //     currentNode.target = "_blank";
-  //   }
-  //   return currentNode;
-  //});
+  domPurify.addHook("afterSanitizeAttributes", function(node) {
+    if (node.localName === "a") {
+      node.setAttribute("target", "_blank");
+    }
+  });
   
   const sanitizedHtml = domPurify.sanitize(untrustedHtml);
 
