@@ -4,7 +4,7 @@ const initialState = {
     backButton: false
 }
 
-export const backButtonReducer = (state = initialState, {type , payload}) => {
+export const backButtonReducer = (state = initialState, {type}) => {
     switch(type){
         case SET_BACK_BUTTON:
             return {

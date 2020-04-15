@@ -2,18 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { setSliding } from '../../actions';
+import { setSliding, closeEmail } from '../../actions';
 
 const HamburgerButton = props => {
-
-    const backButton = true;
 
     const handleSlidebar = () => {
         props.setSliding(!props.slidebar)
     }
 
     const handleBackToEmailList = () => {
-        //props.setBackButton(false)
+        props.closeEmail()
         //props.changeIsDisplayingThread(!props.isDisplayingThread)
     }
 
@@ -21,7 +19,7 @@ const HamburgerButton = props => {
         <>
         {/* Below Div is for mobile */}
         <div className="back-or-bar">
-            {backButton ? (
+            {props.isViewEmail ? (
                 <div className="back-btn btn" onClick={handleBackToEmailList}>
                     <FontAwesomeIcon icon={faArrowLeft} />
                 </div>
@@ -39,4 +37,8 @@ const HamburgerButton = props => {
     )
 }
 
-export default connect(null,{setSliding})(HamburgerButton);
+const mapStateToProps = ({ viewEmail }) => ({
+    isViewEmail:viewEmail.displayEmailSection
+})
+
+export default connect(mapStateToProps,{setSliding,closeEmail})(HamburgerButton);

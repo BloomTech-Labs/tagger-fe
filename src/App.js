@@ -1,16 +1,18 @@
 import React from 'react';
 //import { Switch } from "react-router-dom";
+import { connect } from 'react-redux';
 import './App.scss';
 import TopBar from './components/topbar/TopBar';
 import Sidebar from './components/sidebar/Sidebar';
 import EmailList from './components/emailList/EmailList';
 import EmailSection from './components/emailSection/EmailSection';
+import AnalyticsBar from './components/analytics/Analytics';
 
 //import LandingPage from "./components/landing/LandingPage";
 //import Inbox from "./components/inbox/Inbox";
 //import PrivateRoute from "./utils/PrivateRoute";
 
-const App = () => {
+const App = props => {
 
     return(
     <>
@@ -18,12 +20,15 @@ const App = () => {
     <TopBar />
     <main>
         <Sidebar />
-        <div className="email-list-min"> {/* or email-list for full width */}
+        <div className={props.isViewEmail ? 'email-list-min' : 'email-list'}> {/* className="email-list-min" or email-list for full width */}
             <EmailList />
         </div>
-        <div className="email-body"> {/* add the id="email-body-analytics" for analytics column */}
-            <EmailSection />
-        </div>
+        {props.isViewEmail && (
+            <div className="email-body" id={props.analyticsBar ? 'email-body-analytics' : null}> {/* add the id="email-body-analytics" for analytics column */}
+                <EmailSection />
+            </div>
+        )}
+        {props.analyticsBar ? <AnalyticsBar /> : null}
     </main>
     {/* <Switch> */}
         {/* TO SAVE TIME IN DEVELOPMENT, UNCOMMENT TO OVERRIDE "/" */}
@@ -38,7 +43,12 @@ const App = () => {
     )
 }
 
-export default App;
+const mapStateToProps = ({analyticsbar, viewEmail}) => ({
+    analyticsBar:analyticsbar.analyticsbar,
+    isViewEmail:viewEmail.displayEmailSection
+})
+
+export default connect(mapStateToProps)(App);
 
 // import React, { useEffect } from "react";
 // import { Route, Switch, withRouter } from "react-router-dom";

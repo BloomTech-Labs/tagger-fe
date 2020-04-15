@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { getEmails } from '../../actions';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInbox,
@@ -6,22 +8,28 @@ import {
   faEnvelope
 } from "@fortawesome/free-solid-svg-icons";
 
-const Folders = () => {
+const Folders = props => {
 
-    const setFilter = () => {
+  const [ label, setLabel ] = useState('inbox')
 
-    }
+  const setFilter = (folder) => {
+    setLabel(folder)
+  }
 
+  useEffect(() => {
+    props.getEmails(label)
+  },[label])
+  
     return (
         <nav>
         {/* this onClick sets the snippets to filter email by received */}
-        <li onClick={() => setFilter("\\Inbox")}><FontAwesomeIcon icon={faInbox} />Inbox</li>
+        <li onClick={() => setFilter("inbox")}><FontAwesomeIcon icon={faInbox} />Inbox</li>
         {/* this onClick sets the snippets to filter email by sent */}
-        <li onClick={() => setFilter("\\Sent")}><FontAwesomeIcon icon={faEnvelope} />Sent</li>
+        <li onClick={() => setFilter('sent')}><FontAwesomeIcon icon={faEnvelope} />Sent</li>
         {/* this onClick sets the snippets to filter email by drafts */}
-        <li onClick={() => setFilter("\\Draft")}><FontAwesomeIcon icon={faFolderOpen} />Draft</li>
+        <li onClick={() => setFilter('draft')}><FontAwesomeIcon icon={faFolderOpen} />Draft</li>
       </nav>
     )
 }
 
-export default Folders;
+export default connect(null,{getEmails})(Folders);

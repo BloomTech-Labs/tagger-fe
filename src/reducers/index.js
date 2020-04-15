@@ -9,7 +9,9 @@ import { searchbarReducer } from "./searchbarReducer";
 import { composerReducer } from "./composerReducer";
 import { contactsReducer } from "./contactsReducer";
 import { sidebarReducer } from "./sidebarReducer";
-import { backButtonReducer } from './backButtonReducer';
+//import { backButtonReducer } from './backButtonReducer';
+import { analyticsBarReducer } from './analyticsBarReducer'; // added the anaylytics bar to the store. 
+import { viewEmailReducer } from './viewEmailReducer';
 //import { smartSearch } from "../actions";
 
 const rootReducer = combineReducers({
@@ -20,7 +22,9 @@ const rootReducer = combineReducers({
     composer: composerReducer,
     contacts: contactsReducer,
     sidebar: sidebarReducer,
-    back: backButtonReducer
+    //back: backButtonReducer,
+    analyticsbar: analyticsBarReducer, // this is the reducer i added.
+    viewEmail:viewEmailReducer
 });
 
 let store;

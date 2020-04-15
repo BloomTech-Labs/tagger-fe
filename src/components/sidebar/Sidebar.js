@@ -6,7 +6,7 @@ import Tags from './Tags';
 
 const Sidebar = props => {
     return (
-        <div className="sidebar col" id={props.sidebar.sliderbar && 'slidebar'}>
+        <div className="sidebar col" id={props.sidebar && 'slidebar'}>
             <ComposeButton />
             <Folders />
             <Tags />
@@ -15,7 +15,7 @@ const Sidebar = props => {
 }
 
 const mapStateToProps = ({sidebar}) => ({
-    sidebar:sidebar
+    sidebar:sidebar.sliderbar
 })
 
 export default connect(mapStateToProps)(Sidebar);

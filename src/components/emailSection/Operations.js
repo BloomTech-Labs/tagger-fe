@@ -4,7 +4,7 @@ const Operation = props => {
 
     const setOperation = () => {
         props.setOperation({
-            isHidden:false,
+            isHidden:true,
             messageType:null
         })
     }
@@ -26,8 +26,8 @@ const Operation = props => {
         <textarea>
 
         </textarea>
-        <input type="button" value="Send" onClick={setOperation}/>
-        <input type="button" value="Discard" onClick={setOperation}/>
+        <input type="button" value="Send" onClick={setOperation} className="btn send"/>
+        <input type="button" value="Discard" onClick={setOperation} className='btn discard'/>
         </>
     )
 };

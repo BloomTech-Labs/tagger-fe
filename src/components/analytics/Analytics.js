@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { setAnalyticsBar } from '../../actions';
 import Bars from './Bars';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,15 +10,15 @@ import { faUserCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 const Analytics = props => {
 
    const closeAnalytics = () => {
-       // an action is going to go in here from an actions passed onto the onclick 
+        props.setAnalyticsBar(false)
    }
-    return (
 
+    return (
         <div className="analytics-bar">
-            <FontAwesomeIcon icon={faUserCircle} className= "analytics-bar-close btn" onclick={() => closeAnalytics()}/>
+            <FontAwesomeIcon icon={faTimesCircle} className= "analytics-bar-close btn" onClick={closeAnalytics}/>
 
             <div className= "analytics-avatar col">
-            <FontAwesomeIcon icon={faUserCicle} className="analytics-bar-avatar"/>
+            <FontAwesomeIcon icon={faUserCircle} className="analytics-bar-avatar"/>
             <h2>{/* this displays the contact name.... which was passed via props */}</h2>
             {/* maps over over the everyone it was sent to. prevously it was done mapping over a to object */}
         
@@ -25,7 +27,7 @@ const Analytics = props => {
             <div className="analytics-body">
 
              <p>Sent messages</p>
-              <Bars totalEmails={totalEmails} /> 
+              <Bars /> 
 
              <p>Sent messages</p>
                <Bars/>
@@ -39,4 +41,4 @@ const Analytics = props => {
     );
 };
 
-export default Analytics;
+export default connect(null,{setAnalyticsBar})(Analytics);

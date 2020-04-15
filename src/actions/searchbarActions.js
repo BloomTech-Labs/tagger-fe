@@ -1,11 +1,8 @@
 import axios from "axios";
 
+const url = process.env.REACT_APP_BACKENDURL;
 
-const url = process.env.REACT_APP_BACKENDURL
-    ? process.env.REACT_APP_BACKENDURL
-    : "http://localhost:8000/";
 
-console.log("URL", url);
 
 // =============================================================================
 // S E A R C H  B A R  A C T I O N S  

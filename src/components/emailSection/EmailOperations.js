@@ -1,38 +1,41 @@
 import React from 'react';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faReply, faReplyAll, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {faReply, faReplyAll, faTrashAlt, faShare} from "@fortawesome/free-solid-svg-icons";
 
-const EmailOperations = () => {
+const EmailOperations = props => {
 
-    const setReplyIsHidden = () => {
-
-    }
-
-    const setResponseType = () => {
-        
-    }
+  const setOperation = (operation) => {
+    props.setOperation({
+      isHidden:false,
+      messageType: operation
+    })
+  }
  
     return (
         <>
         <FontAwesomeIcon 
             icon={faReply}
             onClick={() => {
-              setReplyIsHidden(false);
-              setResponseType("Reply");
+              setOperation('reply')
             }} 
         />
         <FontAwesomeIcon 
             icon={faReplyAll}
             onClick={() => {
-              setReplyIsHidden(false);
-              setResponseType("Reply-All");
+              setOperation('replyall')
             }}
-        /> 
+        />
+        <FontAwesomeIcon 
+            icon={faShare}
+            onClick={() => {
+              setOperation('forward')
+            }}
+        />  
         <FontAwesomeIcon 
             icon={faTrashAlt}
             onClick={() => {
-              setReplyIsHidden(false);
+              //setReplyIsHidden(false);
               // todo: need a delete email function that moves the email from emails array in imap to a deleted array so that it lives inside of "trash" before permanently deleting
             }}
         />

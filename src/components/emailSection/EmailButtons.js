@@ -5,16 +5,16 @@ const EmailButtons = props => {
 
     const setOperation = e => {
         props.setOperation({
-            isHidden: true,
+            isHidden: false,
             messageType: e.target.name
         })
     }
 
     return (
         <>
-        <input type="button" value="Reply" name="reply" onClick={setOperation}/>
-        <input type="button" value="Reply All" name="replyall" onClick={setOperation}/>
-        <input type="button" value="Forward" name="forward" onClick={setOperation}/>
+        <input type="button" value="Reply" name="reply" onClick={setOperation} className="btn email-ops"/>
+        <input type="button" value="Reply All" name="replyall" onClick={setOperation} className="btn email-ops"/>
+        <input type="button" value="Forward" name="forward" onClick={setOperation} className="btn email-ops"/>
         </>
     )
 }
