@@ -1,9 +1,9 @@
 import React from 'react';
 
-const ComposeButton = () => {
+const ComposeButton = props => {
 
     const toggleIsComposing = () => {
-        
+        props.setComposer(true)
     }
 
     return (

@@ -7,7 +7,7 @@ import Card from './Card';
 const List = props => {
     
     const toggleIsComposing = () => {
-
+        props.setComposer(true)
     }
 
     return (

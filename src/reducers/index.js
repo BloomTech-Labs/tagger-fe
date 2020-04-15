@@ -13,6 +13,7 @@ import { sidebarReducer } from "./sidebarReducer";
 import { analyticsBarReducer } from './analyticsBarReducer'; // added the anaylytics bar to the store. 
 import { viewEmailReducer } from './viewEmailReducer';
 //import { smartSearch } from "../actions";
+import { setOperationReducer } from './emailOperationReducer';
 
 const rootReducer = combineReducers({
     imap: imapReducer,
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
     sidebar: sidebarReducer,
     //back: backButtonReducer,
     analyticsbar: analyticsBarReducer, // this is the reducer i added.
-    viewEmail:viewEmailReducer
+    viewEmail:viewEmailReducer,
+    operation:setOperationReducer
 });
 
 let store;

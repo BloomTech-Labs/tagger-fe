@@ -15,13 +15,7 @@ import { makeHtmlSafe } from "../inbox/helpers/MessageHelper";
 
 const EmailSection = props => {
 
-    const [ operation, setOperation ] = useState(
-        {
-            isHidden: true,
-            messageType: null
-        }
-    );
-    console.log(operation)
+    //console.log('EmailSection',props.isHidden)
 
     const handleAnalyticsBar = () => {
         props.setAnalyticsBar(!props.analyticsBar)
@@ -38,7 +32,7 @@ const EmailSection = props => {
                             <h3>{props.viewemail.name}</h3>
                         </div>
                         <div className="thread-actions row">
-                            <EmailOperations setOperation={setOperation} />
+                            <EmailOperations />
                         </div>
                     </div>
                     <h2>{props.viewemail.subject}</h2> {/*props.email.subject*/}
@@ -46,10 +40,10 @@ const EmailSection = props => {
                         className="thread-message"
                         dangerouslySetInnerHTML={{ __html: makeHtmlSafe(props.viewemail.email_body) }} 
                     />
-                    {operation.isHidden ? (
-                        <EmailButtons setOperation={setOperation} />
+                    {props.isHidden ? (
+                        <EmailButtons />
                         ) : (
-                        <Operations setOperation={setOperation} operation={operation} />
+                        <Operations />
                     )}
                 </div>
             </SimpleBar>
@@ -57,8 +51,10 @@ const EmailSection = props => {
     );
 }
 
-const mapStateToProps = ({ viewEmail }) => ({
-    viewemail:viewEmail.viewemail
+const mapStateToProps = ({ viewEmail, operation }) => ({
+    viewemail:viewEmail.viewemail,
+    messageType:operation.messageType,
+    isHidden:operation.isHidden
 })
 
 export default connect(mapStateToProps, {setAnalyticsBar, setAnalyticsBarContact})(EmailSection);

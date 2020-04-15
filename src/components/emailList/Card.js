@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { viewEmail } from '../../actions';
+import { viewEmail, discard } from '../../actions';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,7 @@ const Card = props => {
 
     const setViewEmail = id => {
         props.viewEmail(id);
+        props.discard();
     }
 
     const setThreadContact = () => {
@@ -53,4 +54,4 @@ const Card = props => {
     );
 }
 
-export default connect(null,{viewEmail})(Card);
+export default connect(null,{viewEmail,discard})(Card);

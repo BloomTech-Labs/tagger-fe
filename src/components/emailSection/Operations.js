@@ -1,35 +1,35 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { discard } from '../../actions';
 
 const Operation = props => {
 
-    const setOperation = () => {
-        props.setOperation({
-            isHidden:true,
-            messageType:null
-        })
-    }
-
     return (
         <>
-        {props.operation.messageType === 'reply' && (
+        {props.messageType === 'reply' && (
             <input type="text" placeholder="To" name="to"/>
         )}
-        {props.operation.messageType === 'replyall' && (
+        {props.messageType === 'replyall' && (
             <>
             <input type="text" placeholder="To" name="to"/>
             <input type="text" placeholder="CC" name="cc"/>
             </>
         )}
-        {props.operation.messageType === 'forward' && (
+        {props.messageType === 'forward' && (
             <input type="text" placeholder="Forward" name="to"/>
         )}
         <textarea>
 
         </textarea>
-        <input type="button" value="Send" onClick={setOperation} className="btn send"/>
-        <input type="button" value="Discard" onClick={setOperation} className='btn discard'/>
+        <input type="button" value="Send" className="btn send"/>
+        <input type="button" value="Discard" onClick={() => props.discard()} className='btn discard'/>
         </>
     )
 };
 
-export default Operation;  
+const mapStateToProps = ({ operation }) => ({
+    messageType:operation.messageType,
+    isHidden:operation.isHidden
+})
+
+export default connect(mapStateToProps,{discard})(Operation);  

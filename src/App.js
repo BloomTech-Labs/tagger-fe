@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 //import { Switch } from "react-router-dom";
 import { connect } from 'react-redux';
 import './App.scss';
@@ -7,6 +7,7 @@ import Sidebar from './components/sidebar/Sidebar';
 import EmailList from './components/emailList/EmailList';
 import EmailSection from './components/emailSection/EmailSection';
 import AnalyticsBar from './components/analytics/Analytics';
+import Compose from './components/compose/Compose';
 
 //import LandingPage from "./components/landing/LandingPage";
 //import Inbox from "./components/inbox/Inbox";
@@ -14,14 +15,16 @@ import AnalyticsBar from './components/analytics/Analytics';
 
 const App = props => {
 
+    const [ composer, setComposer ] = useState(false)
+
     return(
     <>
     {/* {props.isLoggedIn ? <TopBar /> : null} */}
     <TopBar />
     <main>
-        <Sidebar />
+        <Sidebar setComposer={setComposer} />
         <div className={props.isViewEmail ? 'email-list-min' : 'email-list'}> {/* className="email-list-min" or email-list for full width */}
-            <EmailList />
+            <EmailList setComposer={setComposer}/>
         </div>
         {props.isViewEmail && (
             <div className="email-body" id={props.analyticsBar ? 'email-body-analytics' : null}> {/* add the id="email-body-analytics" for analytics column */}
@@ -30,6 +33,7 @@ const App = props => {
         )}
         {props.analyticsBar ? <AnalyticsBar /> : null}
     </main>
+    {composer && <Compose setComposer={setComposer}/>}
     {/* <Switch> */}
         {/* TO SAVE TIME IN DEVELOPMENT, UNCOMMENT TO OVERRIDE "/" */}
         {/* <Route exact path="/" component={Inbox}></Route> */}

@@ -7,3 +7,5 @@ export * from "./sidebarActions";
 //export * from "./backButtonActions";
 export * from "./analyticsBarActions";
 export * from './viewEmailAction';
+export * from './searchActions';
+export * from './emailOperationActions';

@@ -1,43 +1,40 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
+//import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { sendEmail, changeIsComposing } from "../../actions/composerActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 
-const Compose = (props) => {
+const Compose = props => {
     // this is the state for the email object that gets sent off using nodemailer on the backend
-    const [email, setEmail] = useState({
-        service: "gmail",
-        host: "smtp.gmail.com",
-        port: "465",
-        userEmail: "taggerlabs20@gmail.com",
-        token:props.token,
-        receiver: "",
+     const [email, setEmail] = useState({
+        //service: "gmail",
+        //host: "smtp.gmail.com",
+        //port: "465",
+        from: "Tagger Labs<taggerlabs20@gmail.com>",
+        //token:props.token,
+        to: "",
         subject: "",
-        body: "",
+        text: "",
         cc: "",
         bcc: ""
-
     });
 // handles the input change for the input fields
     const handleChange = e => {
-
         setEmail({
             ...email,
             [e.target.name]: e.target.value
         });
-    };
+    }
 // invokes the sendEmail function brought in from ComposerActions.js 
     const handleSubmit = () => {
-        console.log("PROPS", props);
         console.log(email, "Email");
-        props.sendEmail(email, props.token);
+        props.sendEmail(email);
     };
 // toggles the isComposing state to not show the composing component
     const changeIsComposing = () => {
-        props.changeIsComposing(!props.isComposing);
+        props.setComposer(false);
         //props.setIsCompose(false);
     };
     return (
@@ -46,13 +43,13 @@ const Compose = (props) => {
         </div>
         <div className="compose-card col">
             <FontAwesomeIcon icon={faTimesCircle} className="close end" onClick={changeIsComposing}/>
-            <input type="email" placeholder="To" name="receiver" id="receiver" value={email.receiver} onChange={handleChange} />
+            <input type="email" placeholder="To" name="to" id="receiver" value={email.receiver} onChange={handleChange} />
             <input type="email" placeholder="CC" name="cc" id="cc" value={email.cc} onChange={handleChange} />
             <input type="email" placeholder="BCC" name="bcc" id="bcc" value={email.bcc} onChange={handleChange} />
             <input type="text" placeholder="Subject" name="subject" id="subject" value={email.subject} onChange={handleChange} />
             <textarea
                 type="text"
-                name="body"
+                name="text"
                 id="body"
                 value={email.body}
                 onChange={handleChange}
@@ -74,4 +71,5 @@ const mapDispatchToProps = {
     sendEmail,
     changeIsComposing
 };
-export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Compose);
+//export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Compose);
+export default connect(mapStateToProps,mapDispatchToProps)(Compose);
