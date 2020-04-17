@@ -5,6 +5,8 @@ import { viewEmail, discard } from '../../actions';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
 
+import ShowDate from '../../utils/ShowDate';
+
 const Card = props => {
 
     const setViewEmail = id => {
@@ -12,19 +14,11 @@ const Card = props => {
         props.discard();
     }
 
-    const setThreadContact = () => {
-
-    }
-
     const setContact = () => {
         
     }
 
     const showContact = () => {
-        
-    }
-
-    const showDate = () => {
         
     }
 
@@ -40,7 +34,7 @@ const Card = props => {
                     {/* {showContact()} */} {props.email.name}
                 </h3>
                 <time>
-                    {showDate(props.email.date)}
+                    {ShowDate(props.email.date)}
                 </time>
             </div>
         </div>

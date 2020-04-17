@@ -1,7 +1,8 @@
-import { SEARCH_KEYWORD } from "../actions";
+import { SEARCH_KEYWORD, HIDE_RESULTS } from "../actions";
 
 const initialState = {
-    result:''
+    result:null,
+    isHidden:true
 }
 
 export const searchKeyword = (state = initialState, {type, payload}) => {
@@ -9,7 +10,13 @@ export const searchKeyword = (state = initialState, {type, payload}) => {
         case SEARCH_KEYWORD:
             return {
                 ...state,
-                result: payload
+                result: payload,
+                isHidden: false
+            }
+        case HIDE_RESULTS:
+            return {
+                ...state,
+                isHidden: true
             }
         default:
             return state

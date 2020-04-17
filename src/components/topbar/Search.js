@@ -1,27 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
+import React from 'react';
+import SearchResults from './SearchResults';
 
-const Search = () => {
+import { connect } from 'react-redux';
+import { searchKeyword, hideResults } from '../../actions';
 
-    const [ keyword, setKeyword ] = useState(null)
+const Search = props => {
 
     const handleChange = e => {
-        setKeyword(e.target.value)
+        console.log("LENGTH", e.target.value.length)
+        if (e.target.value.length === 0){
+            props.hideResults()
+            return
+        }
+        props.searchKeyword(e.target.value)
+    }
+    const handleBlur = () => {
+        props.hideResults()
     }
 
-    useEffect(() => {
-        Axios.post('https://tagger-be-dev.herokuapp.com/emails/search', keyword)
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
-    },[keyword])
-
-    console.log(keyword)
-
     return(
-        <div className="row nav-mid">
-            <input name="search" placeholder='Search Contacts and Emails' onChange={handleChange} />
+        <>
+        <div className="nav-mid">
+            <div className="search">
+                <input name="search" placeholder='Search Contacts and Emails' onChange={handleChange} onBlur={handleBlur} />
+                {!props.resultIsHidden && <SearchResults />}
+            </div>
         </div>
+        </>
     );
 }
 
-export default Search;
+const mapStateToProps = ({ search }) => ({
+    resultIsHidden:search.isHidden
+})
+
+export default connect(mapStateToProps,{searchKeyword, hideResults})(Search);

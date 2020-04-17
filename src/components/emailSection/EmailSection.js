@@ -15,11 +15,9 @@ import { makeHtmlSafe } from "../inbox/helpers/MessageHelper";
 
 const EmailSection = props => {
 
-    //console.log('EmailSection',props.isHidden)
-
-    const handleAnalyticsBar = () => {
+    const handleAnalyticsBar = (email) => {
         props.setAnalyticsBar(!props.analyticsBar)
-        props.setAnalyticsBarContact(props.viewemail.from)
+        props.setAnalyticsBarContact(email)
     }
 
     return(
@@ -28,7 +26,7 @@ const EmailSection = props => {
                 <div className="thread-window">
                     <div className="thread-head row">
                         <div className="thread-contact row btn">
-                            <FontAwesomeIcon icon={faUserCircle} onClick={handleAnalyticsBar} className="thread-avatar" />
+                            <FontAwesomeIcon icon={faUserCircle} onClick={() => handleAnalyticsBar(props.viewemail.from)} className="thread-avatar" />
                             <h3>{props.viewemail.name}</h3>
                         </div>
                         <div className="thread-actions row">

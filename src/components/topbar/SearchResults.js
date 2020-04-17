@@ -2,7 +2,11 @@ import React from 'react';
 
 const SearchResults = () => {
 
-    return null;
+    return (
+        <div className="left">
+        
+        </div>
+    );
 }
 
 export default SearchResults;

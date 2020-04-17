@@ -3,14 +3,19 @@ const url = process.env.REACT_APP_BACKENDURL
     ? process.env.REACT_APP_BACKENDURL
     : "https://tagger-be-dev.herokuapp.com/";
 
-export const GET_EMAILS = 'GET_EMAILS';
+export const SET_LABEL = 'SET_LABEL';
 
-export function getEmails(label) {
+export const setLabel = label => dispatch => {
+    dispatch({type:SET_LABEL, payload:label})
+}
+
+export const GET_EMAILS = 'GET_EMAILS';
+export function getEmails(label,pageNum) {
     return function(dispatch){
         return axios
-                .get(url + `emails/label/${label}/1`)
+                .get(url + `emails/label/${label}/${pageNum}`)
                 .then(res => {
-                    console.log(res)
+                    console.log('RESPONSE OF CALL',res)
                     dispatch({type:GET_EMAILS, payload: res.data})
                 })
                 .catch(err => {
@@ -18,6 +23,38 @@ export function getEmails(label) {
                 })
     }
 }
+
+export const NEXT_PAGE = 'NEXT_PAGE';
+
+export function nextPage(label,pageNum) {
+    return function(dispatch){
+        return axios
+                .get(url + `emails/label/${label}/${pageNum}`)
+                .then(res => {
+                    dispatch({type:NEXT_PAGE, payload: res.data})
+                })
+                .catch(err => {
+                    dispatch({type:NEXT_PAGE, payload:err})
+                })
+    }
+}
+
+export const PREV_PAGE = 'PREV_PAGE';
+
+export function prevPage(label,pageNum) {
+    return function(dispatch){
+        return axios
+                .get(url + `emails/label/${label}/${pageNum}`)
+                .then(res => {
+                    dispatch({type:PREV_PAGE, payload: res.data})
+                })
+                .catch(err => {
+                    dispatch({type:PREV_PAGE, payload:err})
+                })
+    }
+}
+
+
 // ALL LINES BELOW ARE COMMENTED OUT BY MILO
 // =============================================================================
 // S T R E A M

@@ -1,5 +1,5 @@
 import Axios from "axios";
-const url = process.env.REACT_APP_BACKENDURL;
+const url = 'https://tagger-be-dev.herokuapp.com/';
 
 export const SET_ANALYTICS_BAR = "SET_ANALYTICS_BAR";
 export const SET_ANALYTICS_BAR_CONTACT = 'SET_ANALYTICS_BAR_CONTACT';
@@ -14,7 +14,7 @@ export function setAnalyticsBarContact(email){
     console.log(email)
     return function (dispatch){
         return Axios
-                .post(url + `${email}`)
+                .post(url + `emails/analytics`, {address:email})
                 .then(res => {
                     console.log(res.data)
                     dispatch({

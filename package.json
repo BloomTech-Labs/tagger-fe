@@ -10,6 +10,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
+    "cron": "^1.8.2",
     "dompurify": "^2.0.8",
     "dotenv": "^8.2.0",
     "font-awesome": "^4.7.0",

@@ -5,7 +5,7 @@ import {
     // CHANGE_ANALYTICS_CONTACT,
     // IFRAME_LOADED,
     // SET_SNIPPET_FILTER,
-    GET_EMAILS
+    GET_EMAILS, NEXT_PAGE, PREV_PAGE, SET_LABEL
 } from "../actions";
 const initialState = {
     // FOR ANALYTICS BAR DEV
@@ -20,6 +20,9 @@ const initialState = {
     //     coverPhoto: ""
     // },
     // snippetsFilter: "\\Inbox",
+    label: 'inbox',
+    pageNum: 1,
+    totalCount: 0,
     emails: []
 };
 
@@ -28,7 +31,27 @@ export const inboxReducer = (state = initialState, {type,payload}) => {
         case GET_EMAILS:
             return {
                 ...state,
-                emails: payload
+                label:state.label,
+                totalCount:payload.totalCount.count,
+                emails: payload.messages
+            }
+        case SET_LABEL:
+            return {
+                ...state,
+                pageNum:1,
+                label:payload
+            }
+        case NEXT_PAGE:
+            return {
+                ...state,
+                pageNum: state.pageNum + 1,
+                emails:payload.messages
+            }
+        case PREV_PAGE:
+            return {
+                ...state,
+                pageNum: state.pageNum - 1,
+                emails:payload.messages
             }
         default:
             return state

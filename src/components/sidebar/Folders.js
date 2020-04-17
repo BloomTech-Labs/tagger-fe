@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { getEmails } from '../../actions';
+import { getEmails, setLabel, closeEmail} from '../../actions';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInbox,
@@ -10,15 +10,20 @@ import {
 
 const Folders = props => {
 
-  const [ label, setLabel ] = useState('inbox')
+  //const [ label, setLabel ] = useState('inbox')
 
   const setFilter = (folder) => {
-    setLabel(folder)
+    props.closeEmail()
+    props.setLabel(folder)
   }
 
   useEffect(() => {
-    props.getEmails(label)
-  },[label])
+    // const interval = setInterval(() => {
+      props.getEmails(props.label,props.pageNum)
+      // console.log('USE EFFECT RAN')
+    // }, 1000 * 60)
+    // clearInterval(interval);
+  },[props.label])
   
     return (
         <nav>
@@ -32,4 +37,9 @@ const Folders = props => {
     )
 }
 
-export default connect(null,{getEmails})(Folders);
+const mapStateToProps = ({ inbox }) => ({
+  label:inbox.label,
+  pageNum: inbox.pageNum
+})
+
+export default connect(mapStateToProps,{getEmails,closeEmail,setLabel})(Folders);
