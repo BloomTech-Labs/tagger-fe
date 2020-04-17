@@ -2,7 +2,7 @@ import React from 'react';
 import SearchResults from './SearchResults';
 
 import { connect } from 'react-redux';
-import { searchKeyword, hideResults } from '../../actions';
+import { searchKeyword, hideResults} from '../../actions';
 
 const Search = props => {
 

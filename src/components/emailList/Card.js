@@ -14,23 +14,15 @@ const Card = props => {
         props.discard();
     }
 
-    const setContact = () => {
-        
-    }
-
-    const showContact = () => {
-        
-    }
-
     return (
         // From or To defined by which folder in sidebar is selected
     <div className="snippet" onClick={() => setViewEmail(props.email.id)}>{/* () => setThreadContact() */}
         <div className="snippet-header row">
             {/* the onClick in here sets the analyticsContact to either who sent the email or who it was sent to depending on the snippetsFilter */}
-            <FontAwesomeIcon icon={faUserCircle} onClick={() => setContact()} />
+            <FontAwesomeIcon icon={faUserCircle} />
             <div className="snippet-meta row">
                 {/* This ternary checks whether to display who its from or who it was sent to depending on what snippetsFilter is set to */}
-                <h3 onClick={() =>setContact()} >
+                <h3>
                     {/* {showContact()} */} {props.email.name}
                 </h3>
                 <time>

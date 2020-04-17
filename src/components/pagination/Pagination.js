@@ -20,6 +20,7 @@ const Pagination = props => {
                 icon={faAngleLeft} 
                 id={currentPage === 1 && 'inactive'}
                 onClick={() => props.prevPage(props.label,currentPage-1)}
+                disabled={currentPage === 1 && 'disabled'}
             />
             {/* Total # of Emails */}
             <FontAwesomeIcon 

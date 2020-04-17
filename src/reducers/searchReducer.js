@@ -1,4 +1,4 @@
-import { SEARCH_KEYWORD, HIDE_RESULTS } from "../actions";
+import { SEARCH_KEYWORD, HIDE_RESULTS} from "../actions";
 
 const initialState = {
     result:null,

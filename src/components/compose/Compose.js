@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 //import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import { sendEmail, changeIsComposing } from "../../actions/composerActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faTimesCircle} from "@fortawesome/free-solid-svg-icons";
@@ -9,11 +8,7 @@ import {faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 const Compose = props => {
     // this is the state for the email object that gets sent off using nodemailer on the backend
      const [email, setEmail] = useState({
-        //service: "gmail",
-        //host: "smtp.gmail.com",
-        //port: "465",
         from: "Tagger Labs<taggerlabs20@gmail.com>",
-        //token:props.token,
         to: "",
         subject: "",
         text: "",
@@ -35,7 +30,6 @@ const Compose = props => {
 // toggles the isComposing state to not show the composing component
     const changeIsComposing = () => {
         props.setComposer(false);
-        //props.setIsCompose(false);
     };
     return (
         <>
@@ -71,5 +65,5 @@ const mapDispatchToProps = {
     sendEmail,
     changeIsComposing
 };
-//export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(Compose);
+
 export default connect(mapStateToProps,mapDispatchToProps)(Compose);
