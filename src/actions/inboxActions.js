@@ -15,7 +15,6 @@ export function getEmails(label,pageNum) {
         return axios
                 .get(url + `emails/label/${label}/${pageNum}`)
                 .then(res => {
-                    console.log('RESPONSE OF CALL',res)
                     dispatch({type:GET_EMAILS, payload: res.data})
                 })
                 .catch(err => {

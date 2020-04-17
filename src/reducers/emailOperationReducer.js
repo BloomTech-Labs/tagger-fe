@@ -6,7 +6,6 @@ const initialState = {
 }
 
 export const setOperationReducer = (state = initialState, {type, payload}) => {
-    console.log(payload)
     switch(type){
         case SET_EMAIL_OPERATION:
             return {

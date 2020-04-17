@@ -11,15 +11,13 @@ export const setAnalyticsBar = () => dispatch => {
 };
 
 export function setAnalyticsBarContact(email){
-    console.log(email)
     return function (dispatch){
         return Axios
                 .post(url + `emails/analytics`, {address:email})
                 .then(res => {
-                    console.log(res.data)
                     dispatch({
                         type: SET_ANALYTICS_BAR_CONTACT,
-                        payload: res.data
+                        payload: {meta:res.data, address:email}
                     })
                 })
                 .catch(err => console.log(err))

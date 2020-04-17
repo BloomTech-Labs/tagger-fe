@@ -7,7 +7,7 @@ import Tags from './Tags';
 const Sidebar = props => {
     
     return (
-        <div className="sidebar col" id={props.sidebar && 'slidebar'}>
+        <div className="sidebar col" id={props.sidebar ? 'slidebar' : null}>
             <ComposeButton setComposer={props.setComposer} />
             <Folders />
             <Tags />

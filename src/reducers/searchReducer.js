@@ -2,6 +2,8 @@ import { SEARCH_KEYWORD, HIDE_RESULTS} from "../actions";
 
 const initialState = {
     result:null,
+    keyword:'',
+    changeListing: false,
     isHidden:true
 }
 
@@ -10,7 +12,8 @@ export const searchKeyword = (state = initialState, {type, payload}) => {
         case SEARCH_KEYWORD:
             return {
                 ...state,
-                result: payload,
+                result: payload.emails,
+                keyword:payload.keyword,
                 isHidden: false
             }
         case HIDE_RESULTS:

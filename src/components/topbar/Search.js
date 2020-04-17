@@ -7,7 +7,6 @@ import { searchKeyword, hideResults} from '../../actions';
 const Search = props => {
 
     const handleChange = e => {
-        console.log("LENGTH", e.target.value.length)
         if (e.target.value.length === 0){
             props.hideResults()
             return
@@ -22,8 +21,8 @@ const Search = props => {
         <>
         <div className="nav-mid">
             <div className="search">
-                <input name="search" placeholder='Search Contacts and Emails' onChange={handleChange} onBlur={handleBlur} />
-                {!props.resultIsHidden && <SearchResults />}
+                <input name="search" placeholder='Search Contacts and Emails' onChange={handleChange} onBlur={handleBlur}/>
+                {!props.resultIsHidden ? <SearchResults /> : null}
             </div>
         </div>
         </>

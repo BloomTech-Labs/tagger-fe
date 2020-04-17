@@ -9,6 +9,7 @@ const initialState = {
 }
 
 export const analyticsBarReducer = (state = initialState, {type,payload}) => {
+    console.log(payload)
     switch(type){
         case SET_ANALYTICS_BAR:
             return {
@@ -19,9 +20,11 @@ export const analyticsBarReducer = (state = initialState, {type,payload}) => {
             return {
                 ...state,
                 email: payload.email,
-                totalEmails: payload.totalEmails,
-                sentEmails: payload.sentEmails,
-                receivedEmails: payload.receivedEmails
+                totalEmails: Number(payload.meta.sent) + Number(payload.meta.received),
+                sentEmails: Number(payload.meta.sent),
+                receivedEmails: Number(payload.meta.received),
+                name:payload.meta.name,
+                address:payload.address
             }
         default:
             return state; 

@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { nextPage, prevPage } from '../../actions';
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
@@ -10,8 +8,23 @@ const Pagination = props => {
 
     const currentPage = props.pageNum;
     const lower = ((props.pageNum - 1) * 25) + 1;
-    const higher = ((props.pageNum - 1) * 25) + 25;
-    const pageCount = Math.floor(props.totalCount / 25)
+    let higher = ((props.pageNum - 1) * 25) + 25;
+    if (higher > props.totalCount){
+        higher = props.totalCount
+    }
+    const pageCount = Math.ceil(props.totalCount / 25)
+
+    const handlePrev = () => {
+        if(currentPage > 1) {
+            props.prevPage(props.label, currentPage-1)
+        }
+    }
+
+    const handleNext = () => {
+        if(currentPage < pageCount) {
+            props.nextPage(props.label,currentPage+1)
+        }
+    }
 
     return (
         <div className="row pagination">
@@ -19,14 +32,12 @@ const Pagination = props => {
             <FontAwesomeIcon 
                 icon={faAngleLeft} 
                 id={currentPage === 1 && 'inactive'}
-                onClick={() => props.prevPage(props.label,currentPage-1)}
-                disabled={currentPage === 1 && 'disabled'}
+                onClick={() => handlePrev()}
             />
-            {/* Total # of Emails */}
             <FontAwesomeIcon 
                 icon={faAngleRight} 
-                id={currentPage === pageCount && 'inactive'}
-                onClick={() => props.nextPage(props.label,currentPage+1)}
+                id={currentPage === pageCount ? 'inactive' : null}
+                onClick={() => handleNext()}
             />
         </div>
     )
