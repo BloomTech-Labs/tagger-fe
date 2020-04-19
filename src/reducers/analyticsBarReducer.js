@@ -9,7 +9,6 @@ const initialState = {
 }
 
 export const analyticsBarReducer = (state = initialState, {type,payload}) => {
-    console.log(payload)
     switch(type){
         case SET_ANALYTICS_BAR:
             return {

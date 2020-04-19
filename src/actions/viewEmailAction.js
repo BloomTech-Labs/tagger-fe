@@ -11,7 +11,6 @@ export function viewEmail(id) {
         return axios
                 .get(url + `emails/email/${id}`)
                 .then(res => {
-                    console.log(res.data)
                     dispatch({type:VIEW_EMAIL, payload: res.data[0]})
                 })
                 .catch(err => {

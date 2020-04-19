@@ -14,14 +14,16 @@ const Search = props => {
         props.searchKeyword(e.target.value)
     }
     const handleBlur = () => {
-        props.hideResults()
+        setTimeout(() => {
+            props.hideResults()
+        },1000)
     }
 
     return(
         <>
         <div className="nav-mid">
             <div className="search">
-                <input name="search" placeholder='Search Contacts and Emails' onChange={handleChange} onBlur={handleBlur}/>
+                <input name="search" placeholder='Search Contacts and Emails' onChange={handleChange} onBlur={handleBlur}/> {/* onBlur={handleBlur} */}
                 {!props.resultIsHidden ? <SearchResults /> : null}
             </div>
         </div>
