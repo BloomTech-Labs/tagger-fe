@@ -29,15 +29,21 @@
     font-size: .8rem;
     max-width: 120px;
     align-self: flex-end;
+    margin: 0.5rem 0;
     margin-right: .5rem;
 }
 
-.discard {
+.discard, .email-ops {
     padding: 10px 40px;
     border-radius: 3px;
     margin-right: 1rem;
     border: 1px solid $border;
     font-size: .8rem;
+    margin: 0.5rem 0;
+}
+
+.email-ops {
+    margin-right: .5rem;
 }
 
 .logout {

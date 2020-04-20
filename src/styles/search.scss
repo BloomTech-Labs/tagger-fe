@@ -1,0 +1,66 @@
+.search-type {
+    font-size: .7rem;
+    color: $grey;
+    margin-right: 0.5rem;
+}
+
+.search-keyword {
+    margin:0;
+    padding: 0;
+    height: 3rem;
+    padding: 0.3rem 0.5rem;
+    border-bottom: 1px solid $border;
+    border-top: 1px solid $border;
+    vertical-align: middle;
+    line-height: 2rem;
+
+    &:hover {
+        background-color: $bg-light;
+        cursor: pointer;
+    }
+}
+
+.search-email {
+    border-bottom: 1px solid $border;
+    height: 4rem;
+    padding: 0.3rem 0.5rem;
+    justify-content: space-between;
+
+    &:hover {
+        background-color: $bg-light;
+        cursor: pointer;
+    }
+
+    .email-content {
+        width: 80%;
+        height: 100%;
+        padding: .3rem 0;
+
+        .search-email-subject {
+            margin:0;
+            padding: 0;
+            height:1.5rem;
+            line-height: 1.5rem;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-weight: bold;
+        }
+    
+        .search-email-body {
+            margin:0;
+            padding: 0;
+            height: 1.5rem;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            line-height: 1.5rem;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .search-date {
+        font-size: .7rem;
+        align-self: end;
+        font-weight: bold;
+    }
+}

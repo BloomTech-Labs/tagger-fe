@@ -37,6 +37,12 @@
     .nav-mid {
         min-width: calc((100vw - 260px) / 2);
         height: 100%;
+        align-items: center;
+
+        .search {
+            height: 100%;
+            line-height: 64px;
+        }
     }
 
     input[name='search']{
@@ -65,19 +71,20 @@
     .left {
         background-color: $white;
         width: calc((100vw - 260px) / 2);
-        height: 100%;
+        //height: 100%;
         overflow-y: scroll;
         overflow-x: hidden;
         // overflow: hidden;
         max-height: 16rem;
         border-left:1px solid $border;
         border-right:1px solid $border;
-        //border-bottom:1px solid $border;
+        border-bottom:1px solid $border;
         // border-top: none;
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
         box-sizing: border-box;
         -ms-overflow-style: none;
+        margin-top: -14px;
         
         &::-webkit-scrollbar {
             display: none;
@@ -101,8 +108,8 @@
     border-bottom:1px solid $border;
     border-top:none;
     width: 100%;
-    height: 4rem;
-    padding:0.5rem;
+    height: 3rem;
+    //padding:0.5rem;
     overflow: hidden;
     cursor: pointer;
     
@@ -216,12 +223,39 @@ main {
     }
 }
 
+.pagination {
+    position: absolute;
+    right: 1rem;
+    top:64px;
+    height: 30px;
+    align-items: center;
+
+    span {
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: $darkGrey;
+        margin-right: 1rem;
+    }
+
+    svg {
+        font-size: 1.2rem;
+        color: $darkGrey;
+        margin:0 1rem;
+        cursor: pointer;
+    }
+
+    #inactive {
+        color:$grey;
+        cursor: default;
+    }
+}
+
 
 
 .email-list {
     position: absolute;
     left:260px;
-    top:64px;
+    top:90px;
     width: calc(100vw - 260px);
     height: 100%;
 }
@@ -229,7 +263,7 @@ main {
 .email-list-min {
     position: absolute;
     left:260px;
-    top:64px;
+    top:90px;
     width: 340px;
     height: 100%;
 }
@@ -238,9 +272,9 @@ main {
     position: absolute;
     left: 600px;
     width: calc(100vw - 600px);
-    top:64px;
+    top:90px;
     background-color: $white;
-    height: calc(100vh - 64px);
+    height: calc(100vh - 90px);
     margin-top: 0.3rem;
 }
 
@@ -251,8 +285,8 @@ main {
 .analytics-bar {
     position: fixed;
     right:0px;
-    top:64px;
-    height: calc(100vh - 64px);
+    top:90px;
+    height: calc(100vh - 90px);
     width: 260px;
     background-color: $white;
     margin-top: 0.3rem;
@@ -311,6 +345,7 @@ $breakpoint-tablet: 1024px;
         .nav-mid {
             min-width: calc((100vw) / 1.5);
             height: 100%;
+            align-items: center;
         }
 
         input[name='search']{
@@ -363,8 +398,8 @@ $breakpoint-tablet: 1024px;
     .analytics-bar {
         position: fixed;
         right:0px;
-        top:64px;
-        height: calc(100vh - 64px);
+        top:90px;
+        height: calc(100vh - 90px);
         width: 260px;
         background-color: $white;
         margin-top: 0.3rem;
@@ -374,7 +409,7 @@ $breakpoint-tablet: 1024px;
     .email-list {
         position: absolute;
         left:0;
-        top:64px;
+        top:90px;
         width: 100vw;
         height: 100%;
     }
@@ -382,7 +417,7 @@ $breakpoint-tablet: 1024px;
     .email-list-min {
         position: absolute;
         left:0;
-        top:64px;
+        top:90px;
         width: 340px;
         height: 100%;
     }
@@ -391,9 +426,9 @@ $breakpoint-tablet: 1024px;
         position: absolute;
         left: 340px;
         width: calc(100vw - 340px - 0.3rem);
-        top:64px;
+        top:90px;
         background-color: $white;
-        height: calc(100vh - 64px);
+        height: calc(100vh - 90px);
         margin-top: 0.3rem;
     }
 
@@ -421,18 +456,29 @@ $breakpoint-mobile: 480px;
         }
         
         .nav-mid {
-            min-width: calc((100vw) / 1.5);
+            width: calc((100vw) / 1.4);
             height: 100%;
+            //align-items: center;
+
+            .search {
+                height: 100%;
+                align-items: center;
+            }
         }
     }
 
     input[name='search']{
         height: 2.5rem;
-        width: calc((100vw) / 1.5);
+        //width: calc((100vw) / 1.4);
+        width: 100%;
         background-color: $bg;
         border: 1px solid $white;
-        border-radius: 5px;
+        border-radius: 10px;
         padding: 0 1rem;
+        //align-items: center;
+        //margin: 0;
+        margin-right: 1rem;
+        align-self: center;
 
         &:focus {
             background-color: $white;
@@ -458,17 +504,13 @@ $breakpoint-mobile: 480px;
         .search-result-content {
             width:80%
         }
-
-        .search-result-date {
-
-        }
     }
 
     .email-list-min {
         visibility: hidden;
         position: fixed;
         left:260px;
-        top:64px;
+        top:90px;
         width: 340px;
         height: 100%;
     }

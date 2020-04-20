@@ -4,7 +4,7 @@ const initialState = {
     sliderbar: false
 }
 
-export const sidebarReducer = (state = initialState, {type , payload}) => {
+export const sidebarReducer = (state = initialState, {type}) => {
     switch(type){
         case SET_SLIDING_SIDEBAR:
             return {

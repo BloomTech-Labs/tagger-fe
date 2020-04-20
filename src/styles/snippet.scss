@@ -61,3 +61,11 @@
         font-size: 0.8rem;
     }
 }
+
+#active-card {
+    background-color: $hover;
+}
+
+#inactive-card {
+    background-color: $white;
+}
