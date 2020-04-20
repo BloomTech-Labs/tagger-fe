@@ -1,4 +1,4 @@
-import { SEARCH_KEYWORD, HIDE_RESULTS} from "../actions";
+import { SEARCH_KEYWORD, HIDE_RESULTS, CHANGE_LISTING, RESET_SEARCH} from "../actions";
 
 const initialState = {
     result:null,
@@ -20,6 +20,17 @@ export const searchKeyword = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 isHidden: true
+            }
+        case CHANGE_LISTING:
+            return {
+                ...state,
+                changeListing:true,
+                result:payload.emails
+            }
+        case RESET_SEARCH:
+            return {
+                ...state,
+                changeListing:false
             }
         default:
             return state

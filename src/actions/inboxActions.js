@@ -58,7 +58,7 @@ export function prevPage(label,pageNum) {
 // =============================================================================
 // S T R E A M
 
-export const INCREMENT_STREAM_COUNTER = "INCREMENT_STREAM_COUNTER";
+//export const INCREMENT_STREAM_COUNTER = "INCREMENT_STREAM_COUNTER";
 
 // export const incrementCounter = () => (dispatch) => {
 //     dispatch({ type: INCREMENT_STREAM_COUNTER });
@@ -67,9 +67,9 @@ export const INCREMENT_STREAM_COUNTER = "INCREMENT_STREAM_COUNTER";
 // =============================================================================
 // Check if all emails are gotten ______________________________________________
 
-export const EMAILS_UPDATE_START = "EMAILS_UPDATE_START";
-export const EMAILS_UPDATE_SUCCESS = "EMAILS_UPDATE_SUCCESS";
-export const EMAILS_UPDATE_FAILURE = "EMAILS_UPDATE_FAILURE";
+//export const EMAILS_UPDATE_START = "EMAILS_UPDATE_START";
+//export const EMAILS_UPDATE_SUCCESS = "EMAILS_UPDATE_SUCCESS";
+//export const EMAILS_UPDATE_FAILURE = "EMAILS_UPDATE_FAILURE";
 
 // export const updateEmails = (emailAddress, token) => (dispatch) => {
 //     // Retrieves user emails

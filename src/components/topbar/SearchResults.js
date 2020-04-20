@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { viewEmail, hideResults } from '../../actions';
+import { viewEmail, hideResults, changeListing } from '../../actions';
 import ShowDate from '../../utils/ShowDate';
 
 const SearchResults = props => {
@@ -10,9 +10,13 @@ const SearchResults = props => {
         props.hideResults()
     }
 
+    const handleKeywordResult = (keyword) => {
+        props.changeListing(keyword)
+    }
+
     return (
         <div className="left" id="search-results">
-            <div className="search-keyword row">
+            <div className="search-keyword row" onClick={() => handleKeywordResult(props.keyword)}>
                 <span className="search-type">Keyword:</span>{props.keyword} 
             </div>
             <div>
@@ -36,4 +40,4 @@ const mapStateToProps = ({search}) => ({
     keyword:search.keyword
 })
 
-export default connect(mapStateToProps,{viewEmail, hideResults})(SearchResults);
+export default connect(mapStateToProps,{viewEmail, hideResults, changeListing})(SearchResults);

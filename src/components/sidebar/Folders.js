@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getEmails, setLabel, closeEmail} from '../../actions';
+import { getEmails, setLabel, closeEmail, resetSearch} from '../../actions';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInbox,
@@ -11,6 +11,7 @@ import {
 const Folders = props => {
 
   const setFilter = (folder) => {
+    props.resetSearch()
     props.closeEmail()
     props.setLabel(folder)
   }
@@ -36,4 +37,4 @@ const mapStateToProps = ({ inbox }) => ({
   pageNum: inbox.pageNum
 })
 
-export default connect(mapStateToProps,{getEmails,closeEmail,setLabel})(Folders);
+export default connect(mapStateToProps,{getEmails,closeEmail,setLabel,resetSearch})(Folders);
