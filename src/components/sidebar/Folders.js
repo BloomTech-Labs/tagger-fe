@@ -18,20 +18,9 @@ const Folders = props => {
 
   useEffect(() => {
     console.log('HERREEEEE',props.label,props.pageNum,props.isSearch)
-    props.getEmails(props.label,props.pageNum)
-    //   console.log('USEEFFECTTTTTTTTTTTTTTTTTTTTT')
-    // if(props.isSearch){
-    //   console.log('ISSEARCHHHHH')
-    //   props.getEmails(null,props.pageNum)
-    // } else {
-    //   props.getEmails('inbox',props.pageNum)
-    // }
-    // if(props.label === undefined){
-    //   props.getEmails('inbox',props.pageNum)
-    // } else if (props.isSearch){
-    //   props.getEmails(props.label,props.pageNum)
-    // }
-  },[props.label,props])
+    props.getEmails(props.label,props.pageNum,props.isSearch)
+    //eslint-disable-next-line
+  },[props.label])
   
     return (
         <nav>

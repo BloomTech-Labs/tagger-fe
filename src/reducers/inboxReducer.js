@@ -18,13 +18,23 @@ const initialState = {
 export const inboxReducer = (state = initialState, {type,payload}) => {
     switch(type) {
         case GET_EMAILS:
-            return {
-                ...state,
-                //label:payload.label,
-                totalCount:payload.emails.totalCount.count,
-                emails: payload.emails.messages,
-                isSearch:payload.iSsearch
+            if(payload.isSearch === true){
+                return {
+                    ...state,
+                    totalCount:payload.emails.totalCount.count,
+                    emails: payload.emails.messages,
+                    isSearch:payload.isSearch,
+                    label:payload.label
+                }
+            } else {
+                return {
+                    ...state,
+                    totalCount:payload.emails.totalCount.count,
+                    emails: payload.emails.messages,
+                    isSearch:payload.isSearch
+                }
             }
+            
         case SET_LABEL:
             return {
                 ...state,
@@ -36,8 +46,7 @@ export const inboxReducer = (state = initialState, {type,payload}) => {
             return {
                 ...state,
                 pageNum: state.pageNum + 1,
-                emails:payload.messages,
-                label:payload.label
+                emails:payload.messages
             }
         case PREV_PAGE:
             return {

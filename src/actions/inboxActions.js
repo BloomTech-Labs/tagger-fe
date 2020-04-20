@@ -6,6 +6,7 @@ const url = process.env.REACT_APP_BACKENDURL
 export const SET_LABEL = 'SET_LABEL';
 
 export const setLabel = label => dispatch => {
+    console.log('SET LABEL', label)
     dispatch({type:SET_LABEL, payload:label})
 }
 
@@ -17,7 +18,7 @@ export function getEmails(label,pageNum,search) {
                 .post(url + `emails/search/name/${pageNum}`,{keyword:label})
                 .then(res => {
                     console.log('SEARCH RESSSS',res.data)
-                    dispatch({type:GET_EMAILS, payload: {emails:res.data, isSearch:true, label:null}})
+                    dispatch({type:GET_EMAILS, payload: {emails:res.data, isSearch:true, label:label}})
                 })
                 .catch(err => {
                     dispatch({type:GET_EMAILS, payload:err})
