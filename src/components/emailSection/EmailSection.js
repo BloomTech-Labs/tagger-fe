@@ -4,7 +4,7 @@ import { setAnalyticsBar, setAnalyticsBarContact } from '../../actions'
 import EmailButtons from './EmailButtons';
 import EmailOperations from './EmailOperations';
 import Operations from './Operations';
-
+import Single from './Single';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
@@ -34,10 +34,17 @@ const EmailSection = props => {
                         </div>
                     </div>
                     <h2>{props.viewemail.subject}</h2> {/*props.email.subject*/}
-                    <div 
-                        className="thread-message"
-                        dangerouslySetInnerHTML={{ __html: makeHtmlSafe(props.viewemail.email_body) }} 
-                    />
+                    {!props.isThread ? (
+                        <div 
+                            className="thread-message"
+                            dangerouslySetInnerHTML={{ __html: makeHtmlSafe(props.viewemail.email_body) }} 
+                        />
+                    ) : (
+                        props.viewemail.map(email => (
+                            <Single email_body={email.email_body} />
+                        ))
+                    )}
+                    
                     {props.isHidden ? (
                         <EmailButtons />
                         ) : (
@@ -52,7 +59,8 @@ const EmailSection = props => {
 const mapStateToProps = ({ viewEmail, operation }) => ({
     viewemail:viewEmail.viewemail,
     messageType:operation.messageType,
-    isHidden:operation.isHidden
+    isHidden:operation.isHidden,
+    isThread:viewEmail.isThread
 })
 
 export default connect(mapStateToProps, {setAnalyticsBar, setAnalyticsBarContact})(EmailSection);

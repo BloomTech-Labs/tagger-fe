@@ -17,7 +17,20 @@ const Folders = props => {
   }
 
   useEffect(() => {
-      props.getEmails(props.label,props.pageNum)
+    console.log('HERREEEEE',props.label,props.pageNum,props.isSearch)
+    props.getEmails(props.label,props.pageNum)
+    //   console.log('USEEFFECTTTTTTTTTTTTTTTTTTTTT')
+    // if(props.isSearch){
+    //   console.log('ISSEARCHHHHH')
+    //   props.getEmails(null,props.pageNum)
+    // } else {
+    //   props.getEmails('inbox',props.pageNum)
+    // }
+    // if(props.label === undefined){
+    //   props.getEmails('inbox',props.pageNum)
+    // } else if (props.isSearch){
+    //   props.getEmails(props.label,props.pageNum)
+    // }
   },[props.label,props])
   
     return (
@@ -34,7 +47,8 @@ const Folders = props => {
 
 const mapStateToProps = ({ inbox }) => ({
   label:inbox.label,
-  pageNum: inbox.pageNum
+  pageNum: inbox.pageNum,
+  isSearch:inbox.isSearch
 })
 
 export default connect(mapStateToProps,{getEmails,closeEmail,setLabel,resetSearch})(Folders);

@@ -12,7 +12,7 @@ export const searchKeyword = (state = initialState, {type, payload}) => {
         case SEARCH_KEYWORD:
             return {
                 ...state,
-                result: payload.emails,
+                result: payload.emails.messages,
                 keyword:payload.keyword,
                 isHidden: false
             }

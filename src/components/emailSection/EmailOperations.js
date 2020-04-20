@@ -1,19 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setEmailOperation } from '../../actions';
-
+import SimilarButton from './SimilarButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faReply, faReplyAll, faTrashAlt, faShare} from "@fortawesome/free-solid-svg-icons";
 
 const EmailOperations = props => {
-
-  const handleSimilar = () => {
-    
-  }
  
   return (
       <>
-      <input type="button" onClick={handleSimilar} value="Similar Emails" className="thread-similar" />
+      <SimilarButton />
       <FontAwesomeIcon 
           icon={faReply}
           onClick={() => {

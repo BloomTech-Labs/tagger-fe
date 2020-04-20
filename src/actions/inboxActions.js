@@ -10,31 +10,56 @@ export const setLabel = label => dispatch => {
 }
 
 export const GET_EMAILS = 'GET_EMAILS';
-export function getEmails(label,pageNum) {
+export function getEmails(label,pageNum,search) {
     return function(dispatch){
-        return axios
-                .get(url + `emails/label/${label}/${pageNum}`)
+        if(search){
+            return axios
+                .post(url + `emails/search/name/${pageNum}`,{keyword:label})
                 .then(res => {
-                    dispatch({type:GET_EMAILS, payload: res.data})
+                    console.log('SEARCH RESSSS',res.data)
+                    dispatch({type:GET_EMAILS, payload: {emails:res.data, isSearch:true, label:null}})
                 })
                 .catch(err => {
                     dispatch({type:GET_EMAILS, payload:err})
                 })
+        } else {
+            return axios
+                .get(url + `emails/label/${label}/${pageNum}`)
+                .then(res => {
+                    console.log('INBOX RESS', res.data)
+                    dispatch({type:GET_EMAILS, payload: {emails:res.data, isSearch:false}})
+                })
+                .catch(err => {
+                    dispatch({type:GET_EMAILS, payload:err})
+                })
+        }
     }
 }
 
 export const NEXT_PAGE = 'NEXT_PAGE';
 
-export function nextPage(label,pageNum) {
+export function nextPage(label,pageNum,search) {
     return function(dispatch){
-        return axios
+        if(!search) {
+            console.log('label ',label,'PAGE', pageNum)
+            return axios
                 .get(url + `emails/label/${label}/${pageNum}`)
                 .then(res => {
+                    console.log('NEXT TRIGGERED', res)
                     dispatch({type:NEXT_PAGE, payload: res.data})
                 })
                 .catch(err => {
                     dispatch({type:NEXT_PAGE, payload:err})
                 })
+        } else {
+            return axios
+                .post(url + `emails/search/name/${pageNum}`, {keyword:label})
+                .then(res => {
+                    console.log('NEXT TRIGGERED-SEARCH ACTION',res.data)
+                    dispatch({type:NEXT_PAGE, payload:res.data});
+                })
+                .catch(err => dispatch({type:NEXT_PAGE, payload:err}))
+                }
     }
 }
 

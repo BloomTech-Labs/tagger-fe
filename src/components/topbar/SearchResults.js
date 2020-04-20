@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { viewEmail, hideResults, changeListing } from '../../actions';
+import { viewEmail, hideResults, changeListing, getEmails } from '../../actions';
 import ShowDate from '../../utils/ShowDate';
 
 const SearchResults = props => {
@@ -11,7 +11,8 @@ const SearchResults = props => {
     }
 
     const handleKeywordResult = (keyword) => {
-        props.changeListing(keyword)
+        //props.changeListing(keyword)
+        props.getEmails(keyword,1,true)
     }
 
     return (
@@ -40,4 +41,4 @@ const mapStateToProps = ({search}) => ({
     keyword:search.keyword
 })
 
-export default connect(mapStateToProps,{viewEmail, hideResults, changeListing})(SearchResults);
+export default connect(mapStateToProps,{viewEmail, hideResults, changeListing, getEmails})(SearchResults);

@@ -16,13 +16,14 @@ const Pagination = props => {
 
     const handlePrev = () => {
         if(currentPage > 1) {
-            props.prevPage(props.label, currentPage-1)
+            props.prevPage(props.label, currentPage-1,props.isSearch)
         }
     }
 
     const handleNext = () => {
+        console.log('HANDLE NEXT LABEL', props.label)
         if(currentPage < pageCount) {
-            props.nextPage(props.label,currentPage+1)
+            props.nextPage(props.label,currentPage+1,props.isSearch)
         }
     }
 
@@ -46,7 +47,8 @@ const Pagination = props => {
 const mapStateToProps = ({ inbox }) => ({
     totalCount:inbox.totalCount,
     pageNum:inbox.pageNum,
-    label:inbox.label
+    label:inbox.label,
+    isSearch:inbox.isSearch
 })
 
 export default connect(mapStateToProps,{nextPage, prevPage})(Pagination); 
