@@ -1,6 +1,6 @@
 # Tagger - Smarter Email
 
-You can find the project at [Tagger](https://tagger-lab.netlify.com/).
+You can find the project at [Tagger](http://tagger-fe.herokuapp.com/).
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/f0e8023998589cc4d94f/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/tagger-fe/maintainability)
 
@@ -10,7 +10,7 @@ You can find the project at [Tagger](https://tagger-lab.netlify.com/).
 
 <h2>Team Lead</h2>
 
-|                                              [Vlad Mogilevskiy](https://github.com/vladmog)                                               |
+|                                              [Connor Holly](https://github.com/ConnorHolly)                                               |
 | :---------------------------------------------------------------------------------------------------------------------------------------: |
 | [<img src="https://github.com/Lambda-School-Labs/tagger-fe/blob/master/src/images/Vlad.jpg" width = "200" />](https://github.com/vladmog) |
 |                           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/vladmog)                            |
@@ -19,7 +19,7 @@ You can find the project at [Tagger](https://tagger-lab.netlify.com/).
 <br>
 <h2>Web Team</h2>
 
-|                                                 [Luis Flores](https://github.com/lflores0214)                                                 |                                                 [Mimi Hoang](https://github.com/meowmimi1)                                                  |                                               [Nathaniel Mosco](https://github.com/natemosco)                                               |                                                 [Raymond Trinh](https://github.com/RaymondTrinh91)                                                  |                                                 [Andrew Wilson](https://github.com/easyas123l1)                                                 |
+|                                                 [Milo Rastgoo](https://github.com/MiloRastgoo)                                                 |                                                 [Asher Kobin](https://github.com/AsherKobin)                                                  |                                               [Spencer Elggren](https://github.com/SpencerElggren)                                               |                                                                                       |
 | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------: |
 | [<img src="https://github.com/Lambda-School-Labs/tagger-fe/blob/master/src/images/Luis.jpg" width = "200" />](https://github.com/lflores0214) | [<img src="https://github.com/Lambda-School-Labs/tagger-fe/blob/master/src/images/Mimi.png" width = "200" />](https://github.com/meowmimi1) | [<img src="https://github.com/Lambda-School-Labs/tagger-fe/blob/master/src/images/Nate.png" width = "200" />](https://github.com/natemosco) | [<img src="https://github.com/Lambda-School-Labs/tagger-fe/blob/master/src/images/Raymond.jpg" width = "200" />](https://github.com/RaymondTrinh91) | [<img src="https://github.com/Lambda-School-Labs/tagger-fe/blob/master/src/images/Andrew.jpg" width = "200" />](https://github.com/easyas123l1) |
 |                           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/lflores0214)                            |                           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/meowmimi1)                            |                           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/natemosco)                            |                             [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/RaymondTrinh91)                             |                            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/easyas123l1)                             |
