@@ -28,7 +28,7 @@ You can find the project at [Tagger](http://tagger-fe.herokuapp.com/).
 | :-----------------------------------------------------------------------------------------------------------: 
 | :-----------------------------------------------------------------------------------------------------------: 
 |
-|                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/asherkobin)                       
+|                      [<img src="https://media-exp1.licdn.com/dms/image/C5603AQGR5Ig-keu43A/profile-displayphoto-shrink_800_800/0?e=1593648000&v=beta&t=NkIYQkOEosaGBYFIFAS3FXt0tRlgcJQUMTCe7eijH2E" width = "200" />](https://github.com/asherkobin)                       
 |                      [<img src="https://avatars0.githubusercontent.com/u/6990987?s=200" width = "200" />](https://github.com/informagician)                       
 |                      [<img src="https://media-exp1.licdn.com/dms/image/C5603AQHGjnHH_0HHDA/profile-displayphoto-shrink_800_800/0?e=1593648000&v=beta&t=ZcDtkbH6SwIUt53DWyrNeJclHIxysmvyXLlkhhzU7mM" width = "200" />](https://github.com/SpencerElggren)                       
 |                      [<img src="https://avatars2.githubusercontent.com/u/54903025?s=200&u=9b4acee1d4d4aeb25269c6fe6129ffa8619be682" width = "200" />](https://github.com/YaniWessi)                       
