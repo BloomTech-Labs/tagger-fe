@@ -39,16 +39,10 @@ To facilitate hand off to future developers of this project, a flow chart was cr
 
 ##### - [x] React Router (https://www.npmjs.com/package/react-router)
 
-##### - [x] Enzyme (https://www.npmjs.com/package/enzyme)
-
-##### - [x] Fuse.js (https://www.npmjs.com/package/fuse.js)
-
 ##### - [x] Axios (https://www.npmjs.com/package/axios)
-
-##### - [x] Styled Components (https://www.styled-components.com/)
 
 ###### [Back end documentation here](https://github.com/Lambda-School-Labs/tagger-be/blob/master/README.md)
 
 ###### How to connect to the web API
 
-###### Staging (https://tagger-labs20.herokuapp.com/)
+###### Staging (http://tagger-fe.herokuapp.com/)
