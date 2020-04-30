@@ -64,7 +64,7 @@ This email client has a more functional, data-science based approach to implemen
 
 The current component structure (Labs 22) is as below. In labs 22 (b/c we did not have a DS team) tookout all DS related components such as Fuse (search)
 
-[img src="https://imgur.com/a/UVCAVSl.jpg"](https://imgur.com/a/UVCAVSl.jpg)
+[<img src="https://i.imgur.com/IgUB7vp.png">](https://i.imgur.com/IgUB7vp.png)
 
 To facilitate hand off to future developers of this project, a flow chart was created. This flow chart depicts data flow and UI flow between the components. Please contact Nate Mosco if you want the pdf and editing base file.
 
