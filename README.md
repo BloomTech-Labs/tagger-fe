@@ -20,7 +20,7 @@ You can find the project at [Tagger](http://tagger-fe.herokuapp.com/).
 <h2>Web Team</h2>
 <br>
 | Asher  | Milo   |
-| ----   | ---    |
+| ---    | ---    |
 | link   | link   |
 | github | github |
 
