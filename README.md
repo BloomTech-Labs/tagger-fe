@@ -19,10 +19,10 @@ You can find the project at [Tagger](http://tagger-fe.herokuapp.com/).
 <br>
 <h2>Web Team</h2>
 <br>
-| Asher  | Milo   |
-| ---    | ---    |
-| link   | link   |
-| github | github |
+| Command | Description |
+| --- | --- |
+| `git status` | List all *new or modified* files |
+| `git diff` | Show file differences that **haven't been** staged |
 
 <br>
 | [Asher Kobin](https://github.com/asherkobin) | [Milo Rastgoo](https://github.com/informagician) | [Spencer Elggren](https://github.com/SpencerElggren) | [Yannick Wessidjam](https://github.com/YaniWessi) |
