@@ -62,6 +62,10 @@ This email client has a more functional, data-science based approach to implemen
 
 ##### COMPONENT STRUCTURE:
 
+The current component structure (Labs 22) is as below. In labs 22 (b/c we did not have a DS team) tookout all DS related components such as Fuse (search)
+
+[img src="https://imgur.com/a/UVCAVSl.jpg"](https://imgur.com/a/UVCAVSl.jpg)
+
 To facilitate hand off to future developers of this project, a flow chart was created. This flow chart depicts data flow and UI flow between the components. Please contact Nate Mosco if you want the pdf and editing base file.
 
 [<img src="https://imgur.com/T6xag5s.jpg">](https://imgur.com/T6xag5s.jpg)
@@ -70,18 +74,18 @@ To facilitate hand off to future developers of this project, a flow chart was cr
 
 ##### - [x] Redux (https://www.npmjs.com/package/redux)
 
-##### - [x] React Router (https://www.npmjs.com/package/react-router)
-
-##### - [x] Enzyme (https://www.npmjs.com/package/enzyme)
-
-##### - [x] Fuse.js (https://www.npmjs.com/package/fuse.js)
-
 ##### - [x] Axios (https://www.npmjs.com/package/axios)
 
-##### - [x] Styled Components (https://www.styled-components.com/)
+##### - [x] SCSS (https://www.npmjs.com/package/node-sass)
+
+##### - [x] Simple Bar (https://www.npmjs.com/package/simplebar)
+
+##### - [x] Moment (https://www.npmjs.com/package/moment)
+
+##### - [x] DOMPurify (https://www.npmjs.com/package/dompurify)
 
 ###### [Back end documentation here](https://github.com/Lambda-School-Labs/tagger-be/blob/master/README.md)
 
-###### How to connect to the web API
+###### How to connect to the web API(https://documenter.getpostman.com/view/10354410/SzmYAN8J?version=latest)
 
-###### Staging (https://tagger-labs20.herokuapp.com/)
+###### Staging (https://tagger-fe.herokuapp.com/)
