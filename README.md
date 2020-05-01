@@ -26,7 +26,6 @@ You can find the project at [Tagger](http://tagger-fe.herokuapp.com/).
 |                 [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/asherkobin)                 |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/informagician)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/SpencerElggren)            |          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/YaniWessi)           |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/wvandolah)             |
 | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/asher-kobin-2a520369/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://linkedin.com/in/rastgoo) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/spencer-elggren/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://linkedin.com/in/yannickw) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) |
 <br>
-        |
 
 </center>
 
@@ -34,7 +33,7 @@ You can find the project at [Tagger](http://tagger-fe.herokuapp.com/).
 
 Here's where you can find our project:
 
-[Trello Board](https://trello.com/b/fxTQlX74/labs-20-tagger-smarter-email)
+[Trello Board](https://trello.com/b/FmnZPTd0/labs-22-tagger-smarter-email)
 
 [Product Canvas](https://www.notion.so/Tagger-Smarter-Email-01673a2ed9e54cb8834b959ad39f7de2)
 
