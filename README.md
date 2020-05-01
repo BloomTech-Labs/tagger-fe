@@ -56,7 +56,7 @@ This email client has a more functional, data-science based approach to implemen
 
 ##### COMPONENT STRUCTURE:
 
-The current component structure (Labs 22) is as below. In labs 22 (b/c we did not have a DS team) tookout all DS related components such as Fuse (search)
+The current component structure (Labs 22) is as below. In labs 22 (b/c we did not have a DS team) tookout all DS related components such as Fuse (search). Please refer to Notion document for more details.
 
 [<img src="https://i.imgur.com/IgUB7vp.png">](https://i.imgur.com/IgUB7vp.png)
 
