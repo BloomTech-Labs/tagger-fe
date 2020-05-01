@@ -10,11 +10,11 @@ You can find the project at [Tagger](http://tagger-fe.herokuapp.com/).
 
 <h2>Team Lead</h2>
 
-|                                              [Connor Holly](https://github.com/ConnorHolly)                                               |
+|                                              [Connor Holly](https://github.com/connorholly11)                                               |
 | :---------------------------------------------------------------------------------------------------------------------------------------: |
-| [<img src="https://github.com/Lambda-School-Labs/tagger-fe/blob/master/src/images/Vlad.jpg" width = "200" />](https://github.com/vladmog) |
-|                           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/vladmog)                            |
-|          [<img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/vladmog/)          |
+| [<img src="https://avatars3.githubusercontent.com/u/52669492?s=400&u=1ecfe377ec9c4f48d91e94760b1bd6d2f5bf3bf5" width = "200" />](https://github.com/connorholly11) |
+|                           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/connorholly11)                            |
+|          [<img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/connorholly1/)          |
 
 <br>
 <h2>Web Team</h2>
